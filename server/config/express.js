@@ -16,6 +16,7 @@ const {
 } = process.env
 
 async function connectDB(){
+    const uri = `mongodb://${dbHost}:${dbPort}/${dbName}`
     await mongoose.connect(uri)
     console.log("Connected to db!")
 }
