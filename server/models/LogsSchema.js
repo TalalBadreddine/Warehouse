@@ -2,9 +2,17 @@ const mongoose = require('mongoose')
 
 const logsSchema = new mongoose.Schema({
 
-    userID: String,
-    Action:String,
-    Date:Date
+    userID:{
+        type: String
+    },
+
+    Action: {
+        type: String
+    },
+    Date: {
+        type: String,
+        default: new Date()
+    }
 
 })
 
