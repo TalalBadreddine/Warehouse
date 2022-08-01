@@ -1,6 +1,7 @@
 const express = require('express')
 const dotenv = require('dotenv')
 const mongoose = require('mongoose')
+const {userRouter} = require('../routes/userRoutes')
 
 
 dotenv.config({path: __dirname + '/../.env'})
@@ -28,7 +29,7 @@ async function startServer(){
 
         // Insert Routest here
 
-        // app.use('/user',  userRouter )
+        app.use('/user',  userRouter )
 
         // app.use('/admin',  adminRouter)
 
