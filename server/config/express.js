@@ -1,8 +1,10 @@
 const express = require('express')
 const dotenv = require('dotenv')
 const mongoose = require('mongoose')
+const warehouseOwnerRouter=require('../routes/wareHouseOwnerRoutes')
 const {userRouter} = require('../routes/userRoutes')
 const {adminRouter} = require('../routes/adminRoutes')
+
 
 dotenv.config({path: __dirname + '/../.env'})
 
@@ -14,7 +16,6 @@ const {
 } = process.env
 
 async function connectDB(){
-    const uri = `mongodb://${dbHost}:${dbPort}/${dbName}`
     await mongoose.connect(uri)
     console.log("Connected to db!")
 }
@@ -29,11 +30,12 @@ async function startServer(){
 
         // Insert Routest here
 
+
         app.use('/user',  userRouter )
 
         app.use('/admin',  adminRouter)
 
-        // app.use('/wareHouseOwner', wareHouseOwnerRouter )
+        app.use('/warehouseOwner', warehouseOwnerRouter )
 
         app.listen(serverPort, () => console.log(`Listening to port ${serverPort}`))
 
