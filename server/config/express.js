@@ -28,6 +28,12 @@ async function startServer(){
 
         // Insert Routest here
 
+        // app.use('/user',  userRouter )
+
+        // app.use('/admin',  adminRouter)
+
+        // app.use('/wareHouseOwner', wareHouseOwnerRouter )
+
         app.listen(serverPort, () => console.log(`Listening to port ${serverPort}`))
 
     }catch(error){
