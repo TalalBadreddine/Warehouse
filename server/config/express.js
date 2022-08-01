@@ -3,6 +3,8 @@ const dotenv = require('dotenv')
 const mongoose = require('mongoose')
 const warehouseOwnerRouter=require('../routes/wareHouseOwnerRoutes')
 const {userRouter} = require('../routes/userRoutes')
+const {adminRouter} = require('../routes/adminRoutes')
+
 
 dotenv.config({path: __dirname + '/../.env'})
 
@@ -31,7 +33,7 @@ async function startServer(){
 
         app.use('/user',  userRouter )
 
-        // app.use('/admin',  adminRouter)
+        app.use('/admin',  adminRouter)
 
         app.use('/warehouseOwner', warehouseOwnerRouter )
 
