@@ -16,6 +16,7 @@ const {
 } = process.env
 
 async function connectDB(){
+    const uri = `mongodb://${dbHost}:${dbPort}/${dbName}`
     await mongoose.connect(uri)
     console.log("Connected to db!")
 }
@@ -26,7 +27,7 @@ async function startServer(){
 
         // intialize express app
         const app = express()
-
+        app.use(express.json())
 
         // Insert Routest here
 

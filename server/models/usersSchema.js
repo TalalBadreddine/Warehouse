@@ -5,8 +5,14 @@ const usersSchema = new mongoose.Schema({
     userName: String,
     email:String,
     password: String,
-    registerDate:Date,
-    isActive: Boolean
+    registerDate:{
+        type:Date,
+        default: new Date()
+    },
+    isActive: {
+        type: Boolean,
+        default: true
+    }
 
 })
 
