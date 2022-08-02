@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const manageUsersAndWarehousesSchema = new mongoose.Schema({
 
-     userId:{
+     userEmail:{
         type: String
     },
     WarehouseId:{

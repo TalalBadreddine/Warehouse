@@ -7,11 +7,17 @@ const {
 const {
     getWareHousesForUsers,
     userLogin,
-    userRegister
+    userRegister,
+    requestRentWarehouse,
+    getAllUserRequests
 } = require('../controllers/userController')
 
 
-userRouter.get('/getWarehouses', validateUser, getWareHousesForUsers )
+userRouter.get('/getWarehouses', validateUser, getWareHousesForUsers)
+
+userRouter.post('/rentWarehouse', validateUser, requestRentWarehouse)
+
+userRouter.get('/getAllUserRequests', validateUser, getAllUserRequests)
 
 userRouter.post('/login', userLogin)
 

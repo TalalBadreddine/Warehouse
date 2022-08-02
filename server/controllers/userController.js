@@ -1,8 +1,11 @@
 const warehouseSchema = require('../models/warehouseSchema')
 const userSchema = require('../models/usersSchema')
+const manageUsersAndWarehousesSchema = require('../models/manageUsersAndWarehousesSchema')
+const jwtDecode = require('jwt-decode')
 const jwt = require('jsonwebtoken')
 const crypto = require('crypto');
 const dotenv = require('dotenv')
+const extensions = require('../helper/extensions')
 
 dotenv.config({path: __dirname + '/../.env'})
 
@@ -16,11 +19,9 @@ const {
 const getWareHousesForUsers = async (req, res) => {
     try{
 
-        const results = await warehouseSchema.find({
-            status:'accepted'
+        await extensions.getEveryWarehouseOwnerAndHisWareHouses().then((results) => {
+            return res.send(results).status(200)
         })
-    
-        return res.send(results).status(200)
 
     }
     catch(err){
@@ -31,6 +32,7 @@ const getWareHousesForUsers = async (req, res) => {
 
 const userLogin = async (req, res) => {
     try{
+
         const userInfo = req.body
         
         const userFromDb = await userSchema.findOne({
@@ -56,7 +58,7 @@ const userLogin = async (req, res) => {
             return res.status(400).json(token)
         })
 
-        // return res.send('somthing went wrong').status(400)
+        return res.send('somthing went wrong').status(400)
 
     }
     catch(err){
@@ -92,9 +94,37 @@ const userRegister = async (req, res) => {
     }
 }
 
+// first build  request rent for warehouse
+const getAllUserRequests = async (req, res) => {
+    try{
+
+        const decode = jwtDecode(req.cookies['jwt'])
+        
+        const allUserRequests = await manageUsersAndWarehousesSchema.find({
+            userEmail: decode.user.email
+        })
+
+        return res.send(allUserRequests).status(200)
+    }
+    catch(err){
+        console.log(`err at getAllUserRequests => ${err.message}`)
+    }
+}
+
+// resolve time conflict
+const requestRentWarehouse = async (req, res) => {
+
+    const wareHouseId = req.body.wareHouseId
+    const rentingDate = req.body.rentingDate
+
+    return res.send('rentWarehouse')
+}
+
 module.exports = {
     getWareHousesForUsers,
     userLogin,
-    userRegister
+    userRegister,
+    requestRentWarehouse,
+    getAllUserRequests
 }
 

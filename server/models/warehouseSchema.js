@@ -9,10 +9,10 @@ const warehouseSchema = new mongoose.Schema({
         type: String
     },
     location:{
-        type:[Number]
+        type:[String]
     },
     datesAvailable:{
-        type: [String]
+        type: [[String]]
     },
     type:{
         type: String
@@ -24,24 +24,29 @@ const warehouseSchema = new mongoose.Schema({
         type: String
     },
     isFireSafe:{
-        type: Boolean
+        type: Boolean,
+        default: false
     },
     isSecurityCameras:{
-        type: Boolean
+        type: Boolean,
+        default: false
     },
     isAirConditioning:{
-        type: Boolean
+        type: Boolean,
+        default: false
     },
     isWorkers:{
-        type: Boolean
+        type: Boolean,
+        default: false
     },
     registerDate:{
         type: Date,
         default: new Date()
     },
     status:{
-        type: String
+        type: String,
         // 3 type ( accepted, rejected, pending)
+        default: 'pending'
     }
 
     
