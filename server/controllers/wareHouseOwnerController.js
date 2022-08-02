@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
-const warehouseOwnerModel = require('../models/WarehouseOwner')
-
-// const {generateToken} = require("../auth/auth.js");
+const warehouseOwnerModel = require('../models/WarehouseOwner');
+const jwt = require('jsonwebtoken');
 
 //Register
 const register = async (req, res) => {
@@ -60,11 +59,13 @@ const login = async (req, res) => {
             user          
         }
 
-        // const token = generateToken(payload);
+        jwt.sign({user: user, role: 'warehouseOwner'}, jwtSecret, async (err, token) => {
 
-      
-        // res.cookie('token', token, {httpOnly : false});
-        return res.sendStatus(200)
+            res.cookie('jwt', token, { httpOnly: true, maxAge: 3 * 24 * 60 * 60 * 1000 })
+            return res.status(200).json(token)
+        })
+
+
 
     } catch(error){
         console.log(error)
