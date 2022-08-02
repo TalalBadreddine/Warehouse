@@ -39,8 +39,8 @@ const warehouseSchema = new mongoose.Schema({
         type: date,
         default: new Date()
     },
-    isApproved:{
-        type: Boolean
+    status:{
+        type: String
     }
 
     
