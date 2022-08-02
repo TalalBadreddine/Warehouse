@@ -27,7 +27,7 @@ async function startServer(){
 
         // intialize express app
         const app = express()
-
+        app.use(express.json())
 
         // Insert Routest here
 
