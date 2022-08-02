@@ -9,10 +9,10 @@ const manageUsersAndWarehousesSchema = new mongoose.Schema({
         type: String
     },
     startRentDate:{
-        type: Date
+        type: String
     },
     endRentDate:{
-        type: Date
+        type: String
     },
     price:{
         type: Number
@@ -22,6 +22,11 @@ const manageUsersAndWarehousesSchema = new mongoose.Schema({
     },
     warehouseOwnerName:{
         type: String
+    },
+    status:{
+        type: String,
+        //['pending','accepted','rejected']
+        default: 'pending'
     }
 
 

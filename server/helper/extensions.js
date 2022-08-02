@@ -168,7 +168,7 @@ const userRentAWarehouseInSpecificDate = async (wareHouseId, askedTime) => {
 
                 wareHouseTime.push([startTime, wareHouseTime[i][0]])
                 wareHouseTime.push([endTime, wareHouseTime[i][1]])
-                
+
                 return true
 
             }
@@ -188,5 +188,6 @@ const userRentAWarehouseInSpecificDate = async (wareHouseId, askedTime) => {
 module.exports = {
     getEveryWarehouseOwnerAndHisWareHouses,
     checkIfTimeIsAvailbleWithWarehouseTime,
+    userRentAWarehouseInSpecificDate,
     formatDate
 }

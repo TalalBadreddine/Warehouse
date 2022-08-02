@@ -111,11 +111,44 @@ const getAllUserRequests = async (req, res) => {
     }
 }
 
+
 // resolve time conflict
 const requestRentWarehouse = async (req, res) => {
 
-    const wareHouseId = req.body.wareHouseId
+    const warehouseInfo = req.body.warehouseInfo
     const rentingDate = req.body.rentingDate
+    const totalPrice = req.body.totalPrice
+    const decodedInfo = jwtDecode(req.cookies['jwt'])
+
+    // const warehouse = await warehouseSchema.findOne({
+    //     _id: warehouseInfo.id
+    // })
+
+    extensions.checkIfTimeIsAvailbleWithWarehouseTime(warehouseInfo.datesAvailable , rentingDate).then(async (results) => {
+
+        if(results){
+            
+            let relation = new manageUsersAndWarehousesSchema({
+
+                userEmail: decodedInfo.user.email,
+                WarehouseId: warehouseInfo._id,
+                startRentDate: rentingDate[0],
+                endRentDate: rentingDate[1],
+                price: parseInt(totalPrice),
+                warehouseName: warehouseInfo.name,
+                warehouseOwnerName: wareHouseInfo.ownerName
+
+            })
+
+            await relation.save()
+
+            return res.status(200)
+
+        }
+
+        return res.send('not availble').status(410)
+
+    })
 
     return res.send('rentWarehouse')
 }
