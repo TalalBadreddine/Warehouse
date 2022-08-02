@@ -1,7 +1,8 @@
 const express = require('express')
 const dotenv = require('dotenv')
 const mongoose = require('mongoose')
-const warehouseOwnerRouter=require('../routes/wareHouseOwnerRoutes')
+const cookieParser = require('cookie-parser');
+const warehouseOwnerRouter = require('../routes/wareHouseOwnerRoutes')
 const {userRouter} = require('../routes/userRoutes')
 const {adminRouter} = require('../routes/adminRoutes')
 
@@ -27,6 +28,10 @@ async function startServer(){
 
         // intialize express app
         const app = express()
+        
+        app.use(express.json())
+        
+        app.use(cookieParser())
 
 
         // Insert Routest here
