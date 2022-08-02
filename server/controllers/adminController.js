@@ -1,3 +1,4 @@
+
 const usersSchema = require("../models/usersSchema");
 const manageUsersAndWarehousesSchema = require('../models/manageUsersAndWarehousesSchema')
 const warehouseSchema = require('../models/warehouseSchema')
@@ -84,6 +85,35 @@ const  deleteWarehouseOwners = (req, res) => {
     return res.send(' deleteWarehouseOwners').status(200)
 }
 
+
+//warehouses with a pending status
+const getAllWarehousesPending = async (req, res) => {
+
+    try {
+
+        const warehouse =  await warehouseSchema.find({status: 'pending'});
+        return res.send(warehouse).status(200)
+    } catch(error){
+        res.status(500).json({message : "internal error with function getAllwarehousesPending"})
+    }
+}
+
+//from pending to accepted or rejected warehouse 
+
+const acceptRejectWarehouseRequest = async (req, res) => {
+    try {
+
+        const warehouseId =  req.body.warehouseId
+        const status = req.body.status
+
+        await warehouseSchema.updateOne( {_id:warehouseId} , { $set: {status: status} } ) 
+        return res.status(200)
+
+    } catch(error){
+        res.status(500).json({message : "internal error with function acceptRejectWarehouseRequest"})
+    }
+}
+
 module.exports = {
     getAllCustomer,
     addCustomer, 
@@ -94,5 +124,7 @@ module.exports = {
     deleteWarehouse,
     getAllWarehouseOwners, 
     addWarehouseOwners, 
-    deleteWarehouseOwners
+    deleteWarehouseOwners,
+    getAllWarehousesPending,
+    acceptRejectWarehouseRequest
 }
