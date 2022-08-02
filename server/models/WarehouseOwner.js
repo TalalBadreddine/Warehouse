@@ -25,7 +25,7 @@ const warehouseOwnerSchema = new mongoose.Schema({
     },
     myWarehouses:
     {
-        type:String
+        type: [String]
         
     },
     registerDate:
