@@ -1,5 +1,6 @@
 const warehouseSchema = require('../models/warehouseSchema')
 const userSchema = require('../models/usersSchema')
+const jwt = require('jsonwebtoken')
 const crypto = require('crypto');
 const dotenv = require('dotenv')
 
@@ -7,14 +8,15 @@ dotenv.config({path: __dirname + '/../.env'})
 
 const {
     hashType,
-    encodeAs
+    encodeAs,
+    jwtSecret
 } = process.env
 
 
 const getWareHousesForUsers = async (req, res) => {
     try{
 
-        const results = await userSchema.find({
+        const results = await warehouseSchema.find({
             status:'accepted'
         })
     
@@ -47,7 +49,14 @@ const userLogin = async (req, res) => {
             return res.send('Inactive').status(403)
         }
 
-        return res.send('Login').status(200)
+
+        jwt.sign({user: userInfo, role: 'user'}, jwtSecret, async (err, token) => {
+
+            res.cookie('jwt', token, { httpOnly: true, maxAge: 3 * 24 * 60 * 60 * 1000 })
+            return res.status(400).json(token)
+        })
+
+        // return res.send('somthing went wrong').status(400)
 
     }
     catch(err){
