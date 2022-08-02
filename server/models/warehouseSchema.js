@@ -40,7 +40,9 @@ const warehouseSchema = new mongoose.Schema({
         default: new Date()
     },
     status:{
-        type: String
+        type: String,
+        default:'pending'
+
     }
 
     
