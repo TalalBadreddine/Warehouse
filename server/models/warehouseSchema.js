@@ -36,7 +36,7 @@ const warehouseSchema = new mongoose.Schema({
         type: Boolean
     },
     registerDate:{
-        type: date,
+        type: Date,
         default: new Date()
     },
     status:{
