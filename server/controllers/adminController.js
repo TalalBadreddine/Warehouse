@@ -1,8 +1,20 @@
-const usersSchema = require('../models/usersSchema');
-const warehouseSchema = require('../models/warehouseSchema');
-const warehouseOwnerSchema =require('../models/WarehouseOwner');
-const getAllCustomer = (req, res) => {
-    return res.send('getAllCustomer').status(200)
+const usersSchema = require("../models/usersSchema");
+const manageUsersAndWarehousesSchema = require('../models/manageUsersAndWarehousesSchema')
+const warehouseSchema = require('../models/warehouseSchema')
+const warehouseOwnerSchema = require('../models/WarehouseOwner')
+
+const getAllCustomer = async (req, res) => {
+   
+    try{
+  
+        const user= await usersSchema.find();
+        if (user){
+             res.status(200).json(user);
+        }}
+    catch(error){
+        res.status(500).json({message : "internal error with function get all cutomers"})
+
+    }
 }
 
 const addCustomer = async(req, res) => {
@@ -45,13 +57,32 @@ const deleteCustomer = async(req, res) => {
     
 }
 
-const getCurrentCustomerInfo = (req, res) => {
-    return res.send('getCurrentCustomerInfo').status(200)
+const getCurrentCustomerInfo = async (req, res) => {
+    try{
+        const currentUserId = req.body.userId
+        
+        const result = await manageUsersAndWarehousesSchema.find({
+            userId :currentUserId
+        })
+        return res.send(result).status(200)
+
+    }
+    catch(error){
+        res.status(500).json({message : "internal error with function get current customer"})
+    }
 }
 
 // warehouses
 const getAllWarehouses = (req, res) => {
-    return res.send('getAllWarehouses').status(200)
+       try{
+        const warehouse= await warehouseSchema.find();
+        if (warehouse){
+             res.status(200).json(warehouse);
+        }}
+    catch(error){
+        res.status(500).json({message : "internal error with function get all warehouses"})
+
+    }
 }
 
 const addWarehouse = async(req, res) => {
@@ -94,7 +125,17 @@ const  deleteWarehouse = async(req, res) => {
 
 //warehouse owner
 const  getAllWarehouseOwners = (req, res) => {
-    return res.send('getAllWarehouseOwners').status(200)
+        try{
+        const warehouseOwner= await warehouseOwnerSchema.find({
+            status: "accepted"
+        });
+        if (warehouseOwner){
+             res.status(200).json(warehouseOwner);
+        }}
+    catch(error){
+        res.status(500).json({message : "internal error with function get all warehouse owners"})
+
+    }
 }
 
 const addWarehouseOwners = async(req, res) => {
@@ -134,6 +175,35 @@ const  deleteWarehouseOwners = async(req, res) => {
     }
 }
 
+
+//warehouses with a pending status
+const getAllWarehousesPending = async (req, res) => {
+
+    try {
+
+        const warehouse =  await warehouseSchema.find({status: 'pending'});
+        return res.send(warehouse).status(200)
+    } catch(error){
+        res.status(500).json({message : "internal error with function getAllwarehousesPending"})
+    }
+}
+
+//from pending to accepted or rejected warehouse 
+
+const acceptRejectWarehouseRequest = async (req, res) => {
+    try {
+
+        const warehouseId =  req.body.warehouseId
+        const status = req.body.status
+
+        await warehouseSchema.updateOne( {_id:warehouseId} , { $set: {status: status} } ) 
+        return res.status(200)
+
+    } catch(error){
+        res.status(500).json({message : "internal error with function acceptRejectWarehouseRequest"})
+    }
+}
+
 module.exports = {
     getAllCustomer,
     addCustomer, 
@@ -144,5 +214,7 @@ module.exports = {
     deleteWarehouse,
     getAllWarehouseOwners, 
     addWarehouseOwners, 
-    deleteWarehouseOwners
+    deleteWarehouseOwners,
+    getAllWarehousesPending,
+    acceptRejectWarehouseRequest
 }

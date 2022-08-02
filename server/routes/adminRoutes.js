@@ -1,6 +1,7 @@
 const router = require('express').Router
 const adminRouter = router()
 
+
 const {
     getAllCustomer,
     addCustomer, 
@@ -11,8 +12,11 @@ const {
     deleteWarehouse,
     getAllWarehouseOwners, 
     addWarehouseOwners, 
-    deleteWarehouseOwners
+    deleteWarehouseOwners,
+    getAllWarehousesPending,
+    acceptRejectWarehouseRequest
 } = require('../controllers/adminController')
+
 
 adminRouter.get('/getAllCustomer', getAllCustomer )
 adminRouter.post('/addCustomer', addCustomer )
@@ -27,8 +31,8 @@ adminRouter.get('/getAllWarehouseOwners', getAllWarehouseOwners )
 adminRouter.post('/addWarehouseOwners', addWarehouseOwners )
 adminRouter.delete('/deleteWarehouseOwners', deleteWarehouseOwners )
 
-
-
+adminRouter.get('/getAllWarehousesPending', getAllWarehousesPending)
+adminRouter.post('/acceptRejectWarehouseRequest', acceptRejectWarehouseRequest)
 
 module.exports = {adminRouter}
 
