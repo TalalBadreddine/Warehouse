@@ -47,6 +47,7 @@ const warehouseSchema = new mongoose.Schema({
         type: String,
         // 3 type ( accepted, rejected, pending)
         default: 'pending'
+
     }
 
     

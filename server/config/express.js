@@ -31,6 +31,8 @@ async function startServer(){
 
         app.use(express.json())
         
+        app.use(express.json())
+        
         app.use(cookieParser())
 
 

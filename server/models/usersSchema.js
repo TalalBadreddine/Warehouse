@@ -5,8 +5,8 @@ const usersSchema = new mongoose.Schema({
     userName: String,
     email:String,
     password: String,
-    registerDate: {
-        type: Date,
+    registerDate:{
+        type:Date,
         default: new Date()
     },
     isActive: {
