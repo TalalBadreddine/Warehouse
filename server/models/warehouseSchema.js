@@ -36,11 +36,12 @@ const warehouseSchema = new mongoose.Schema({
         type: Boolean
     },
     registerDate:{
-        type: date,
+        type: Date,
         default: new Date()
     },
-    isApproved:{
-        type: Boolean
+    status:{
+        type: String
+        // 3 type ( accepted, rejected, pending)
     }
 
     

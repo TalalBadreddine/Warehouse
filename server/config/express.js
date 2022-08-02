@@ -28,12 +28,13 @@ async function startServer(){
 
         // intialize express app
         const app = express()
+
+        app.use(express.json())
         
         app.use(cookieParser())
 
 
         // Insert Routest here
-
 
         app.use('/user',  userRouter )
 
