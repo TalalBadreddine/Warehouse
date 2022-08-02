@@ -73,7 +73,7 @@ const getCurrentCustomerInfo = async (req, res) => {
 }
 
 // warehouses
-const getAllWarehouses = (req, res) => {
+const getAllWarehouses = async (req, res) => {
        try{
         const warehouse= await warehouseSchema.find();
         if (warehouse){
@@ -124,7 +124,7 @@ const  deleteWarehouse = async(req, res) => {
 }
 
 //warehouse owner
-const  getAllWarehouseOwners = (req, res) => {
+const  getAllWarehouseOwners = async (req, res) => {
         try{
         const warehouseOwner= await warehouseOwnerSchema.find({
             status: "accepted"
