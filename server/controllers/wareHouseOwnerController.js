@@ -119,6 +119,7 @@ const acceptDeclineRequest = async (req, res) => {
 
         if(requestStatus == 'accepted'){
             await extensions.userRentAWarehouseInSpecificDate(warehouseId,requestedDate ).then( async (response) => {
+                console.log(response)
                 if(response){ requestStatus = 'accepted'}else{requestStatus = 'rejected'}
 
                 await manageUsersAndWarehousesSchema.updateOne({

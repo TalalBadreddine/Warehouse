@@ -2,6 +2,16 @@ const usersSchema = require("../models/usersSchema");
 const manageUsersAndWarehousesSchema = require('../models/manageUsersAndWarehousesSchema')
 const warehouseSchema = require('../models/warehouseSchema')
 const warehouseOwnerSchema = require('../models/WarehouseOwner')
+const dotenv = require('dotenv')
+const jwt = require('jsonwebtoken')
+
+dotenv.config({path: __dirname + '../.env'})
+
+const {
+    adminUserName,
+    adminPassword,
+    jwtSecret
+} = process.env
 
 const getAllCustomer = async (req, res) => {
    
@@ -225,6 +235,30 @@ const acceptRejectWarehouseRequest = async (req, res) => {
     }
 }
 
+const adminLogin = async (req, res) => {
+    try{
+        const userInfo = req.body
+
+        if(userInfo.email == adminUserName && userInfo.password == adminPassword ){
+
+            jwt.sign({user: userInfo, role: 'admin'}, jwtSecret, async (err, token) => {
+
+                res.cookie('jwt', token, { httpOnly: true, maxAge: 3 * 24 * 60 * 60 * 1000 })
+                return res.status(200).json(token)
+            })
+    
+
+        }else{
+            
+            return res.send('rejected').status(403)
+        }
+
+    }
+    catch(err){
+        console.log(`error at adminLogin => $${err.message}`)
+    }
+}
+
 module.exports = {
     getAllCustomer,
     addCustomer, 
@@ -237,5 +271,6 @@ module.exports = {
     addWarehouseOwners, 
     deleteWarehouseOwners,
     getAllWarehousesPending,
-    acceptRejectWarehouseRequest
+    acceptRejectWarehouseRequest,
+    adminLogin
 }

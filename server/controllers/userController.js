@@ -34,31 +34,36 @@ const userLogin = async (req, res) => {
     try{
 
         const userInfo = req.body
-        
+
         const userFromDb = await userSchema.findOne({
             email: userInfo.email
         })
  
+        console.log(userInfo.email)
+        console.log(userInfo.password)
+        
         if(!userFromDb){
             return res.send('Does not exist').status(404)
         }
         
-        if(userFromDb.password != crypto.createHash(hashType).update(userInfo.password).digest(encodeAs)){
+        else if(userFromDb.password != crypto.createHash(hashType).update(userInfo.password).digest(encodeAs)){
             return res.send('wrong password').status(403)
         }
 
-        if(!userFromDb.isActive ){
+        else if(!userFromDb.isActive ){
             return res.send('Inactive').status(403)
-        }
+        }else {
+
+  
 
 
         jwt.sign({user: userInfo, role: 'user'}, jwtSecret, async (err, token) => {
 
             res.cookie('jwt', token, { httpOnly: true, maxAge: 3 * 24 * 60 * 60 * 1000 })
-            return res.status(400).json(token)
+            return res.status(200).json(token)
         })
 
-        return res.send('somthing went wrong').status(400)
+    }
 
     }
     catch(err){

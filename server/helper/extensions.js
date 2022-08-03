@@ -51,8 +51,6 @@ const formatDate = (currentDate) => {
 const checkIfTimeIsAvailbleWithWarehouseTime = async  (wareHouseTime, askedTime) => {
 
     try{
-        // [1,4]
-        // [2,4]
       
         const requestedStartDate = new Date(askedTime[0]);
         const requestedStartDateInSeconds = Math.floor(requestedStartDate.getTime() / 1000);
@@ -72,7 +70,6 @@ const checkIfTimeIsAvailbleWithWarehouseTime = async  (wareHouseTime, askedTime)
            
             if(requestedStartDateInSeconds >= startTimeInSeconde && requestedEndDateInSeconds <= endTimeInSeconde){return true}
 
-
         }
 
         return false
@@ -88,9 +85,11 @@ const userRentAWarehouseInSpecificDate = async (wareHouseId, askedTime) => {
 
     try{
 
-        const wareHouseTime = await warehouseSchema.findOne({
+        let wareHouseTime = await warehouseSchema.findOne({
             _id: wareHouseId
         })
+
+        wareHouseTime = wareHouseTime.datesAvailable
 
         const requestedStartDate = new Date(askedTime[0]);
         const requestedStartDateInSeconds = Math.floor(requestedStartDate.getTime() / 1000);
