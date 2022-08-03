@@ -2,6 +2,16 @@ const usersSchema = require("../models/usersSchema");
 const manageUsersAndWarehousesSchema = require('../models/manageUsersAndWarehousesSchema')
 const warehouseSchema = require('../models/warehouseSchema')
 const warehouseOwnerSchema = require('../models/WarehouseOwner')
+const dotenv = require('dotenv')
+const jwt = require('jsonwebtoken')
+
+dotenv.config({path: __dirname + '../.env'})
+
+const {
+    adminUserName,
+    adminPassword,
+    jwtSecret
+} = process.env
 
 const getAllCustomer = async (req, res) => {
    
@@ -24,7 +34,7 @@ const addCustomer = async(req, res) => {
         
         const user=req.body;
         const alreadyExist = await usersSchema.find({email: user.email})
-        if(alreadyExist.length >=1){
+        if(alreadyExist.length >= 1){
             return res.status(409).json({message:'User already exists'})
         }
         const result = await usersSchema.create(user);
@@ -73,6 +83,27 @@ const getCurrentCustomerInfo = async (req, res) => {
 }
 
 // warehouses
+
+// const currentWarehouse = req.body
+// const {name, space, location, datesAvailable, type, pricePerDay, description, isFireSafe, isSecurityCameras, isAirConditioning, isWorkers } = currentWarehouse
+
+// let warehouse = new warehouseSchema({
+//     name: name,
+//     space: space,
+//     location: location,
+//     datesAvailable: datesAvailable,
+//     type: type,
+//     pricePerDay: pricePerDay,
+//     description: description,
+//     isFireSafe: Boolean(isFireSafe),
+//     isSecurityCameras: Boolean(isSecurityCameras),
+//     isAirConditioning: Boolean(isAirConditioning),
+//     isWorkers: Boolean(isWorkers)
+    
+// })
+// await warehouse.save()
+// return res.send('added')
+
 const getAllWarehouses = async (req, res) => {
        try{
         const warehouse= await warehouseSchema.find();
@@ -204,6 +235,30 @@ const acceptRejectWarehouseRequest = async (req, res) => {
     }
 }
 
+const adminLogin = async (req, res) => {
+    try{
+        const userInfo = req.body
+
+        if(userInfo.email == adminUserName && userInfo.password == adminPassword ){
+
+            jwt.sign({user: userInfo, role: 'admin'}, jwtSecret, async (err, token) => {
+
+                res.cookie('jwt', token, { httpOnly: true, maxAge: 3 * 24 * 60 * 60 * 1000 })
+                return res.status(200).json(token)
+            })
+    
+
+        }else{
+            
+            return res.send('rejected').status(403)
+        }
+
+    }
+    catch(err){
+        console.log(`error at adminLogin => $${err.message}`)
+    }
+}
+
 module.exports = {
     getAllCustomer,
     addCustomer, 
@@ -216,5 +271,6 @@ module.exports = {
     addWarehouseOwners, 
     deleteWarehouseOwners,
     getAllWarehousesPending,
-    acceptRejectWarehouseRequest
+    acceptRejectWarehouseRequest,
+    adminLogin
 }

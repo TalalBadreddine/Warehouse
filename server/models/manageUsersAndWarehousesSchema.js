@@ -2,17 +2,17 @@ const mongoose = require('mongoose')
 
 const manageUsersAndWarehousesSchema = new mongoose.Schema({
 
-     userId:{
+     userEmail:{
         type: String
     },
     WarehouseId:{
         type: String
     },
     startRentDate:{
-        type: Date
+        type: String
     },
     endRentDate:{
-        type: Date
+        type: String
     },
     price:{
         type: Number
@@ -22,6 +22,14 @@ const manageUsersAndWarehousesSchema = new mongoose.Schema({
     },
     warehouseOwnerName:{
         type: String
+    },
+    warehouseOwnerEmail:{
+        type: String
+    },
+    status:{
+        type: String,
+        //['pending','accepted','rejected']
+        default: 'pending'
     }
 
 

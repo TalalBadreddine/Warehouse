@@ -46,6 +46,7 @@ const validateAdmin = (req, res, next) => {
 
             }else{
                 let role = decodedToken['role']
+                console.log(role)
                 role == "admin" ? next() : res.send("forbidden")
 
             }
