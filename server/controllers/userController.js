@@ -34,31 +34,36 @@ const userLogin = async (req, res) => {
     try{
 
         const userInfo = req.body
-        
+
         const userFromDb = await userSchema.findOne({
             email: userInfo.email
         })
  
+        console.log(userInfo.email)
+        console.log(userInfo.password)
+        
         if(!userFromDb){
             return res.send('Does not exist').status(404)
         }
         
-        if(userFromDb.password != crypto.createHash(hashType).update(userInfo.password).digest(encodeAs)){
+        else if(userFromDb.password != crypto.createHash(hashType).update(userInfo.password).digest(encodeAs)){
             return res.send('wrong password').status(403)
         }
 
-        if(!userFromDb.isActive ){
+        else if(!userFromDb.isActive ){
             return res.send('Inactive').status(403)
-        }
+        }else {
+
+  
 
 
         jwt.sign({user: userInfo, role: 'user'}, jwtSecret, async (err, token) => {
 
             res.cookie('jwt', token, { httpOnly: true, maxAge: 3 * 24 * 60 * 60 * 1000 })
-            return res.status(400).json(token)
+            return res.status(200).json(token)
         })
 
-        return res.send('somthing went wrong').status(400)
+    }
 
     }
     catch(err){
@@ -116,6 +121,7 @@ const getAllUserRequests = async (req, res) => {
 const requestRentWarehouse = async (req, res) => {
 
     const warehouseInfo = req.body.warehouseInfo
+    const warehouseOwnerDetails = req.body.warehouseOwner
     const rentingDate = req.body.rentingDate
     const totalPrice = req.body.totalPrice
     const decodedInfo = jwtDecode(req.cookies['jwt'])
@@ -123,8 +129,9 @@ const requestRentWarehouse = async (req, res) => {
     // const warehouse = await warehouseSchema.findOne({
     //     _id: warehouseInfo.id
     // })
+    // console.log(extensions.checkIfTimeIsAvailbleWithWarehouseTime())
 
-    extensions.checkIfTimeIsAvailbleWithWarehouseTime(warehouseInfo.datesAvailable , rentingDate).then(async (results) => {
+    await extensions.checkIfTimeIsAvailbleWithWarehouseTime(warehouseInfo.datesAvailable , rentingDate).then(async (results) => {
 
         if(results){
             
@@ -136,21 +143,20 @@ const requestRentWarehouse = async (req, res) => {
                 endRentDate: rentingDate[1],
                 price: parseInt(totalPrice),
                 warehouseName: warehouseInfo.name,
-                warehouseOwnerName: wareHouseInfo.ownerName
+                warehouseOwnerName: warehouseOwnerDetails.ownerName,
+                warehouseOwnerEmail: warehouseOwnerDetails.email
 
             })
 
             await relation.save()
 
-            return res.status(200)
+            return res.send('rent').status(200)
 
         }
 
         return res.send('not availble').status(410)
 
     })
-
-    return res.send('rentWarehouse')
 }
 
 module.exports = {

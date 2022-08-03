@@ -1,40 +1,42 @@
 const mongoose = require('mongoose');
 const warehouseOwnerModel = require('../models/WarehouseOwner');
 const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
+const dotenv = require('dotenv')
+const jwtDecode = require('jwt-decode');
+const manageUsersAndWarehousesSchema = require('../models/manageUsersAndWarehousesSchema');
+const extensions = require('../helper/extensions')
+
+
+dotenv.config({path: __dirname + '/../.env'})
+
+const {
+    hashType,
+    encodeAs,
+    jwtSecret
+} = process.env
+
+
 
 //Register
 const register = async (req, res) => {
     try {
 
         const {userName, email, password,phoneNumber} = req.body;
-
-       
-
-        try {
+        
             
-            const user = await warehouseOwner.create({
-                userName, email, password, phoneNumber
+            await warehouseOwnerModel.create({
+                userName: userName,
+                email: email,
+                password: crypto.createHash(hashType).update(password).digest(encodeAs),
+                phoneNumber: phoneNumber
             })
 
-        }catch(e){
-            // console.log(e.errors.password.properties.message)
-            let errors = [];
-            for(let key of Object.keys(e.errors)){
-                let field = e.errors[key]
-                errors.push(field.properties.message)
-            }
-            return res.status(400).json({message : errors})
-        }
-
-        if(user){
-            res.status(201).json({message : "created warehouseOwner"});
-        }else{
-            res.status(400).json({message : "faild to create warehouseOwner"});
-        }
+            return res.send('created').status(200)
 
     } catch(error){
         console.log(error)
-        res.status(500).json({message : "an error occured!"});
+        res.status(500).json({message : "an error occured at register function "});
     }
 }
 
@@ -44,15 +46,15 @@ const login = async (req, res) => {
 
         const {email, password} = req.body;
 
-        const user = await warehouseOwner.findOne({
+        const user = await warehouseOwnerModel.findOne({
             email
         })
 
         if(!user) return res.status(400).json({message : "user does not exist"});        
 
         // verify password
-        // if((await user.validatePassword(password) == false)) 
-        //     return res.status(403).json({message : "incorrect password!"})
+        if(( crypto.createHash(hashType).update(password).digest(encodeAs) != user.password)) 
+            return res.status(403).json({message : "incorrect password!"})
 
         // create token
         const payload = {
@@ -69,7 +71,7 @@ const login = async (req, res) => {
 
     } catch(error){
         console.log(error)
-        return res.status(500).json({message : "an error occured!"});
+        return res.status(500).json({message : "an error occured at login function"});
     }
 }
 
@@ -86,14 +88,64 @@ const logout = async (req, res) => {
 
     } catch(error){
         console.log(error)
-        return res.status(500).json({message : "an error occured!"});
+        return res.status(500).json({message : "an error occured at logout function"});
+    }
+}
+
+const getRequests = async (req, res) => {
+    try{
+        const userInfo = jwtDecode(req.cookies['jwt'])
+        
+        const results = await manageUsersAndWarehousesSchema.find({
+            status:'pending',
+            warehouseOwnerEmail: userInfo.user.email
+        })
+
+        return res.send(results).status(200)
+    }
+    catch(err){
+        console.log(`error at getRequest function ${err.message}`)
+    }
+}
+
+const acceptDeclineRequest = async (req, res) => {
+    try{
+        // const decodedInfo = jwtDecode(req.cookies['jwt'])
+        const requestId = req.body.requestId
+        let requestStatus =  req.body.status
+        const warehouseId = req.body.warehouseId
+        const requestedDate = req.body.requestedDate
+
+
+        if(requestStatus == 'accepted'){
+            await extensions.userRentAWarehouseInSpecificDate(warehouseId,requestedDate ).then( async (response) => {
+                console.log(response)
+                if(response){ requestStatus = 'accepted'}else{requestStatus = 'rejected'}
+
+                await manageUsersAndWarehousesSchema.updateOne({
+                    _id: requestId
+                },{
+                    $set:{
+                        status: requestStatus
+                    }
+                }
+                )
+            })
+        }
+        console.log('done')
+        return res.send('updated').status(200)
+        
+    }
+    catch(err){
+        console.log(`error at acceptDeclineRequest => ${err.message}`)
     }
 }
 
 // POST request to add a warehouseowner
 const addWarehouseOwner = async (req, res) => {
+
     try{
-        const  warehouseOwner=req.body;
+        const  warehouseOwner = req.body;
         const result = await warehouseOwnerModel.create(warehouseOwner);
         if(result){
             res.status(201).json({message:"added WareHouseOwner"})
@@ -102,12 +154,12 @@ const addWarehouseOwner = async (req, res) => {
             res.status(409).json({message:"failed to add WareHouseOwner"})
         }
     
-console.log(req.body)
     }catch(error){
-        res.status(500).json({message:"internal error"})
+        res.status(500).json({message:"error at addWarehouseOwner function"})
     
     }
 }
+
 // GET request for a list of all warehouseOwner
 const getWarehouseOwner = async (req, res) => {
     try{
@@ -144,4 +196,13 @@ const deleteWarehouseOwner = async (req, res) => {warehouseOwnerModel.findByIdAn
 
 
 
-module.exports = {register,login,logout,addWarehouseOwner,getWarehouseOwner,deleteWarehouseOwner}
+module.exports = {
+    register,
+    login,
+    logout,
+    getRequests,
+    addWarehouseOwner,
+    getWarehouseOwner,
+    acceptDeclineRequest,
+    deleteWarehouseOwner
+}

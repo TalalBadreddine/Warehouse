@@ -23,6 +23,9 @@ const manageUsersAndWarehousesSchema = new mongoose.Schema({
     warehouseOwnerName:{
         type: String
     },
+    warehouseOwnerEmail:{
+        type: String
+    },
     status:{
         type: String,
         //['pending','accepted','rejected']
