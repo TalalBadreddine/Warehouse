@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const warehouseOwnerModel = require('../models/WarehouseOwner');
 const jwt = require('jsonwebtoken');
+const warehouseSchema=require('../models/warehouseSchema');
 const crypto = require('crypto');
 const dotenv = require('dotenv')
 const jwtDecode = require('jwt-decode');
@@ -15,7 +16,6 @@ const {
     encodeAs,
     jwtSecret
 } = process.env
-
 
 
 //Register
@@ -142,16 +142,17 @@ const acceptDeclineRequest = async (req, res) => {
 }
 
 // POST request to add a warehouseowner
+
 const addWarehouseOwner = async (req, res) => {
 
     try{
         const  warehouseOwner = req.body;
         const result = await warehouseOwnerModel.create(warehouseOwner);
         if(result){
-            res.status(201).json({message:"added WareHouseOwner"})
+            res.status(201).json({message:"added WareHouse"})
            
         }else{
-            res.status(409).json({message:"failed to add WareHouseOwner"})
+            res.status(409).json({message:"failed to add WareHouse"})
         }
     
     }catch(error){
@@ -161,37 +162,34 @@ const addWarehouseOwner = async (req, res) => {
 }
 
 // GET request for a list of all warehouseOwner
-const getWarehouseOwner = async (req, res) => {
+const getWarehouses = async (req, res) => {
     try{
-        const Email=req.query.Email
-        const Password=req.query.Password;
-        
-        const filters ={}
+     const warehouse= await warehouseSchema.find();
+     if (warehouse){
+          res.status(200).json(warehouse);
+     }}
+ catch(error){
+     res.status(500).json({message : "internal error with function get all warehouses"})
 
-        Email && (filters.Email=Email)
-        Password && (filters.Password=Password)
-        
-    const warehouseOwner= await warehouseOwnerModel.find(filters);
-    if (warehouseOwner){
-        res.status(200).json(warehouseOwner);
-    }}
-    catch(error){
-        res.status(500).json({message : "internal error"})
+ }
+}
 
-    }
-    }
 
 
     // DELETE request to delete a WarehouseOwner
-const deleteWarehouseOwner = async (req, res) => {warehouseOwnerModel.findByIdAndRemove(req.params.id, (err, data) => {
-    if(!err) {
-        // res.send(data);
-        res.status(200).json({code: 200, message: 'WareHouseOwner deleted', deleteWarehouseOwner: data})
-    } else {
-        console.log(err);
+    const  deleteWarehouse = async(req, res) => {
+      
+          try{
+              const _Id= req.body._Id
+              await warehouseSchema.findOneAndDelete({_Id:_Id})
+              res.status(200).json({message : "warehouse deleted"})
+        }
+        catch(error){
+            res.status(500).json({message :"internal error with fucntion delete warehouse"})
+    
+        }
+      
     }
-});
-}
 
 
 

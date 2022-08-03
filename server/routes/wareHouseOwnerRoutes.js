@@ -17,6 +17,7 @@ warehouseOwnerRouter.post('/login',login)
 warehouseOwnerRouter.get('/logout', validateWarehouseOwner,logout)
 
 // POST request to add a warehouseOwner
+
 warehouseOwnerRouter.post('/add', validateWarehouseOwner, addWarehouseOwner);
 
 // GET request for a list of all warehouseOwner
