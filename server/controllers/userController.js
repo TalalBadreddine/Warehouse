@@ -116,6 +116,7 @@ const getAllUserRequests = async (req, res) => {
 const requestRentWarehouse = async (req, res) => {
 
     const warehouseInfo = req.body.warehouseInfo
+    const warehouseOwnerDetails = req.body.warehouseOwner
     const rentingDate = req.body.rentingDate
     const totalPrice = req.body.totalPrice
     const decodedInfo = jwtDecode(req.cookies['jwt'])
@@ -123,8 +124,9 @@ const requestRentWarehouse = async (req, res) => {
     // const warehouse = await warehouseSchema.findOne({
     //     _id: warehouseInfo.id
     // })
+    // console.log(extensions.checkIfTimeIsAvailbleWithWarehouseTime())
 
-    extensions.checkIfTimeIsAvailbleWithWarehouseTime(warehouseInfo.datesAvailable , rentingDate).then(async (results) => {
+    await extensions.checkIfTimeIsAvailbleWithWarehouseTime(warehouseInfo.datesAvailable , rentingDate).then(async (results) => {
 
         if(results){
             
@@ -136,21 +138,20 @@ const requestRentWarehouse = async (req, res) => {
                 endRentDate: rentingDate[1],
                 price: parseInt(totalPrice),
                 warehouseName: warehouseInfo.name,
-                warehouseOwnerName: wareHouseInfo.ownerName
+                warehouseOwnerName: warehouseOwnerDetails.ownerName,
+                warehouseOwnerEmail: warehouseOwnerDetails.email
 
             })
 
             await relation.save()
 
-            return res.status(200)
+            return res.send('rent').status(200)
 
         }
 
         return res.send('not availble').status(410)
 
     })
-
-    return res.send('rentWarehouse')
 }
 
 module.exports = {

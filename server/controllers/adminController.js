@@ -24,7 +24,7 @@ const addCustomer = async(req, res) => {
         
         const user=req.body;
         const alreadyExist = await usersSchema.find({email: user.email})
-        if(alreadyExist.length >=1){
+        if(alreadyExist.length >= 1){
             return res.status(409).json({message:'User already exists'})
         }
         const result = await usersSchema.create(user);

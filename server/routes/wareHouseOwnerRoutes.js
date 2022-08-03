@@ -1,4 +1,4 @@
-const {register,login,logout,addWarehouseOwner, getWarehouseOwner, deleteWarehouseOwner} = require('../controllers/wareHouseOwnerController')
+const {register,login,logout,addWarehouseOwner, getWarehouseOwner, acceptDeclineRequest, deleteWarehouseOwner, getRequests} = require('../controllers/wareHouseOwnerController')
 const Router = require('express').Router;
 
 // initialize express router
@@ -22,5 +22,9 @@ warehouseOwnerRouter.get('/', getWarehouseOwner);
 
 // DELETE request to delete a warehouseOwner
 warehouseOwnerRouter.delete('/:id/delete', deleteWarehouseOwner);
+
+warehouseOwnerRouter.get('/requests', getRequests)
+
+warehouseOwnerRouter.post('/acceptDeclineRequest', acceptDeclineRequest )
 
 module.exports = warehouseOwnerRouter;
