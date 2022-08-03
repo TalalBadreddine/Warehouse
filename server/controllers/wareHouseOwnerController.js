@@ -143,11 +143,11 @@ const acceptDeclineRequest = async (req, res) => {
 
 // POST request to add a warehouseowner
 
-const addWarehouseOwner = async (req, res) => {
+const addWarehouses = async (req, res) => {
 
     try{
-        const  warehouseOwner = req.body;
-        const result = await warehouseOwnerModel.create(warehouseOwner);
+        const  warehouse = req.body;
+        const result = await warehouseSchema.create(warehouse);
         if(result){
             res.status(201).json({message:"added WareHouse"})
            
@@ -156,7 +156,7 @@ const addWarehouseOwner = async (req, res) => {
         }
     
     }catch(error){
-        res.status(500).json({message:"error at addWarehouseOwner function"})
+        res.status(500).json({message:"error at addWarehouse function"})
     
     }
 }
@@ -199,8 +199,8 @@ module.exports = {
     login,
     logout,
     getRequests,
-    addWarehouseOwner,
-    getWarehouseOwner,
+    addWarehouses,
+    getWarehouses,
     acceptDeclineRequest,
-    deleteWarehouseOwner
+    deleteWarehouse
 }
