@@ -228,7 +228,7 @@ const acceptRejectWarehouseRequest = async (req, res) => {
         const status = req.body.status
 
         await warehouseSchema.updateOne( {_id:warehouseId} , { $set: {status: status} } ) 
-        return res.status(200)
+        return res.status(200).json({message : "warehouse status updated"})
 
     } catch(error){
         res.status(500).json({message : "internal error with function acceptRejectWarehouseRequest"})
