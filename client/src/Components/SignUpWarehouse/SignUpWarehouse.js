@@ -5,7 +5,7 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Col from 'react-bootstrap/Col';
 import {useState} from 'react';
-import { registerWarehouseOwner } from '../../../Services/registerWarehouseOwner';
+import { registerWarehouseOwner } from '../../Services/registerWarehouseOwner';
 
 function SignUpWarehouse() {
   

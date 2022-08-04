@@ -5,8 +5,8 @@ import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import SignUpWarehouse from '../SignUpWarehouse/SignUpWarehouse';
-import SignUpUser from '../SignUpUser/SignUpUser';
+import SignUpWarehouse from '../../../Components/SignUpWarehouse/SignUpWarehouse'
+import SignUpUser from '../../../Components/SignUpUser/SignUpUser';
 
 function SignIn() {
 
