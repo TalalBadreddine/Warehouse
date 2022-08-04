@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.27.2",
     "cookie-parser": "^1.4.6",
     "crypto": "^1.0.1",
     "dotenv": "^16.0.1",
@@ -16,6 +17,8 @@
     "jsonwebtoken": "^8.5.1",
     "jwt-decode": "^3.1.2",
     "mongoose": "^6.5.0",
-    "nodemon": "^2.0.19"
+    "node-geocoder": "^4.2.0",
+    "nodemon": "^2.0.19",
+    "react-geocode": "^0.2.3"
   }
 }

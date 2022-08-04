@@ -11,8 +11,7 @@ import Button from 'react-bootstrap/Button'
 
 import ac from './air-conditioner.png'
 
-const WarehouseCard = () => {
-
+const WarehouseCard = (props) => {
 
 
     return (
@@ -35,7 +34,7 @@ const WarehouseCard = () => {
             </div>
 
             <div className="ms-sm-2 col-sm-8 p-sm-2 p-1 col-12 ">
-                <h1 className={styles.bigTypo}>Warehouse Name, Country   </h1>
+                <h1 className={styles.bigTypo}>{props.info.name}'s warehouse   </h1>
                 <h1 className={styles.smallTypo} style={{ color: 'gray' }}>address: Beirut, Lebanon </h1>
                 <div className='mt-3'>
 
