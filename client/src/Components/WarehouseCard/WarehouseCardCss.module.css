@@ -1,0 +1,19 @@
+.bigTypo{
+    font-size: 2vw;
+}
+
+.smallTypo{
+    font-size: 1vw;
+}
+
+
+@media screen and (max-width: 800px) {
+    
+    .bigTypo{
+        font-size: 3vw;
+    }
+
+    .smallTypo{
+        font-size: 2vw;
+    }
+}
