@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react"
 import WarehouseCard from "../WarehouseCard/WarehouseCard"
+import axios from 'axios'
 
 
 const MapWithAllWarehouses = () => {
     const [warehousesInfo, setWarehousesInfo] = useState()
 
     useEffect(() => {
-
+       axios.get('/visitor/getWarehouses').then((results) => {
+        console.log(results)
+       })
         
         
     },[])

@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const warehouseOwnerRouter = require('../routes/wareHouseOwnerRoutes')
 const {userRouter} = require('../routes/userRoutes')
 const {adminRouter} = require('../routes/adminRoutes')
+const {visitorRouter} = require('../routes/visitorRoutes')
 
 
 dotenv.config({path: __dirname + '/../.env'})
@@ -39,6 +40,8 @@ async function startServer(){
         // Insert Routest here
 
         app.use('/user',  userRouter )
+
+        app.use('/visitor', visitorRouter)
 
         app.use('/admin',  adminRouter)
 

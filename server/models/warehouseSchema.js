@@ -49,8 +49,6 @@ const warehouseSchema = new mongoose.Schema({
         default: 'pending'
 
     }
-
-    
     
 })
 

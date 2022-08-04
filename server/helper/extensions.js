@@ -1,6 +1,6 @@
 const warehouseSchema = require('../models/warehouseSchema')
 const userSchema = require('../models/usersSchema')
-const WarehouseOwner = require('../models/WarehouseOwner')
+const WarehouseOwnerSchema = require('../models/WarehouseOwner')
 
 
 // TODO: test it

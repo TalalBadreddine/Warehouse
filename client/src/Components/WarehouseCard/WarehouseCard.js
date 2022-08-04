@@ -13,11 +13,6 @@ import ac from './air-conditioner.png'
 
 const WarehouseCard = () => {
 
-    const renderTooltip = (props) => (
-        <Tooltip id="button-tooltip" {...props}>
-            Simple tooltip
-        </Tooltip>
-    );
 
 
     return (
@@ -28,7 +23,7 @@ const WarehouseCard = () => {
                     <Carousel.Item>
 
                         <img
-                            // className='h-90'
+                            className='h-90'
                             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRp5RIT9h5dgyVUm3bEvdZqxsgeL10flNzipnGRwuUI6pdjsYpVFZAi37IBniNaJ_2Go0g&usqp=CAU"
                             alt="First slide"
                         // width={'200px'}
