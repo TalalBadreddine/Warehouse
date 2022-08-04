@@ -1,8 +1,14 @@
 import React from 'react';
 import { CDBFooter,  CDBBox,  } from 'cdbreact';
+import { Outlet } from 'react-router-dom';
 
 export const Footer = () => {
   return (
+    
+    <div>
+    <Outlet></Outlet>
+    <div>
+
     <CDBFooter className="shadow" style={{color: "white", backgroundColor:"#767B78", position:"absolute" ,bottom:0, left:0, right:0}} >
       <CDBBox display="flex" flex="column" className="mx-auto py-2" style={{ width: '90%' }}>
 
@@ -54,6 +60,8 @@ export const Footer = () => {
         </CDBBox>
       </CDBBox>
     </CDBFooter>
+    </div>
+    </div>
   );
 };
 export default Footer;

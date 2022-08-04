@@ -1,32 +1,35 @@
-import Home from "./Routes/Visitor/Home/Home";
-import {BrowserRouter,Routes,Route} from "react-router-dom"
+import Home from "./Routes/Visitor/Landing/Landing";
+import { Routes, Route } from "react-router-dom"
 import SignIn from "./Routes/Visitor/SignIn/SignIn";
+import Navigationbar from "./Components/NavigationBar/NavigationBar";
+import Landing from "./Routes/Visitor/Landing/Landing";
+import Footer from "./Components/Footer/Footer";
 
 
 function App() {
   return (
     <div>
+      <Routes>
+        
+      <Route path="" element={<Footer></Footer>}>
 
-      <SignIn/>
+
+       {/* VISITOR PATH */}
+      <Route path='/' element={<Navigationbar></Navigationbar>}> 
       
-    
-     <BrowserRouter>
-     <Routes>
-     <Route path="/Home" element= {<Home/>} />
-     {/* <Route path="" element= {} />
-     <Route path="" element= {} /> */}
+          <Route path='' element={<Landing></Landing>}></Route>
+          <Route path='login' element={<SignIn></SignIn>}></Route>
+
+      </Route>
 
 
 
-     </Routes>
-     
-     
-     
-     
-     </BrowserRouter>
+
+      </Route>
+
+      </Routes>
     </div>
   )
 }
 
 export default App;
- 

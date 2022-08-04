@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import { Outlet, Link } from 'react-router-dom';
 
 
-function VisitorNavbar() {
+function Navigationbar() {
+  const [currentPage, setCurrentPage] = useState(-1)
+
   return (
    <>
   
@@ -19,18 +22,24 @@ function VisitorNavbar() {
             className="justify-content-end "
             style={{ width : "100%"}}
             navbarScroll
-            
           >
-            <Nav.Link href="/Home" style={{ color: "black" }}> Home</Nav.Link>
-            <Nav.Link href="#List your space" style={{ color: "black" }}> List your space</Nav.Link>
+
+            <Nav.Link> <Link to={''} style={{ color: "black", textDecoration: 'none' }} className={currentPage == 0 && 'font-weight-bold bg-primary'} > Home </Link> </Nav.Link>
+            <Nav.Link> <Link to={'/ListSpace'} style={{ color: "black", textDecoration: 'none' }} className={currentPage == 1 && 'font-weight-bold bg-primary'} > Find a space </Link> </Nav.Link>
+            <Nav.Link> <Link to={'/Search'} style={{ color: "black", textDecoration: 'none' }} className={currentPage == 2 && 'font-weight-bold bg-primary'} > About us </Link> </Nav.Link>
+            <Nav.Link> <Link to={'/login'} style={{ color: "black", textDecoration: 'none' }} className={currentPage == 3 && 'font-weight-bold bg-primary'} > Sign-in </Link> </Nav.Link>
+
+            {/* <Nav.Link href="#List your space" style={{ color: "black" }}> List your space</Nav.Link>
             <Nav.Link href="#Find a space" style={{ color: "black" }}> Find a space</Nav.Link>
-             <Nav.Link href="#About Us" style={{ color: "black" }}> About Us</Nav.Link> 
-              <Nav.Link href="#Sign-in" style={{ color: "black" }}> Sign-in</Nav.Link>
+             <Nav.Link href="/About Us" style={{ color: "black" }}> About Us</Nav.Link> 
+              <Nav.Link href="/login" style={{ color: "black" }} className={currentPage == 4 && 'font-weight-bold bg-primary'} > Sign-in</Nav.Link> */}
           </Nav>
       
         </Navbar.Collapse>
       </Container>
     </Navbar>
+
+    <Outlet></Outlet>
      {/* <Navbar bg="white" variant="white" >
        
         <Container>
@@ -59,4 +68,4 @@ function VisitorNavbar() {
   )
 }
 
-export default VisitorNavbar
+export default Navigationbar

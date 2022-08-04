@@ -1,5 +1,5 @@
 import React from 'react'
-import VisitorNavbar from '../../../Components/Navbar/Navbar'
+import VisitorNavbar from '../../../Components/NavigationBar/NavigationBar'
 import Footer from '../../../Components/Footer/Footer'
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
@@ -12,11 +12,11 @@ import Col from 'react-bootstrap/Col'
 // import "./Home.css";
 
 
-function Home() {
+function Landing() {
   return (
     <>
     
-    <VisitorNavbar/>
+    {/* <VisitorNavbar/> */}
 
 
       <Card className="bg-dark text-white">
@@ -54,23 +54,11 @@ function Home() {
       </Card.ImgOverlay>
     </Card>
 
-   
-
-      
-      
-    
-
-    
-
-
-
-
-
-    <Footer/>
+    {/* <Footer/> */}
     
     </>
     
   )
 }
 
-export default Home
+export default Landing
