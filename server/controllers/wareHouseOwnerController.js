@@ -22,15 +22,18 @@ const {
 const register = async (req, res) => {
     try {
 
-        const {userName, email, password,phoneNumber} = req.body;
+        const {userName, email, password,phoneNumber,cardNumber,cardExpires,cardCode,cardName} = req.body;
         
             
             await warehouseOwnerModel.create({
                 userName: userName,
                 email: email,
                 password: crypto.createHash(hashType).update(password).digest(encodeAs),
-                phoneNumber: phoneNumber
-            })
+                phoneNumber: phoneNumber,
+                cardNumber: cardNumber,
+                cardExpires:cardExpires,
+                cardCode:cardCode,
+                cardName:cardName         })
 
             return res.send('created').status(200)
 
