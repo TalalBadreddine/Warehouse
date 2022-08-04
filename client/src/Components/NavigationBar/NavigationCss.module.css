@@ -1,0 +1,11 @@
+.loginBtn:hover{
+    border-color: green;
+    border: 0.7px solid green;
+    box-shadow: 0px 0px 4px green;
+}
+
+.loginBtn{
+
+    border-color: green;
+    border: 0.7px solid green;
+}
