@@ -17,7 +17,7 @@ const {
 } = process.env
 
 async function connectDB(){
-    const uri = `mongodb://${dbHost}:${dbPort}/${dbName}`
+    const uri = `mongodb+srv://Job:Job123@cluster0.xnktc2x.mongodb.net/${dbName}`
     await mongoose.connect(uri)
     console.log("Connected to db!")
 }
@@ -28,7 +28,11 @@ async function startServer(){
 
         // intialize express app
         const app = express()
+        var cors = require('cors')
 
+ 
+         app.use(cors())
+         
         app.use(express.json())
         
         app.use(express.json())

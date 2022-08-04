@@ -23,6 +23,23 @@ const warehouseOwnerSchema = new mongoose.Schema({
         type:Number
         
     },
+    cardNumber:{
+        type:String
+
+    },
+    cardExpires:{
+        type:String
+
+    },
+    cardCode:{
+        type:String
+
+    },
+    cardName:{
+        type:String
+        
+    },
+
     myWarehouses:
     {
         type: [String]
