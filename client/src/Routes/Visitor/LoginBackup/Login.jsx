@@ -28,6 +28,7 @@ export default function (props) {
               Submit
             </button>
           </div>
+          
           <p className="forgot-password text-right mt-2">
             Create an <a href="#" style={{ color: '#54d494' }} >account?</a>
           </p>
