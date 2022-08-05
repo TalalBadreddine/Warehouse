@@ -1,15 +1,14 @@
-import MapWithWarehousesOnTheSide from "./Components/MapWithWareHousesOnTheSide/MapWithWarehousesOnTheSide";
 import './index.css'
 import "../node_modules/react-bootstrap/dist/react-bootstrap.js"
 import "../node_modules/bootstrap/dist/css/bootstrap.css"
-import MapWithAllWarehouses from "./Components/MapWithWareHousesOnTheSide/MapWithAllWarehouses";
+import SearchWarehouse from "./Routes/Visitor/SearchWarehouse/SearchWarehouse";
 
 
 function App() {
   return (
     <div>
-      
-      <MapWithAllWarehouses></MapWithAllWarehouses>
+
+      <SearchWarehouse></SearchWarehouse>    
     </div>
   );
 }

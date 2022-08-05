@@ -4,16 +4,32 @@ const axios = require('axios')
 
 
 const getWarehouses = async (req, res) => {
-    try{
-        // const results = await warehouseSchema.find()
+    try {
+        // const currentWarehouse = req.body
+        // const { name, space, location, datesAvailable, type, pricePerDay, description, isFireSafe, isSecurityCameras, isAirConditioning, isWorkers } = currentWarehouse
 
-        const results = await axios.get('https://api.opencagedata.com/geocode/v1/json?q=33.377190+35.483590&key=6641773533da4005b39f03770e9c5b4c')
+        // let warehouse = new warehouseSchema({
+        //     name: name,
+        //     space: space,
+        //     location: location,
+        //     datesAvailable: datesAvailable,
+        //     type: type,
+        //     pricePerDay: pricePerDay,
+        //     description: description,
+        //     isFireSafe: Boolean(isFireSafe),
+        //     isSecurityCameras: Boolean(isSecurityCameras),
+        //     isAirConditioning: Boolean(isAirConditioning),
+        //     isWorkers: Boolean(isWorkers)
 
-        console.log(results.data)
-        return res.send(results.data).status(200)
+        // })
+        // await warehouse.save()
+        // return res.send('added')
+        
+        const results = await warehouseSchema.find()
+        return res.send(results).status(200)
 
     }
-    catch(err){
+    catch (err) {
         console.log(`error at getWareHousesForUsers => ${err.message}`)
     }
 

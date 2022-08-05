@@ -25,16 +25,16 @@ const WarehousesMap = (props) => {
     const mapRef = useRef();
 
     const showLocation = (x, y) => {
-        // mapRef.current.setView([x, y], 17, {
+        // mapRef.current.setView([x, y], 16, {
         //     duration: 2,
         //     animate: true
         // })
-        mapRef.current.flyTo([x, y], 17, {
-            duration: 2,
+        mapRef.current.flyTo([x, y], 16, {
+            duration: 3,
             animate: true
         })
     };
-    props.flyToMap && showLocation(parseInt(props.flyToMap[0]), parseInt(props.flyToMap[1]))
+    props.flyToMap && showLocation(parseFloat(props.flyToMap[0]), parseFloat(props.flyToMap[1]))
 
     const getMyLocation = () => {
 
@@ -72,9 +72,8 @@ const WarehousesMap = (props) => {
                         </Marker>}
 
                     {props.info &&  props.info.map((warehouse) => {
-                        console.log(warehouse.location[0])
                         return (
-                            <Marker position={[parseInt(warehouse.location[0]), parseInt(warehouse.location[1])]} icon={markerIcon}>
+                            <Marker position={[parseFloat(warehouse.location[0]), parseFloat(warehouse.location[1])]} icon={markerIcon}>
                                 <Popup>
                                     <div>
                                

@@ -15,7 +15,7 @@ const WarehouseCard = (props) => {
 
 
     return (
-        <div className="col-5 m-2 p-2 d-sm-flex border rounded border-dark d-block col-sm-10 ">
+        <div className="col-5 col-sm-12 m-2 p-2 d-sm-flex border rounded border-dark d-block  ">
 
             <div className='col-sm-4 '>
                 <Carousel>
@@ -35,7 +35,7 @@ const WarehouseCard = (props) => {
 
             <div className="ms-sm-2 col-sm-8 p-sm-2 p-1 col-12 ">
                 <h1 className={styles.bigTypo}>{props.info.name}'s warehouse   </h1>
-                <h1 className={styles.smallTypo} style={{ color: 'gray' }}>address: Beirut, Lebanon </h1>
+                <h1 className={styles.smallTypo} style={{ color: 'gray' }}>address: {props.info.address}</h1>
                 <div className='mt-3'>
 
                     <BiCctv style={{ color: 'black' }} className={`font-wight-700 m-2 ${styles.cctvIcon}`} size={27} ></BiCctv>
