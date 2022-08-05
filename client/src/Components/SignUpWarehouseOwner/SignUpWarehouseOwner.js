@@ -7,6 +7,7 @@ import Col from 'react-bootstrap/Col';
 import {useState} from 'react';
 import { registerWarehouseOwner } from '../../Services/registerWarehouseOwner';
 
+
 function SignUpWarehouse() {
   
 const [warehouseOwner, setWarehouseOwner] = useState({
@@ -22,6 +23,7 @@ const [warehouseOwner, setWarehouseOwner] = useState({
     const handleregistration=(e)=>{
         registerWarehouseOwner(warehouseOwner);
       }
+    
   return (
     <div>  <Row > 
          <Row className='justify-content-center mb-2'><Form.Label className='justify-content-center'>User Information</Form.Label></Row>
@@ -34,6 +36,7 @@ const [warehouseOwner, setWarehouseOwner] = useState({
       </Col> 
       <Col className='col-6'>
       <InputGroup className="mb-2">
+      
        <Form.Control value={warehouseOwner.email} 
     onChange={(e) => setWarehouseOwner({...warehouseOwner, email: e.target.value })} className="mb-2" id="inlineFormInput" placeholder="email" />
       </InputGroup>

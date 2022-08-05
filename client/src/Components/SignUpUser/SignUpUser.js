@@ -26,7 +26,7 @@ function SignUpUser() {
             Username 
           </Form.Label> 
           <InputGroup className="mb-2"> 
-            <InputGroup.Text>@</InputGroup.Text> 
+             
             <Form.Control id="inlineFormInputGroup" placeholder="email" /> 
           </InputGroup> 
         </Row> 
