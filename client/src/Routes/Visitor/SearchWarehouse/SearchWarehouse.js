@@ -10,16 +10,21 @@ const SearchWarehouse = () => {
 
     const [allWarehouses, setAllWarehouses] = useState()
     const [filtredWarehousesInfo, setFiltredWarehousesInfo] = useState()
+    const [myLocation, setMylocation] = useState()
     const [flyToMap, setFlyToMap] = useState(null)
     const [searchValue, setSearchValue] = useState(null)
     const [defaultSettings, setDefaultSettings] = useState({
         priceMin: 0,
-        priceMax: 2000
+        priceMax: 2000,
+        spaceMin: 0,
+        spaceMax: 2000
     })
 
     const [filterSettings, setFilterSettings] = useState({
         priceMin: 0,
-        priceMax: 2000
+        priceMax: Infinity,
+        spaceMin: 0,
+        spaceMax: Infinity
     })
 
 
@@ -29,11 +34,19 @@ const SearchWarehouse = () => {
             let maxPrice = -Infinity
             let minPrice = Infinity
 
-            for(let i = 0 ; i < data.length ; i++){
+            let maxSpace = -Infinity
+            let minSpace = Infinity
+
+
+            for (let i = 0; i < data.length; i++) {
                 maxPrice = Math.max(maxPrice, data[i].pricePerDay)
                 minPrice = Math.min(minPrice, data[i].pricePerDay)
+
+                maxSpace = Math.max(maxSpace, parseInt(data[i].space))
+                minSpace = Math.min(minSpace, parseInt(data[i].space))
             }
-            setDefaultSettings({...defaultSettings, ['priceMin']: minPrice, ['priceMax']: maxPrice})
+
+            setDefaultSettings({ ...defaultSettings, ['priceMin']: minPrice, ['priceMax']: maxPrice, ['spaceMin']: minSpace, ['spaceMax']: maxSpace })
 
             setAllWarehouses(data)
             setFiltredWarehousesInfo(data)
@@ -45,47 +58,92 @@ const SearchWarehouse = () => {
         let value = e.target.value
         setSearchValue(value)
 
-        if (value.split() == '') {
-            setFiltredWarehousesInfo(allWarehouses)
-            return
-        }
         let warehouses = allWarehouses.filter((warehouse) => {
-            return warehouse.name.includes(value) &&
-             parseInt(warehouse.pricePerDay) >= filterSettings.priceMin &&
-              parseInt(warehouse.pricePerDay) <= filterSettings.priceMax
+            return (value ? warehouse.name.includes(value) : true) &&
+                parseInt(warehouse.pricePerDay) >= filterSettings.priceMin &&
+                parseInt(warehouse.pricePerDay) <= filterSettings.priceMax &&
+                parseInt(warehouse.space) <= filterSettings.spaceMax &&
+                parseInt(warehouse.space) >= filterSettings.spaceMin
         })
 
         setFiltredWarehousesInfo(warehouses)
     }
-    
 
-    const priceChange = (min, max) =>{
-        setFilterSettings({...filterSettings, ['priceMin']: min, ['priceMax']: max})
+
+    const priceChange = (min, max) => {
+        setFilterSettings({ ...filterSettings, ['priceMin']: min, ['priceMax']: max })
+    }
+
+    const spaceChange = (min, max) => {
+        setFilterSettings({ ...filterSettings, ['spaceMin']: min, ['spaceMax']: max })
     }
 
     useEffect(() => {
-        if(allWarehouses == null || allWarehouses.length == 0)return
+        if (allWarehouses == null || allWarehouses.length == 0) return
         let value = searchValue
         setSearchValue(value)
 
-
         let warehouses = allWarehouses.filter((warehouse) => {
-            return  (value ? warehouse.name.includes(value) : true) &&
-             parseInt(warehouse.pricePerDay) >= filterSettings.priceMin &&
-              parseInt(warehouse.pricePerDay) <= filterSettings.priceMax
+            return (value ? warehouse.name.includes(value) : true) &&
+                parseInt(warehouse.pricePerDay) >= filterSettings.priceMin &&
+                parseInt(warehouse.pricePerDay) <= filterSettings.priceMax &&
+                parseInt(warehouse.space) <= filterSettings.spaceMax &&
+                parseInt(warehouse.space) >= filterSettings.spaceMin
         })
 
         setFiltredWarehousesInfo(warehouses)
 
     }, [filterSettings])
 
+    const sortByAction = (test) => {
+        let sortType = test
+        let sortedArr = []
+
+        switch (sortType) {
+            // case 'location':
+            //     setFiltredWarehousesInfo(filtredWarehousesInfo.sort((a,b) => {
+            //         a
+            //     }))
+
+            case 'lowPrice':
+                sortedArr = filtredWarehousesInfo.sort((a, b) => {
+                    return parseInt(a.pricePerDay) - parseInt(b.pricePerDay)
+                })
+                break;
+
+            case 'highPrice':
+                sortedArr = filtredWarehousesInfo.sort((a, b) => {
+                    return parseInt(b.pricePerDay) - parseInt(a.pricePerDay)
+                })
+                break;
+
+            case 'bigSpace':
+                sortedArr = filtredWarehousesInfo.sort((a, b) => {
+                    return parseInt(b.space) - parseInt(a.space)
+                })
+                break;
+
+            case 'smallSpace':
+                sortedArr = filtredWarehousesInfo.sort((a, b) => {
+                    return parseInt(a.space) - parseInt(b.space)
+                })
+                break;
+
+
+
+        }
+
+        setFiltredWarehousesInfo([...sortedArr])
+
+    }
+
     return (
         <div className="p-2">
 
             <div className="col-12 mb-2">
-                <WarehousesSearchFilters data={defaultSettings} priceChange={priceChange}></WarehousesSearchFilters>
+                <WarehousesSearchFilters data={defaultSettings} priceChange={priceChange} spaceChange={spaceChange} sortByAction={sortByAction}></WarehousesSearchFilters>
             </div>
-            
+
             <div className="col-6">
                 <SearchBar searchValue={searchValue} action={onSearch}></SearchBar>
             </div>
@@ -116,7 +174,7 @@ const SearchWarehouse = () => {
                 </div>
 
                 <div className={`col-6 position-fixed ${styles.mapContainer}`}>
-                    <WarehousesMap info={filtredWarehousesInfo} flyToMap={flyToMap} ></WarehousesMap>
+                    <WarehousesMap info={filtredWarehousesInfo} flyToMap={flyToMap} setMylocation={setMylocation} ></WarehousesMap>
                 </div>
 
 

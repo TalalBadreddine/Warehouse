@@ -24,6 +24,10 @@ const WarehousesMap = (props) => {
     const location = useGeoLocation()
     const mapRef = useRef();
 
+    useEffect(() => {
+        props.setMylocation(location)
+    },[location])
+
     const showLocation = (x, y) => {
         // mapRef.current.setView([x, y], 16, {
         //     duration: 2,

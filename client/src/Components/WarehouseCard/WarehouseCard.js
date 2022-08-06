@@ -35,7 +35,7 @@ const WarehouseCard = (props) => {
 
             <div className="ms-sm-2 col-sm-8 p-sm-2 p-1 col-12 ">
                 <h1 className={styles.bigTypo}>{props.info.name}'s warehouse   </h1>
-                <h1 className={styles.smallTypo} style={{ color: 'gray' }}>address: {props.info.address}</h1>
+                <h1 className={styles.smallTypo} style={{ color: 'gray' }}>address:{props.info.address[0][1]}, {props.info.address[0][0]}</h1>
                 <div className='mt-3'>
 
                     <BiCctv style={{ color: 'black' }} className={`font-wight-700 m-2 ${styles.cctvIcon}`} size={27} ></BiCctv>
