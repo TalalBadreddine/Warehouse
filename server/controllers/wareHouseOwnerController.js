@@ -150,6 +150,8 @@ const addWarehouses = async (req, res) => {
 
     try{
         const  warehouse = req.body;
+        console.log(warehouse);
+        console.log(req.data);
         const result = await warehouseSchema.create(warehouse);
         if(result){
             res.status(201).json({message:"added WareHouse"})

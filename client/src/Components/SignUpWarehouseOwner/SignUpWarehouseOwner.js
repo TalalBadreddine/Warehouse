@@ -76,7 +76,7 @@ const [warehouseOwner, setWarehouseOwner] = useState({
         <Col className='col-6'>
         <InputGroup>
         <Form.Control value={warehouseOwner.cardExpires} 
-    onChange={(e) => setWarehouseOwner({...warehouseOwner, cardExpires: e.target.value })} className="mb-2" id="inlineFormInput" type='date'/>
+    onChange={(e) => setWarehouseOwner({...warehouseOwner, cardExpires: e.target.value })} className="mb-2" id="inlineFormInput" type='month'/>
     </InputGroup>
     </Col>
     </Row>
