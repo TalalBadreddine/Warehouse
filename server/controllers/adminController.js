@@ -244,7 +244,7 @@ const adminLogin = async (req, res) => {
             jwt.sign({user: userInfo, role: 'admin'}, jwtSecret, async (err, token) => {
 
                 res.cookie('jwt', token, { httpOnly: true, maxAge: 3 * 24 * 60 * 60 * 1000 })
-                return res.status(200).json(token)
+                return res.status(200).send('admin')
             })
     
 

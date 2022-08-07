@@ -1,7 +1,33 @@
 import css from './login.css'
-import React from "react"
+import React,{useState} from 'react'
+import axios from 'axios';
 
-export default function (props) {
+
+const Login = ({setLoginUser}) => {
+
+    const [user,setUser] = useState({
+        email:"",
+       
+        password: ""
+    })
+
+    const login =()=>{
+        axios.post('/admin/login',{
+          
+            email:user.email,
+            password: user.password
+          
+        })
+        .then(res=>{
+          console.log(res.status)
+          if (res.data == 'admin' ){
+            alert('go to home page')
+          }
+          else{
+            alert ("can't go anywhere")
+          }
+        })
+    }
   return (
     <div className="Auth-form-container">
       <form className="Auth-form">
@@ -13,27 +39,33 @@ export default function (props) {
               type="email"
               className="form-control mt-1"
               placeholder="Enter email"
+              value={user.email}
+              onChange={(e)=>{
+                setUser({...user,['email']: e.target.value})
+              }}
             />
           </div>
           <div className="form-group mt-3">
             <label>Password</label>
-            <input
-              type="password"
+            <input type="password"
               className="form-control mt-1"
               placeholder="Enter password"
-            />
+              value={user.password}
+              onChange={(e)=>{
+                setUser({...user,['password']: e.target.value})
+              }}
+             />
           </div>
           <div className="d-grid gap-2 mt-3">
-            <button style={{ backgroundColor: '#54d494', borderColor: '#54d494' }} type="submit" className="btn btn-primary">
+            <button style={{ backgroundColor: '#54d494', borderColor: '#54d494' }} type="submit" className="btn btn-primary" onClick={login}>
               Submit
             </button>
           </div>
           
-          <p className="forgot-password text-right mt-2">
-            Create an <a href="#" style={{ color: '#54d494' }} >account?</a>
-          </p>
+         
         </div>
       </form>
     </div>
   )
 }
+export default Login
