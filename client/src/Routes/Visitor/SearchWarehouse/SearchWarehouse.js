@@ -3,7 +3,10 @@ import WarehouseCard from "../../../Components/WarehouseCard/WarehouseCard"
 import axios from 'axios'
 import WarehousesMap from "../../../Components/WarehousesMap/WarehousesMap"
 import SearchBar from "../../../Components/SearchBar/SearchBar"
+import { Modal } from "react-bootstrap"
 import styles from './SearchWarehousesCss.module.css'
+import Button from "react-bootstrap/Button"
+import Notification from "../../../Components/Notification/Notification"
 import WarehousesSearchFilters from "../../../Components/WarehousesSearchFilter/WarehousesSearchFilters"
 
 const SearchWarehouse = () => {
@@ -11,8 +14,18 @@ const SearchWarehouse = () => {
     const [allWarehouses, setAllWarehouses] = useState()
     const [filtredWarehousesInfo, setFiltredWarehousesInfo] = useState()
     const [myLocation, setMylocation] = useState()
+    const [showLocationNotification, setShowLocationNotification] = useState(false)
     const [flyToMap, setFlyToMap] = useState(null)
     const [searchValue, setSearchValue] = useState(null)
+    const [getMyLocation, setGetMyLocation] = useState(false)
+    const [date, setDate] = useState([
+        {
+            startDate: new Date(),
+            endDate: new Date(),
+            key: "selection",
+        },
+    ]);
+
     const [defaultSettings, setDefaultSettings] = useState({
         priceMin: 0,
         priceMax: 2000,
@@ -84,26 +97,49 @@ const SearchWarehouse = () => {
         setSearchValue(value)
 
         let warehouses = allWarehouses.filter((warehouse) => {
+
+            let found = false
+
+            for (let i = 0; i < warehouse.datesAvailable.length; i++) {
+                console.log(warehouse.name)
+                if (checkDate(date, warehouse.datesAvailable[i])) {
+                    found = true
+                    break
+                }
+            }
+
             return (value ? warehouse.name.includes(value) : true) &&
                 parseInt(warehouse.pricePerDay) >= filterSettings.priceMin &&
                 parseInt(warehouse.pricePerDay) <= filterSettings.priceMax &&
                 parseInt(warehouse.space) <= filterSettings.spaceMax &&
-                parseInt(warehouse.space) >= filterSettings.spaceMin
+                parseInt(warehouse.space) >= filterSettings.spaceMin && found
         })
 
         setFiltredWarehousesInfo(warehouses)
 
-    }, [filterSettings])
+    }, [filterSettings, date])
+
+    const checkDate = (requestedDate, warehouseDates) => {
+        let startDate = new Date(requestedDate[0].startDate).getTime()
+        let endDate = new Date(requestedDate[0].endDate).getTime()
+        //    if(startDate == endDate && new Date(startDate).getTime() == new Date().getTime()  )return true
+
+        let warehouseStartDate = new Date(warehouseDates[0]).getTime()
+        let warehouseEndDate = new Date(warehouseDates[1]).getTime()
+
+        return parseInt(warehouseStartDate) <= parseInt(startDate) && parseInt(warehouseEndDate) >= parseInt(endDate)
+
+    }
 
     const sortByAction = (test) => {
         let sortType = test
         let sortedArr = []
 
         switch (sortType) {
-            // case 'location':
-            //     setFiltredWarehousesInfo(filtredWarehousesInfo.sort((a,b) => {
-            //         a
-            //     }))
+            case 'location':
+                setShowLocationNotification(true)
+                sortedArr = filtredWarehousesInfo
+                break;
 
             case 'lowPrice':
                 sortedArr = filtredWarehousesInfo.sort((a, b) => {
@@ -137,11 +173,25 @@ const SearchWarehouse = () => {
 
     }
 
+    const usingMyLocation = () => {
+        setFlyToMap([myLocation.coordinates.lat, myLocation.coordinates.lng])
+        setShowLocationNotification(false)
+        let sortedArr = filtredWarehousesInfo.sort((a, b) => {
+            return Math.sqrt(Math.pow(myLocation.coordinates.lat - a.location[0],2) + Math.pow(myLocation.coordinates.lng - a.location[1],2)) - Math.sqrt(Math.pow(myLocation.coordinates.lat - b.location[0],2) + Math.pow(myLocation.coordinates.lng - b.location[1],2)) 
+        })
+
+        setFiltredWarehousesInfo([...sortedArr])
+    }
+
+    const pinOnMap = () => {
+       
+    }
+
     return (
         <div className="p-2">
 
             <div className="col-12 mb-2">
-                <WarehousesSearchFilters data={defaultSettings} priceChange={priceChange} spaceChange={spaceChange} sortByAction={sortByAction}></WarehousesSearchFilters>
+                <WarehousesSearchFilters data={defaultSettings} setDate={setDate} date={date} priceChange={priceChange} spaceChange={spaceChange} sortByAction={sortByAction}></WarehousesSearchFilters>
             </div>
 
             <div className="col-6">
@@ -150,6 +200,20 @@ const SearchWarehouse = () => {
 
             <div className="col-12 p-2 d-flex">
 
+                <Modal show={showLocationNotification} onHide={() => {setShowLocationNotification(false)}}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Location</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>Choose </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={() => {usingMyLocation()}}>
+                            Use My Location
+                        </Button>
+                        <Button variant="primary" onClick={pinOnMap()}>
+                            Pin on Map
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
 
                 <div className="d-flex d-sm-block flex-wrap col-sm-6  col-12">
 
@@ -174,7 +238,7 @@ const SearchWarehouse = () => {
                 </div>
 
                 <div className={`col-6 position-fixed ${styles.mapContainer}`}>
-                    <WarehousesMap info={filtredWarehousesInfo} flyToMap={flyToMap} setMylocation={setMylocation} ></WarehousesMap>
+                    <WarehousesMap info={filtredWarehousesInfo} flyToMap={flyToMap} setMylocation={setMylocation} getMyLocation={getMyLocation}  ></WarehousesMap>
                 </div>
 
 

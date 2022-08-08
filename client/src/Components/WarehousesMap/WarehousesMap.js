@@ -20,7 +20,7 @@ const WarehousesMap = (props) => {
         iconUrl: require('./warehouse.png'),
         iconSize: [30, 40]
     })
-
+ 
     const location = useGeoLocation()
     const mapRef = useRef();
 
@@ -39,7 +39,7 @@ const WarehousesMap = (props) => {
         })
     };
     props.flyToMap && showLocation(parseFloat(props.flyToMap[0]), parseFloat(props.flyToMap[1]))
-
+    props.getMyLocation && getMyLocation()
     const getMyLocation = () => {
 
         if (location.loaded && !location.error) {
