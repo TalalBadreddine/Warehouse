@@ -9,8 +9,23 @@ import { addWarehouse } from '../../Services/AddNewWarehouse';
 import {useState,useEffect} from 'react';
 import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
+import FormGroup from 'react-bootstrap/esm/FormGroup';
 
 function PostNewWarehouse() {
+
+  const [validated, setValidated] = useState(false);
+
+  const handleSubmit = (event) => {
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+    setValidated(true);
+  };
+
+
   const navigate=useNavigate();
   useEffect(()=>{
     axios.get('http://localhost:5001/warehouseOwner/validateWarehouseOwner') .then((res) => {
@@ -68,7 +83,7 @@ axios({
         handleUpload();
       }
   return (
-    <div>
+    <Form noValidate validated={validated} onSubmit={handleSubmit}>
         <div className='row justify-content-center mt-5'>
    <h1 style={{color:'#54d494'}} className='text-center '>Post Your Space</h1>
         </div>
@@ -76,18 +91,24 @@ axios({
         <Card style={{ width: '65rem' }}>
       
       <Card.Body>
+        <FormGroup controlId="validationCustom01">
       <FloatingLabel
         controlId="floatingInput"
         label="Warehouse Name"
         className="mb-3"
       >
-        <Form.Control value={warehouse.name} 
-    onChange={(e) => setWarehouse({...warehouse, name: e.target.value })}   placeholder="Warehouse Name" required />
-      </FloatingLabel>
+        <Form.Control  required value={warehouse.name} 
+    onChange={(e) => setWarehouse({...warehouse, name: e.target.value })}   placeholder="Warehouse Name" />
+    <Form.Control.Feedback type="invalid">
+              Please choose a Warehouse name.
+            </Form.Control.Feedback> </FloatingLabel></FormGroup>
+      <FormGroup controlId="validationCustomUsername">
       <FloatingLabel controlId="floatingPassword" label="Space For Warehouse" className="mb-3">
-        <Form.Control  value={warehouse.space} 
+        <Form.Control required  value={warehouse.space} 
     onChange={(e) => setWarehouse({...warehouse, space: e.target.value })}  placeholder="Space For Warehouse" />
-      </FloatingLabel>
+      <Form.Control.Feedback type="invalid">
+              Please choose a Warehouse space.
+            </Form.Control.Feedback></FloatingLabel></FormGroup>
       {/* <FloatingLabel
         controlId="floatingInput"
         label="Date Available"
@@ -98,9 +119,10 @@ axios({
       </FloatingLabel> */}
       {/* value={warehouse.type} 
     onChange={(e) => setWarehouse({...warehouse, type: e.target.value })} placeholder="Warehouse Type"  */}
+    <FormGroup controlId="validationCustom03">
       <FloatingLabel controlId="floatingPassword" label="Warehouse Type" className="mb-3">
-      <Form.Select value={warehouse.type} 
-    onChange={(e) => setWarehouse({...warehouse, type: e.target.value })} placeholder="Warehouse Type"  aria-label="Default select example">
+      <Form.Select required value={warehouse.type} 
+    onChange={(e) => setWarehouse({...warehouse, type: e.target.value })} placeholder="Warehouse Type">
      
       <option value="Public Warehouse">Public Warehouse</option>
       <option value="Private Warehouse">Private Warehouse</option>
@@ -113,18 +135,21 @@ axios({
       <option value="On-Demand Warehouse">On-Demand Warehouse</option>
       <option value="Distribution Centers">Distribution Centers</option>
     </Form.Select>
-      </FloatingLabel>
+      </FloatingLabel></FormGroup>
+      <FormGroup controlId="validationCustom04">
       <FloatingLabel
         controlId="floatingInput"
         label="Price"
         className="mb-3"
       >
 
-        <Form.Control value={warehouse.pricePerDay} 
+        <Form.Control required value={warehouse.pricePerDay} 
     onChange={(e) => setWarehouse({...warehouse, pricePerDay: e.target.value })} className="mb-3" placeholder="Price" />
-      </FloatingLabel>
-      <Accordion className="mb-3" defaultActiveKey="0">
-      <Accordion.Item eventKey="0">
+      <Form.Control.Feedback type="invalid">
+              Please choose a price.
+            </Form.Control.Feedback></FloatingLabel></FormGroup>
+      <Accordion className="mb-3" >
+      <Accordion.Item >
         <Accordion.Header>Choose Your location</Accordion.Header>
         <Accordion.Body>
         <Figure.Image
@@ -136,10 +161,13 @@ axios({
         </Accordion.Body>
       </Accordion.Item>
       </Accordion>
+      <FormGroup controlId="validationCustom05">
       <FloatingLabel className="mb-3" controlId="floatingPassword" label="Description">
-        <Form.Control  value={warehouse.description} 
+        <Form.Control required  value={warehouse.description} 
     onChange={(e) => setWarehouse({...warehouse, description: e.target.value })} className="mb-3" style={{height:'100px'}} placeholder="Description" />
-      </FloatingLabel>
+     <Form.Control.Feedback type="invalid">
+              Please write a description
+            </Form.Control.Feedback> </FloatingLabel></FormGroup>
       <Form>
       <Form.Check 
        value={warehouse.isFireSafe} 
@@ -176,7 +204,7 @@ axios({
       </Card.Body>
     </Card>
         </div>
-  </div>
+  </Form>
   )
 }
 
