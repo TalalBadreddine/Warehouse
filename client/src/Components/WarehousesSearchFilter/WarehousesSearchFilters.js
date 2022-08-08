@@ -99,7 +99,7 @@ const WarehousesSearchFilters = (props) => {
                 <div className='ms-3'>
 
                     <Form.Select aria-label="Default select example" onChange={(e) => { props.sortByAction(e.target.value) }} >
-                        <option selected disabled hidden   >Select an Option</option>
+                        <option selected disabled hidden value={'nothing'}   >Select an Option</option>
                         <option value={'location'}>Nearest To Me</option>
                         <option value={'lowPrice'}>Lowest Price</option>
                         <option value={'highPrice'}>Highest Price</option>

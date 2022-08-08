@@ -7,6 +7,7 @@ import { Modal } from "react-bootstrap"
 import styles from './SearchWarehousesCss.module.css'
 import Button from "react-bootstrap/Button"
 import Notification from "../../../Components/Notification/Notification"
+import { Form } from "react-bootstrap"
 import WarehousesSearchFilters from "../../../Components/WarehousesSearchFilter/WarehousesSearchFilters"
 
 const SearchWarehouse = () => {
@@ -18,6 +19,10 @@ const SearchWarehouse = () => {
     const [flyToMap, setFlyToMap] = useState(null)
     const [searchValue, setSearchValue] = useState(null)
     const [getMyLocation, setGetMyLocation] = useState(false)
+    const [canPin, setCanPin] = useState(false)
+    const [pinLocation, setPinLocation] = useState([])
+    const [searchBy, setSearchBy] = useState('name')
+    const [isFlyToOn, setIsFlyToOne] = useState(false)
     const [date, setDate] = useState([
         {
             startDate: new Date(),
@@ -70,9 +75,8 @@ const SearchWarehouse = () => {
     const onSearch = (e) => {
         let value = e.target.value
         setSearchValue(value)
-
         let warehouses = allWarehouses.filter((warehouse) => {
-            return (value ? warehouse.name.includes(value) : true) &&
+            return (value ?  (searchBy == 'name' ? warehouse[searchBy].toLowerCase().includes(value.toLowerCase()) : warehouse[searchBy][0].includes(value) ) : true) &&
                 parseInt(warehouse.pricePerDay) >= filterSettings.priceMin &&
                 parseInt(warehouse.pricePerDay) <= filterSettings.priceMax &&
                 parseInt(warehouse.space) <= filterSettings.spaceMax &&
@@ -94,21 +98,19 @@ const SearchWarehouse = () => {
     useEffect(() => {
         if (allWarehouses == null || allWarehouses.length == 0) return
         let value = searchValue
-        setSearchValue(value)
-
+        
         let warehouses = allWarehouses.filter((warehouse) => {
 
             let found = false
 
             for (let i = 0; i < warehouse.datesAvailable.length; i++) {
-                console.log(warehouse.name)
                 if (checkDate(date, warehouse.datesAvailable[i])) {
                     found = true
                     break
                 }
             }
 
-            return (value ? warehouse.name.includes(value) : true) &&
+            return (value ?  (searchBy == 'name' ? warehouse[searchBy].toLowerCase().includes(value.toLowerCase()) : warehouse[searchBy][0].includes(value) ) : true) &&
                 parseInt(warehouse.pricePerDay) >= filterSettings.priceMin &&
                 parseInt(warehouse.pricePerDay) <= filterSettings.priceMax &&
                 parseInt(warehouse.space) <= filterSettings.spaceMax &&
@@ -117,7 +119,7 @@ const SearchWarehouse = () => {
 
         setFiltredWarehousesInfo(warehouses)
 
-    }, [filterSettings, date])
+    }, [filterSettings, date, searchBy])
 
     const checkDate = (requestedDate, warehouseDates) => {
         let startDate = new Date(requestedDate[0].startDate).getTime()
@@ -134,6 +136,7 @@ const SearchWarehouse = () => {
     const sortByAction = (test) => {
         let sortType = test
         let sortedArr = []
+        setCanPin(false)
 
         switch (sortType) {
             case 'location':
@@ -165,8 +168,6 @@ const SearchWarehouse = () => {
                 })
                 break;
 
-
-
         }
 
         setFiltredWarehousesInfo([...sortedArr])
@@ -177,15 +178,27 @@ const SearchWarehouse = () => {
         setFlyToMap([myLocation.coordinates.lat, myLocation.coordinates.lng])
         setShowLocationNotification(false)
         let sortedArr = filtredWarehousesInfo.sort((a, b) => {
-            return Math.sqrt(Math.pow(myLocation.coordinates.lat - a.location[0],2) + Math.pow(myLocation.coordinates.lng - a.location[1],2)) - Math.sqrt(Math.pow(myLocation.coordinates.lat - b.location[0],2) + Math.pow(myLocation.coordinates.lng - b.location[1],2)) 
+            return Math.sqrt(Math.pow(myLocation.coordinates.lat - a.location[0], 2) + Math.pow(myLocation.coordinates.lng - a.location[1], 2)) - Math.sqrt(Math.pow(myLocation.coordinates.lat - b.location[0], 2) + Math.pow(myLocation.coordinates.lng - b.location[1], 2))
         })
 
         setFiltredWarehousesInfo([...sortedArr])
     }
 
     const pinOnMap = () => {
-       
+        setCanPin(true)
+        setShowLocationNotification(false)
     }
+
+    useEffect(() => {
+        if (pinLocation.length == 0) return
+
+        let sortedArr = filtredWarehousesInfo.sort((a, b) => {
+            return Math.sqrt(Math.pow(pinLocation[0] - a.location[0], 2) + Math.pow(pinLocation[1] - a.location[1], 2)) - Math.sqrt(Math.pow(pinLocation[0] - b.location[0], 2) + Math.pow(pinLocation[1] - b.location[1], 2))
+        })
+
+        setFiltredWarehousesInfo([...sortedArr])
+
+    }, [pinLocation])
 
     return (
         <div className="p-2">
@@ -194,22 +207,42 @@ const SearchWarehouse = () => {
                 <WarehousesSearchFilters data={defaultSettings} setDate={setDate} date={date} priceChange={priceChange} spaceChange={spaceChange} sortByAction={sortByAction}></WarehousesSearchFilters>
             </div>
 
-            <div className="col-6">
-                <SearchBar searchValue={searchValue} action={onSearch}></SearchBar>
+            <div className="col-6 d-flex">
+                <div className="col-6">
+                    <SearchBar searchValue={searchValue} action={onSearch}></SearchBar>
+                </div>
+                <div className=" ms-3 col-6">
+                    <Form className="d-flex">
+                        <Form.Check
+                            type="switch"
+                            id="custom-switch"
+                            label="Fly to Space"
+                        />
+                        <Form.Check
+                            className="ms-3"
+                            type="switch"
+                            id="custom-switch"
+                            label="Search By Location"
+                            onChange={(e) => {
+                                e.target.checked ? setSearchBy('address') : setSearchBy('name')
+                            }}
+                        />
+                    </Form>
+                </div>
             </div>
 
             <div className="col-12 p-2 d-flex">
 
-                <Modal show={showLocationNotification} onHide={() => {setShowLocationNotification(false)}}>
+                <Modal show={showLocationNotification} onHide={() => { setShowLocationNotification(false) }}>
                     <Modal.Header closeButton>
                         <Modal.Title>Location</Modal.Title>
                     </Modal.Header>
-                    <Modal.Body>Choose </Modal.Body>
+                    <Modal.Body>Please Choose the base from where we should calculate the distance </Modal.Body>
                     <Modal.Footer>
-                        <Button variant="secondary" onClick={() => {usingMyLocation()}}>
+                        <Button variant="secondary" onClick={() => { usingMyLocation() }}>
                             Use My Location
                         </Button>
-                        <Button variant="primary" onClick={pinOnMap()}>
+                        <Button variant="primary" onClick={() => { pinOnMap() }}>
                             Pin on Map
                         </Button>
                     </Modal.Footer>
@@ -238,7 +271,7 @@ const SearchWarehouse = () => {
                 </div>
 
                 <div className={`col-6 position-fixed ${styles.mapContainer}`}>
-                    <WarehousesMap info={filtredWarehousesInfo} flyToMap={flyToMap} setMylocation={setMylocation} getMyLocation={getMyLocation}  ></WarehousesMap>
+                    <WarehousesMap info={filtredWarehousesInfo} flyToMap={flyToMap} setMylocation={setMylocation} getMyLocation={getMyLocation} canPin={canPin} setPinLocation={setPinLocation}  ></WarehousesMap>
                 </div>
 
 

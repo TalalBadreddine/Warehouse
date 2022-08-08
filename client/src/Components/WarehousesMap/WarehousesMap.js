@@ -9,24 +9,25 @@ const WarehousesMap = (props) => {
     const [warehousesInfo, setWarehousesInfo] = useState(null)
     const [center, setCenter] = useState([33.377190, 35.483590])
     const [goToMap, setGoToMap] = useState(null)
-    const [mapClick, setMapClick] = useState(null)
+    const [clickLocation, setClickLocation] = useState(null)
+    const [showPinLocation, setShowPinLocation] = useState(false)
 
     useEffect(() => {
         setWarehousesInfo(props.warehousesInfo)
         setGoToMap(props.flyToMap)
-    },[])
+    }, [])
 
     const markerIcon = new L.icon({
         iconUrl: require('./warehouse.png'),
         iconSize: [30, 40]
     })
- 
+
     const location = useGeoLocation()
     const mapRef = useRef();
 
     useEffect(() => {
         props.setMylocation(location)
-    },[location])
+    }, [location])
 
     const showLocation = (x, y) => {
         // mapRef.current.setView([x, y], 16, {
@@ -50,7 +51,9 @@ const WarehousesMap = (props) => {
     const MapEvents = () => {
         useMapEvents({
             click(e) {
-                setMapClick([e.latlng.lat, e.latlng.lng])
+
+                props.canPin && setClickLocation([e.latlng.lat, e.latlng.lng])
+                props.canPin && props.setPinLocation([e.latlng.lat, e.latlng.lng])
             },
         });
         return false;
@@ -75,27 +78,34 @@ const WarehousesMap = (props) => {
                             </Popup>
                         </Marker>}
 
-                    {props.info &&  props.info.map((warehouse) => {
+                    {props.info && props.info.map((warehouse) => {
                         return (
                             <Marker position={[parseFloat(warehouse.location[0]), parseFloat(warehouse.location[1])]} icon={markerIcon}>
                                 <Popup>
                                     <div>
-                               
-                                            <h3 className="fs-4">{warehouse.name}</h3>
-                                            <p><span style={{fontWeight:'bold'}} >Details:</span> {warehouse.description}</p>
+
+                                        <h3 className="fs-4">{warehouse.name}</h3>
+                                        <p><span style={{ fontWeight: 'bold' }} >Details:</span> {warehouse.description}</p>
                                     </div>
-                                   
+
                                 </Popup>
                             </Marker>
                         )
                     })}
+
+                    {showPinLocation && 
+                        <Marker position={[parseFloat(clickLocation[0]), parseFloat(clickLocation[1])]} icon={markerIcon}>
+                            <Popup>
+                                <h3 className="fs-4">PingLocation</h3>  
+                            </Popup>
+                        </Marker>}
                     <MapEvents />
                 </MapContainer>
             </>
 
 
 
-                {/* <div onMouseEnter={(e) => {
+            {/* <div onMouseEnter={(e) => {
                     e.preventDefault()
                     showLocation(33.378190, 35.489590)
                 }}>
@@ -104,18 +114,11 @@ const WarehousesMap = (props) => {
                 </div> */}
 
 
-                {/* <button onClick={(e) => {
+            {/* <button onClick={(e) => {
                     e.preventDefault()
                     getMyLocation(location.coordinates.lat, location.coordinates.lng)
                 }}>Get My Location</button> */}
- 
-{/* 
-            {mapClick &&
-                <div>
-                    <h1>Mouse curser:
-                        x = {mapClick[0]}
-                        y = {mapClick[1]}</h1>
-                </div>} */}
+
 
         </div>
     )
