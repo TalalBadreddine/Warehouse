@@ -22,7 +22,7 @@ const SearchWarehouse = () => {
     const [canPin, setCanPin] = useState(false)
     const [pinLocation, setPinLocation] = useState([])
     const [searchBy, setSearchBy] = useState('name')
-    const [isFlyToOn, setIsFlyToOne] = useState(false)
+    const [isFlyToOn, setIsFlyToOn] = useState(false)
     const [date, setDate] = useState([
         {
             startDate: new Date(),
@@ -76,7 +76,7 @@ const SearchWarehouse = () => {
         let value = e.target.value
         setSearchValue(value)
         let warehouses = allWarehouses.filter((warehouse) => {
-            return (value ?  (searchBy == 'name' ? warehouse[searchBy].toLowerCase().includes(value.toLowerCase()) : warehouse[searchBy][0].includes(value) ) : true) &&
+            return (value ? (searchBy == 'name' ? warehouse[searchBy].toLowerCase().includes(value.toLowerCase()) : warehouse[searchBy][0].includes(value)) : true) &&
                 parseInt(warehouse.pricePerDay) >= filterSettings.priceMin &&
                 parseInt(warehouse.pricePerDay) <= filterSettings.priceMax &&
                 parseInt(warehouse.space) <= filterSettings.spaceMax &&
@@ -98,19 +98,26 @@ const SearchWarehouse = () => {
     useEffect(() => {
         if (allWarehouses == null || allWarehouses.length == 0) return
         let value = searchValue
-        
+        let found = false
+
+
         let warehouses = allWarehouses.filter((warehouse) => {
 
-            let found = false
+            if(new Date(date[0].startDate).getTime() != new Date(date[0].endDate).getTime() ){
 
-            for (let i = 0; i < warehouse.datesAvailable.length; i++) {
-                if (checkDate(date, warehouse.datesAvailable[i])) {
-                    found = true
-                    break
+                for (let i = 0; i < warehouse.datesAvailable.length; i++) {
+                    if (checkDate(date, warehouse.datesAvailable[i])) {
+                        found = true
+                        break
+                    }
                 }
+                                
+            }else{
+                found = true
             }
 
-            return (value ?  (searchBy == 'name' ? warehouse[searchBy].toLowerCase().includes(value.toLowerCase()) : warehouse[searchBy][0].includes(value) ) : true) &&
+
+            return (value ? (searchBy == 'name' ? warehouse[searchBy].toLowerCase().includes(value.toLowerCase()) : warehouse[searchBy][0].includes(value)) : true) &&
                 parseInt(warehouse.pricePerDay) >= filterSettings.priceMin &&
                 parseInt(warehouse.pricePerDay) <= filterSettings.priceMax &&
                 parseInt(warehouse.space) <= filterSettings.spaceMax &&
@@ -217,6 +224,10 @@ const SearchWarehouse = () => {
                             type="switch"
                             id="custom-switch"
                             label="Fly to Space"
+                            onChange={(e) => {
+                                setIsFlyToOn(e.target.checked)
+
+                            }}
                         />
                         <Form.Check
                             className="ms-3"
@@ -257,7 +268,8 @@ const SearchWarehouse = () => {
                             filtredWarehousesInfo && filtredWarehousesInfo.map((warehouse) => {
                                 return (
                                     <div key={warehouse.location[0]} onMouseEnter={() => {
-                                        setFlyToMap([warehouse.location[0], warehouse.location[1]])
+                                        isFlyToOn &&
+                                            setFlyToMap([warehouse.location[0], warehouse.location[1]])
                                     }}>
                                         <WarehouseCard info={warehouse} ></WarehouseCard>
 
