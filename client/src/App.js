@@ -12,6 +12,7 @@ import "../node_modules/bootstrap/dist/css/bootstrap.css"
 import 'react-date-range/dist/styles.css'; 
 import 'react-date-range/dist/theme/default.css'; 
 import AboutUs from './Routes/Visitor/AboutUs/AboutUs';
+import WarehouseDetails from './Routes/Customer/WarehouseDetails';
 
 
 function App() {
@@ -27,18 +28,27 @@ function App() {
       
           <Route path='' element={<Landing></Landing>}></Route>
           <Route path='login' element={<SignIn></SignIn>}></Route>
-          <Route path='findASpace' element={<SearchWarehouse/>}></Route>
+          <Route path='findASpace' element={<SearchWarehouse role={'visitor'}/>}></Route>
           <Route path='aboutUs' element={<AboutUs></AboutUs>}></Route>
+
+      </Route>
+
+      {/* CUSTOMER PATH */}
+      <Route path='customer/' element={<Navigationbar role='customer'></Navigationbar>}>
+
+        <Route path='' element={<SearchWarehouse role={'customer'}></SearchWarehouse>}></Route>
+        <Route path='warehouseDetails' element={<WarehouseDetails></WarehouseDetails>}></Route>
+
+
 
       </Route>
 
 
 
-
       {/* </Route> */}
 
-      </Routes> 
 
+      </Routes> 
 
     </div>
   )

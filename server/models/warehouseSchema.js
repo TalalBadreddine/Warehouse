@@ -40,6 +40,10 @@ const mongoose = require('mongoose')
         type: Boolean,
         default: false
     },
+    isForklift:{
+        type: Boolean,
+        default:false
+    },
     registerDate:{
         type: Date,
         default: new Date()
