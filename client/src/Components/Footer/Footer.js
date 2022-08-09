@@ -9,7 +9,8 @@ export const Footer = () => {
     <Outlet></Outlet>
     <div>
 
-    <CDBFooter className="shadow" style={{color: "white", backgroundColor:"#767B78", position:"relative" ,bottom:'0', left:'0', right:'0'}} >
+    <CDBFooter className="shadow" style={{color: "white", backgroundColor:"#767B78", position:"relative" ,bottom:'0', left:'0', right:'0',display:'flex'}} >
+
       <CDBBox display="flex" flex="column" className="mx-auto py-2" style={{ width: '90%' }}>
 
         <CDBBox display="flex" justifyContent="between" className="flex-wrap">

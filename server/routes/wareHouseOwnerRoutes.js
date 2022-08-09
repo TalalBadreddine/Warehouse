@@ -46,9 +46,10 @@ warehouseOwnerRouter.get('/', validateWarehouseOwner, getWarehouses);
 // DELETE request to delete a warehouseOwner
 warehouseOwnerRouter.delete('/:id/delete', validateWarehouseOwner, deleteWarehouse);
 
-warehouseOwnerRouter.get('/requests', validateWarehouseOwner, getRequests)
+warehouseOwnerRouter.post('/requests',  getRequests)
+// validateWarehouseOwner,
 
-warehouseOwnerRouter.post('/acceptDeclineRequest', validateWarehouseOwner, acceptDeclineRequest )
+warehouseOwnerRouter.post('/acceptDeclineRequest',validateWarehouseOwner, acceptDeclineRequest )
 
 
 module.exports = warehouseOwnerRouter;

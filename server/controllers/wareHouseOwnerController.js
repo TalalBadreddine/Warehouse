@@ -97,11 +97,12 @@ const logout = async (req, res) => {
 
 const getRequests = async (req, res) => {
     try{
-        const userInfo = jwtDecode(req.cookies['jwt'])
-        
+        // const userInfo = jwtDecode(req.cookies['jwt'])
+        const userInfo = req.body
         const results = await manageUsersAndWarehousesSchema.find({
             status:'pending',
-            warehouseOwnerEmail: userInfo.user.email
+            // warehouseOwnerEmail: userInfo.user.email
+            warehouseOwnerEmail: userInfo.email
         })
 
         return res.send(results).status(200)
@@ -118,9 +119,10 @@ const acceptDeclineRequest = async (req, res) => {
         let requestStatus =  req.body.status
         const warehouseId = req.body.warehouseId
         const requestedDate = req.body.requestedDate
-
+        console.log(req.body)
 
         if(requestStatus == 'accepted'){
+            
             await extensions.userRentAWarehouseInSpecificDate(warehouseId,requestedDate ).then( async (response) => {
                 console.log(response)
                 if(response){ requestStatus = 'accepted'}else{requestStatus = 'rejected'}
