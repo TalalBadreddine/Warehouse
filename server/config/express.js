@@ -5,6 +5,8 @@ const cookieParser = require('cookie-parser');
 const warehouseOwnerRouter = require('../routes/wareHouseOwnerRoutes')
 const {userRouter} = require('../routes/userRoutes')
 const {adminRouter} = require('../routes/adminRoutes')
+const {visitorRouter} = require('../routes/visitorRoutes')
+const multer = require("multer");
 
 
 dotenv.config({path: __dirname + '/../.env'})
@@ -16,8 +18,19 @@ const {
     serverPort
 } = process.env
 
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, "uploads");
+    },
+    filename: (req, file, cb) => {
+      cb(null, file.originalname);
+    },
+  });
+  
+  const upload = multer({ storage: storage });
+
 async function connectDB(){
-    const uri = `mongodb://${dbHost}:${dbPort}/${dbName}`
+  const uri = `mongodb://${dbHost}:${dbPort}/${dbName}`
     await mongoose.connect(uri)
     console.log("Connected to db!")
 }
@@ -47,6 +60,8 @@ async function startServer(){
         app.use('/admin',  adminRouter)
 
         app.use('/warehouseOwner', warehouseOwnerRouter )
+
+        app.use('/visitor', visitorRouter)
 
         app.listen(serverPort, () => console.log(`Listening to port ${serverPort}`))
 
