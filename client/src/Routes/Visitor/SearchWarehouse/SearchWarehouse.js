@@ -7,7 +7,7 @@ import { Modal } from "react-bootstrap"
 import styles from './SearchWarehousesCss.module.css'
 import Button from "react-bootstrap/Button"
 import { Form } from "react-bootstrap"
-import WarehousesSearchFilters from "../../../Components/WarehousesSearchFilters/WarehousesSearchFilters"
+import WarehousesSearchFilters from "../../../Components/Footer/WarehousesSearchFilters/WarehousesSearchFilters"
 
 const SearchWarehouse = () => {
 

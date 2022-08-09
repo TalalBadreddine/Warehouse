@@ -4,7 +4,6 @@ const apiUri="http://localhost:5001/user/login";
 export async function loginUser(email,password){
     return await axios.post(apiUri, {email,password})
     .then(async (data) => {
-        console.log('test')
         await console.log(data)
     })
     .catch((err) => {

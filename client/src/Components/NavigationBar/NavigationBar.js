@@ -6,7 +6,7 @@ import { Outlet, Link } from 'react-router-dom';
 import styles from './NavigationCss.module.css'
 
 
-function Navigationbar() {
+function Navigationbar({role}) {
   const [currentPage, setCurrentPage] = useState(-1)
 
   return (
@@ -25,7 +25,7 @@ function Navigationbar() {
             navbarScroll
           >
 
-            <Nav.Link> <Link to={''} style={{ color: "black", textDecoration: 'none' }} className={'px-1'} > Home </Link> </Nav.Link>
+            {role == 'visitor' && <Nav.Link> <Link to={''} style={{ color: "black", textDecoration: 'none' }} className={'px-1'} > Home </Link> </Nav.Link>}
             <Nav.Link> <Link to={'/findASpace'} style={{ color: "black", textDecoration: 'none' }} className={'px-1'} > Find a space </Link> </Nav.Link>
             <Nav.Link> <Link to={'/aboutUs'} style={{ color: "black", textDecoration: 'none' }} className={'px-1'} > About us </Link> </Nav.Link>
             <Nav.Link> <Link to={'/login'} style={{ color: "black", textDecoration: 'none' }} className={`px-3 py-2 rounded-4  ${styles.loginBtn}`} > Sign-in </Link> </Nav.Link>

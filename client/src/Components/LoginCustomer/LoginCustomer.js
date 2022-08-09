@@ -40,7 +40,7 @@ function LoginCustomer() {
     />
     <label htmlFor="floatingPasswordCustom">Password</label>
   </Form.Floating>
-  <Button onClick={HandleLogin}  style={{backgroundColor:'#54d494',borderColor:'#54d494'}} type="submit" className="mb-2"> 
+  <Button onClick={HandleLogin}  style={{backgroundColor:'#54d494',borderColor:'#54d494'}} type="submit" className="mb-2 mt-2"> 
         Submit 
       </Button> </div>
   )
