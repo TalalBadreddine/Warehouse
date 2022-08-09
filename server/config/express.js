@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const warehouseOwnerRouter = require('../routes/wareHouseOwnerRoutes')
 const {userRouter} = require('../routes/userRoutes')
 const {adminRouter} = require('../routes/adminRoutes')
+const multer = require("multer");
 
 
 dotenv.config({path: __dirname + '/../.env'})
@@ -15,6 +16,17 @@ const {
     dbName,
     serverPort
 } = process.env
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, "uploads");
+    },
+    filename: (req, file, cb) => {
+      cb(null, file.originalname);
+    },
+  });
+  
+  const upload = multer({ storage: storage });
 
 async function connectDB(){
     const uri = `mongodb+srv://Job:Job123@cluster0.xnktc2x.mongodb.net/${dbName}`
