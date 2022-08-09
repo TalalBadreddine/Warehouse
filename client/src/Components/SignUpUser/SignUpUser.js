@@ -1,11 +1,22 @@
-import React from 'react'
+import React, {useState} from 'react'
 import Row from 'react-bootstrap/Row'; 
-
 import Button from 'react-bootstrap/Button'; 
 import Form from 'react-bootstrap/Form'; 
 import InputGroup from 'react-bootstrap/InputGroup';
 
+import {registerCustomer} from '../../Services/registerCustomer'
+
 function SignUpUser() {
+
+  const [customer, setCustomer] = useState({
+    userName: "",
+    email: "",
+    password:"",
+    });
+    const handleregistration=(e)=>{
+        registerCustomer(customer);
+    }
+
   return (
     <>
     <Row className="align-items-center"> 
@@ -18,6 +29,7 @@ function SignUpUser() {
             className="mb-2" 
             id="inlineFormInput" 
             placeholder="Username" 
+            onChange={(e) => setCustomer({...customer, userName: e.target.value })}
           /> 
           </InputGroup>
         </Row> 
@@ -27,7 +39,11 @@ function SignUpUser() {
           </Form.Label> 
           <InputGroup className="mb-2"> 
             <InputGroup.Text>@</InputGroup.Text> 
-            <Form.Control id="inlineFormInputGroup" placeholder="email" /> 
+            <Form.Control 
+            id="inlineFormInputGroup" 
+            placeholder="email"
+            onChange={(e) => setCustomer({...customer, email: e.target.value })}
+            /> 
           </InputGroup> 
         </Row> 
         
@@ -40,6 +56,7 @@ function SignUpUser() {
             className="mb-2" 
             id="inlineFormInput" 
             placeholder="password" 
+            onChange={(e) => setCustomer({...customer, password: e.target.value })}
           /> 
           </InputGroup>
         </Row> 
@@ -56,7 +73,7 @@ function SignUpUser() {
           </InputGroup>
         </Row>
         <Row xs="auto" className='justify-content-center'> 
-          <Button type="submit" className="mb-2" style={{backgroundColor:'#54d494', borderColor:'#54d494'}}> 
+          <Button onClick={handleregistration} type="submit" className="mb-2" style={{backgroundColor:'#54d494', borderColor:'#54d494'}}> 
             Submit 
           </Button> 
         </Row> 

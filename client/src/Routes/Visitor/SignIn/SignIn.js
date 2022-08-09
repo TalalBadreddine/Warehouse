@@ -44,7 +44,7 @@ function openAndCustomer(){
         
         <Col className='mt-5'> <Card style={{ width: '21rem' , outline:'none', height:'415px',boxShadow:'1px 2px 9px #54d494'  }}>
       <Card.Body >
-        <Card.Title>List a space</Card.Title>
+        <Card.Title>Rent a space</Card.Title>
         <br></br>
         <br></br>
         <Card.Text>
@@ -81,7 +81,7 @@ function openAndCustomer(){
     </Card></Col>
         <Col className='mt-5'><Card style={{ width: '21rem' , height:'415px',boxShadow:'1px 2px 9px #54d494' }}>
       <Card.Body >
-        <Card.Title>Rent a space </Card.Title>
+        <Card.Title>List a space </Card.Title>
         <br></br>
         <br></br>
         <Card.Text>
