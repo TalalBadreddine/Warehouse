@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const warehouseOwnerRouter = require('../routes/wareHouseOwnerRoutes')
 const {userRouter} = require('../routes/userRoutes')
 const {adminRouter} = require('../routes/adminRoutes')
+const {visitorRouter} = require('../routes/visitorRoutes')
 const multer = require("multer");
 
 
@@ -29,7 +30,7 @@ const storage = multer.diskStorage({
   const upload = multer({ storage: storage });
 
 async function connectDB(){
-    const uri = `mongodb+srv://Job:Job123@cluster0.xnktc2x.mongodb.net/${dbName}`
+  const uri = `mongodb://${dbHost}:${dbPort}/${dbName}`
     await mongoose.connect(uri)
     console.log("Connected to db!")
 }
@@ -59,6 +60,8 @@ async function startServer(){
         app.use('/admin',  adminRouter)
 
         app.use('/warehouseOwner', warehouseOwnerRouter )
+
+        app.use('/visitor', visitorRouter)
 
         app.listen(serverPort, () => console.log(`Listening to port ${serverPort}`))
 

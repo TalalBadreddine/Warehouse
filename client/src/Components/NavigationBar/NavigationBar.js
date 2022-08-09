@@ -26,8 +26,8 @@ function Navigationbar() {
           >
 
             <Nav.Link> <Link to={''} style={{ color: "black", textDecoration: 'none' }} className={'px-1'} > Home </Link> </Nav.Link>
-            <Nav.Link> <Link to={'/ListSpace'} style={{ color: "black", textDecoration: 'none' }} className={'px-1'} > Find a space </Link> </Nav.Link>
-            <Nav.Link> <Link to={'/Search'} style={{ color: "black", textDecoration: 'none' }} className={'px-1'} > About us </Link> </Nav.Link>
+            <Nav.Link> <Link to={'/findASpace'} style={{ color: "black", textDecoration: 'none' }} className={'px-1'} > Find a space </Link> </Nav.Link>
+            <Nav.Link> <Link to={'/aboutUs'} style={{ color: "black", textDecoration: 'none' }} className={'px-1'} > About us </Link> </Nav.Link>
             <Nav.Link> <Link to={'/login'} style={{ color: "black", textDecoration: 'none' }} className={`px-3 py-2 rounded-4  ${styles.loginBtn}`} > Sign-in </Link> </Nav.Link>
 
             {/* <Nav.Link href="#List your space" style={{ color: "black" }}> List your space</Nav.Link>
