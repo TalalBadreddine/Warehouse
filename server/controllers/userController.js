@@ -126,10 +126,6 @@ const requestRentWarehouse = async (req, res) => {
     const totalPrice = req.body.totalPrice
     const decodedInfo = jwtDecode(req.cookies['jwt'])
 
-    // const warehouse = await warehouseSchema.findOne({
-    //     _id: warehouseInfo.id
-    // })
-    // console.log(extensions.checkIfTimeIsAvailbleWithWarehouseTime())
 
     await extensions.checkIfTimeIsAvailbleWithWarehouseTime(warehouseInfo.datesAvailable , rentingDate).then(async (results) => {
 
