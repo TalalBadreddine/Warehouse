@@ -4,8 +4,24 @@ const {
     validateWarehouseOwner
   } = require('../middleware/auth')
 
+  const multer=require('multer')
+
+  const storage = multer.diskStorage({
+      destination: function(req, file, cb){
+        cb(null, './');
+      } ,
+    filename:(req,file,cb) => {
+        cb(null,file.originalname)
+    },
+  })
+  const upload=multer(({storage:storage}))
+
 // initialize express router
 const warehouseOwnerRouter = Router();
+
+warehouseOwnerRouter.post('/image',upload.single('file'),function(req,res){
+    res.json({})
+})
 
 //REGISTER 
 warehouseOwnerRouter.post('/register',register)
@@ -18,7 +34,10 @@ warehouseOwnerRouter.get('/logout', validateWarehouseOwner,logout)
 
 // POST request to add a warehouseOwner
 
-warehouseOwnerRouter.post('/add', validateWarehouseOwner, addWarehouses);
+warehouseOwnerRouter.post('/add', validateWarehouseOwner ,addWarehouses);
+
+//la yet2akad eno warehouseOwner l aam bfut 3a saf7a 
+warehouseOwnerRouter.get('/validateWarehouseOwner',validateWarehouseOwner);
 
 // GET request for a list of all warehouseOwner
 warehouseOwnerRouter.get('/', validateWarehouseOwner, getWarehouses);
@@ -30,5 +49,6 @@ warehouseOwnerRouter.delete('/:id/delete', validateWarehouseOwner, deleteWarehou
 warehouseOwnerRouter.get('/requests', validateWarehouseOwner, getRequests)
 
 warehouseOwnerRouter.post('/acceptDeclineRequest', validateWarehouseOwner, acceptDeclineRequest )
+
 
 module.exports = warehouseOwnerRouter;
