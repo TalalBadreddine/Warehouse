@@ -90,7 +90,7 @@ const userRentAWarehouseInSpecificDate = async (wareHouseId, askedTime) => {
         })
 
         wareHouseTime = wareHouseTime.datesAvailable
-
+        
         const requestedStartDate = new Date(askedTime[0]);
         const requestedStartDateInSeconds = Math.floor(requestedStartDate.getTime() / 1000);
 

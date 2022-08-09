@@ -34,8 +34,8 @@ function Landing() {
         <ScrollPage  >
         <Animator animation={FadeOut(1000,-500)}>
       
-      <Card className="bg-dark text-white" style={{width: '100%',height: '200vh', margin: "10px 0",backgroundRepeat:'no-repeat'}}>
-      <Card.Img src={require('../../../Assets/modern.webp')} alt="Card image" style={{height:"200vh",resizeMode: 'cover',flex: 1, opacity:"0.7"}}/>
+      <Card className="bg-dark text-white" style={{width: '100%',height: '95vh', margin: "10px 0",backgroundRepeat:'no-repeat'}}>
+      <Card.Img src={require('../../../Assets/modern.webp')} alt="Card image" style={{height:"95vh",resizeMode: 'cover',flex: 1, opacity:"0.7"}}/>
       <Card.ImgOverlay>
 
         <Row className='justify-content-center mt-3'>

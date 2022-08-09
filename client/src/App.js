@@ -4,6 +4,7 @@ import SignIn from "./Routes/Visitor/SignIn/SignIn";
 import Navigationbar from "./Components/NavigationBar/NavigationBar";
 import Landing from "./Routes/Visitor/Landing/Landing";
 import Footer from "./Components/Footer/Footer";
+import ManageRequests from "./Routes/WarehouseOwner/MangaRequests/ManageRequests";
 
 
 function App() {
@@ -19,7 +20,7 @@ function App() {
       
           <Route path='' element={<Landing></Landing>}></Route>
           <Route path='login' element={<SignIn></SignIn>}></Route>
-
+          <Route path='managerequests' element={<ManageRequests></ManageRequests>}></Route>
       </Route>
 
 

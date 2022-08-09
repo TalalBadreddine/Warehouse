@@ -19,7 +19,7 @@ function Home() {
 
 
       <Card className="bg-dark text-white">
-      <Card.Img src={require('../../../Assets/modern.webp')} alt="Card image" style={{height:"30rem"}}/>
+      <Card.Img src={require('../../../Assets/newwarehouseimg.png')} alt="Card image" style={{height:"30rem"}}/>
       <Card.ImgOverlay>
 
         <Row className='justify-content-center mt-3'>
