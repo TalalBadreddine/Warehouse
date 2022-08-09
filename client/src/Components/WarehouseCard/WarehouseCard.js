@@ -15,7 +15,7 @@ const WarehouseCard = (props) => {
 
 
     return (
-        <div className="col-5 col-sm-12 m-2 p-2 d-sm-flex border rounded border-dark d-block  ">
+        <div className={`col-5 col-sm-12 m-2 p-2 d-sm-flex border rounded border-dark d-block ${styles.cardDiv}`}  >
 
             <div className='col-sm-4 '>
                 <Carousel>
