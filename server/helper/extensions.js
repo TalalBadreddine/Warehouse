@@ -1,10 +1,9 @@
 const warehouseSchema = require('../models/warehouseSchema')
 const userSchema = require('../models/usersSchema')
-const WarehouseOwner = require('../models/WarehouseOwner')
+const WarehouseOwnerSchema = require('../models/WarehouseOwner')
 
 
-// TODO: test it
-const getEveryWarehouseOwnerAndHisWareHouses = async (req, res) => {
+const getEveryWarehouseOwnerAndHisWareHouses = async () => {
     try{
 
         const results = await WarehouseOwnerSchema.find()
@@ -18,20 +17,20 @@ const getEveryWarehouseOwnerAndHisWareHouses = async (req, res) => {
             for(let j = 0 ; j < currentWareHouseOwnerWarehousesArrayId.length ; j++){
 
                 currentWareHouseOwnerArrayOfWarehouses.push( await warehouseSchema.find({
-                    _id: currentWareHouseOwnerWarehousesArrayId[i]
+                    _id: currentWareHouseOwnerWarehousesArrayId[j]
                 })
                 )
             }
 
             let currentObj = {
-                wareHouseOwner: currentWareHouseOwner,
-                wareHouses: currentWareHouseOwner
+                warehouseOwner: currentWareHouseOwner,
+                warehouses: currentWareHouseOwnerArrayOfWarehouses
             }
 
             toReturn.push(currentObj)
         }
     
-        return res.send(toReturn).status(200)
+        return toReturn
 
     }
     catch(err){
