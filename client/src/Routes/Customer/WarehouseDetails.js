@@ -1,37 +1,48 @@
-import { useLocation, useNavigate } from "react-router-dom"
 import { IoIosReturnLeft } from 'react-icons/io'
-import { useEffect, useState } from "react";
-import { addDays } from 'date-fns';
-
-
+import {AiOutlineMail} from "react-icons/ai"
+import {FiPhone} from "react-icons/fi"
 import { BiCctv } from 'react-icons/bi'
 import sprinkler from '../../Components/WarehouseCard/sprinkler.png'
 import { TbForklift } from 'react-icons/tb'
 import { GrUserWorker } from 'react-icons/gr'
 import ac from '../../Components/WarehouseCard/air-conditioner.png'
+
+import { addDays } from 'date-fns';
+import { DateRangePicker } from 'react-date-range';
+
+import { useEffect, useState, useRef } from "react";
+import { useLocation, useNavigate } from "react-router-dom"
+
 import WarehousesMap from '../../Components/WarehousesMap/WarehousesMap.js'
 import osm from '../../Components/WarehousesMap/TileLayer'
 import L from 'leaflet'
 import { MapContainer, Marker, Popup, TileLayer, useMapEvents } from "react-leaflet";
-import { DateRangePicker } from 'react-date-range';
+
+import Button from "react-bootstrap/Button";
+import Table from "react-bootstrap/Table"
+import styles from './WarehouseDetailsCss.module.css'
 
 
 const WarehouseDetails = () => {
 
     const [dataSettings, setDataSettings] = useState({
         endDate: null,
-        disabledDates: []
+        disabledDates: [],
+        showEmail: false,
+        showPhoneNumber: false,
+        showDateAlert:false
     })
 
+    const dateRangeRef = useRef()
     const [state, setState] = useState(
         {
-          startDate: null,
-          endDate: null,
-          key: 'selection'
+            startDate: null,
+            endDate: null,
+            key: 'selection'
         }
-      );
+    );
 
-    const [finalDate , setFinalDate] = useState(null)
+    const [finalDate, setFinalDate] = useState(null)
 
     const markerIcon = new L.icon({
         iconUrl: require('../../Components/WarehousesMap/warehouse.png'),
@@ -41,37 +52,41 @@ const WarehouseDetails = () => {
     const data = useLocation()
     const navigate = useNavigate();
     const [warehouseData, setWarehouseData] = useState(data.state)
-    console.log(data.state)
 
     useEffect(() => {
-        if(warehouseData == null)return
+        if (warehouseData == null) return
         let maxDate = -Infinity
         let disabledDates = []
 
-        for(let i = 0 ; i < warehouseData.datesAvailable.length ; i++){
+        for (let i = 0; i < warehouseData.datesAvailable.length; i++) {
             maxDate = Math.max(maxDate, new Date(warehouseData.datesAvailable[i][1]).getTime())
         }
 
-
-        for( let  i = new Date() ; i < new Date(maxDate) ; i.setDate(i.getDate() + 1)){
+        for (let i = new Date(); i < new Date(maxDate); i.setDate(i.getDate() + 1)) {
             let currentDate = new Date(i)
             let allowed = false
 
-            for(let j = 0 ; j < warehouseData.datesAvailable.length ; j++){
-                if(new Date(warehouseData.datesAvailable[j][0]) <= currentDate && currentDate <= new Date(warehouseData.datesAvailable[j][1])){
+            for (let j = 0; j < warehouseData.datesAvailable.length; j++) {
+                if (new Date(warehouseData.datesAvailable[j][0]) <= currentDate && currentDate <= new Date(warehouseData.datesAvailable[j][1])) {
                     allowed = true
                 }
             }
 
-            if(!allowed){disabledDates.push(currentDate)}
+            if (!allowed) { disabledDates.push(currentDate) }
         }
-        setDataSettings({...dataSettings, ['endDate']: maxDate, ['disabledDates']: disabledDates})
+        setDataSettings({ ...dataSettings, ['endDate']: maxDate, ['disabledDates']: disabledDates })
 
-    },[warehouseData])
+    }, [warehouseData])
+
+    const manageRequest = () => {
+        if(!state.endDate || !state.endDate){
+            setDataSettings({...dataSettings,['showDateAlert']:true})
+            window.scroll({ top: dateRangeRef.current.offsetTop, left: 0 })
+        }
+    }
 
     return (
         <div className="mt-3 d-flex">
-
 
             <div className="col-2 ps-5 ">
                 <IoIosReturnLeft onClick={() => navigate(-1)} size={50}></IoIosReturnLeft>
@@ -93,7 +108,6 @@ const WarehouseDetails = () => {
                     </div>
 
                     <div>
-
 
                         <div className="ms-3 ">
 
@@ -133,8 +147,43 @@ const WarehouseDetails = () => {
 
                     </div>
 
-                    <div className="col-5 bg-success">
-                        <h1> I am the payment</h1>
+                    <div className="col-5 rounded-4 d-flex border border-dark ">
+                        <div className="p-3 col-12 rounded py-4">
+
+                            <div className="col-12 px-1">
+                                <Table bordered>
+                                    <tbody>
+                                        <tr >
+                                            <td className="w-50 p-2">From: {state.startDate ? new Date(state.startDate).toISOString().slice(0, 10) : 'No Date Selected'}</td>
+                                            <td className="w-50 p-2">Till: {state.endDate ? new Date(state.endDate).toISOString().slice(0, 10) : 'No Date Selected'}</td>
+                                        </tr>
+                                        <tr className={styles.requestBtn}>
+                                            <td colSpan={2} className={`text-center bg-success text-white fs-5 `} onClick={() => {
+                                                manageRequest()
+                                            }}>Request</td>
+                                        </tr>
+                                    </tbody>
+                                </Table>
+                            </div>
+
+                            <div className="mt-4 px-5">
+                                <p className="fs-4">{datediff(state.startDate, state.endDate )} Day X {warehouseData.pricePerDay}$ Per Day</p>
+                                <p className="col-12 m-auto"><hr></hr></p>
+                                <p className=" fs-4">Total: {datediff(state.startDate, state.endDate ) * parseInt(warehouseData.pricePerDay)}$</p>
+                            </div>
+
+                            <div className="mt-5 d-flex justify-content-between px-4">
+
+                                <p className={`fs-4`} onClick={() => {
+                                    setDataSettings({...dataSettings, ['showEmail']: true})
+                                }}> { dataSettings.showEmail ?  <p className="fs-5">{warehouseData.Owner.email} </p> : <p className={styles.emailIcon}><AiOutlineMail size={40}></AiOutlineMail> Mail </p>  }</p>
+
+                                <p className="fs-4" onClick={() => {
+                                    setDataSettings({...dataSettings, ['showPhoneNumber']: true})
+                                }}>{ dataSettings.showPhoneNumber ?  <p className="fs-5"> {warehouseData.Owner.phoneNumber} </p> : <p className={`${styles.emailIcon}`}><FiPhone size={40}></FiPhone> Phone </p> }</p>
+                            </div>
+
+                        </div>
                     </div>
 
                 </div>
@@ -229,26 +278,28 @@ const WarehouseDetails = () => {
                     <h1>Select Rental Date:</h1>
                     <p>Select a rental date so your request to rent the warehouse will be sent to the owner</p>
                     <p>Availble Dates: {warehouseData && warehouseData.datesAvailable.map((currentDate) => {
-                        return <span className="ms-3 px-3 py-1 d-inline-block rounded-4" style={{backgroundColor: '#90ee90'}}>{currentDate[0].replaceAll('/','-')} / {currentDate[1].replaceAll('/','-')}</span>
+                        return <span className="ms-3 px-3 py-1 d-inline-block rounded-4" style={{ backgroundColor: '#90ee90' }}>{currentDate[0].replaceAll('/', '-')} / {currentDate[1].replaceAll('/', '-')}</span>
                     })}</p>
-                   { state.endDate && <p> From: {new Date(state.startDate).toISOString().slice(0, 10)}<span className="ms-3"></span> Till: {new Date(state.endDate).toISOString().slice(0, 10)}</p>}
-                    <div>
-                       {dataSettings.endDate && <DateRangePicker
+                    {state.endDate && <p> From: {new Date(state.startDate).toISOString().slice(0, 10)}<span className="ms-3"></span> Till: {new Date(state.endDate).toISOString().slice(0, 10)}</p>}
+                    {dataSettings.showDateAlert && <p className={`${styles.dateAlert} fs-4`}> Fill Date To Continue !</p>}
+                    <div ref={dateRangeRef}>
+                        {dataSettings.endDate && <DateRangePicker 
 
-                            onChange={item => { 
+                            onChange={item => {
                                 setState(item.selection)
                                 setFinalDate(item.selection)
+                                setDataSettings({...dataSettings, ['showDateAlert']: false})
                             }}
                             minDate={new Date()}
                             showSelectionPreview={true}
                             moveRangeOnFirstSelection={false}
                             months={2}
-                            maxDate={ new Date(dataSettings.endDate) }
+                            maxDate={new Date(dataSettings.endDate)}
                             disabledDates={dataSettings.disabledDates}
                             ranges={[state]}
                             direction="horizontal"
                         />
-                            }
+                        }
                     </div>
                 </div>
 
@@ -256,6 +307,10 @@ const WarehouseDetails = () => {
 
         </div>
     )
+}
+
+function datediff(first, second) {
+    return Math.round((second-first)/(1000*60*60*24));
 }
 
 export default WarehouseDetails
