@@ -1,20 +1,73 @@
 import { useLocation, useNavigate } from "react-router-dom"
 import { IoIosReturnLeft } from 'react-icons/io'
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { addDays } from 'date-fns';
+
 
 import { BiCctv } from 'react-icons/bi'
 import sprinkler from '../../Components/WarehouseCard/sprinkler.png'
 import { TbForklift } from 'react-icons/tb'
 import { GrUserWorker } from 'react-icons/gr'
 import ac from '../../Components/WarehouseCard/air-conditioner.png'
+import WarehousesMap from '../../Components/WarehousesMap/WarehousesMap.js'
+import osm from '../../Components/WarehousesMap/TileLayer'
+import L from 'leaflet'
+import { MapContainer, Marker, Popup, TileLayer, useMapEvents } from "react-leaflet";
+import { DateRangePicker } from 'react-date-range';
 
 
 const WarehouseDetails = () => {
+    // const [state, setState] = useState({
+    //     selection: {
+    //       startDate: new Date(),
+    //       endDate: null,
+    //       key: 'selection'
+    //     },
+    //     compare: {
+    //       startDate: new Date(),
+    //       endDate: addDays(new Date(), 10),
+    //       key: 'selection'
+    //     }
+    //   })
+
+    const [dataSettings, setDataSettings] = useState({
+        endDate: null,
+        disabledDates: []
+    })
+
+    const [state, setState] = useState(
+        {
+          startDate: new Date(),
+          endDate: addDays(new Date(), 7),
+          key: 'selection'
+        }
+      );
+
+    const [finalDate , setFinalDate] = useState(null)
+
+    const markerIcon = new L.icon({
+        iconUrl: require('../../Components/WarehousesMap/warehouse.png'),
+        iconSize: [30, 40]
+    })
 
     const data = useLocation()
     const navigate = useNavigate();
     const [warehouseData, setWarehouseData] = useState(data.state)
     console.log(data.state)
+
+    useEffect(() => {
+        if(warehouseData == null)return
+        let maxDate = -Infinity
+        let disabledDates = []
+
+        for(let i = 0 ; i < warehouseData.datesAvailable.length ; i++){
+            maxDate = Math.max(maxDate, new Date(warehouseData.datesAvailable[i][1]).getTime())
+        }
+
+        setDataSettings({...dataSettings, ['endDate']: maxDate})
+        console.log(`max Date => ${maxDate}`)
+
+    },[warehouseData])
 
     return (
         <div className="mt-3 d-flex">
@@ -141,10 +194,60 @@ const WarehouseDetails = () => {
 
                 </div>
 
-                <div className="col-12 ">
-                        <div className="col-8 m-auto">
-                            <hr></hr>
-                        </div>
+                <div className="col-12 mb-5 ">
+                    <div className="col-10 m-auto">
+                        <hr></hr>
+                    </div>
+                </div>
+
+                <div>
+                    <MapContainer center={[warehouseData.location[0], warehouseData.location[1]]} zoom={14}  >
+                        <TileLayer
+                            url={osm.maptiler.url}
+                            attribution={osm.maptiler.attribution}
+                        />
+                        <Marker position={[warehouseData.location[0], warehouseData.location[1]]} icon={markerIcon}>
+                            <Popup>
+                                <div>
+                                    <h4>{warehouseData.name}</h4>
+                                </div>
+                            </Popup>
+                        </Marker>
+
+
+                    </MapContainer>
+                </div>
+
+
+                <div className="col-12 mt-5 ">
+                    <div className="col-10 m-auto">
+                        <hr></hr>
+                    </div>
+                </div>
+
+                <div>
+                    <h1>Select Rental Date:</h1>
+                    <p>Select a rental date so your request to rent the warehouse will be sent to the owner</p>
+                    <p>Availble Dates: {warehouseData && warehouseData.datesAvailable.map((currentDate) => {
+                        return <span className="ms-3 px-3 py-1 d-inline-block rounded-4" style={{backgroundColor: 'red'}}>{currentDate[0].replaceAll('/','-')} / {currentDate[1].replaceAll('/','-')}</span>
+                    })}</p>
+                    <div>
+                       {dataSettings.endDate && <DateRangePicker
+
+                            onChange={item => { 
+                                setState(item.selection)
+                                setFinalDate(item.selection)
+                            }}
+                            minDate={new Date()}
+                            showSelectionPreview={true}
+                            moveRangeOnFirstSelection={false}
+                            months={2}
+                            maxDate={ new Date(dataSettings.endDate) }
+                            ranges={[state]}
+                            direction="horizontal"
+                        />
+                            }
+                    </div>
                 </div>
 
             </div>
