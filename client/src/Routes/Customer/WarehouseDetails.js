@@ -64,8 +64,20 @@ const WarehouseDetails = () => {
             maxDate = Math.max(maxDate, new Date(warehouseData.datesAvailable[i][1]).getTime())
         }
 
-        setDataSettings({...dataSettings, ['endDate']: maxDate})
-        console.log(`max Date => ${maxDate}`)
+
+        for( let  i = new Date() ; i < new Date(maxDate) ; i.setDate(i.getDate() + 1)){
+            let currentDate = new Date(i)
+            let allowed = false
+
+            for(let j = 0 ; j < warehouseData.datesAvailable.length ; j++){
+                if(new Date(warehouseData.datesAvailable[j][0]) <= currentDate && currentDate <= new Date(warehouseData.datesAvailable[j][1])){
+                    allowed = true
+                }
+            }
+
+            if(!allowed){disabledDates.push(currentDate)}
+        }
+        setDataSettings({...dataSettings, ['endDate']: maxDate, ['disabledDates']: disabledDates})
 
     },[warehouseData])
 
@@ -243,6 +255,7 @@ const WarehouseDetails = () => {
                             moveRangeOnFirstSelection={false}
                             months={2}
                             maxDate={ new Date(dataSettings.endDate) }
+                            disabledDates={dataSettings.disabledDates}
                             ranges={[state]}
                             direction="horizontal"
                         />
