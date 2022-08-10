@@ -17,18 +17,6 @@ import { DateRangePicker } from 'react-date-range';
 
 
 const WarehouseDetails = () => {
-    // const [state, setState] = useState({
-    //     selection: {
-    //       startDate: new Date(),
-    //       endDate: null,
-    //       key: 'selection'
-    //     },
-    //     compare: {
-    //       startDate: new Date(),
-    //       endDate: addDays(new Date(), 10),
-    //       key: 'selection'
-    //     }
-    //   })
 
     const [dataSettings, setDataSettings] = useState({
         endDate: null,
@@ -37,8 +25,8 @@ const WarehouseDetails = () => {
 
     const [state, setState] = useState(
         {
-          startDate: new Date(),
-          endDate: addDays(new Date(), 7),
+          startDate: null,
+          endDate: null,
           key: 'selection'
         }
       );
@@ -241,8 +229,9 @@ const WarehouseDetails = () => {
                     <h1>Select Rental Date:</h1>
                     <p>Select a rental date so your request to rent the warehouse will be sent to the owner</p>
                     <p>Availble Dates: {warehouseData && warehouseData.datesAvailable.map((currentDate) => {
-                        return <span className="ms-3 px-3 py-1 d-inline-block rounded-4" style={{backgroundColor: 'red'}}>{currentDate[0].replaceAll('/','-')} / {currentDate[1].replaceAll('/','-')}</span>
+                        return <span className="ms-3 px-3 py-1 d-inline-block rounded-4" style={{backgroundColor: '#90ee90'}}>{currentDate[0].replaceAll('/','-')} / {currentDate[1].replaceAll('/','-')}</span>
                     })}</p>
+                   { state.endDate && <p> From: {new Date(state.startDate).toISOString().slice(0, 10)}<span className="ms-3"></span> Till: {new Date(state.endDate).toISOString().slice(0, 10)}</p>}
                     <div>
                        {dataSettings.endDate && <DateRangePicker
 
