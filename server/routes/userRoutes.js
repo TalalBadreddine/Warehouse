@@ -17,8 +17,8 @@ userRouter.get('/getWarehouses', validateUser, getWareHousesForUsers)
 
 userRouter.post('/rentWarehouse', validateUser, requestRentWarehouse)
 
-userRouter.get('/getAllUserRequests', validateUser, getAllUserRequests)
-
+userRouter.post('/getAllUserRequests',  getAllUserRequests)
+// validateUser,
 userRouter.post('/login', userLogin)
 
 userRouter.post('/register', userRegister)

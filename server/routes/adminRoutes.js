@@ -18,7 +18,8 @@ const {
     deleteWarehouseOwners,
     getAllWarehousesPending,
     acceptRejectWarehouseRequest,
-    adminLogin
+    adminLogin,
+    getAllWarehouseOwnersWarehouses
 } = require('../controllers/adminController')
 
 adminRouter.post('/login', adminLogin)
@@ -26,13 +27,15 @@ adminRouter.post('/login', adminLogin)
 adminRouter.get('/getAllCustomer', validateAdmin, getAllCustomer )
 adminRouter.post('/addCustomer', validateAdmin, addCustomer )
 adminRouter.delete('/deleteCustomer', validateAdmin, deleteCustomer )
-adminRouter.get('/getCurrentCustomerInfo', validateAdmin, getCurrentCustomerInfo )
-
+adminRouter.get('/getCurrentCustomerInfo', getCurrentCustomerInfo )
+// validateAdmin,
 adminRouter.get('/getAllWarehouses', validateAdmin, getAllWarehouses )
 adminRouter.post('/addWarehouse', validateAdmin, addWarehouse )
 adminRouter.delete('/deleteWarehouse', validateAdmin, deleteWarehouse )
 
-adminRouter.get('/getAllWarehouseOwners', validateAdmin, getAllWarehouseOwners )
+adminRouter.get('/getAllWarehouseOwners', getAllWarehouseOwners )
+// validateAdmin,
+adminRouter.post('/getAllWarehouseOwnersWarehouses', getAllWarehouseOwnersWarehouses)
 adminRouter.post('/addWarehouseOwners', validateAdmin, addWarehouseOwners )
 adminRouter.delete('/deleteWarehouseOwners', validateAdmin, deleteWarehouseOwners )
 

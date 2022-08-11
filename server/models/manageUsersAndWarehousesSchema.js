@@ -5,6 +5,9 @@ const manageUsersAndWarehousesSchema = new mongoose.Schema({
      userEmail:{
         type: String
     },
+    userName:{
+        type: String
+    },
     WarehouseId:{
         type: String
     },

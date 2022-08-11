@@ -103,10 +103,11 @@ const userRegister = async (req, res) => {
 const getAllUserRequests = async (req, res) => {
     try{
 
-        const decode = jwtDecode(req.cookies['jwt'])
-        
+        // const decode = jwtDecode(req.cookies['jwt'])
+        const decode = req.body
         const allUserRequests = await manageUsersAndWarehousesSchema.find({
-            userEmail: decode.user.email
+            // userEmail: decode.user.email
+             userEmail: decode.email
         })
 
         return res.send(allUserRequests).status(200)

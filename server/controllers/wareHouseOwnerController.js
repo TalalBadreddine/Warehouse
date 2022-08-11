@@ -95,10 +95,11 @@ const logout = async (req, res) => {
 const getRequests = async (req, res) => {
     try{
         const userInfo = jwtDecode(req.cookies['jwt'])
-        
+       
         const results = await manageUsersAndWarehousesSchema.find({
             status:'pending',
             warehouseOwnerEmail: userInfo.user.email
+          
         })
 
         return res.send(results).status(200)
