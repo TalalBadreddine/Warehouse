@@ -14,6 +14,7 @@ import 'react-date-range/dist/theme/default.css';
 import AboutUs from './Routes/Visitor/AboutUs/AboutUs';
 
 
+
 function App() {
   return (
     <div>
@@ -29,6 +30,7 @@ function App() {
           <Route path='login' element={<SignIn></SignIn>}></Route>
           <Route path='findASpace' element={<SearchWarehouse/>}></Route>
           <Route path='aboutUs' element={<AboutUs></AboutUs>}></Route>
+          <Route path='postNewWarehouse' element={<PostNewWarehouse></PostNewWarehouse>}></Route>
 
       </Route>
 

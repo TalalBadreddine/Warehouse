@@ -6,7 +6,8 @@ const crypto = require('crypto');
 const dotenv = require('dotenv')
 const jwtDecode = require('jwt-decode');
 const manageUsersAndWarehousesSchema = require('../models/manageUsersAndWarehousesSchema');
-const extensions = require('../helper/extensions')
+const extensions = require('../helper/extensions');
+
 
 
 dotenv.config({path: __dirname + '/../.env'})
@@ -157,6 +158,7 @@ const addWarehouses = async (req, res) => {
         const result = await warehouseSchema.create(warehouse);
         if(result){
             res.status(201).json({message:"added WareHouse"})
+            
            
         }else{
             res.status(409).json({message:"failed to add WareHouse"})
