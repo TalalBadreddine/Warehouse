@@ -1,13 +1,16 @@
 import React from 'react'
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { loginWarehouseOwner } from '../../Services/LoginWarehouseOwner';
+import { LoginWarehouseOwnerService } from '../../Services/LoginWarehouseOwnerServices';
 import {useState} from 'react';
+import axios from "axios";
+import {useNavigate} from 'react-router-dom';
 
 function LoginWarehouseOwner() {
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
-      
+    const apiUri="http://localhost:5001/warehouseOwner/login";
+    const navigate=useNavigate();
     const HandleEmail = (e) => {
       setEmail(e.target.value)
     }
@@ -19,8 +22,37 @@ function LoginWarehouseOwner() {
 
             e.preventDefault()
             
-              loginWarehouseOwner(email,password)
-            }
+              // LoginWarehouseOwnerService(email,password)
+              
+               
+                const data=(email,password);
+                axios.post(apiUri, {email,password})
+                .then(async (data) => {
+                 console.log(data);
+                navigate('/postNewWarehouse');
+                    
+                })
+                .catch((err) => {
+                    console.log(err.message)
+                     if(err.message === 'Request failed with status code 400'){
+                    window.alert("User does not exist");
+                    console.log("User does not exist");
+                     }
+                      else if(err.message === 'Request failed with status code 403');{
+                       window.alert("Wrong Password");
+                        console.log("Wrong Password");
+                  }
+              //          else if(err.res.data === 'testing'){
+              //           window.alert("You are desactivated by the admin");
+              //            console.log("Wrong desactivated by the admin");
+              //  }
+                  
+
+              
+                })
+              
+            
+              }
   return (
     <div><Form.Floating className="mb-3">
     <Form.Control value={email} onChange={HandleEmail}
@@ -29,7 +61,11 @@ function LoginWarehouseOwner() {
       placeholder="name@example.com"
     />
     <label htmlFor="floatingInputCustom">Email address</label>
+    <Form.Control.Feedback id='email'>
+              User does not exist
+            </Form.Control.Feedback>
   </Form.Floating>
+
   <Form.Floating>
     <Form.Control  value={password} onChange={HandlePassword}
       id="floatingPasswordCustom"

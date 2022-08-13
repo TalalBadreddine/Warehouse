@@ -17,6 +17,7 @@ import ManageRequests from './Routes/WarehouseOwner/MangaRequests/ManageRequests
 import MyWarehouses from './Routes/WarehouseOwner/MyWarehouses/MyWarehouses';
 
 
+
 function App() {
   return (
     <div>
@@ -32,6 +33,7 @@ function App() {
           <Route path='login' element={<SignIn></SignIn>}></Route>
           <Route path='findASpace' element={<SearchWarehouse role={'visitor'} />}></Route>
           <Route path='aboutUs' element={<AboutUs></AboutUs>}></Route>
+          <Route path='postNewWarehouse' element={<PostNewWarehouse></PostNewWarehouse>}></Route>
 
         </Route>
 
