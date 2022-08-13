@@ -49,7 +49,6 @@ function ManageRequests() {
         // getRequest(warehouseOwner)
         // .then(response => response.json())
         // .then(records() => {
-        //     console.log(records)
         // })
 
     },[]);

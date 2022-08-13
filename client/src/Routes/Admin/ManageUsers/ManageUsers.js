@@ -18,6 +18,7 @@ import { getAllCustomer } from '../../../Services/getAllUsers';
 import AddUser from '../../../Components/AddUser/AddUser';
 import { deleteCustomer } from '../../../Services/DeleteUserByAdmin';
 import { activeDeactiveCustomer } from '../../../Services/activeDeactiveCustomer';
+import { useNavigate } from 'react-router-dom';
 
 const columns = [
   { id: 'userName', label: 'Username', minWidth: 170 },
@@ -47,6 +48,7 @@ function createData(userName, email, accountStatus, action) {
 
 
 function ManageUsers() {
+  const navigate = useNavigate()
   const [rows, setRows] = useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -76,7 +78,6 @@ function ManageUsers() {
       alert('User already exists')
       return 
     }
-    console.log(item)
     setAllUsers([...allUsers,item])
   }
 
@@ -87,7 +88,6 @@ function ManageUsers() {
 
       for(let i=0 ; i < arr4.length ; i++){
         if(arr4[i]._id == userId){
-          console.log(arr4[i])
           arr4[i].isActive = status
         }
       }
@@ -145,33 +145,10 @@ function ManageUsers() {
         getAllCustomer().then(result => {
         setAllUsers(result.data)
         setSearchedUsers(result.data)
-        console.log(result.data)
-        // setCustomersData(result.data)
-        // let arr = result.data.map((item ,i)=>{
-        //     return (
-        //         createData( item.userName , 
-        //                     item.email , 
-        //                     item.isActive ? <Button style={{borderColor:'green',color:'green'}}variant="outlined" >Active</Button> : <Button style={{borderColor:'red',color:'red'}}variant="outlined" >Deactive</Button> ,
-        //                     <>
-        //                     <Button style={{color:'white', backgroundColor:'green', borderColor:'red' , margin: 5}} 
-        //                             variant="Contained" 
-        //                             size="medium">
-        //                     Log History
-        //                     </Button> 
-        //                     <Button style={{color:'white', backgroundColor:'red', borderColor:'red' , margin: 5}} 
-        //                             onClick={()=> {handleDeleteCustomer(item.email)}}
-        //                             variant="outlined" 
-        //                             size="medium">
-        //                     Delete
-        //                     </Button>
-        //                     </>,
-          
-        //     )
-        //     )
-        // })
-        // setRows([...arr])
   
-    })
+    }).catch((err) => {
+      if(err.response.data == 'forbidden'){navigate('/')}
+  })
     },[]);
 
     //for the modal

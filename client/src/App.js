@@ -15,6 +15,9 @@ import AboutUs from './Routes/Visitor/AboutUs/AboutUs';
 import WarehouseDetails from './Routes/Customer/WarehouseDetails/WarehouseDetails';
 import ManageRequests from './Routes/WarehouseOwner/MangaRequests/ManageRequests'
 import MyWarehouses from './Routes/WarehouseOwner/MyWarehouses/MyWarehouses';
+import SideBar from './Components/SideBar/SideBar'
+import AdminSignIn from './Routes/Admin/AdminSignIn/AdminSignIn'
+import ManageUsers from './Routes/Admin/ManageUsers/ManageUsers';
 
 
 
@@ -58,14 +61,15 @@ function App() {
         </Route>
 
 
-        {/* <Route path='admin/' element={<Navigationbar role="owner"></Navigationbar>}>
+       
 
-          <Route path='' element={<MyWarehouses></MyWarehouses>}></Route>
-          <Route path='addWarehouse' element={<PostNewWarehouse></PostNewWarehouse>}></Route>
-          <Route path='warehouseRequests' element={<ManageRequests> </ManageRequests>}></Route>
+        <Route path='admin/' element={<SideBar></SideBar>}>
 
-        </Route> */}
+             <Route path='' element={<ManageUsers></ManageUsers>}></Route>
 
+        </Route>
+        
+        <Route path='adminLogin' element={<AdminSignIn></AdminSignIn>}></Route>
 
       </Routes>
 

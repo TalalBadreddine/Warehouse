@@ -40,13 +40,11 @@ const validateAdmin = (req, res, next) => {
         jwt.verify(token, jwtSecret, async (err, decodedToken) => {
             if(err){
 
-                console.log(err.message);
                 return res.status(500).json("Error with the server")
 
 
             }else{
                 let role = decodedToken['role']
-                console.log(role)
                 role == "admin" ? next() : res.send("forbidden")
 
             }

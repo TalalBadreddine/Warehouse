@@ -80,9 +80,7 @@ const mongoose = require('mongoose')
          countryAndCity = [data.results[0].components.city ? data.results[0].components.city : data.results[0].components.state , data.results[0].components.country]
 
          fullLocation = data.results[0].formatted
-         console.log(countryAndCity, fullLocation)
          this.address = [countryAndCity, fullLocation ]
-         console.log(this.address)
 
      }).catch((err) => {
          console.log(` error in warehouseSchema => ${err.message}`)

@@ -34,11 +34,9 @@ function LoginWarehouseOwner() {
                     console.log(err.message)
                      if(err.message === 'Request failed with status code 400'){
                     window.alert("User does not exist");
-                    console.log("User does not exist");
                      }
                       else if(err.message === 'Request failed with status code 403');{
                        window.alert("Wrong Password");
-                        console.log("Wrong Password");
                   }
               //          else if(err.res.data === 'testing'){
               //           window.alert("You are desactivated by the admin");

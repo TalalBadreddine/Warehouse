@@ -16,7 +16,6 @@ function AddUser(props) {
     const handleAddCustomer= (e)=>{
         addCustomer(customer).then((result)=> {
             props.addAction(result)
-            console.log(result)
         }) 
         props.closeAction()
        

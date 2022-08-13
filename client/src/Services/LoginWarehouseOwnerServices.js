@@ -8,7 +8,6 @@ export async function LoginWarehouseOwnerService(email,password){
     const data=(email,password);
     return await axios.post(apiUri, {email,password})
     .then(async (data) => {
-     console.log(data);
     // navigate('/postNewWarehouse');
         
     })

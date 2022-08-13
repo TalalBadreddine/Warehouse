@@ -38,17 +38,14 @@ const addCustomer = async(req, res) => {
             return res.status(409).json({message:'User already exists'})
         }
         const result = await usersSchema.create(user);
-        console.log(result)
         if(result){
             return res.status(201).send(result)
         }else{
             res.status(409).json({message:"failed to add costumer"})
         }
     
-console.log(req.body)
     }catch(error){
         res.status(500).json({error})
-    console.log(error);
     }
 }
 
@@ -56,7 +53,6 @@ const deleteCustomer = async(req, res) => {
     // return res.send('deleteCustomer').status(200)
     try{
           const email = req.body.email
-          console.log(req.body)
           await usersSchema.findOneAndDelete({email:email})
           res.status(200).json({message : "costumer deleted"})
     }
@@ -147,11 +143,10 @@ const addWarehouse = async(req, res) => {
         }else{
             res.status(409).json({message:"failed to add warehouse"})
         }
-    
-console.log(req.body)
+
     }catch(error){
         res.status(500).json({error})
-    console.log(error);
+    
     }
 }
 
@@ -201,10 +196,8 @@ const addWarehouseOwners = async(req, res) => {
             res.status(409).json({message:"failed to add warehouseOwner"})
         }
     
-console.log(req.body)
     }catch(error){
         res.status(500).json({error})
-    console.log(error);
     }
 }
 
@@ -259,13 +252,13 @@ const adminLogin = async (req, res) => {
             jwt.sign({user: userInfo, role: 'admin'}, jwtSecret, async (err, token) => {
 
                 res.cookie('jwt', token, { httpOnly: true, maxAge: 3 * 24 * 60 * 60 * 1000 })
-                return res.status(200).json(token)
+                return res.status(200).json(true)
             })
     
 
         }else{
             
-            return res.send('rejected').status(403)
+            return res.send(false).status(403)
         }
 
     }

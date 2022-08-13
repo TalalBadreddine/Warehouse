@@ -8,7 +8,6 @@ export function acceptDeclineRequest(acceptingDeclining){
     //     (res)=>res.json()
     //     )
     //     .then((response) => {
-    //             console.log(response);
     //             getData(response);
     //         })
 

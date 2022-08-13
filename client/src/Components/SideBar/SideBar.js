@@ -17,10 +17,19 @@ import AccessibilityIcon from '@mui/icons-material/Accessibility';
 import LogoutIcon from '@mui/icons-material/Logout';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import Link from '@mui/material/Link';
+import { Outlet, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 
-
+// TODO:add link from router-dom
 function SideBar() {
+  const navigate = useNavigate()
+
+  const Logout = () => {
+    axios.get('/logout').then((data) => {
+      navigate('/')
+    })
+  }
 
 const [state, setState] = React.useState({
      top: false,
@@ -94,19 +103,22 @@ const [state, setState] = React.useState({
 
 
       <List>
-        {['Logout'].map((text, index) => (
-          <ListItem key={text} disablePadding>
+
+          <ListItem disablePadding>
             <ListItemButton href="/5" variant="contained">
               <LogoutIcon style={{color:'#54d494' , minWidth: '50px'}}/>
-              <ListItemText primary={text} />
+              <ListItemText primary={'Logout'}  onClick={(e) =>{
+                e.preventDefault()
+                Logout()
+                } }/>
             </ListItemButton>
           </ListItem>
-        ))}
       </List>
     </Box>
   );
 
   return (
+    <div >
     <div>
        {[''].map((anchor) => (
         <React.Fragment key={anchor}>
@@ -128,6 +140,8 @@ const [state, setState] = React.useState({
           </Drawer>
         </React.Fragment>
       ))}
+    </div>
+    {<Outlet></Outlet>}
     </div>
   )
 }

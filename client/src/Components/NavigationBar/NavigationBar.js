@@ -45,12 +45,14 @@ function Navigationbar({role}) {
             navbarScroll
           >
 
-             {/* CUSTOMER AND VISITOR */}
-             { (role == 'visitor' || role == 'customer') && <Nav.Link> <Link to={ findSpaceRoute(role)} style={{ color: "black", textDecoration: 'none' }} className={'px-1'} > Find a space </Link> </Nav.Link>}
-
+           
 
              {/* VISITOR */}
             {role == 'visitor' && <Nav.Link> <Link to={''} style={{ color: "black", textDecoration: 'none' }} className={'px-1'} > Home </Link> </Nav.Link>}
+            
+              {/* CUSTOMER AND VISITOR */}
+              { (role == 'visitor' || role == 'customer') && <Nav.Link> <Link to={ findSpaceRoute(role)} style={{ color: "black", textDecoration: 'none' }} className={'px-1'} > Find a space </Link> </Nav.Link>}
+
             {role == 'visitor' &&<Nav.Link> <Link to={'/aboutUs'} style={{ color: "black", textDecoration: 'none' }} className={'px-1'} > About us </Link> </Nav.Link>}
             {role == 'visitor' && <Nav.Link> <Link to={'/login'} style={{ color: "black", textDecoration: 'none' }} className={`px-3 py-2 rounded-4  ${styles.loginBtn}`} > Sign-in </Link> </Nav.Link>}
 
