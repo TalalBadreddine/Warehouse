@@ -8,8 +8,8 @@
 } */
 .mytablecontainer{
     display: block;
-     height: 300px;
-     overflow: hidden ;
+    height: 600px;
+    overflow: hidden ;
     overflow-y: scroll ;
 }
 /* .tablehead{

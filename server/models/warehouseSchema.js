@@ -6,6 +6,9 @@ const mongoose = require('mongoose')
     name:{
         type: String
     },
+    images:{
+        type:[String]
+    },
     space:{
         type: String
     },

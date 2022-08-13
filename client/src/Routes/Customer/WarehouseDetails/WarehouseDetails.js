@@ -1,36 +1,38 @@
 import { IoIosReturnLeft } from 'react-icons/io'
-import {AiOutlineMail} from "react-icons/ai"
-import {FiPhone} from "react-icons/fi"
+import { AiOutlineMail } from "react-icons/ai"
+import { FiPhone } from "react-icons/fi"
 import { BiCctv } from 'react-icons/bi'
-import sprinkler from '../../Components/WarehouseCard/sprinkler.png'
+import sprinkler from '../../../Components/WarehouseCard/sprinkler.png'
 import { TbForklift } from 'react-icons/tb'
 import { GrUserWorker } from 'react-icons/gr'
-import ac from '../../Components/WarehouseCard/air-conditioner.png'
+import ac from '../../../Components/WarehouseCard/air-conditioner.png'
 
-import { addDays } from 'date-fns';
 import { DateRangePicker } from 'react-date-range';
 
 import { useEffect, useState, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom"
 
-import WarehousesMap from '../../Components/WarehousesMap/WarehousesMap.js'
-import osm from '../../Components/WarehousesMap/TileLayer'
+import osm from '../../../Components/WarehousesMap/TileLayer'
 import L from 'leaflet'
 import { MapContainer, Marker, Popup, TileLayer, useMapEvents } from "react-leaflet";
 
-import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table"
 import styles from './WarehouseDetailsCss.module.css'
+import CreditCardForm from '../../../Components/CreditCard/CreditCardForm'
+import { Modal } from 'react-bootstrap'
+import Button from 'react-bootstrap/Button'
+
 
 
 const WarehouseDetails = () => {
 
+    const [showPayments, setShowPayments] = useState(false)
     const [dataSettings, setDataSettings] = useState({
         endDate: null,
         disabledDates: [],
         showEmail: false,
         showPhoneNumber: false,
-        showDateAlert:false
+        showDateAlert: false
     })
 
     const dateRangeRef = useRef()
@@ -45,7 +47,7 @@ const WarehouseDetails = () => {
     const [finalDate, setFinalDate] = useState(null)
 
     const markerIcon = new L.icon({
-        iconUrl: require('../../Components/WarehousesMap/warehouse.png'),
+        iconUrl: require('../../../Components/WarehousesMap/warehouse.png'),
         iconSize: [30, 40]
     })
 
@@ -79,14 +81,39 @@ const WarehouseDetails = () => {
     }, [warehouseData])
 
     const manageRequest = () => {
-        if(!state.endDate || !state.endDate){
-            setDataSettings({...dataSettings,['showDateAlert']:true})
+        if (!state.endDate || !state.endDate) {
+            setDataSettings({ ...dataSettings, ['showDateAlert']: true })
             window.scroll({ top: dateRangeRef.current.offsetTop, left: 0 })
+            return
         }
+        setShowPayments(true)
     }
 
     return (
         <div className="mt-3 d-flex">
+
+
+            <Modal
+                show={showPayments}
+                onHide={() => setShowPayments(false)}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title id="contained-modal-title-vcenter">
+                        Payments
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <CreditCardForm></CreditCardForm>
+                </Modal.Body>
+            </Modal>
+
+
+
+            {/* <div className='position-absolute'>
+            </div> */}
 
             <div className="col-2 ps-5 ">
                 <IoIosReturnLeft onClick={() => navigate(-1)} size={50}></IoIosReturnLeft>
@@ -103,8 +130,8 @@ const WarehouseDetails = () => {
 
                 <div className="d-flex">
 
-                    <div style={{ height: '404px' }} className="bg-primary">
-                        <img src='#' alt='warehouseImg' width={'300px'} height={'404px'} className="rounded" ></img>
+                    <div style={{ height: '404px' }} >
+                        <img src={warehouseData.images[0]} alt='warehouseImg' width={'300px'} height={'404px'} className="rounded border" ></img>
                     </div>
 
                     <div>
@@ -112,12 +139,12 @@ const WarehouseDetails = () => {
                         <div className="ms-3 ">
 
                             <div>
-                                <img src='#' alt='warehouseImg' width={'300px'} height={'190px'} className="rounded m-1" ></img>
-                                <img src='#' alt='warehouseImg' width={'300px'} height={'190px'} className="rounded ms-2" ></img>
+                                <img src={warehouseData.images[1]} alt='warehouseImg' width={'300px'} height={'190px'} className="rounded m-1 border" ></img>
+                                <img src={warehouseData.images[2]} alt='warehouseImg' width={'300px'} height={'190px'} className="rounded ms-2 border" ></img>
                             </div>
 
                             <div>
-                                <img src='#' alt='warehouseImg' width={'610px'} height={'200px'} className="rounded m-1 " ></img>
+                                <img src={warehouseData.images[0]} alt='warehouseImg' width={'610px'} height={'200px'} className="rounded m-1 border" ></img>
                             </div>
 
                         </div>
@@ -167,20 +194,20 @@ const WarehouseDetails = () => {
                             </div>
 
                             <div className="mt-4 px-5">
-                                <p className="fs-4">{datediff(state.startDate, state.endDate )} Day X {warehouseData.pricePerDay}$ Per Day</p>
+                                <p className="fs-4">{datediff(state.startDate, state.endDate)} Day X {warehouseData.pricePerDay}$ Per Day</p>
                                 <p className="col-12 m-auto"><hr></hr></p>
-                                <p className=" fs-4">Total: {datediff(state.startDate, state.endDate ) * parseInt(warehouseData.pricePerDay)}$</p>
+                                <p className=" fs-4">Total: {datediff(state.startDate, state.endDate) * parseInt(warehouseData.pricePerDay)}$</p>
                             </div>
 
                             <div className="mt-5 d-flex justify-content-between px-4">
 
                                 <p className={`fs-4`} onClick={() => {
-                                    setDataSettings({...dataSettings, ['showEmail']: true})
-                                }}> { dataSettings.showEmail ?  <p className="fs-5">{warehouseData.Owner.email} </p> : <p className={styles.emailIcon}><AiOutlineMail size={40}></AiOutlineMail> Mail </p>  }</p>
+                                    setDataSettings({ ...dataSettings, ['showEmail']: true })
+                                }}> {dataSettings.showEmail ? <p className="fs-5">{warehouseData.Owner.email} </p> : <p className={styles.emailIcon}><AiOutlineMail size={40}></AiOutlineMail> Mail </p>}</p>
 
                                 <p className="fs-4" onClick={() => {
-                                    setDataSettings({...dataSettings, ['showPhoneNumber']: true})
-                                }}>{ dataSettings.showPhoneNumber ?  <p className="fs-5"> {warehouseData.Owner.phoneNumber} </p> : <p className={`${styles.emailIcon}`}><FiPhone size={40}></FiPhone> Phone </p> }</p>
+                                    setDataSettings({ ...dataSettings, ['showPhoneNumber']: true })
+                                }}>{dataSettings.showPhoneNumber ? <p className="fs-5"> {warehouseData.Owner.phoneNumber} </p> : <p className={`${styles.emailIcon}`}><FiPhone size={40}></FiPhone> Phone </p>}</p>
                             </div>
 
                         </div>
@@ -249,6 +276,7 @@ const WarehouseDetails = () => {
                     </div>
                 </div>
 
+
                 <div>
                     <MapContainer center={[warehouseData.location[0], warehouseData.location[1]]} zoom={14}  >
                         <TileLayer
@@ -283,12 +311,12 @@ const WarehouseDetails = () => {
                     {state.endDate && <p> From: {new Date(state.startDate).toISOString().slice(0, 10)}<span className="ms-3"></span> Till: {new Date(state.endDate).toISOString().slice(0, 10)}</p>}
                     {dataSettings.showDateAlert && <p className={`${styles.dateAlert} fs-4`}> Fill Date To Continue !</p>}
                     <div ref={dateRangeRef}>
-                        {dataSettings.endDate && <DateRangePicker 
+                        {dataSettings.endDate && <DateRangePicker
 
                             onChange={item => {
                                 setState(item.selection)
                                 setFinalDate(item.selection)
-                                setDataSettings({...dataSettings, ['showDateAlert']: false})
+                                setDataSettings({ ...dataSettings, ['showDateAlert']: false })
                             }}
                             minDate={new Date()}
                             showSelectionPreview={true}
@@ -310,7 +338,7 @@ const WarehouseDetails = () => {
 }
 
 function datediff(first, second) {
-    return Math.round((second-first)/(1000*60*60*24));
+    return Math.round((second - first) / (1000 * 60 * 60 * 24));
 }
 
 export default WarehouseDetails
