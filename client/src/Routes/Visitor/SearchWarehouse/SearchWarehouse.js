@@ -9,7 +9,7 @@ import Button from "react-bootstrap/Button"
 import { Form } from "react-bootstrap"
 import WarehousesSearchFilters from "../../../Components/Footer/WarehousesSearchFilters/WarehousesSearchFilters"
 
-const SearchWarehouse = () => {
+const SearchWarehouse = ({role}) => {
 
     const [allWarehouses, setAllWarehouses] = useState()
     const [filtredWarehousesInfo, setFiltredWarehousesInfo] = useState()
@@ -48,6 +48,20 @@ const SearchWarehouse = () => {
     useEffect(() => {
         axios.get('/visitor/getWarehouses').then((results) => {
             let data = results.data
+            let arrOfWarehouses = []
+
+            for(let i = 0 ; i < data.length ; i++){
+          
+                for(let j = 0 ; j < data[i].warehouses.length; j++){
+                    let warehouse = data[i].warehouses[j][0]
+                    warehouse['Owner'] = data[i].warehouseOwner
+
+                    arrOfWarehouses.push(warehouse)
+                }
+            }
+   
+     
+        
             let maxPrice = -Infinity
             let minPrice = Infinity
 
@@ -55,18 +69,18 @@ const SearchWarehouse = () => {
             let minSpace = Infinity
 
 
-            for (let i = 0; i < data.length; i++) {
-                maxPrice = Math.max(maxPrice, data[i].pricePerDay)
-                minPrice = Math.min(minPrice, data[i].pricePerDay)
+            for (let i = 0; i < arrOfWarehouses.length; i++) {
+                maxPrice = Math.max(maxPrice, arrOfWarehouses[i].pricePerDay)
+                minPrice = Math.min(minPrice, arrOfWarehouses[i].pricePerDay)
 
-                maxSpace = Math.max(maxSpace, parseInt(data[i].space))
-                minSpace = Math.min(minSpace, parseInt(data[i].space))
+                maxSpace = Math.max(maxSpace, parseInt(arrOfWarehouses[i].space))
+                minSpace = Math.min(minSpace, parseInt(arrOfWarehouses[i].space))
             }
 
             setDefaultSettings({ ...defaultSettings, ['priceMin']: minPrice, ['priceMax']: maxPrice, ['spaceMin']: minSpace, ['spaceMax']: maxSpace })
 
-            setAllWarehouses(data)
-            setFiltredWarehousesInfo(data)
+            setAllWarehouses(arrOfWarehouses)
+            setFiltredWarehousesInfo(arrOfWarehouses)
         })
 
     }, [])
@@ -270,7 +284,7 @@ const SearchWarehouse = () => {
                                         isFlyToOn &&
                                             setFlyToMap([warehouse.location[0], warehouse.location[1]])
                                     }}>
-                                        <WarehouseCard info={warehouse} ></WarehouseCard>
+                                        <WarehouseCard info={warehouse} role={role} ></WarehouseCard>
 
                                     </div>
                                 )
