@@ -6,6 +6,9 @@ const mongoose = require('mongoose')
     name:{
         type: String
     },
+    images:{
+        type:[String]
+    },
     space:{
         type: String
     },
@@ -39,6 +42,10 @@ const mongoose = require('mongoose')
     isWorkers:{
         type: Boolean,
         default: false
+    },
+    isForklift:{
+        type: Boolean,
+        default:false
     },
     registerDate:{
         type: Date,

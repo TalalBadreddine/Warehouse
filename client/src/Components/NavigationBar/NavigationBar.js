@@ -9,6 +9,17 @@ import styles from './NavigationCss.module.css'
 function Navigationbar({role}) {
   const [currentPage, setCurrentPage] = useState(-1)
 
+  const findSpaceRoute = (role) => {
+    if(role == 'visitor'){
+      return '/findASpace'
+    }
+
+    if(role == 'customer'){
+      return '/customer/'
+    }
+
+  }
+
   return (
    <>
   
@@ -26,10 +37,14 @@ function Navigationbar({role}) {
           >
 
             {role == 'visitor' && <Nav.Link> <Link to={''} style={{ color: "black", textDecoration: 'none' }} className={'px-1'} > Home </Link> </Nav.Link>}
-            <Nav.Link> <Link to={'/findASpace'} style={{ color: "black", textDecoration: 'none' }} className={'px-1'} > Find a space </Link> </Nav.Link>
-            <Nav.Link> <Link to={'/aboutUs'} style={{ color: "black", textDecoration: 'none' }} className={'px-1'} > About us </Link> </Nav.Link>
-            <Nav.Link> <Link to={'/login'} style={{ color: "black", textDecoration: 'none' }} className={`px-3 py-2 rounded-4  ${styles.loginBtn}`} > Sign-in </Link> </Nav.Link>
 
+            { (role == 'visitor' || role == 'customer') && <Nav.Link> <Link to={ findSpaceRoute(role)} style={{ color: "black", textDecoration: 'none' }} className={'px-1'} > Find a space </Link> </Nav.Link>}
+            {role == 'customer' && <Nav.Link> <Link to={'/requests'} style={{ color: "black", textDecoration: 'none' }} className={'px-1'} > My Requests </Link> </Nav.Link>}
+            {role == 'owner' && <Nav.Link> <Link to={'/warehouses'} style={{ color: "black", textDecoration: 'none' }} className={'px-1'} > My Warehouses </Link> </Nav.Link>}
+            <Nav.Link> <Link to={'/aboutUs'} style={{ color: "black", textDecoration: 'none' }} className={'px-1'} > About us </Link> </Nav.Link>
+            {role == 'visitor' && <Nav.Link> <Link to={'/login'} style={{ color: "black", textDecoration: 'none' }} className={`px-3 py-2 rounded-4  ${styles.loginBtn}`} > Sign-in </Link> </Nav.Link>}
+
+            {role == 'owner' && <Nav.Link> <Link to={'/owner/warehouseRequests'} style={{ color: "black", textDecoration: 'none' }} className={'px-1'} > Warehouse Requests </Link> </Nav.Link> }
             {/* <Nav.Link href="#List your space" style={{ color: "black" }}> List your space</Nav.Link>
             <Nav.Link href="#Find a space" style={{ color: "black" }}> Find a space</Nav.Link>
              <Nav.Link href="/About Us" style={{ color: "black" }}> About Us</Nav.Link> 
