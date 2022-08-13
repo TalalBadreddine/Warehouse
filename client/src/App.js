@@ -12,6 +12,8 @@ import "../node_modules/bootstrap/dist/css/bootstrap.css"
 import 'react-date-range/dist/styles.css'; 
 import 'react-date-range/dist/theme/default.css'; 
 import AboutUs from './Routes/Visitor/AboutUs/AboutUs';
+import ManageRequests from './Routes/WarehouseOwner/MangaRequests/ManageRequests';
+import SideBar from './Components/SideBar/SideBar';
 
 
 function App() {
@@ -29,7 +31,8 @@ function App() {
           <Route path='login' element={<SignIn></SignIn>}></Route>
           <Route path='findASpace' element={<SearchWarehouse/>}></Route>
           <Route path='aboutUs' element={<AboutUs></AboutUs>}></Route>
-
+          <Route path='/managerequests' element={<ManageRequests></ManageRequests>}></Route>
+          
       </Route>
 
 
@@ -38,7 +41,7 @@ function App() {
       {/* </Route> */}
 
       </Routes> 
-
+      <SideBar/>
 
     </div>
   )
