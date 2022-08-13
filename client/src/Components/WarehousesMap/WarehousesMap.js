@@ -26,7 +26,7 @@ const WarehousesMap = (props) => {
     const mapRef = useRef();
 
     useEffect(() => {
-        props.setMylocation(location)
+        props.setMylocation && props.setMylocation(location)
     }, [location])
 
     const showLocation = (x, y) => {

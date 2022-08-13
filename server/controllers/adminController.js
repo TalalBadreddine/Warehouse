@@ -38,8 +38,9 @@ const addCustomer = async(req, res) => {
             return res.status(409).json({message:'User already exists'})
         }
         const result = await usersSchema.create(user);
+        console.log(result)
         if(result){
-            res.status(201).json({message:"added costumer"})
+            return res.status(201).send(result)
         }else{
             res.status(409).json({message:"failed to add costumer"})
         }
@@ -55,6 +56,7 @@ const deleteCustomer = async(req, res) => {
     // return res.send('deleteCustomer').status(200)
     try{
           const email = req.body.email
+          console.log(req.body)
           await usersSchema.findOneAndDelete({email:email})
           res.status(200).json({message : "costumer deleted"})
     }
@@ -79,6 +81,19 @@ const getCurrentCustomerInfo = async (req, res) => {
     }
     catch(error){
         res.status(500).json({message : "internal error with function get current customer"})
+    }
+}
+
+const activeDeactiveCustomer = async (req,res) => {
+    try{
+        const userId = req.body.userId
+        const status = req.body.status
+
+        await usersSchema.updateOne({_id:userId},{$set:{isActive:status}})
+        return res.status(200).send(status)
+    }
+    catch(error){
+         res.status(500).json({message : "internal error with function activedeactive user"})
     }
 }
 
@@ -259,6 +274,7 @@ const adminLogin = async (req, res) => {
     }
 }
 
+
 module.exports = {
     getAllCustomer,
     addCustomer, 
@@ -272,5 +288,6 @@ module.exports = {
     deleteWarehouseOwners,
     getAllWarehousesPending,
     acceptRejectWarehouseRequest,
-    adminLogin
+    adminLogin,
+    activeDeactiveCustomer
 }
