@@ -1,5 +1,5 @@
 import axios from "axios";
-const apiUri="http://localhost:5001/warehouseOwner/acceptDeclineRequest";
+const apiUri="/warehouseOwner/acceptDeclineRequest";
 
 
 export function acceptDeclineRequest(acceptingDeclining){ 

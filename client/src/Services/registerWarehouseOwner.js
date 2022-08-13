@@ -1,5 +1,5 @@
 import axios from "axios";
-const apiUri="http://localhost:5001/warehouseOwner/register";
+const apiUri="/warehouseOwner/register";
 
 
 export function registerWarehouseOwner(warehouseOwner){ 

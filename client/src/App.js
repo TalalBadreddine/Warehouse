@@ -46,7 +46,6 @@ function App() {
         </Route>
 
 
-
         {/* </Route> */}
 
         <Route path='owner/' element={<Navigationbar role="owner"></Navigationbar>}>
