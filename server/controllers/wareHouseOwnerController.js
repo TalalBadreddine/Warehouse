@@ -47,8 +47,8 @@ const register = async (req, res) => {
 //Login
 const login = async (req, res) => {
     try {
-
-        const {email, password} = req.body;
+    
+        const {email, password} = req.body; 
 
         const user = await warehouseOwnerModel.findOne({
             email
@@ -64,18 +64,18 @@ const login = async (req, res) => {
         const payload = {
             user          
         }
+        
+        await jwt.sign({user: user, role: 'warehouseOwner'}, jwtSecret, async (err, token) => {
 
-        jwt.sign({user: user, role: 'warehouseOwner'}, jwtSecret, async (err, token) => {
-
-            res.cookie('jwt', token, { httpOnly: true, maxAge: 3 * 24 * 60 * 60 * 1000 })
-            return res.status(200).json(token)
+            await res.cookie('jwt', `${token}`, { httpOnly: true })
+             res.status(200).json(token)
         })
 
 
 
     } catch(error){
         console.log(error)
-        return res.status(500).json({message : "an error occured at login function"});
+         res.status(500).json({message : "an error occured at login function"});
     }
 }
 
@@ -98,12 +98,10 @@ const logout = async (req, res) => {
 
 const getRequests = async (req, res) => {
     try{
-        // const userInfo = jwtDecode(req.cookies['jwt'])
-        const userInfo = req.body
+        const userInfo = jwtDecode(req.cookies['jwt'])
         const results = await manageUsersAndWarehousesSchema.find({
             status:'pending',
-            // warehouseOwnerEmail: userInfo.user.email
-            warehouseOwnerEmail: userInfo.email
+            warehouseOwnerEmail: userInfo.user.email
         })
 
         return res.send(results).status(200)
@@ -115,12 +113,13 @@ const getRequests = async (req, res) => {
 
 const acceptDeclineRequest = async (req, res) => {
     try{
-        // const decodedInfo = jwtDecode(req.cookies['jwt'])
+        //TODO: talal check what is the use of decoded Info
+        const decodedInfo = jwtDecode(req.cookies['jwt'])
         const requestId = req.body.requestId
         let requestStatus =  req.body.status
         const warehouseId = req.body.warehouseId
         const requestedDate = req.body.requestedDate
-        console.log(req.body)
+   
 
         if(requestStatus == 'accepted'){
             
@@ -138,7 +137,6 @@ const acceptDeclineRequest = async (req, res) => {
                 )
             })
         }
-        console.log('done')
         return res.send('updated').status(200)
         
     }
@@ -171,14 +169,12 @@ const addWarehouses = async (req, res) => {
 // GET request for a list of all warehouseOwner
 const getWarehouses = async (req, res) => {
     try{
-        // const decodedInfo = jwtDecode(req.cookies['jwt'])
-        const decodedInfo = {
-            email: 'owner2@gmail.com'
-        }
+
+        const decodedInfo = jwtDecode(req.cookies['jwt'])
         let myWarehousese = []
 
         const owner = await warehouseOwnerModel.findOne({
-            email: decodedInfo.email
+            email: decodedInfo.user.email
         })
 
       for(let i = 0 ; i < owner.myWarehouses.length ; i++){

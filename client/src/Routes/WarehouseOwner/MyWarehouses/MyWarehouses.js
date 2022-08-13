@@ -1,26 +1,29 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { Button } from "react-bootstrap"
+import { useNavigate } from "react-router-dom"
 import WarehouseCard from "../../../Components/WarehouseCard/WarehouseCard"
 
 const MyWarehouses = () => {
 
     const [myWarehouses, setMyWarehouses] = useState()
+    const navigate = useNavigate()
 
     useEffect( () => {
         axios.get('/warehouseOwner/').then((results) => {
             let warehouses = results.data
-            setMyWarehouses(warehouses)
-            console.log(warehouses)
-            
+            setMyWarehouses(warehouses) 
+        }).catch((err) => {
+            if(err.response.data == 'forbidden'){navigate('/')}
         })
+
     },[])
 
     return(
         <div className=" col-8 justify-content-center m-auto">
             <div>
                 <div className="d-flex justify-content-center ">
-                    <Button variant="success"> Add Warehouse</Button>
+                    <Button variant="success" onClick={() => {navigate('/owner/addWarehouse')}}> Add Warehouse</Button>
                 </div>
                 <div  >
                    { myWarehouses && myWarehouses.map((warehouse) => {

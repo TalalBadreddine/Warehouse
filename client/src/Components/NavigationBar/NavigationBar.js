@@ -1,13 +1,15 @@
+import axios from 'axios';
 import React, { useState } from 'react'
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { Outlet, Link } from 'react-router-dom';
+import { Outlet, Link, useNavigate } from 'react-router-dom';
 import styles from './NavigationCss.module.css'
 
 
 function Navigationbar({role}) {
   const [currentPage, setCurrentPage] = useState(-1)
+  const navigate = useNavigate()
 
   const findSpaceRoute = (role) => {
     if(role == 'visitor'){
@@ -20,10 +22,17 @@ function Navigationbar({role}) {
 
   }
 
+  const logout  = () => {
+    axios.get('/logout').then((data) => {
+      navigate('/')
+    })
+  }
+
+//TODO: nav logout btn and change i ui
   return (
    <>
   
-
+    
        <Navbar bg="white" expand="lg" style={{ color: "black" }} >
       <Container fluid>
         <Navbar.Brand href="#Logo">Logo</Navbar.Brand>
@@ -36,19 +45,27 @@ function Navigationbar({role}) {
             navbarScroll
           >
 
-            {role == 'visitor' && <Nav.Link> <Link to={''} style={{ color: "black", textDecoration: 'none' }} className={'px-1'} > Home </Link> </Nav.Link>}
+             {/* CUSTOMER AND VISITOR */}
+             { (role == 'visitor' || role == 'customer') && <Nav.Link> <Link to={ findSpaceRoute(role)} style={{ color: "black", textDecoration: 'none' }} className={'px-1'} > Find a space </Link> </Nav.Link>}
 
-            { (role == 'visitor' || role == 'customer') && <Nav.Link> <Link to={ findSpaceRoute(role)} style={{ color: "black", textDecoration: 'none' }} className={'px-1'} > Find a space </Link> </Nav.Link>}
-            {role == 'customer' && <Nav.Link> <Link to={'/requests'} style={{ color: "black", textDecoration: 'none' }} className={'px-1'} > My Requests </Link> </Nav.Link>}
-            {role == 'owner' && <Nav.Link> <Link to={'/warehouses'} style={{ color: "black", textDecoration: 'none' }} className={'px-1'} > My Warehouses </Link> </Nav.Link>}
-            <Nav.Link> <Link to={'/aboutUs'} style={{ color: "black", textDecoration: 'none' }} className={'px-1'} > About us </Link> </Nav.Link>
+
+             {/* VISITOR */}
+            {role == 'visitor' && <Nav.Link> <Link to={''} style={{ color: "black", textDecoration: 'none' }} className={'px-1'} > Home </Link> </Nav.Link>}
+            {role == 'visitor' &&<Nav.Link> <Link to={'/aboutUs'} style={{ color: "black", textDecoration: 'none' }} className={'px-1'} > About us </Link> </Nav.Link>}
             {role == 'visitor' && <Nav.Link> <Link to={'/login'} style={{ color: "black", textDecoration: 'none' }} className={`px-3 py-2 rounded-4  ${styles.loginBtn}`} > Sign-in </Link> </Nav.Link>}
 
+              {/* CUSTOMER */}
+            {role == 'customer' && <Nav.Link> <Link to={'/requests'} style={{ color: "black", textDecoration: 'none' }} className={'px-1'} > My Requests </Link> </Nav.Link>}
+
+            
+              {/* OWNER */}
+            {role == 'owner' && <Nav.Link> <Link to={'/owner/myWarehouses'} style={{ color: "black", textDecoration: 'none' }} className={'px-1'} > My Warehouses </Link> </Nav.Link>}
             {role == 'owner' && <Nav.Link> <Link to={'/owner/warehouseRequests'} style={{ color: "black", textDecoration: 'none' }} className={'px-1'} > Warehouse Requests </Link> </Nav.Link> }
-            {/* <Nav.Link href="#List your space" style={{ color: "black" }}> List your space</Nav.Link>
-            <Nav.Link href="#Find a space" style={{ color: "black" }}> Find a space</Nav.Link>
-             <Nav.Link href="/About Us" style={{ color: "black" }}> About Us</Nav.Link> 
-              <Nav.Link href="/login" style={{ color: "black" }} className={currentPage == 4 && 'px-1'} > Sign-in</Nav.Link> */}
+
+
+              {/* CUSTOMER AND OWNER*/}
+              {(role == 'owner' || role == 'customer') && <Nav.Link><p onClick={() => {logout()}} >Logout</p></Nav.Link>}
+              
           </Nav>
       
         </Navbar.Collapse>

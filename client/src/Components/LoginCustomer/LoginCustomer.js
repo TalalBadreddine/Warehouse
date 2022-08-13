@@ -3,10 +3,12 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { loginUser } from '../../Services/LoginUser';
 import {useState} from 'react';
+import {useNavigate} from 'react-router-dom'
 
 function LoginCustomer() {
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
+    const navigate = useNavigate()
       
     const HandleEmail = (e) => {
       setEmail(e.target.value)
@@ -18,8 +20,12 @@ function LoginCustomer() {
         const HandleLogin = (e) => {
 
             e.preventDefault()
-            
-              loginUser(email,password)
+              loginUser(email,password).then((data) => {
+                if(data.data == true){navigate('/customer/')}
+                 //TODO: Sana Handle Error (wrong password ....)
+              }).catch((err) => {
+               
+              })
             }
   return (
     <div><Form.Floating className="mb-3">

@@ -21,7 +21,7 @@ import { BsTrash } from 'react-icons/bs'
 import styles from './PostNewWarehouseCss.module.css'
 
 
-
+//TODO: add back button to the page before
 function PostNewWarehouse() {
 
   const [validated, setValidated] = useState(false);
@@ -77,7 +77,7 @@ function PostNewWarehouse() {
 
     }).catch((error) => {
       if (error.response.statusText == 'Forbidden') {
-        // navigate("/")
+        navigate("/")
       }
     });
   }, [])

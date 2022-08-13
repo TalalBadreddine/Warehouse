@@ -46,7 +46,6 @@ const WarehouseCard = (props) => {
             </div>
         )
     }
-    console.log(setColorByStatus(props.info.status))
 
     return (
         <div>

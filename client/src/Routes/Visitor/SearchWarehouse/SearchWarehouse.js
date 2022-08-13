@@ -8,9 +8,11 @@ import styles from './SearchWarehousesCss.module.css'
 import Button from "react-bootstrap/Button"
 import { Form } from "react-bootstrap"
 import WarehousesSearchFilters from "../../../Components/Footer/WarehousesSearchFilters/WarehousesSearchFilters"
+import { useNavigate } from "react-router-dom"
 
 const SearchWarehouse = ({role}) => {
 
+    const navigate = useNavigate()
     const [allWarehouses, setAllWarehouses] = useState()
     const [filtredWarehousesInfo, setFiltredWarehousesInfo] = useState()
     const [myLocation, setMylocation] = useState()
@@ -44,6 +46,17 @@ const SearchWarehouse = ({role}) => {
         spaceMax: Infinity
     })
 
+    useEffect(() => {
+        if(role == 'visitor'){
+            return
+        }else{
+            axios.get('/user/checkUserValidation').then((data) => {
+               
+            }).catch((err) => {
+                if(err.response.data == 'forbidden'){navigate('/')}
+            })
+        }
+    },[])
 
     useEffect(() => {
         axios.get('/visitor/getWarehouses').then((results) => {

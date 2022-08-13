@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import { getRequest } from '../../../Services/getWarehouseRequests';
 import mytable from './tablestyle.module.css';
 import { acceptDeclineRequest } from '../../../Services/acceptDeclineRequest';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -12,19 +13,9 @@ import { acceptDeclineRequest } from '../../../Services/acceptDeclineRequest';
 
 function ManageRequests() {
 
-    // const [acceptingDeclining,setAcceptingDeclining] = useState({
-    //         requestId : "" ,
-    //         requestStatus : "",
-    //         warehouseId : "",
-    //         requestedDate : ""
-    //     })
-
+    const navigate = useNavigate()
     const HandleAccept = (ID,STATUS,WAREHOUSEID,STARTRENTDATE) => {
-        console.log(ID)
-        console.log(STATUS)
-        console.log(WAREHOUSEID)
-        console.log(STARTRENTDATE)
-        // setAcceptingDeclining({...acceptingDeclining,['requestId']:ID,['requestStatus']:STATUS,['warehouseId']:WAREHOUSEID,['requestedDate']:STARTRENTDATE})
+
 
         acceptDeclineRequest({
         requestId: ID,
@@ -43,22 +34,17 @@ function ManageRequests() {
 
     }
     
-    
 
     const [requests,setRequests] = useState([])
 
-    const [warehouseOwner,setWarehouseOwner] = useState({
-        //here we have the logged in warehouseowner
-        email:"owner@gmail.com"
-    })
-
-
+ 
     useEffect(()=>{
-        getRequest(warehouseOwner).then(result => {
-        console.log(result.data)
-        // console.log(result.data[0].userEmail)
+        getRequest().then(result => {
+    
         setRequests(result.data)
-    })
+    }).catch((err) => {
+      if(err.response.data == 'forbidden'){navigate('/')}
+  })
 
         // getRequest(warehouseOwner)
         // .then(response => response.json())

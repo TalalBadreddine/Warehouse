@@ -23,6 +23,10 @@ userRouter.post('/login', userLogin)
 
 userRouter.post('/register', userRegister)
 
+userRouter.get('/checkUserValidation', validateUser, (req, res) => {
+    return res.status(200).send(true)
+})
+
 module.exports = {
     userRouter,
     userRegister,

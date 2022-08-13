@@ -26,18 +26,18 @@ warehouseOwnerRouter.get('/logout', validateWarehouseOwner,logout)
 warehouseOwnerRouter.post('/add', addWarehouses);
 
 //la yet2akad eno warehouseOwner l aam bfut 3a saf7a 
-warehouseOwnerRouter.get('/validateWarehouseOwner',validateWarehouseOwner);
+warehouseOwnerRouter.get('/validateWarehouseOwner',validateWarehouseOwner, (req, res) => {
+  return res.send(true)
+});
 
 // GET request for a list of all warehouseOwner
-warehouseOwnerRouter.get('/', getWarehouses);
-//validateWarehouseOwner
+warehouseOwnerRouter.get('/', validateWarehouseOwner ,getWarehouses);
 
 
 // DELETE request to delete a warehouseOwner
 warehouseOwnerRouter.delete('/:id/delete', validateWarehouseOwner, deleteWarehouse);
 
-warehouseOwnerRouter.post('/requests',  getRequests)
-// validateWarehouseOwner,
+warehouseOwnerRouter.post('/requests', validateWarehouseOwner,getRequests)
 
 warehouseOwnerRouter.post('/acceptDeclineRequest',validateWarehouseOwner, acceptDeclineRequest )
 

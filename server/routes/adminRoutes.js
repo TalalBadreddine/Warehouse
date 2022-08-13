@@ -24,14 +24,14 @@ const {
 
 adminRouter.post('/login', adminLogin)
 
-adminRouter.get('/getAllCustomer', getAllCustomer )
-// validateAdmin, 
-adminRouter.post('/addCustomer',  addCustomer )
-// validateAdmin,
-adminRouter.delete('/deleteCustomer',  deleteCustomer )
-// validateAdmin,
-adminRouter.put('/activeDeactiveCustomer',  activeDeactiveCustomer )
-// validateAdmin,
+adminRouter.get('/getAllCustomer',validateAdmin,  getAllCustomer )
+
+adminRouter.post('/addCustomer',validateAdmin,  addCustomer )
+
+adminRouter.delete('/deleteCustomer', validateAdmin, deleteCustomer )
+
+adminRouter.put('/activeDeactiveCustomer',validateAdmin,  activeDeactiveCustomer )
+
 adminRouter.get('/getCurrentCustomerInfo', validateAdmin, getCurrentCustomerInfo )
 
 adminRouter.get('/getAllWarehouses', validateAdmin, getAllWarehouses )

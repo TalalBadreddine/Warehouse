@@ -43,8 +43,6 @@ function App() {
           <Route path='' element={<SearchWarehouse role={'customer'}></SearchWarehouse>}></Route>
           <Route path='warehouseDetails' element={<WarehouseDetails></WarehouseDetails>}></Route>
 
-
-
         </Route>
 
 
@@ -53,10 +51,20 @@ function App() {
         <Route path='owner/' element={<Navigationbar role="owner"></Navigationbar>}>
 
           <Route path='' element={<MyWarehouses></MyWarehouses>}></Route>
+          <Route path='myWarehouses' element={<MyWarehouses></MyWarehouses>}></Route>
           <Route path='addWarehouse' element={<PostNewWarehouse></PostNewWarehouse>}></Route>
           <Route path='warehouseRequests' element={<ManageRequests> </ManageRequests>}></Route>
 
         </Route>
+
+
+        {/* <Route path='admin/' element={<Navigationbar role="owner"></Navigationbar>}>
+
+          <Route path='' element={<MyWarehouses></MyWarehouses>}></Route>
+          <Route path='addWarehouse' element={<PostNewWarehouse></PostNewWarehouse>}></Route>
+          <Route path='warehouseRequests' element={<ManageRequests> </ManageRequests>}></Route>
+
+        </Route> */}
 
 
       </Routes>

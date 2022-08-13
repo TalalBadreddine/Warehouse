@@ -9,7 +9,7 @@ import {useNavigate} from 'react-router-dom';
 function LoginWarehouseOwner() {
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
-    const apiUri="http://localhost:5001/warehouseOwner/login";
+    const apiUri="/warehouseOwner/login";
     const navigate=useNavigate();
     const HandleEmail = (e) => {
       setEmail(e.target.value)
@@ -23,13 +23,11 @@ function LoginWarehouseOwner() {
             e.preventDefault()
             
               // LoginWarehouseOwnerService(email,password)
-              
-               
+
                 const data=(email,password);
                 axios.post(apiUri, {email,password})
                 .then(async (data) => {
-                 console.log(data);
-                navigate('/postNewWarehouse');
+                navigate('/owner/myWarehouses');
                     
                 })
                 .catch((err) => {
