@@ -1,12 +1,10 @@
 import { BiCctv } from 'react-icons/bi'
 import { Carousel } from 'react-bootstrap'
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import sprinkler from './sprinkler.png'
 import { TbForklift } from 'react-icons/tb'
 import { GrUserWorker } from 'react-icons/gr'
 import styles from './WarehouseCardCss.module.css'
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-import Tooltip from 'react-bootstrap/Tooltip';
 import Button from 'react-bootstrap/Button'
 import { Modal } from 'react-bootstrap';
 
@@ -29,23 +27,52 @@ const WarehouseCard = (props) => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+    const setColorByStatus = (status) => {
+
+        if(status == 'pending'){
+            return 'purple'
+        }else if(status == 'accepted'){
+            return 'green'
+        }else if(status == 'rejected'){
+            return 'red'
+        }
+
+    }
+
+    const ownerDiv = () => {
+        return(
+            <div>
+                <p className='fs-4 d-flex'>Status: <p style={{color: setColorByStatus(props.info.status)}} className="ms-3">{props.info.status == 'accepted' ? 'Listed' : props.info.status }</p> </p> 
+            </div>
+        )
+    }
+    console.log(setColorByStatus(props.info.status))
+
     return (
         <div>
         <div className={`col-5 col-sm-12 m-2 p-2 d-sm-flex border rounded border-dark d-block ${styles.cardDiv}`} onClick={() => { navigateToWarehouseDetails(props.role, props.info) }}  >
 
             <div className='col-sm-4 '>
                 <Carousel>
-                    <Carousel.Item>
-
+                    {props.info.images.length > 0  && props.info.images.map((base64,index) => {
+                  
+                        return(
+                            <Carousel.Item>
+                                
                         <img
                             className='h-100'
-                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRp5RIT9h5dgyVUm3bEvdZqxsgeL10flNzipnGRwuUI6pdjsYpVFZAi37IBniNaJ_2Go0g&usqp=CAU"
-                            alt="First slide"
-                            // width={'200px'}
+                            key={index}
+                            src={base64}
+                            alt="slide"
                             height={'160px'}
                         />
 
                     </Carousel.Item>
+                        )
+
+                    })
+                    
+                    }
                 </Carousel>
             </div>
 
@@ -69,8 +96,8 @@ const WarehouseCard = (props) => {
 
                     <img src={ac} width={'37px'} style={{ opacity: 0.4 }} className="m-2 mt-3"></img>
 
-                    <p>Price starts from <span style={{filter: props.role == 'visitor' ?  'blur(4px)' : null }}>${props.info.pricePerDay}</span> with space: <span style={{filter: props.role == 'visitor' ?  'blur(4px)' : null }}>{props.info.space}</span> m<sup>2</sup> </p>
-                    
+                   {props.role == 'owner' ?  ownerDiv() : <p>Price starts from <span style={{filter: props.role == 'visitor' ?  'blur(4px)' : null }}>${props.info.pricePerDay}</span> with space: <span style={{filter: props.role == 'visitor' ?  'blur(4px)' : null }}>{props.info.space}</span> m<sup>2</sup> </p>}
+        
                 </div>
           
 

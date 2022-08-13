@@ -7,6 +7,8 @@ const {userRouter} = require('../routes/userRoutes')
 const {adminRouter} = require('../routes/adminRoutes')
 const {visitorRouter} = require('../routes/visitorRoutes')
 const multer = require("multer");
+const cors = require('cors')
+
 
 
 dotenv.config({path: __dirname + '/../.env'})
@@ -18,16 +20,6 @@ const {
     serverPort
 } = process.env
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-      cb(null, "uploads");
-    },
-    filename: (req, file, cb) => {
-      cb(null, file.originalname);
-    },
-  });
-  
-  const upload = multer({ storage: storage });
 
 async function connectDB(){
   const uri = `mongodb://${dbHost}:${dbPort}/${dbName}`
@@ -41,14 +33,10 @@ async function startServer(){
 
         // intialize express app
         const app = express()
-        var cors = require('cors')
-
  
          app.use(cors())
          
-        app.use(express.json())
-        
-        app.use(express.json())
+         app.use(express.json({limit: '50mb'}));
         
         app.use(cookieParser())
 

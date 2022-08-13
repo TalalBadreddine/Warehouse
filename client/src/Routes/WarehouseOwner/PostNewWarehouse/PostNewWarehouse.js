@@ -4,19 +4,21 @@ import Card from 'react-bootstrap/Card';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import Accordion from 'react-bootstrap/Accordion';
-import Figure from 'react-bootstrap/Figure';
 import { addWarehouse } from '../../../Services/AddNewWarehouse';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import FormGroup from 'react-bootstrap/esm/FormGroup';
 
 import { MapContainer, Marker, Popup, TileLayer, useMapEvents } from "react-leaflet";
 import osm from '../../../Components/WarehousesMap/TileLayer'
-import L from 'leaflet'
+import L, { bind } from 'leaflet'
 
 import { DateRange } from 'react-date-range';
+import FileBase64 from 'react-file-base64';
 
+import { BsTrash } from 'react-icons/bs'
+import styles from './PostNewWarehouseCss.module.css'
 
 
 
@@ -24,6 +26,15 @@ function PostNewWarehouse() {
 
   const [validated, setValidated] = useState(false);
   const [pinLocation, setPinLocation] = useState(null)
+  const [errors, setErrors] = useState({
+
+    map: null,
+
+    date: null,
+
+    images: null
+  })
+
   const [selectedDate, setSelectedDate] = useState({
     startDate: null,
     endDate: null,
@@ -32,11 +43,30 @@ function PostNewWarehouse() {
 
   const handleSubmit = (event) => {
     const form = event.currentTarget;
+    
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
     }
 
+    if(warehouse.datesAvailable[0] == null){
+      setErrors({...errors, ['date']: 'Select a date where your warehouse is availble for renting'})
+      window.scrollTo({top: 10,behavior:'smooth'})
+      return
+    }
+
+    if(warehouse.images.length < 4 ){
+      setErrors({...errors, ['images']: 'You need to add at least 4 images of your warehouse'})
+      window.scrollTo({top: 0,behavior:'smooth'})
+      return
+    }
+
+    if(warehouse.location[0] == null){
+      setErrors({...errors, ['map']: 'Select your warehouse location on the map'})
+      window.scrollTo({top: 10,behavior:'smooth'})
+      return
+    }
+    
     setValidated(true);
   };
 
@@ -57,41 +87,11 @@ function PostNewWarehouse() {
     iconSize: [30, 40]
   })
 
-
-  const [state, setState] = useState({
-    file: null
-  })
-  const handleFile = (e) => {
-
-    let file = e.target.files[0]
-    setState({ file: file })
-  }
-  const handleUpload = (e) => {
-
-    let file = state.file
-    let formdata = new FormData()
-    formdata.append('file', file)
-    formdata.append('name', 'sana')
-
-    console.log(state, "THE STATE ----$$$$")
-
-
-    axios({
-      url: 'http://localhost:5001/warehouseOwner/image',
-      method: "POST",
-      headers: {
-        authorization: 'your token'
-      },
-      data: formdata
-    }).then((res) => {
-
-    })
-  }
-
   const [warehouse, setWarehouse] = useState({
     name: "",
     space: "",
     location: [null, null],
+    datesAvailable: [null],
     type: "",
     pricePerDay: null,
     description: "",
@@ -99,21 +99,43 @@ function PostNewWarehouse() {
     isSecurityCameras: false,
     isAirConditioning: false,
     isWorkers: false,
+    isForklift:false,
+    images: [],
   });
 
   const handleAddWarehouse = (e) => {
-    addWarehouse(warehouse);
-    handleUpload();
+    e.preventDefault()
+    if(validated){
+      addWarehouse(warehouse);
+    }
+    // handleUpload();
   }
 
   const MapEvents = () => {
     useMapEvents({
       click(e) {
+        setErrors({...errors, ['map']: null})
         setWarehouse({ ...warehouse, ['location']: [e.latlng.lat, e.latlng.lng] })
       },
     });
     return false;
   }
+
+  const handleUploadImage = (item) => {
+    setErrors({...errors, ['images']:null})
+    setWarehouse({ ...warehouse, ['images']: [...warehouse.images, item] })
+  }
+
+  const handleDeleteImage = (index) => {
+    let images = warehouse.images
+
+    images = images.filter((image, i) => {
+      return i != index
+    })
+
+    setWarehouse({ ...warehouse, ['images']: [...images] })
+  }
+
 
 
   return (
@@ -143,21 +165,6 @@ function PostNewWarehouse() {
                 <Form.Control.Feedback type="invalid">
                   Please choose a Warehouse space.
                 </Form.Control.Feedback></FloatingLabel></FormGroup>
-            {/* <FloatingLabel
-              controlId="floatingInput"
-              label="Date Available"
-              className="mb-3 bg-primary"
-            > */}
-
-
-            {/* <Form.Control value={warehouse.datesAvailable}
-                onChange={(e) => setWarehouse({ ...warehouse, datesAvailable: e.target.value })} type="" placeholder="Date Available" ></Form.Control> */}
-
-            {/* </FloatingLabel> */}
-
-
-            {/* value={warehouse.type} 
-    onChange={(e) => setWarehouse({...warehouse, type: e.target.value })} placeholder="Warehouse Type"  */}
             <FormGroup controlId="validationCustom03">
               <FloatingLabel controlId="floatingPassword" label="Warehouse Type" className="mb-3">
                 <Form.Select required value={warehouse.type}
@@ -190,12 +197,17 @@ function PostNewWarehouse() {
 
             <Accordion className="mb-3" >
               <Accordion.Item >
-                <Accordion.Header>Choose Availble Dates</Accordion.Header>
+                <Accordion.Header>Choose Availble Dates {errors.date != null && <span className='ms-3 fs-5' style={{color:'red'}}> {errors.date} !</span>}</Accordion.Header>
                 <Accordion.Body>
+                  <div className='d-flex justify-content-center'>
                   <DateRange
                     date={new Date()}
-                    onChange={(item) => 
-                       setSelectedDate(item.selection)}
+                    onChange={(item) =>{
+                      setSelectedDate(item.selection)
+                      setWarehouse({...warehouse, ['availbleDates']:[[item.selection.startDate, item.selection.endDate]]})
+                      setErrors({...errors,['date']:null})
+                    }
+                     }
                     minDate={new Date()}
                     months={2}
                     ranges={[selectedDate]}
@@ -203,6 +215,36 @@ function PostNewWarehouse() {
                   >
 
                   </DateRange>
+                  </div>
+                </Accordion.Body>
+              </Accordion.Item>
+            </Accordion>
+
+
+            <Accordion className="mb-3" >
+              <Accordion.Item >
+                <Accordion.Header>Upload images {errors.images != null && <span className='ms-3 fs-5' style={{color:'red'}}> {errors.images} !</span>}</Accordion.Header>
+                <Accordion.Body>
+
+                  <div>
+                    <div className='col-12 text-center'>
+                      <FileBase64
+                        multiple={true}
+                        onDone={image => handleUploadImage(image[0])} />
+                    </div>
+                    <div className='mt-5 d-flex'>
+                      {warehouse.images && warehouse.images.map((image, index) => {
+                        return (
+                          <div className='position-relative' key={index}>
+                            <img src={image.base64} width='170px' height='100px' className='border ms-3'></img>
+                            <p className={`position-absolute ${styles.trashIcon} `} onClick={() => { handleDeleteImage(index) }} style={{ bottom: 0, right: 3 }}><BsTrash></BsTrash></p>
+                          </div>
+                        )
+                      })}
+                    </div>
+
+                  </div>
+
 
                 </Accordion.Body>
               </Accordion.Item>
@@ -210,9 +252,10 @@ function PostNewWarehouse() {
 
 
 
+
             <Accordion className="mb-3" >
               <Accordion.Item >
-                <Accordion.Header>Choose Your location</Accordion.Header>
+                <Accordion.Header>Choose Your location {errors.map != null && <span className='ms-3 fs-5' style={{color:'red'}}> {errors.map} !</span>}</Accordion.Header>
                 <Accordion.Body>
 
                   <MapContainer center={[0, 0]} zoom={3} >
@@ -276,9 +319,17 @@ function PostNewWarehouse() {
                 id="custom-switch"
                 label="Workers"
               /></Form>
-            <input type='file' onChange={handleFile}></input>
 
-            <Button onClick={handleAddWarehouse} className='mt-3' style={{ backgroundColor: '#54d494', borderColor: '#54d494' }} type="submit" variant="primary">Upload Space</Button>
+              <Form.Check
+              value={warehouse.isForklift}
+              onChange={(e) => setWarehouse({ ...warehouse, isForklift: e.target.checked })}
+              type="checkbox"
+              id="custom-switch"
+              label="Forklift"
+              ></Form.Check>
+            <div className='col-12 justify-content-center d-flex'>
+                <Button onClick={() => {handleAddWarehouse()}} className='mt-3 te' style={{ backgroundColor: '#54d494', borderColor: '#54d494' }} type="submit" variant="primary">Upload Space</Button>
+            </div>
           </Card.Body>
         </Card>
       </div>

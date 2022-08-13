@@ -12,7 +12,9 @@ import "../node_modules/bootstrap/dist/css/bootstrap.css"
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 import AboutUs from './Routes/Visitor/AboutUs/AboutUs';
-import WarehouseDetails from './Routes/Customer/WarehouseDetails';
+import WarehouseDetails from './Routes/Customer/WarehouseDetails/WarehouseDetails';
+import ManageRequests from './Routes/WarehouseOwner/MangaRequests/ManageRequests'
+import MyWarehouses from './Routes/WarehouseOwner/MyWarehouses/MyWarehouses';
 
 
 function App() {
@@ -49,8 +51,9 @@ function App() {
 
         <Route path='owner/' element={<Navigationbar role="owner"></Navigationbar>}>
 
-          <Route path=''></Route>
+          <Route path='' element={<MyWarehouses></MyWarehouses>}></Route>
           <Route path='addWarehouse' element={<PostNewWarehouse></PostNewWarehouse>}></Route>
+          <Route path='warehouseRequests' element={<ManageRequests> </ManageRequests>}></Route>
 
         </Route>
 
