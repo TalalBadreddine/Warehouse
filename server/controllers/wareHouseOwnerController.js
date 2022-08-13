@@ -153,8 +153,6 @@ const addWarehouses = async (req, res) => {
 
     try{
         const  warehouse = req.body;
-        console.log(warehouse);
-        console.log(req.data);
         const result = await warehouseSchema.create(warehouse);
         if(result){
             res.status(201).json({message:"added WareHouse"})
@@ -173,16 +171,32 @@ const addWarehouses = async (req, res) => {
 // GET request for a list of all warehouseOwner
 const getWarehouses = async (req, res) => {
     try{
-     const warehouse= await warehouseSchema.find();
-     if (warehouse){
-          res.status(200).json(warehouse);
-     }}
+        // const decodedInfo = jwtDecode(req.cookies['jwt'])
+        const decodedInfo = {
+            email: 'owner2@gmail.com'
+        }
+        let myWarehousese = []
+
+        const owner = await warehouseOwnerModel.findOne({
+            email: decodedInfo.email
+        })
+
+      for(let i = 0 ; i < owner.myWarehouses.length ; i++){
+
+        let warehouse = await warehouseSchema.find({
+            _id: owner.myWarehouses[i]
+        })
+
+        myWarehousese.push(warehouse[0])
+      }
+
+      return res.status(200).send(myWarehousese)
+}
  catch(error){
      res.status(500).json({message : "internal error with function get all warehouses"})
 
  }
 }
-
 
 
     // DELETE request to delete a WarehouseOwner

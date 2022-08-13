@@ -49,7 +49,7 @@ function ManageRequests() {
 
     const [warehouseOwner,setWarehouseOwner] = useState({
         //here we have the logged in warehouseowner
-        email:"khalil@gmail.com"
+        email:"owner@gmail.com"
     })
 
 
@@ -93,15 +93,9 @@ function ManageRequests() {
           <th>Costumer Email</th>
           <th>Space Name</th>
           <th>
-            <input
-             type="text"
-             placeholder="Search Warehouse.."
-             className='search'
-             onChange={(e) => setQuery(e.target.value)}
-             />
+            Action
           </th>
-          {/* <th>{requests[0].userEmail}</th>
-          <th>{requests[0].warehouseName}</th> */}
+   
         </tr>
       </thead>
       <tbody>
@@ -124,149 +118,6 @@ function ManageRequests() {
                 // }
             })
         }
-        <tr>
-          <td>khalilabbas@gmail.com</td>
-          <td >khalil warehouse</td>
-          <td>
-            <Button className="m-1" variant="success" style={{backgroundColor:"#54d494" , borderColor:"#54d494"}}>Accept</Button>{' '}
-            <Button className="m-1" variant="danger" style={{backgroundColor:"#ff0000" , borderColor:"#ff0000"}}>Decline</Button>{' '}
-            <Button className="m-1" variant="light" style={{backgroundColor:"#54d949" , borderColor:"#54d949"}}>View Details</Button>{' '}
-          </td>
-          
-          
-        </tr>
-          <tr>
-          <td>khalilabbas@gmail.com</td>
-          <td >khalil warehouse</td>
-          <td>
-            <Button className="m-1" variant="success" style={{backgroundColor:"#54d494" , borderColor:"#54d494"}}>Accept</Button>{' '}
-            <Button className="m-1" variant="danger" style={{backgroundColor:"#ff0000" , borderColor:"#ff0000"}}>Decline</Button>{' '}
-            <Button className="m-1" variant="light" style={{backgroundColor:"#ADD8E6" , borderColor:"#00008b"}}>View Details</Button>{' '}
-          </td>
-          
-          
-        </tr>
-          <tr>
-          <td>khalilabbas@gmail.com</td>
-          <td >khalil warehouse</td>
-          <td>
-            <Button className="m-1" variant="success" style={{backgroundColor:"#54d494" , borderColor:"#54d494"}}>Accept</Button>{' '}
-            <Button className="m-1" variant="danger" style={{backgroundColor:"#ff0000" , borderColor:"#ff0000"}}>Decline</Button>{' '}
-            <Button className="m-1" variant="light" style={{backgroundColor:"#ADD8E6" , borderColor:"#00008b"}}>View Details</Button>{' '}
-          </td>
-          
-          
-        </tr>
-          <tr>
-          <td>khalilabbas@gmail.com</td>
-          <td >khalil warehouse</td>
-          <td>
-            <Button className="m-1" variant="success" style={{backgroundColor:"#54d494" , borderColor:"#54d494"}}>Accept</Button>{' '}
-            <Button className="m-1" variant="danger" style={{backgroundColor:"#ff0000" , borderColor:"#ff0000"}}>Decline</Button>{' '}
-            <Button className="m-1" variant="light" style={{backgroundColor:"#ADD8E6" , borderColor:"#00008b"}}>View Details</Button>{' '}
-          </td>
-          
-          
-        </tr>
-          <tr>
-          <td>khalilabbas@gmail.com</td>
-          <td >khalil warehouse</td>
-          <td>
-            <Button className="m-1" variant="success" style={{backgroundColor:"#54d494" , borderColor:"#54d494"}}>Accept</Button>{' '}
-            <Button className="m-1" variant="danger" style={{backgroundColor:"#ff0000" , borderColor:"#ff0000"}}>Decline</Button>{' '}
-            <Button className="m-1" variant="light" style={{backgroundColor:"#ADD8E6" , borderColor:"#00008b"}}>View Details</Button>{' '}
-          </td>
-          
-          
-        </tr>
-          <tr>
-          <td>khalilabbas@gmail.com</td>
-          <td >khalil warehouse</td>
-          <td>
-            <Button className="m-1" variant="success" style={{backgroundColor:"#54d494" , borderColor:"#54d494"}}>Accept</Button>{' '}
-            <Button className="m-1" variant="danger" style={{backgroundColor:"#ff0000" , borderColor:"#ff0000"}}>Decline</Button>{' '}
-            <Button className="m-1" variant="light" style={{backgroundColor:"#ADD8E6" , borderColor:"#00008b"}}>View Details</Button>{' '}
-          </td>
-          
-          
-        </tr>
-          <tr>
-          <td>khalilabbas@gmail.com</td>
-          <td >khalil warehouse</td>
-          <td>
-            <Button className="m-1" variant="success" style={{backgroundColor:"#54d494" , borderColor:"#54d494"}}>Accept</Button>{' '}
-            <Button className="m-1" variant="danger" style={{backgroundColor:"#ff0000" , borderColor:"#ff0000"}}>Decline</Button>{' '}
-            <Button className="m-1" variant="light" style={{backgroundColor:"#ADD8E6" , borderColor:"#00008b"}}>View Details</Button>{' '}
-          </td>
-          
-          
-        </tr>
-          <tr>
-          <td>khalilabbas@gmail.com</td>
-          <td >khalil warehouse</td>
-          <td>
-            <Button className="m-1" variant="success" style={{backgroundColor:"#54d494" , borderColor:"#54d494"}}>Accept</Button>{' '}
-            <Button className="m-1" variant="danger" style={{backgroundColor:"#ff0000" , borderColor:"#ff0000"}}>Decline</Button>{' '}
-            <Button className="m-1" variant="light" style={{backgroundColor:"#ADD8E6" , borderColor:"#00008b"}}>View Details</Button>{' '}
-          </td>
-          
-          
-        </tr>
-          <tr>
-          <td>khalilabbas@gmail.com</td>
-          <td >khalil warehouse</td>
-          <td>
-            <Button className="m-1" variant="success" style={{backgroundColor:"#54d494" , borderColor:"#54d494"}}>Accept</Button>{' '}
-            <Button className="m-1" variant="danger" style={{backgroundColor:"#ff0000" , borderColor:"#ff0000"}}>Decline</Button>{' '}
-            <Button className="m-1" variant="light" style={{backgroundColor:"#ADD8E6" , borderColor:"#00008b"}}>View Details</Button>{' '}
-          </td>
-          
-          
-        </tr>
-          <tr>
-          <td>khalilabbas@gmail.com</td>
-          <td >khalil warehouse</td>
-          <td>
-            <Button className="m-1" variant="success" style={{backgroundColor:"#54d494" , borderColor:"#54d494"}}>Accept</Button>{' '}
-            <Button className="m-1" variant="danger" style={{backgroundColor:"#ff0000" , borderColor:"#ff0000"}}>Decline</Button>{' '}
-            <Button className="m-1" variant="light" style={{backgroundColor:"#ADD8E6" , borderColor:"#00008b"}}>View Details</Button>{' '}
-          </td>
-          
-          
-        </tr>
-          <tr>
-          <td>khalilabbas@gmail.com</td>
-          <td >khalil warehouse</td>
-          <td>
-            <Button className="m-1" variant="success" style={{backgroundColor:"#54d494" , borderColor:"#54d494"}}>Accept</Button>{' '}
-            <Button className="m-1" variant="danger" style={{backgroundColor:"#ff0000" , borderColor:"#ff0000"}}>Decline</Button>{' '}
-            <Button className="m-1" variant="light" style={{backgroundColor:"#ADD8E6" , borderColor:"#00008b"}}>View Details</Button>{' '}
-          </td>
-          
-          
-        </tr>
-          <tr>
-          <td>khalilabbas@gmail.com</td>
-          <td >khalil warehouse</td>
-          <td>
-            <Button className="m-1" variant="success" style={{backgroundColor:"#54d494" , borderColor:"#54d494"}}>Accept</Button>{' '}
-            <Button className="m-1" variant="danger" style={{backgroundColor:"#ff0000" , borderColor:"#ff0000"}}>Decline</Button>{' '}
-            <Button className="m-1" variant="light" style={{backgroundColor:"#ADD8E6" , borderColor:"#00008b"}}>View Details</Button>{' '}
-          </td>
-          
-          
-        </tr>
-          <tr>
-          <td>khalilabbas@gmail.com</td>
-          <td >khalil warehouse</td>
-          <td>
-            <Button className="m-1" variant="success" style={{backgroundColor:"#54d494" , borderColor:"#54d494"}}>Accept</Button>{' '}
-            <Button className="m-1" variant="danger" style={{backgroundColor:"#ff0000" , borderColor:"#ff0000"}}>Decline</Button>{' '}
-            <Button className="m-1" variant="light" style={{backgroundColor:"#ADD8E6" , borderColor:"#00008b"}}>View Details</Button>{' '}
-          </td>
-          
-          
-        </tr>
        
       </tbody>
     </Table>

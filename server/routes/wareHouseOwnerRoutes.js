@@ -1,27 +1,16 @@
 const {register,login,logout,addWarehouses, getWarehouses, acceptDeclineRequest, deleteWarehouse, getRequests} = require('../controllers/wareHouseOwnerController')
 const Router = require('express').Router;
+const fs = require('fs')
+const jwtDecode = require('jwt-decode')
 const {
     validateWarehouseOwner
   } = require('../middleware/auth')
 
-  const multer=require('multer')
-
-  const storage = multer.diskStorage({
-      destination: function(req, file, cb){
-        cb(null, './');
-      } ,
-    filename:(req,file,cb) => {
-        cb(null,file.originalname)
-    },
-  })
-  const upload=multer(({storage:storage}))
 
 // initialize express router
 const warehouseOwnerRouter = Router();
 
-warehouseOwnerRouter.post('/image',upload.single('file'),function(req,res){
-    res.json({})
-})
+
 
 //REGISTER 
 warehouseOwnerRouter.post('/register',register)
@@ -34,13 +23,14 @@ warehouseOwnerRouter.get('/logout', validateWarehouseOwner,logout)
 
 // POST request to add a warehouseOwner
 
-warehouseOwnerRouter.post('/add', validateWarehouseOwner ,addWarehouses);
+warehouseOwnerRouter.post('/add', addWarehouses);
 
 //la yet2akad eno warehouseOwner l aam bfut 3a saf7a 
 warehouseOwnerRouter.get('/validateWarehouseOwner',validateWarehouseOwner);
 
 // GET request for a list of all warehouseOwner
-warehouseOwnerRouter.get('/', validateWarehouseOwner, getWarehouses);
+warehouseOwnerRouter.get('/', getWarehouses);
+//validateWarehouseOwner
 
 
 // DELETE request to delete a warehouseOwner

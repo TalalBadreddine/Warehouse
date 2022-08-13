@@ -1,5 +1,5 @@
 import axios from "axios";
- const apiUri="http://localhost:5001/warehouseOwner/login";
+const apiUri="/warehouseOwner/login";
 
  export async function loginWarehouseOwner(email,password){
      return await axios.post(apiUri, {email,password})
