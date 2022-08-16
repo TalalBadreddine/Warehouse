@@ -54,6 +54,9 @@ const warehouseOwnerSchema = new mongoose.Schema({
     {
         type:String
         
+    },
+    stripeAccountId:{
+        type: String
     }
 
 })
