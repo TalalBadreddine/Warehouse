@@ -21,6 +21,7 @@ import styles from './WarehouseDetailsCss.module.css'
 import CreditCardForm from '../../../Components/CreditCard/CreditCardForm'
 import { Modal } from 'react-bootstrap'
 import Button from 'react-bootstrap/Button'
+import axios from 'axios'
 
 
 
@@ -80,12 +81,17 @@ const WarehouseDetails = () => {
 
     }, [warehouseData])
 
-    const manageRequest = () => {
+    const manageRequest = async  () => {
         if (!state.endDate || !state.endDate) {
             setDataSettings({ ...dataSettings, ['showDateAlert']: true })
             window.scroll({ top: dateRangeRef.current.offsetTop, left: 0 })
             return
         }
+
+        await axios.get('/user/testPayment').then((data)=>{
+            console.log(data.data)
+            window.location = `${data.data.url}`
+        })
         setShowPayments(true)
     }
 

@@ -22,7 +22,7 @@ function LoginCustomer() {
             e.preventDefault()
               loginUser(email,password).then((data) => {
                 if(data.data == true){navigate('/customer/')}
-                 //TODO: Sana Handle Error (wrong password ....)
+                 //TODO: Handle Error (wrong password ....)
               }).catch((err) => {
                
               })

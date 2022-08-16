@@ -20,8 +20,16 @@ const [warehouseOwner, setWarehouseOwner] = useState({
     cardCode: "",
     cardName: "",
     });
+
     const handleregistration=(e)=>{
-        registerWarehouseOwner(warehouseOwner);
+        registerWarehouseOwner(warehouseOwner).then((data) => {
+          if(data.data == 'alreadyExist'){
+            alert('alreadyExist')
+            return
+          }else{
+            window.open(`${data.data.url}`)
+          }
+        })
       }
     
   return (

@@ -1,6 +1,6 @@
 import './index.css'
 import Home from "./Routes/Visitor/Landing/Landing";
-import { Routes, Route } from "react-router-dom"
+import { Routes, Route, Navigate } from "react-router-dom"
 import SignIn from "./Routes/Visitor/SignIn/SignIn";
 import Navigationbar from "./Components/NavigationBar/NavigationBar";
 import Landing from "./Routes/Visitor/Landing/Landing";
@@ -70,6 +70,8 @@ function App() {
         </Route>
         
         <Route path='adminLogin' element={<AdminSignIn></AdminSignIn>}></Route>
+
+        <Route path='*' element={<Navigate to='/' />} />
 
       </Routes>
 
