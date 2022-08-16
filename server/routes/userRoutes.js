@@ -9,16 +9,13 @@ const {
     userLogin,
     userRegister,
     requestRentWarehouse,
-    getAllUserRequests,
-    testPayment
+    getAllUserRequests
 } = require('../controllers/userController')
 
 
 userRouter.get('/getWarehouses', validateUser, getWareHousesForUsers)
 
 userRouter.post('/rentWarehouse', validateUser, requestRentWarehouse)
-
-userRouter.get('/testPayment', testPayment)
 
 userRouter.get('/getAllUserRequests', validateUser, getAllUserRequests)
 

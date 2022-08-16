@@ -12,12 +12,8 @@ dotenv.config({path: __dirname + '/../.env'})
 const {
     hashType,
     encodeAs,
-    jwtSecret,
-    stripeSecretKey
+    jwtSecret
 } = process.env
-
-const stripe = require('stripe')(`${stripeSecretKey}`);
-
 
 
 const getWareHousesForUsers = async (req, res) => {
@@ -157,51 +153,11 @@ const requestRentWarehouse = async (req, res) => {
     })
 }
 
-const testPayment = async (req, res) => {
-    // const capabilities = await stripe.accounts.listCapabilities(
-    //     ''
-    //   );
-      
-      const transfer = await stripe.transfers.create({
-        amount: 7000,
-        currency: 'usd',
-        destination: 'acct_1LWggURe4M9JlCWK',
-        transfer_group: '1',
-      });
-      
-      const session = await stripe.checkout.sessions.create({
-        payment_method_types: ['card'],
-        line_items: [{
-          price_data: {
-            currency: 'usd',
-            unit_amount: 1000 * 100,
-            product_data: {
-              name: 'warehouse',
-              description: 'renting for 30 days',
-            },
-          },
-          quantity: 1,
-        }],
-        payment_intent_data: {
-            transfer_data: {
-                destination: `acct_1LWggURe4M9JlCWK`
-            }
-        },
-        mode: 'payment',
-        success_url: 'http://localhost:3000/customer/',
-        cancel_url: 'http://localhost:3000/customer/',
-      });
-
-      console.log(session)
-      return res.send(session)
-}
-
 module.exports = {
     getWareHousesForUsers,
     userLogin,
     userRegister,
     requestRentWarehouse,
-    getAllUserRequests,
-    testPayment
+    getAllUserRequests
 }
 
