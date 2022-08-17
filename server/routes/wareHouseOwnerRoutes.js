@@ -1,6 +1,5 @@
 const {register,login,logout,addWarehouses, getWarehouses, acceptDeclineRequest, deleteWarehouse, getRequests} = require('../controllers/wareHouseOwnerController')
 const Router = require('express').Router;
-const fs = require('fs')
 const jwtDecode = require('jwt-decode')
 const {
     validateWarehouseOwner

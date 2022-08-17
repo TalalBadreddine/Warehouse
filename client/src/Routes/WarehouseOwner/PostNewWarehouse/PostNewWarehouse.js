@@ -74,7 +74,7 @@ function PostNewWarehouse() {
   const navigate = useNavigate();
   useEffect(() => {
     axios.get('/warehouseOwner/validateWarehouseOwner').then((res) => {
-
+      if(res.data == 'forbidden'){navigate('/')}
     }).catch((error) => {
       if (error.response.statusText == 'Forbidden') {
         navigate("/")
@@ -105,10 +105,10 @@ function PostNewWarehouse() {
 
   const handleAddWarehouse = (e) => {
     e.preventDefault()
+    console.log(warehouse)
     if(validated){
       addWarehouse(warehouse);
     }
-    // handleUpload();
   }
 
   const MapEvents = () => {

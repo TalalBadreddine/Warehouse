@@ -28,6 +28,7 @@ import axios from 'axios'
 const WarehouseDetails = () => {
 
     const [showPayments, setShowPayments] = useState(false)
+    const [totalPrice, setTotalPrice] = useState(0)
     const [dataSettings, setDataSettings] = useState({
         endDate: null,
         disabledDates: [],
@@ -88,7 +89,9 @@ const WarehouseDetails = () => {
             return
         }
 
-        await axios.get('/user/testPayment').then((data)=>{
+        let totalPrice = datediff(state.startDate, state.endDate) * parseInt(warehouseData.pricePerDay)
+
+        await axios.post('/user/rentWarehouse', {warehouseData, totalPrice:totalPrice, rentingDate: [state.startDate, state.endDate ]}).then((data)=>{
             console.log(data.data)
             window.location = `${data.data.url}`
         })
@@ -312,7 +315,7 @@ const WarehouseDetails = () => {
                     <h1>Select Rental Date:</h1>
                     <p>Select a rental date so your request to rent the warehouse will be sent to the owner</p>
                     <p>Availble Dates: {warehouseData && warehouseData.datesAvailable.map((currentDate) => {
-                        return <span className="ms-3 px-3 py-1 d-inline-block rounded-4" style={{ backgroundColor: '#90ee90' }}>{currentDate[0].replaceAll('/', '-')} / {currentDate[1].replaceAll('/', '-')}</span>
+                        return <span className="ms-3 px-3 py-1 d-inline-block rounded-4" style={{ backgroundColor: '#90ee90' }}>{new Date(currentDate[0]).toISOString().slice(0, 10)} / {new Date(currentDate[1]).toISOString().slice(0, 10)}</span>
                     })}</p>
                     {state.endDate && <p> From: {new Date(state.startDate).toISOString().slice(0, 10)}<span className="ms-3"></span> Till: {new Date(state.endDate).toISOString().slice(0, 10)}</p>}
                     {dataSettings.showDateAlert && <p className={`${styles.dateAlert} fs-4`}> Fill Date To Continue !</p>}

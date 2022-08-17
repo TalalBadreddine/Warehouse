@@ -12,6 +12,7 @@ const MyWarehouses = () => {
     useEffect( () => {
         axios.get('/warehouseOwner/').then((results) => {
             let warehouses = results.data
+            if(warehouses == 'forbidden'){navigate('/')}
             setMyWarehouses(warehouses) 
         }).catch((err) => {
             if(err.response.data == 'forbidden'){navigate('/')}

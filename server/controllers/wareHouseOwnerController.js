@@ -144,19 +144,30 @@ const getRequests = async (req, res) => {
 
 const acceptDeclineRequest = async (req, res) => {
     try {
-        //TODO: talal check what is the use of decoded Info
-        const decodedInfo = jwtDecode(req.cookies['jwt'])
+
         const requestId = req.body.requestId
         let requestStatus = req.body.status
         const warehouseId = req.body.warehouseId
-        const requestedDate = req.body.requestedDate
 
+        const results = await manageUsersAndWarehousesSchema.findOne({
+            _id: requestId
+        })
+
+        const requestedDate = [results.startRentDate, results.endRentDate]
+        let returnStatus = ''
 
         if (requestStatus == 'accepted') {
 
             await extensions.userRentAWarehouseInSpecificDate(warehouseId, requestedDate).then(async (response) => {
-                console.log(response)
-                if (response) { requestStatus = 'accepted' } else { requestStatus = 'rejected' }
+              
+                if (response) { 
+                    requestStatus = 'accepted'
+                    returnStatus = 'accepted'
+
+             } else { 
+                 requestStatus = 'rejected'
+                 returnStatus = 'rejected cause of time conflict'
+                 }
 
                 await manageUsersAndWarehousesSchema.updateOne({
                     _id: requestId
@@ -167,8 +178,22 @@ const acceptDeclineRequest = async (req, res) => {
                 }
                 )
             })
+            
+        }else{
+
+            returnStatus = 'rejected'
+            await manageUsersAndWarehousesSchema.updateOne({
+                _id: requestId
+            }, {
+                $set: {
+                    status: 'rejected'
+                }
+            }
+            )
+
         }
-        return res.send('updated').status(200)
+
+        return res.send(`updated request with id ${requestId} status to ${returnStatus}`).status(200)
 
     }
     catch (err) {

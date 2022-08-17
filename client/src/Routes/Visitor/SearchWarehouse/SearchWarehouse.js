@@ -62,7 +62,7 @@ const SearchWarehouse = ({role}) => {
         axios.get('/visitor/getWarehouses').then((results) => {
             let data = results.data
             let arrOfWarehouses = []
-
+                                    
             for(let i = 0 ; i < data.length ; i++){
           
                 for(let j = 0 ; j < data[i].warehouses.length; j++){
@@ -124,11 +124,11 @@ const SearchWarehouse = ({role}) => {
     useEffect(() => {
         if (allWarehouses == null || allWarehouses.length == 0) return
         let value = searchValue
-        let found = false
+   
 
 
         let warehouses = allWarehouses.filter((warehouse) => {
-
+            let found = false
             if(new Date(date[0].startDate).getTime() != new Date(date[0].endDate).getTime() ){
 
                 for (let i = 0; i < warehouse.datesAvailable.length; i++) {
@@ -141,7 +141,7 @@ const SearchWarehouse = ({role}) => {
             }else{
                 found = true
             }
-
+            
 
             return (value ? (searchBy == 'name' ? warehouse[searchBy].toLowerCase().includes(value.toLowerCase()) : warehouse[searchBy][0].includes(value)) : true) &&
                 parseInt(warehouse.pricePerDay) >= filterSettings.priceMin &&
@@ -149,8 +149,7 @@ const SearchWarehouse = ({role}) => {
                 parseInt(warehouse.space) <= filterSettings.spaceMax &&
                 parseInt(warehouse.space) >= filterSettings.spaceMin && found
         })
-
-        setFiltredWarehousesInfo(warehouses)
+        setFiltredWarehousesInfo([...warehouses])
 
     }, [filterSettings, date, searchBy])
 

@@ -87,8 +87,8 @@ const userRentAWarehouseInSpecificDate = async (wareHouseId, askedTime) => {
         let wareHouseTime = await warehouseSchema.findOne({
             _id: wareHouseId
         })
-
         wareHouseTime = wareHouseTime.datesAvailable
+       
         
         const requestedStartDate = new Date(askedTime[0]);
         const requestedStartDateInSeconds = Math.floor(requestedStartDate.getTime() / 1000);
@@ -96,10 +96,10 @@ const userRentAWarehouseInSpecificDate = async (wareHouseId, askedTime) => {
 
         const requestedEndDate = new Date(askedTime[1])
         const requestedEndDateInSeconds = Math.floor(requestedEndDate.getTime() / 1000);
-
-
+        
+        
         for(let i = 0 ; i < wareHouseTime.length ; i++){
-
+           
             let startTime = new Date(wareHouseTime[i][0]); 
             let startTimeInSeconde = Math.floor(startTime.getTime() / 1000);
 
@@ -107,7 +107,7 @@ const userRentAWarehouseInSpecificDate = async (wareHouseId, askedTime) => {
             let endTimeInSeconde = Math.floor(endTime.getTime() / 1000);
 
             if(requestedStartDateInSeconds >= startTimeInSeconde && requestedEndDateInSeconds <= endTimeInSeconde){
-
+        
                 //["2022/08/02","2023/08/02"]
                 //["2022/09/02", "2022/12/02"]
                 //-------------------------------
@@ -161,13 +161,25 @@ const userRentAWarehouseInSpecificDate = async (wareHouseId, askedTime) => {
                     return true
                 }
 
+                let firstHalfArr = [wareHouseTime[i][0], requestedStartDate ]
+                let secondHalfArr = [requestedEndDate, wareHouseTime[i][1]]
+
                 wareHouseTime = wareHouseTime.filter((element, index) => {
                     return index != i 
                 })
 
-                wareHouseTime.push([startTime, wareHouseTime[i][0]])
-                wareHouseTime.push([endTime, wareHouseTime[i][1]])
+                wareHouseTime.push(firstHalfArr)
+                wareHouseTime.push(secondHalfArr)
 
+                await warehouseSchema.updateOne({
+                    _id: wareHouseId
+                },{
+                    $set:{
+                        datesAvailable: wareHouseTime
+                    }
+                })
+                
+                console.log(wareHouseId)
                 return true
 
             }
@@ -178,7 +190,7 @@ const userRentAWarehouseInSpecificDate = async (wareHouseId, askedTime) => {
 
     }
     catch(err){
-        console.log(`error at checkIfTimeIsAvailbleWithWarehouseTime in extension => ${err.message}`)
+        console.log(`error at userRentAWarehouseInSpecificDate time => ${askedTime} in extension => ${err.message}`)
     }
 }
 

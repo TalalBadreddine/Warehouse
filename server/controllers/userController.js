@@ -121,14 +121,12 @@ const getAllUserRequests = async (req, res) => {
 
 // resolve time conflict
 const requestRentWarehouse = async (req, res) => {
-
-    const warehouseInfo = req.body.warehouseInfo
-    const warehouseOwnerDetails = req.body.warehouseOwner
+    const warehouseInfo = req.body.warehouseData
+    const warehouseOwnerDetails = warehouseInfo.Owner
     const rentingDate = req.body.rentingDate
     const totalPrice = req.body.totalPrice
     const decodedInfo = jwtDecode(req.cookies['jwt'])
-
-
+    
     await extensions.checkIfTimeIsAvailbleWithWarehouseTime(warehouseInfo.datesAvailable , rentingDate).then(async (results) => {
 
         if(results){
@@ -148,7 +146,32 @@ const requestRentWarehouse = async (req, res) => {
 
             await relation.save()
 
-            return res.send('rent').status(200)
+            const session = await stripe.checkout.sessions.create({
+                payment_method_types: ['card'],
+                line_items: [{
+                  price_data: {
+                    currency: 'usd',
+                    unit_amount: totalPrice * 100,
+                    product_data: {
+                      name: warehouseInfo.name,
+                      description: `renting ${warehouseInfo.name} from ${new Date(relation.startRentDate).toISOString().slice(0, 10) } to ${new Date(relation.endRentDate).toISOString().slice(0, 10)}`,
+                    },
+                  },
+                  quantity: 1,
+                }],
+    
+                mode: 'payment',
+                success_url: 'http://localhost:3000/customer/',
+                cancel_url: 'http://localhost:3000/customer/',
+              });
+              //TODO: add path for payment
+            //   payment_intent_data: {
+            //     transfer_data: {
+            //         destination: warehouseOwnerDetails.stripeId
+            //     }
+            // },
+
+            return res.send(session).status(200)
 
         }
 
@@ -169,28 +192,6 @@ const testPayment = async (req, res) => {
         transfer_group: '1',
       });
       
-      const session = await stripe.checkout.sessions.create({
-        payment_method_types: ['card'],
-        line_items: [{
-          price_data: {
-            currency: 'usd',
-            unit_amount: 1000 * 100,
-            product_data: {
-              name: 'warehouse',
-              description: 'renting for 30 days',
-            },
-          },
-          quantity: 1,
-        }],
-        payment_intent_data: {
-            transfer_data: {
-                destination: `acct_1LWggURe4M9JlCWK`
-            }
-        },
-        mode: 'payment',
-        success_url: 'http://localhost:3000/customer/',
-        cancel_url: 'http://localhost:3000/customer/',
-      });
 
       console.log(session)
       return res.send(session)
