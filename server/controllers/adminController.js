@@ -131,7 +131,7 @@ const addWarehouse = async(req, res) => {
     // return res.send('addWarehouse').status(200)
       try{
 
-        
+        console.log(req.body);
         const warehouse=req.body;
         const alreadyExist = await warehouseSchema.find({name: warehouse.name, space:warehouse.space})
         if(alreadyExist.length >=1){
@@ -139,7 +139,7 @@ const addWarehouse = async(req, res) => {
         }
         const result = await warehouseSchema.create(warehouse);
         if(result){
-            res.status(201).json({message:"added warehouse"})
+            res.status(201).json(result)
         }else{
             res.status(409).json({message:"failed to add warehouse"})
         }

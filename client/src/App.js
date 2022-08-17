@@ -18,6 +18,7 @@ import MyWarehouses from './Routes/WarehouseOwner/MyWarehouses/MyWarehouses';
 import SideBar from './Components/SideBar/SideBar'
 import AdminSignIn from './Routes/Admin/AdminSignIn/AdminSignIn'
 import ManageUsers from './Routes/Admin/ManageUsers/ManageUsers';
+import ManageWarehouse from './Routes/Admin/ManageWarehouse/ManageWarehouse';
 
 
 
@@ -66,7 +67,7 @@ function App() {
         <Route path='admin/' element={<SideBar></SideBar>}>
 
              <Route path='' element={<ManageUsers></ManageUsers>}></Route>
-
+            <Route path='manageWarehouses'element={<ManageWarehouse></ManageWarehouse>}></Route>
         </Route>
         
         <Route path='adminLogin' element={<AdminSignIn></AdminSignIn>}></Route>
