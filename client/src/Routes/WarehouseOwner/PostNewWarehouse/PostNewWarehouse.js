@@ -49,7 +49,7 @@ function PostNewWarehouse() {
       event.stopPropagation();
     }
 
-    if(warehouse.datesAvailable[0] == null){
+    if(warehouse.datesAvailble[0] == null){
       setErrors({...errors, ['date']: 'Select a date where your warehouse is availble for renting'})
       window.scrollTo({top: 10,behavior:'smooth'})
       return
@@ -66,7 +66,6 @@ function PostNewWarehouse() {
       window.scrollTo({top: 10,behavior:'smooth'})
       return
     }
-    
     setValidated(true);
   };
 
@@ -104,7 +103,6 @@ function PostNewWarehouse() {
   });
 
   const handleAddWarehouse = (e) => {
-    e.preventDefault()
     console.log(warehouse)
     if(validated){
       addWarehouse(warehouse);
@@ -204,7 +202,8 @@ function PostNewWarehouse() {
                     date={new Date()}
                     onChange={(item) =>{
                       setSelectedDate(item.selection)
-                      setWarehouse({...warehouse, ['availbleDates']:[[item.selection.startDate, item.selection.endDate]]})
+                      console.log(item.selection)
+                      setWarehouse({...warehouse, ['datesAvailble']:[[item.selection.startDate, item.selection.endDate]]})
                       setErrors({...errors,['date']:null})
                     }
                      }
