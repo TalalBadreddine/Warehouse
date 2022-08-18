@@ -18,6 +18,7 @@ import MyWarehouses from './Routes/WarehouseOwner/MyWarehouses/MyWarehouses';
 import SideBar from './Components/SideBar/SideBar'
 import AdminSignIn from './Routes/Admin/AdminSignIn/AdminSignIn'
 import ManageUsers from './Routes/Admin/ManageUsers/ManageUsers';
+import ViewWarehouseDetails from './Routes/WarehouseOwner/ViewWarehouseDetails/ViewWarehouseDetails';
 
 
 
@@ -57,6 +58,7 @@ function App() {
           <Route path='myWarehouses' element={<MyWarehouses></MyWarehouses>}></Route>
           <Route path='addWarehouse' element={<PostNewWarehouse></PostNewWarehouse>}></Route>
           <Route path='warehouseRequests' element={<ManageRequests> </ManageRequests>}></Route>
+          <Route path='viewWarehouseDetails' element={<ViewWarehouseDetails></ViewWarehouseDetails>}></Route>
 
         </Route>
 

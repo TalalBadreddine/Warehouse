@@ -2,6 +2,7 @@ const usersSchema = require("../models/usersSchema");
 const manageUsersAndWarehousesSchema = require('../models/manageUsersAndWarehousesSchema')
 const warehouseSchema = require('../models/warehouseSchema')
 const warehouseOwnerSchema = require('../models/WarehouseOwner')
+const extension = require('../helper/extensions')
 const dotenv = require('dotenv')
 const jwt = require('jsonwebtoken')
 
@@ -115,10 +116,15 @@ const activeDeactiveCustomer = async (req,res) => {
 // await warehouse.save()
 // return res.send('added')
 
+// We need to get all warehouses owner with the warehouses
 const getAllWarehouses = async (req, res) => {
        try{
-        const warehouse= await warehouseSchema.find();
-        if (warehouse){
+           let warehousesWithOwners = 
+
+            extension.getEveryWarehouseOwnerAndHisWareHouses().then((results) => {
+                warehousesWithOwners = results.data
+            })
+        if (warehousesWithOwners){
              res.status(200).json(warehouse);
         }}
     catch(error){

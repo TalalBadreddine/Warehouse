@@ -266,6 +266,33 @@ const deleteWarehouse = async (req, res) => {
 
 }
 
+const getWarehouseDetails = async (req, res) => {
+    try{
+
+        const warehouseId = req.body.warehouseId
+
+        const oldRequests = await manageUsersAndWarehousesSchema.find({
+            WarehouseId: warehouseId,
+            status: 'accepted'
+        })
+
+        const warehouseInfo = await warehouseSchema.find({
+        _id: warehouseId
+        })
+
+        let object = {
+            oldRequests:oldRequests,
+            warehouseInfo: warehouseInfo
+        }
+
+        return res.send(object).status(200)
+
+    }
+    catch(err){
+        console.log(`error at getWarehouseDetails in warehouseOwnerController ${err.message}`)
+    }
+}
+
 
 
 
@@ -277,5 +304,6 @@ module.exports = {
     addWarehouses,
     getWarehouses,
     acceptDeclineRequest,
-    deleteWarehouse
+    deleteWarehouse,
+    getWarehouseDetails
 }
