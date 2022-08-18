@@ -8,6 +8,7 @@ import { acceptDeclineRequest } from '../../../Services/acceptDeclineRequest';
 import { useNavigate } from 'react-router-dom';
 import { Modal } from 'react-bootstrap'
 import { Accordion } from 'react-bootstrap'
+import ViewWarehouseDetails from '../ViewWarehouseDetails/ViewWarehouseDetails'
 import axios from 'axios';
 
 
@@ -158,21 +159,19 @@ function ManageRequests() {
     })
 
     axios.post('/warehouseOwner/getWarehouseDetails', {warehouseId}).then((results) => {
+
       setCurrentRequestDetails({
         oldRequests: results.data.oldRequests,
         warehouseInfo: results.data.warehouseInfo,
-        conflictedWarehouse: requestForThisWarehouse
-      })
-
-      console.log({
-        oldRequests: results.data.oldRequests,
-        warehouseInfo: results.data.warehouseInfo,
-        conflictedWarehouse: requestForThisWarehouse
+        conflictedWarehouse: requestForThisWarehouse,
+        thisRequest: requestData
       })
 
     }).catch((err) => {
       alert(err.message)
     })
+
+    setShowDetailsModal(true)
   }
 
   //for the search functionality
@@ -259,22 +258,7 @@ function ManageRequests() {
                     </Modal>}
 
 
-                    <Modal>
-                    <Modal.Header closeButton>
-                        <Modal.Title><h3>Details</h3></Modal.Title>
-                      </Modal.Header>
-                      <Modal.Body>
-
-                      </Modal.Body>
-                      <Modal.Footer>
-                        <Button variant="secondary" onClick={handleClose}>
-                          Close
-                        </Button>
-                        <Button variant="primary" onClick={() => { handleAccpetBtn() }}>
-                          Accept
-                        </Button>
-                      </Modal.Footer>
-                    </Modal>
+                    {showDetailsModal && currentRequestDetails && <ViewWarehouseDetails data={currentRequestDetails} showState={showDetailsModal} showAction={() => {setShowDetailsModal(true)}} hideAction={() => {setShowDetailsModal(false)}} ></ViewWarehouseDetails>}
 
                     <td>
                       <Button className="m-1" variant="success" style={{ backgroundColor: "#54d494", borderColor: "#54d494" }}
