@@ -10,6 +10,7 @@ import { Modal } from 'react-bootstrap';
 
 import ac from './air-conditioner.png'
 import { useNavigate } from 'react-router-dom';
+import alternative from './warehouseAlternative.jpeg'
 
 const WarehouseCard = (props) => {
     const navigate = useNavigate()
@@ -53,23 +54,32 @@ const WarehouseCard = (props) => {
 
             <div className='col-sm-4 '>
                 <Carousel>
-                    {props.info.images.length > 0  && props.info.images.map((base64,index) => {
+                    {props.info.images.length > 0  ? props.info.images.map((base64,index) => {
                   
                         return(
                             <Carousel.Item>
                                 
                         <img
-                            className='h-100'
                             key={index}
                             src={base64}
-                            alt="slide"
-                            height={'160px'}
+                            alt=""
+                            height={'180px'}
+                            width={'310px'}
                         />
 
                     </Carousel.Item>
                         )
 
-                    })
+                    }) :  <Carousel.Item>
+                                
+                    <img
+                        src={alternative}
+                        alt="Warehouse Img"
+                        height={'180px'}
+                        width={'310px'}
+                    />
+
+                </Carousel.Item>
                     
                     }
                 </Carousel>

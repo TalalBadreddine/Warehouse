@@ -19,6 +19,7 @@ import SideBar from './Components/SideBar/SideBar'
 import AdminSignIn from './Routes/Admin/AdminSignIn/AdminSignIn'
 import ManageUsers from './Routes/Admin/ManageUsers/ManageUsers';
 import ViewWarehouseDetails from './Routes/WarehouseOwner/ViewWarehouseDetails/ViewWarehouseDetails';
+import CustomerRequests from './Routes/Customer/customerRequests/customerRequests';
 
 
 
@@ -46,6 +47,7 @@ function App() {
 
           <Route path='' element={<SearchWarehouse role={'customer'}></SearchWarehouse>}></Route>
           <Route path='warehouseDetails' element={<WarehouseDetails></WarehouseDetails>}></Route>
+          <Route path='requests' element={<CustomerRequests></CustomerRequests>}></Route>
 
         </Route>
 

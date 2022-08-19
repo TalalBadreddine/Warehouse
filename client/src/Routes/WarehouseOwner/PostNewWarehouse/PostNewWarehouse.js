@@ -48,7 +48,7 @@ function PostNewWarehouse() {
       event.preventDefault();
       event.stopPropagation();
     }
-    console.log(warehouse)
+                      
     if(warehouse.datesAvailable[0] == null){
       
       setErrors({...errors, ['date']: 'Select a date where your warehouse is availble for renting'})
@@ -60,12 +60,16 @@ function PostNewWarehouse() {
     if(warehouse.images.length < 4 ){
       setErrors({...errors, ['images']: 'You need to add at least 4 images of your warehouse'})
       window.scrollTo({top: 100,behavior:'smooth'})
+      event.preventDefault();
+      event.stopPropagation();
       return
     }
 
     if(warehouse.location[0] == null){
       setErrors({...errors, ['map']: 'Select your warehouse location on the map'})
       window.scrollTo({top: 10,behavior:'smooth'})
+      event.preventDefault();
+      event.stopPropagation();
       return
     }
  
@@ -106,9 +110,10 @@ function PostNewWarehouse() {
   });
 
   const handleAddWarehouse = (e) => {
- 
+
     if(validated){
       addWarehouse(warehouse);
+      e.preventDefault()
     }
   }
 

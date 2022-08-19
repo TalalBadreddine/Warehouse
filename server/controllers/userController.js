@@ -106,10 +106,11 @@ const getAllUserRequests = async (req, res) => {
     try{
 
         const decode = jwtDecode(req.cookies['jwt'])
-        
+        console.log(decode)
         const allUserRequests = await manageUsersAndWarehousesSchema.find({
             userEmail: decode.user.email
         })
+        console.log(allUserRequests)
 
         return res.send(allUserRequests).status(200)
     }
@@ -197,12 +198,28 @@ const testPayment = async (req, res) => {
       return res.send(session)
 }
 
+const getWarehouseInfo =  async (req, res) => {
+    try{
+        const warehouseId = req.body.warehouseId
+
+        const results = await warehouseSchema.find({
+            _id: warehouseId
+        })
+
+        return res.send(results[0]).status(200)
+    }
+    catch(err){
+        console.log(`error at the getWarehouseInfo ${err.message}`)
+    }
+}
+
 module.exports = {
     getWareHousesForUsers,
     userLogin,
     userRegister,
     requestRentWarehouse,
     getAllUserRequests,
-    testPayment
+    testPayment,
+    getWarehouseInfo
 }
 

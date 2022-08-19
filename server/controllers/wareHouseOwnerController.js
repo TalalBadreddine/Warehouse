@@ -209,12 +209,14 @@ const addWarehouses = async (req, res) => {
         const warehouse = req.body;
         const decodedInfo = jwtDecode(req.cookies['jwt'])
         const result = await warehouseSchema.create(warehouse);
+        console.log(decodedInfo)
+        console.log(result)
 
         await warehouseOwnerModel.updateOne({
             _id: decodedInfo.user._id
         },{
-            $set: {
-                myWarehouses: [...myWarehouses, result._id]
+            $push: {
+                myWarehouses: result._id
             }
         })
 
