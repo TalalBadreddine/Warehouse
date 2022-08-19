@@ -19,7 +19,7 @@ import SideBar from './Components/SideBar/SideBar'
 import AdminSignIn from './Routes/Admin/AdminSignIn/AdminSignIn'
 import ManageUsers from './Routes/Admin/ManageUsers/ManageUsers';
 import ViewWarehouseDetails from './Routes/WarehouseOwner/ViewWarehouseDetails/ViewWarehouseDetails';
-import CustomerRequests from './Routes/Customer/customerRequests/customerRequests';
+import CustomerRequests from './Routes/Customer/CustomerRequests/CustomerRequests';
 
 
 

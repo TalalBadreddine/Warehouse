@@ -59,7 +59,7 @@ function Navigationbar({ role }) {
               {role == 'visitor' && <Nav.Link> <Link to={'/login'} style={{ color: fontColor, textDecoration: 'none' }} className={`px-3 py-2 rounded-4  ${styles.loginBtn}`} > Sign-in </Link> </Nav.Link>}
 
               {/* CUSTOMER */}
-              {role == 'customer' && <Nav.Link> <Link to={'/requests'} style={{ color: fontColor, textDecoration: 'none' }} className={'px-1'} > My Requests </Link> </Nav.Link>}
+              {role == 'customer' && <Nav.Link> <Link to={'/customer/requests'} style={{ color: fontColor, textDecoration: 'none' }} className={'px-1'} > My Requests </Link> </Nav.Link>}
 
 
               {/* OWNER */}

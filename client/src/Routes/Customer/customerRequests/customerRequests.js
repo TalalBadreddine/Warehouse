@@ -194,6 +194,10 @@ function CustomerRequests() {
                     </div>
                         
                     </div>
+
+                    <div className='mt-5'>
+                        <h2>Feedback</h2>
+                    </div>
                 </Modal.Body>
 
             </Modal>}
