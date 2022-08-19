@@ -48,16 +48,18 @@ function PostNewWarehouse() {
       event.preventDefault();
       event.stopPropagation();
     }
-
-    if(warehouse.datesAvailble[0] == null){
+    console.log(warehouse)
+    if(warehouse.datesAvailable[0] == null){
+      
       setErrors({...errors, ['date']: 'Select a date where your warehouse is availble for renting'})
       window.scrollTo({top: 10,behavior:'smooth'})
       return
     }
 
+
     if(warehouse.images.length < 4 ){
       setErrors({...errors, ['images']: 'You need to add at least 4 images of your warehouse'})
-      window.scrollTo({top: 0,behavior:'smooth'})
+      window.scrollTo({top: 100,behavior:'smooth'})
       return
     }
 
@@ -66,6 +68,7 @@ function PostNewWarehouse() {
       window.scrollTo({top: 10,behavior:'smooth'})
       return
     }
+ 
     setValidated(true);
   };
 
@@ -103,7 +106,7 @@ function PostNewWarehouse() {
   });
 
   const handleAddWarehouse = (e) => {
-    console.log(warehouse)
+ 
     if(validated){
       addWarehouse(warehouse);
     }
@@ -203,7 +206,7 @@ function PostNewWarehouse() {
                     onChange={(item) =>{
                       setSelectedDate(item.selection)
                       console.log(item.selection)
-                      setWarehouse({...warehouse, ['datesAvailble']:[[item.selection.startDate, item.selection.endDate]]})
+                      setWarehouse({...warehouse, ['datesAvailable']:[[item.selection.startDate, item.selection.endDate]]})
                       setErrors({...errors,['date']:null})
                     }
                      }
@@ -327,7 +330,7 @@ function PostNewWarehouse() {
               label="Forklift"
               ></Form.Check>
             <div className='col-12 justify-content-center d-flex'>
-                <Button onClick={() => {handleAddWarehouse()}} className='mt-3 te' style={{ backgroundColor: '#54d494', borderColor: '#54d494' }} type="submit" variant="primary">Upload Space</Button>
+                <Button onClick={(e) => {handleAddWarehouse(e)}} className='mt-3 te' style={{ backgroundColor: '#54d494', borderColor: '#54d494' }} type="submit" variant="primary">Upload Space</Button>
             </div>
           </Card.Body>
         </Card>

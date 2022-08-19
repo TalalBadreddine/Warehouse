@@ -207,7 +207,17 @@ const addWarehouses = async (req, res) => {
 
     try {
         const warehouse = req.body;
+        const decodedInfo = jwtDecode(req.cookies['jwt'])
         const result = await warehouseSchema.create(warehouse);
+
+        await warehouseOwnerModel.updateOne({
+            _id: decodedInfo.user._id
+        },{
+            $set: {
+                myWarehouses: [...myWarehouses, result._id]
+            }
+        })
+
         if (result) {
             res.status(201).json({ message: "added WareHouse" })
 
