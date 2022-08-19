@@ -79,7 +79,6 @@ const checkIfTimeIsAvailbleWithWarehouseTime = async  (wareHouseTime, askedTime)
     }
 }
 
-//TODO: test this function
 const userRentAWarehouseInSpecificDate = async (wareHouseId, askedTime) => {
 
     try{

@@ -12,7 +12,8 @@ import Col from 'react-bootstrap/Col'
 
 import './Landing.css'
 import { Animator, ScrollContainer, ScrollPage, batch, Fade, FadeIn, FadeOut, Move, MoveIn, MoveOut, Sticky, StickyIn, StickyOut, Zoom, ZoomIn, ZoomOut } from "react-scroll-motion";
-
+import landingImg from '../../../Assets/homePageBg.jpg'
+import SearchBar from '../../../Components/SearchBar/SearchBar'
 
 
 
@@ -25,116 +26,91 @@ function Landing() {
   const ZoomInScrollOut = batch(StickyIn(), FadeIn(), ZoomIn());
   return (
     <>
-    
-    {/* <VisitorNavbar/> */}
-      
-  
+
+      {/* <VisitorNavbar/> */}
+
+
       <ScrollContainer className="bg-success col-12">
 
         <ScrollPage  >
-        <Animator animation={FadeOut(1000,-500)}>
-      
-      <Card className="bg-dark text-white" style={{width: '100%',height: '95vh', margin: "10px 0",backgroundRepeat:'no-repeat'}}>
-      <Card.Img src={require('../../../Assets/modern.webp')} alt="Card image" style={{height:"95vh",resizeMode: 'cover',flex: 1, opacity:"0.7"}}/>
-      <Card.ImgOverlay>
+          <Animator>
 
-        <Row className='justify-content-center mt-3'>
 
-        
-        <Col className='col-4'></Col>
-        <Col className='col-4 mt-5'>
-        <div style={{display: 'flex',  justifyContent:'center', alignItems:'center'}}>
-          <h1> Search for a Space</h1>
-          
-        </div>
-        <InputGroup >
-          <FormControl
-            placeholder="Search"
-          />
-          <Button onClick={()=>{window.scrollTo({bottom:0,behavior:'smooth'})}} style={{backgroundColor:'#54d494', borderColor:'#54d494'}}>
-            Search
-          </Button>
-        </InputGroup>
-        
-        </Col>
-        <Col className='col-4'></Col>
+            <div>
+              <img className='col-12 position-relative' src={landingImg}></img>
+              <div style={{ position: 'absolute', top: '30%', left: '30%', color: 'white' }} >
+                <p style={{ fontSize: '4.5rem', fontWeight:'bold' }}>Search For A Space</p>
+                <div className='col-6 ms-3'>
+                                 {/* TODO: add search Bar */}   
+                </div>
 
-        </Row>
-      
+              </div>
 
-        {/* <Card.Title>Card title</Card.Title>
-        <Card.Text>
-          This is a wider card with supporting text below as a natural lead-in
-          to additional content. This content is a little bit longer.
-        </Card.Text>
-        <Card.Text>Last updated 3 mins ago</Card.Text> */}
+            </div>
 
-      </Card.ImgOverlay>
-    </Card>
-    
-    </Animator>
+          </Animator>
         </ScrollPage>
 
 
 
         <ScrollPage>
-         <Animator animation={MoveIn(-1000,0)}>
-          
-      <Container>
+          <Animator>
 
-      <Row className='parrr'>
-        <Col className='col-lg-8 col-sm-12'>
-            <p>Warehousing is the process of storing physical inventory for sale or distribution. Warehouses are used by all different types of businesses that need to temporarily store products in bulk before either shipping them to other locations or individually to end consumers.</p>
-        </Col>
-        <Col className='col-lg-4 col-sm-12'> 
-        <img src={require('../../../Assets/Logistics-pana 1.png')}/>
-          </Col>
-      </Row>
+            <Container>
+
+              <Row className='parrr'>
+                <Col className='col-lg-7 col-sm-11'>
+                  <p>Warehousing is the process of storing physical inventory for sale or distribution. Warehouses are used by all different types of businesses that need to temporarily store products in bulk before either shipping them to other locations or individually to end consumers.</p>
+                </Col>
+                <Col className='col-lg-4 col-sm-12'>
+                  <img src={require('../../../Assets/Logistics-pana 1.png')} />
+                </Col>
+              </Row>
 
 
-        <Row className='parrr'>
-        <Col className='col-lg-4 col-sm-12'>
+              <Row className='parrr'>
+                <Col className='col-lg-4 col-sm-12'>
 
-          
-          <img src={require('../../../Assets/Container ship-cuate 1.png')}/>
-        
-        </Col>
-        
-        <Col className='col-lg-8 col-sm-12'>
-        
-        <p>Warehousing is the process of storing physical inventory for sale or distribution. Warehouses are used by all different types of businesses that need to temporarily store products in bulk before either shipping them to other locations or individually to end consumers.</p>
-        
-        </Col>
-      </Row >
 
-          <Row className='parrr'>
-        <Col className='col-lg-8 col-sm-12'>
-          
-        <p>Warehousing is the process of storing physical inventory for sale or distribution. Warehouses are used by all different types of businesses that need to temporarily store products in bulk before either shipping them to other locations or individually to end consumers.</p>
-        
-        </Col>
-        <Col className='col-lg-4 col-sm-12'>
-        
-        <img src={require('../../../Assets/Logistics-amico2.png')}/>
-        
-        </Col>
-      </Row>
+                  <img src={require('../../../Assets/Container ship-cuate 1.png')} />
 
-      
-    </Container>
-    
-    </Animator>
+                </Col>
+
+                <Col className='col-lg-8 col-sm-12'>
+
+                  <p>Warehousing is the process of storing physical inventory for sale or distribution. Warehouses are used by all different types of businesses that need to temporarily store products in bulk before either shipping them to other locations or individually to end consumers.</p>
+
+                </Col>
+              </Row >
+
+              <Row className='parrr'>
+                <Col className='col-lg-8 col-sm-12'>
+
+                  <p>Warehousing is the process of storing physical inventory for sale or distribution. Warehouses are used by all different types of businesses that need to temporarily store products in bulk before either shipping them to other locations or individually to end consumers.</p>
+
+                </Col>
+                <Col className='col-lg-4 col-sm-12'>
+
+                  <img src={require('../../../Assets/Logistics-amico2.png')} />
+
+                </Col>
+              </Row>
+
+
+            </Container>
+
+          </Animator>
         </ScrollPage>
       </ScrollContainer>
 
-     
-    
 
-    {/* <Footer/> 
+
+
+      {/* <Footer/> 
     Assets/Logistics-amico2.png*/}
-    
+
     </>
-    
+
   )
 }
 
