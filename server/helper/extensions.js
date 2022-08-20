@@ -40,6 +40,45 @@ const getEveryWarehouseOwnerAndHisWareHouses = async () => {
 }
 
 
+const getEveryWarehouseOwnerAndHisWareHousesPending = async () => {
+    try{
+
+        const results = await WarehouseOwnerSchema.find()
+
+        let toReturn = []
+        for(let i = 0 ; i < results.length ; i++){
+            let currentWareHouseOwner = results[i]
+            let currentWareHouseOwnerWarehousesArrayId = currentWareHouseOwner.myWarehouses
+            let currentWareHouseOwnerArrayOfWarehouses = []
+
+            for(let j = 0 ; j < currentWareHouseOwnerWarehousesArrayId.length ; j++){
+
+                let warehouseResult = await warehouseSchema.find({
+                    _id: currentWareHouseOwnerWarehousesArrayId[j],
+                    status:'pending'
+                })
+                if(warehouseResult.length != 0 ){
+                    currentWareHouseOwnerArrayOfWarehouses.push(warehouseResult)
+                }
+            }
+
+            let currentObj = {
+                warehouseOwner: currentWareHouseOwner,
+                warehouses: currentWareHouseOwnerArrayOfWarehouses
+            }
+
+            toReturn.push(currentObj)
+        }
+    
+        return toReturn
+
+    }
+    catch(err){
+        console.log(`error at getEveryWarehouseOwnerAndHisWareHouses, extentions => ${err.message}`)
+    }
+
+}
+
 //@params wareHouseTime is a array
 
 const formatDate = (currentDate) => {
@@ -187,5 +226,6 @@ module.exports = {
     getEveryWarehouseOwnerAndHisWareHouses,
     checkIfTimeIsAvailbleWithWarehouseTime,
     userRentAWarehouseInSpecificDate,
-    formatDate
+    formatDate,
+    getEveryWarehouseOwnerAndHisWareHousesPending 
 }

@@ -204,7 +204,7 @@ function PostNewWarehouse() {
                     date={new Date()}
                     onChange={(item) =>{
                       setSelectedDate(item.selection)
-                      setWarehouse({...warehouse, ['availbleDates']:[[item.selection.startDate, item.selection.endDate]]})
+                      setWarehouse({...warehouse, ['datesAvailable']:[[item.selection.startDate, item.selection.endDate]]})
                       setErrors({...errors,['date']:null})
                     }
                      }

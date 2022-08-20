@@ -4,6 +4,7 @@ const warehouseSchema = require('../models/warehouseSchema')
 const warehouseOwnerSchema = require('../models/WarehouseOwner')
 const dotenv = require('dotenv')
 const jwt = require('jsonwebtoken')
+const extension = require('../helper/extensions')
 
 dotenv.config({path: __dirname + '../.env'})
 
@@ -117,14 +118,17 @@ const activeDeactiveCustomer = async (req,res) => {
 
 const getAllWarehouses = async (req, res) => {
        try{
-        const warehouse= await warehouseSchema.find();
-        if (warehouse){
-             res.status(200).json(warehouse);
-        }}
-    catch(error){
+           
+            await extension.getEveryWarehouseOwnerAndHisWareHousesPending().then((results) => {
+                console.log(results)
+                return res.send(results).status(200)
+                
+            })
+        }
+        catch(error){
         res.status(500).json({message : "internal error with function get all warehouses"})
 
-    }
+        }
 }
 
 const addWarehouse = async(req, res) => {

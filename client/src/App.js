@@ -18,6 +18,7 @@ import MyWarehouses from './Routes/WarehouseOwner/MyWarehouses/MyWarehouses';
 import SideBar from './Components/SideBar/SideBar'
 import AdminSignIn from './Routes/Admin/AdminSignIn/AdminSignIn'
 import ManageUsers from './Routes/Admin/ManageUsers/ManageUsers';
+import Requests from './Routes/Admin/Requests/Requests';
 
 
 
@@ -72,6 +73,9 @@ function App() {
         <Route path='adminLogin' element={<AdminSignIn></AdminSignIn>}></Route>
 
         <Route path='*' element={<Navigate to='/' />} />
+
+        <Route path='/Requests' element={<Requests></Requests>}></Route>
+        
 
       </Routes>
 
