@@ -22,6 +22,7 @@ import ViewWarehouseDetails from './Routes/WarehouseOwner/ViewWarehouseDetails/V
 import CustomerRequests from './Routes/Customer/CustomerRequests/CustomerRequests';
 import UserDetails from './Components/UserDetails/UserDetails';
 import WarehouseRequests from './Routes/Admin/WarehouseRequests/WarehouseRequests';
+import ManageWarehouseOwner from './Routes/Admin/ManageWarehouseOwner/ManageWarehouseOwner'
 
 
 
@@ -74,6 +75,7 @@ function App() {
              <Route path='' element={<ManageUsers></ManageUsers>}></Route>
              <Route path='userdetails' element={<UserDetails></UserDetails>}></Route>
              <Route path='requests' element={<WarehouseRequests></WarehouseRequests>}></Route>
+             <Route  path='manageOwner' element={<ManageWarehouseOwner></ManageWarehouseOwner>}></Route>
 
         </Route>
         

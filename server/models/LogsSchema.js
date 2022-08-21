@@ -9,6 +9,11 @@ const logsSchema = new mongoose.Schema({
     Action: {
         type: String
     },
+
+    role:{
+        type: String
+    },
+    
     Date: {
         type: String,
         default: new Date()

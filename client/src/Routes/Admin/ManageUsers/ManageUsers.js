@@ -117,7 +117,9 @@ function ManageUsers() {
   },[allUsers])
 
   useEffect(()=>{
-            
+    console.log(searchedUsers)
+    if(searchedUsers == null || searchedUsers.length == 0)return
+
             let arr = searchedUsers.map((item ,i)=>{
             return (
                 createData( item.userName , 
@@ -148,6 +150,9 @@ function ManageUsers() {
     
     useEffect(()=>{
         getAllCustomer().then(result => {
+          if(result.data == 'forbidden'){
+            navigate('/')
+          }
         setAllUsers(result.data)
         setSearchedUsers(result.data)
   
