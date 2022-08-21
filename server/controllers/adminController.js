@@ -267,6 +267,20 @@ const adminLogin = async (req, res) => {
     }
 }
 
+const  getUserRequests = async (req, res) => {
+    try{
+
+        const userEmail = req.body.email
+        const results = await manageUsersAndWarehousesSchema.find({
+            userEmail: userEmail
+        })
+        return res.send(results).status(200)
+
+    }catch(err){
+        console.log(`error at getUserRequest => $${err.message}`)
+    }
+}
+
 
 module.exports = {
     getAllCustomer,
@@ -282,5 +296,6 @@ module.exports = {
     getAllWarehousesPending,
     acceptRejectWarehouseRequest,
     adminLogin,
-    activeDeactiveCustomer
+    activeDeactiveCustomer,
+    getUserRequests
 }

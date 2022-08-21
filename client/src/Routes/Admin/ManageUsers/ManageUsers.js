@@ -95,6 +95,10 @@ function ManageUsers() {
       
     })
   }
+
+  const handleUserHistory = (item) => {
+    navigate('/admin/userDetails' , {state: item})
+  }
   
 
   useEffect(()=>{
@@ -120,10 +124,11 @@ function ManageUsers() {
                             item.email , 
                             <Button onClick={()=>handleStatus(item._id ,item.isActive)} style={{borderColor: item.isActive ? 'green' : 'red',color: item.isActive ? 'green' : 'red'}}variant="outlined" >{item.isActive ? 'Active' : 'Deactive'}</Button>,
                             <>
-                            <Button style={{color:'white', backgroundColor:'green', borderColor:'red' , margin: 5}} 
+                            <Button style={{color:'white', backgroundColor:'green', borderColor:'red' , margin: 5}}
+                            onClick={()=>handleUserHistory(item)}
                                     variant="Contained" 
                                     size="medium">
-                            Log History
+                            User History
                             </Button> 
                             <Button style={{color:'white', backgroundColor:'red', borderColor:'red' , margin: 5}} 
                                     onClick={()=> {handleDeleteCustomer(item.email)}}
