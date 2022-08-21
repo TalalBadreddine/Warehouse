@@ -12,8 +12,11 @@ import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
+import Modal from 'react-bootstrap/Modal';
 
 import { getAllWarehouseOwners } from "../../../services/getAllWarehouseOwners"
+import { deleteWarehouseOwnerByAdmin } from "../../../services/deleteWarehouseOwnerByAdmin"
+import AddWarehouseOwner from '../../../Components/AddWarehouseOwner/AddWarehouseOwner';
 
 const columns = [
     { id: 'userName', label: 'Warehouse Owner', minWidth: 170 },
@@ -40,42 +43,116 @@ function ManageUsers() {
     const [rows, setRows] = useState([]);
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
-    const navigate = useNavigate();
     const handleLogs = (info) => {
-        navigate('/admin/WarehouseOwnerDetails', {state:info})
+        navigate('/admin/WarehouseOwnerDetails', { state: info })
     }
+    const [searchedWarehouseOwner, setSearchedWarehouseOwner] = useState([]);
+    const [query, setQuery] = useState("");
+    const navigate = useNavigate();
+
 
     //get all users axios req and the definition of the data
     const [requests, setRequests] = useState([]);
-    useEffect(() => {
-        getAllWarehouseOwners().then(result => {
-            setRequests(result.data)
-            // setCustomersData(result.data)
-            let arr = result.data.map((item, i) => {
-                return (
-                    createData(item.userName,
-                        item.email,
 
-                        <>
-                            <Button style={{ color: 'white', backgroundColor: '#54d494', margin: 5, boxShadow: '3px 3px 6px green' }} onClick={() => { handleLogs(item) }}
-                                variant="Contained"
-                                size="medium">
-                                CheckLog
-                            </Button>
-                            <Button className="ms-4" style={{ color: 'white', backgroundColor: 'red', borderColor: 'red', margin: 5, boxShadow: '3px 3px 6px #682020' }}
-                                variant="outlined"
-                                size="medium">
-                                Delete
-                            </Button>
-                        </>,
-
-                    )
-                )
-            })
-            setRows([...arr])
-
+    const handleDeleteWarehouseOwner = (email) => {
+        deleteWarehouseOwnerByAdmin(email)
+        let arr2 = requests.filter((warehouseOwner) => {
+            return warehouseOwner.email != email
         })
-    }, []);
+        setRequests(arr2)
+    }
+
+    const handleAddRow = (item) => {
+        
+        if (item === 'Warehouse Owner already exists') {
+            alert('Warehouse Owner already exists')
+           
+        }
+        console.log(item)
+        setRequests([...requests, item.message])
+    }
+
+    useEffect(() => {
+        if (query == "") {
+            setSearchedWarehouseOwner(requests)
+
+
+        }
+        // console.log(requests)
+        let arr3 = requests.filter((warehouseOwner) => {
+            // console.log(warehouseOwner);
+            // console.log(query);
+
+            return warehouseOwner.userName.includes(query)
+        })
+        setSearchedWarehouseOwner(arr3)
+    }, [query])
+
+    useEffect(() => {
+        setSearchedWarehouseOwner(requests)
+    }, [requests])
+
+    useEffect(() => {
+
+        let arr = searchedWarehouseOwner.map((item, i) => {
+
+            return (
+
+                createData(item.userName,
+                    item.email,
+                    <>
+                        <Button style={{ color: 'white', backgroundColor: '#54d494', margin: 5, boxShadow: '3px 3px 6px green' }} onClick={() => { handleLogs(item) }}
+                            variant="Contained"
+                            size="medium">
+                            CheckLog
+                        </Button>
+                        <Button className="ms-4" style={{ color: 'white', backgroundColor: 'red', borderColor: 'red', margin: 5, boxShadow: '3px 3px 6px #792727' }}
+                            onClick={() => { handleDeleteWarehouseOwner(item.email) }}
+                            variant="outlined"
+                            size="medium">
+                            Delete
+                        </Button>
+                    </>,
+                )
+            )
+        })
+        setRows([...arr])
+    }, [searchedWarehouseOwner])
+
+    // useEffect(() => {
+    //     getAllWarehouseOwners().then(result => {
+    //         setRequests(result.data)
+          
+    //         let arr = result.data.map((item, i) => {
+               
+    //             return (
+    //                 createData(item.userName,
+    //                     item.email,
+                        
+    //                 )
+    //             )
+    //         })
+    //         setRows([...arr])
+    //         console.log(result.data)
+
+    //     })
+    // }, []);
+    useEffect(()=>{ 
+        getAllWarehouseOwners().then(result => {        
+          setRequests(result.data)   
+          setSearchedWarehouseOwner(result.data) 
+
+          console.log(result.data)
+
+        }).catch((err) => { 
+        if(err.response.data == 'forbidden'){navigate('/')} 
+        }) 
+        },[]);
+
+    const [show, setShow] = useState(false);
+    const handleShow = () => setShow(true);
+    const handleClose = () => setShow(false);
+
 
 
     return (
@@ -83,17 +160,18 @@ function ManageUsers() {
             <Grid container spacing={2} sx={{ m: 2 }}>
                 <Grid item xs={2}></Grid>
                 <Grid item xs={8}>
-                    <TextField style={{ width: '40%' }} sx={{ m: 1 }} id="outlined-basic" label="Search for a Warehouse Owner..." variant="outlined" size='small' />
+                    <TextField style={{ width: '40%' }} sx={{ m: 1 }} id="outlined-basic" label="Search for a Warehouse Owner..." variant="outlined" size='small' onChange={(e) => setQuery(e.target.value)} />
                     <Button
                         style={{ backgroundColor: 'gray', borderColor: '#54d494', float: 'right', boxShadow: '3px 3px 6px black' }}
                         startIcon={<AddIcon />} sx={{ m: 1 }}
+                        onClick={handleShow}
                         variant="contained"
                         size="medium">
                         Create
                     </Button>
 
                     <Paper sx={{ width: '100%', overflow: 'hidden' }} style={{ marginTop: '5%' }}>
-                        <TableContainer sx={{ maxHeight: 440 }} >
+                        <TableContainer sx={{ maxHeight: 500 }} >
                             <Table stickyHeader aria-label="sticky table">
                                 <TableHead>
                                     <TableRow>
@@ -110,7 +188,7 @@ function ManageUsers() {
                                 </TableHead>
                                 <TableBody>
                                     {rows && rows
-                                        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                        .slice()
                                         .map((row) => {
                                             return (
                                                 <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
@@ -139,6 +217,25 @@ function ManageUsers() {
                 </Grid>
                 <Grid item xs={2}></Grid>
             </Grid>
+            <Modal
+                show={show}
+                onHide={handleClose}
+                backdrop="static"
+                size="md"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+                keyboard={false}
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title>Add a Warehouse Owner</Modal.Title>
+                </Modal.Header>
+
+                <Modal.Body>
+                    <AddWarehouseOwner addAction={handleAddRow} closeAction={() => { handleClose() }} />
+                </Modal.Body>
+
+
+            </Modal>
         </div>
     )
 }

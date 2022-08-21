@@ -182,7 +182,7 @@ const addWarehouseOwners = async (req, res) => {
         }
         const result = await warehouseOwnerSchema.create(warehouseOwner);
         if (result) {
-            res.status(201).json({ message: "added warehouseOwner" })
+            res.status(201).json({ message: result })
         } else {
             res.status(409).json({ message: "failed to add warehouseOwner" })
         }

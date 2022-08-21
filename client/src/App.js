@@ -2,7 +2,7 @@
 import React from 'react'
 import { Routes, Route } from "react-router-dom"
 // import Login from './Routes/Visitor/LoginBackup/Login'
-import Requests from "./Routes/Visitor/Requests/Requests"
+// import Requests from "./Routes/Visitor/Requests/Requests"
 import ManageWarehouseOwner from './Routes/Admin/ManageWarehouseOwner/ManageWarehouseOwner'
 import WarehouseOwnerDetails from './Routes/Admin/WarehouseOwnerDetails/WarehouseOwnerDetails'
 const App = () => {
@@ -18,7 +18,7 @@ const App = () => {
       <ManageWarehouseOwner />
       {/* <AboutUs/>  */}
 
-      <Requests/>
+      {/* <Requests/> */}
 
       {/* <Login/> */}
       

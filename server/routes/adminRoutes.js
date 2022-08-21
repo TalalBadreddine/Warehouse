@@ -36,9 +36,10 @@ adminRouter.delete('/deleteWarehouse', validateAdmin, deleteWarehouse )
 adminRouter.get('/getAllWarehouseOwners', getAllWarehouseOwners )
 // validateAdmin,
 adminRouter.post('/getAllWarehouseOwnersWarehouses', getAllWarehouseOwnersWarehouses)
-adminRouter.post('/addWarehouseOwners', validateAdmin, addWarehouseOwners )
-adminRouter.delete('/deleteWarehouseOwners', validateAdmin, deleteWarehouseOwners )
-
+adminRouter.post('/addWarehouseOwners', addWarehouseOwners )
+// validateAdmin,
+adminRouter.delete('/deleteWarehouseOwners', deleteWarehouseOwners )
+// validateAdmin,
 adminRouter.get('/getAllWarehousesPending', validateAdmin, getAllWarehousesPending)
 adminRouter.post('/acceptRejectWarehouseRequest', validateAdmin, acceptRejectWarehouseRequest)
 
