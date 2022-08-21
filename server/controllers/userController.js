@@ -31,41 +31,36 @@ const getWareHousesForUsers = async (req, res) => {
 }
 
 const userLogin = async (req, res) => {
-    try{
+    try {
+    
+        const {email, password} = req.body; 
 
-        const userInfo = req.body
- 
-        const userFromDb = await userSchema.findOne({
-            email: userInfo.email
+        const user = await userSchema.findOne({
+            email
         })
- 
+
+        if(!user) return res.status(400).json({message : "user does not exist"});        
+
+        // verify password
+        if(( crypto.createHash(hashType).update(password).digest(encodeAs) != user.password)) 
+            return res.status(403).json({message : "incorrect password!"})
+
+        // create token
+        const payload = {
+            user          
+        }
         
-        if(!userFromDb){
-            return res.send('Does not exist').status(404)
-          
-        }
-   
-        else if(userFromDb.password != crypto.createHash(hashType).update(userInfo.password).digest(encodeAs)){
-            return res.send('wrong password').status(403)
-           
-        }
+        await jwt.sign({user: user, role: 'user'}, jwtSecret, async (err, token) => {
 
-        else if(!userFromDb.isActive ){
-            return res.send('Inactive').status(403)
-            
-        }else {
-
-       
-        await jwt.sign({user: userInfo, role: 'user'}, jwtSecret, async (err, token) => {
-            await res.cookie('jwt', `${token}`, { httpOnly: true, maxAge: 3 * 24 * 60 * 60 * 1000 })
-            return res.status(200).send(true)
+            await res.cookie('jwt', `${token}`, { httpOnly: true })
+             res.status(200).json(token)
         })
-        
-    }
 
-    }
-    catch(err){
-        console.log(`error at userLogin => ${err.message}`)
+
+
+    } catch(error){
+        console.log(error)
+         res.status(500).json({message : "an error occured at login function"});
     }
 }
 

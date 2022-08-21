@@ -26,6 +26,7 @@ function PostNewWarehouse() {
 
   const [validated, setValidated] = useState(false);
   const [pinLocation, setPinLocation] = useState(null)
+  const [error,setError] = useState('');
   const [errors, setErrors] = useState({
 
     map: null,
@@ -79,6 +80,11 @@ function PostNewWarehouse() {
       if (error.response.statusText == 'Forbidden') {
         navigate("/")
       }
+      else if(error.message === 'Request failed with status code 409'){
+        setError("User does not exist");
+  
+       }
+      
     });
   }, [])
 
@@ -327,6 +333,7 @@ function PostNewWarehouse() {
               id="custom-switch"
               label="Forklift"
               ></Form.Check>
+              <p className='mt-2' style={{  fontSize: '18px',fontStyle:'italic', color:'red' }}>{error}</p>
             <div className='col-12 justify-content-center d-flex'>
                 <Button onClick={() => {handleAddWarehouse()}} className='mt-3 te' style={{ backgroundColor: '#54d494', borderColor: '#54d494' }} type="submit" variant="primary">Upload Space</Button>
             </div>

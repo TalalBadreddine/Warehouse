@@ -6,9 +6,11 @@ import {useState} from 'react';
 import axios from "axios";
 import {useNavigate} from 'react-router-dom';
 
+
 function LoginWarehouseOwner() {
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
+    const [error,setError] = useState('');
     const apiUri="/warehouseOwner/login";
     const navigate=useNavigate();
     const HandleEmail = (e) => {
@@ -33,10 +35,11 @@ function LoginWarehouseOwner() {
                 .catch((err) => {
                     console.log(err.message)
                      if(err.message === 'Request failed with status code 400'){
-                    window.alert("User does not exist");
+                      setError("User does not exist");
+                
                      }
-                      else if(err.message === 'Request failed with status code 403');{
-                       window.alert("Wrong Password");
+                       else if(err.message === 'Request failed with status code 403'){
+                        setError("Wrong Password");
                   }
               //          else if(err.res.data === 'testing'){
               //           window.alert("You are desactivated by the admin");
@@ -69,10 +72,14 @@ function LoginWarehouseOwner() {
       placeholder="Password"
     />
     <label htmlFor="floatingPasswordCustom">Password</label>
+
   </Form.Floating>
+ 
+  <p className='mt-2' style={{  fontSize: '18px',fontStyle:'italic', color:'red' }}>{error}</p>
   <Button onClick={HandleLogin}  style={{backgroundColor:'#54d494',borderColor:'#54d494'}} type="submit" className="mb-2 mt-2"> 
         Submit 
       </Button> 
+      
   </div>
   )
 }

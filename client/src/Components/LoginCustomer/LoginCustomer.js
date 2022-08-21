@@ -4,10 +4,13 @@ import Button from 'react-bootstrap/Button';
 import { loginUser } from '../../Services/LoginUser';
 import {useState} from 'react';
 import {useNavigate} from 'react-router-dom'
+import axios from "axios";
 
 function LoginCustomer() {
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
+    const [error,setError] = useState('');
+    const apiUri="/user/login";
     const navigate = useNavigate()
       
     const HandleEmail = (e) => {
@@ -20,11 +23,18 @@ function LoginCustomer() {
         const HandleLogin = (e) => {
 
             e.preventDefault()
-              loginUser(email,password).then((data) => {
-                if(data.data == true){navigate('/customer/')}
-                 //TODO: Sana Handle Error (wrong password ....)
-              }).catch((err) => {
+            const data=(email,password);
+            axios.post(apiUri, {email,password}).then(async(data) => {
+               navigate('/customer/')
                
+              }).catch((err) => {
+                if(err.message === 'Request failed with status code 400'){
+                  setError("User does not exist");
+            
+                 }
+                   else if(err.message === 'Request failed with status code 403'){
+                    setError("Wrong Password");
+              }
               })
             }
   return (
@@ -46,6 +56,7 @@ function LoginCustomer() {
     />
     <label htmlFor="floatingPasswordCustom">Password</label>
   </Form.Floating>
+  <p className='mt-2' style={{  fontSize: '18px',fontStyle:'italic', color:'red' }}>{error}</p>
   <Button onClick={HandleLogin}  style={{backgroundColor:'#54d494',borderColor:'#54d494'}} type="submit" className="mb-2 mt-2"> 
         Submit 
       </Button> </div>

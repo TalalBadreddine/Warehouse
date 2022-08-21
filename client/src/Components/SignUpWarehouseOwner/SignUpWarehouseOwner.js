@@ -9,6 +9,17 @@ import { registerWarehouseOwner } from '../../Services/registerWarehouseOwner';
 
 
 function SignUpWarehouse() {
+  const [validated, setValidated] = useState(false);
+
+  const handleSubmit = (event) => {
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+    setValidated(true);
+  };
   
 const [warehouseOwner, setWarehouseOwner] = useState({
     userName: "",
@@ -25,76 +36,106 @@ const [warehouseOwner, setWarehouseOwner] = useState({
       }
     
   return (
-    <div>  <Row > 
+    <div>
+      <Form noValidate validated={validated} onSubmit={handleSubmit}>
+        <Row > 
          <Row className='justify-content-center mb-2'><Form.Label className='justify-content-center'>User Information</Form.Label></Row>
     <Row xs="auto"> 
     <Col>
+    <Form.Group>
     <InputGroup className=" mb-2">
-      <Form.Control value={warehouseOwner.userName} 
+      
+      <Form.Control required value={warehouseOwner.userName} 
     onChange={(e) => setWarehouseOwner({...warehouseOwner, userName: e.target.value })} className="mb-2" id="inlineFormInput" placeholder="Username" /> 
-      </InputGroup>
+      <Form.Control.Feedback type="invalid">
+                  Please fill your username.
+                </Form.Control.Feedback> </InputGroup>
+      </Form.Group>
       </Col> 
       <Col className='col-6'>
+      <Form.Group>
       <InputGroup className="mb-2">
       
-       <Form.Control value={warehouseOwner.email} 
+       <Form.Control required value={warehouseOwner.email} 
     onChange={(e) => setWarehouseOwner({...warehouseOwner, email: e.target.value })} className="mb-2" id="inlineFormInput" placeholder="email" />
-      </InputGroup>
+     <Form.Control.Feedback type="invalid">
+                  Please fill your email.
+                </Form.Control.Feedback> </InputGroup>
+      </Form.Group>
       </Col>
       </Row>
 
     <Row className='mb-2' xs="auto"> 
-    
+    <Form.Group>
       <InputGroup>
-      <Form.Control value={warehouseOwner.phoneNumber} 
+      <Form.Control required value={warehouseOwner.phoneNumber} 
     onChange={(e) => setWarehouseOwner({...warehouseOwner, phoneNumber: e.target.value })} className="mb-2" id="inlineFormInput" placeholder="phone number" />
-       </InputGroup>
-     
+      <Form.Control.Feedback type="invalid">
+                  Please fill your phone number.
+                </Form.Control.Feedback> </InputGroup>
+     </Form.Group>
     </Row> 
     
     
     <Row xs="auto"> 
     <Col>
+    <Form.Group>
    <InputGroup>
-      <Form.Control value={warehouseOwner.password} 
-    onChange={(e) => setWarehouseOwner({...warehouseOwner, password: e.target.value })} className="mb-2" id="inlineFormInput" placeholder="password"/> 
-      </InputGroup>
+      <Form.Control required value={warehouseOwner.password} 
+    onChange={(e) => setWarehouseOwner({...warehouseOwner, password: e.target.value })} className="mb-2" id="inlineFormInput" placeholder="password" type="password"/> 
+      <Form.Control.Feedback type="invalid">
+                  Please fill your password.
+                </Form.Control.Feedback> </InputGroup></Form.Group>
       </Col>
    <Col className='col-6'>
+   <Form.Group>
     <InputGroup>
-      <Form.Control  className="mb-5" id="inlineFormInput" placeholder="confirm password"/>
-       </InputGroup>
+      <Form.Control required  className="mb-5" id="inlineFormInput" placeholder="confirm password" type="password"/>
+      <Form.Control.Feedback type="invalid">
+                  Please confirm your password.
+                </Form.Control.Feedback> </InputGroup></Form.Group>
        </Col>
     </Row>
     <Row className='justify-content-center mb-2'><Form.Label className='justify-content-center'>Card Information</Form.Label></Row>
     <Row xs="auto"><Col>
+    <Form.Group>
         <InputGroup>
-       <Form.Control value={warehouseOwner.cardNumber} 
+       <Form.Control required value={warehouseOwner.cardNumber} 
     onChange={(e) => setWarehouseOwner({...warehouseOwner, cardNumber: e.target.value })} className="mb-2 " id="inlineFormInput" placeholder="Card number" />
-        </InputGroup>
+       <Form.Control.Feedback type="invalid">
+                  Please fill your card Number.
+                </Form.Control.Feedback> </InputGroup></Form.Group>
         </Col>
         <Col className='col-6'>
+        <Form.Group>
         <InputGroup>
-        <Form.Control value={warehouseOwner.cardExpires} 
+        <Form.Control required value={warehouseOwner.cardExpires} 
     onChange={(e) => setWarehouseOwner({...warehouseOwner, cardExpires: e.target.value })} className="mb-2" id="inlineFormInput" type='month'/>
-    </InputGroup>
+    <Form.Control.Feedback type="invalid">
+                  Please fill your card Expire date.
+                </Form.Control.Feedback></InputGroup></Form.Group>
     </Col>
     </Row>
 
         <Row xs="auto">
-           <Col className='col-6'><InputGroup>
-        <Form.Control value={warehouseOwner.cardCode} 
+           <Col className='col-6'>
+           <Form.Group><InputGroup>
+        <Form.Control required value={warehouseOwner.cardCode} 
     onChange={(e) => setWarehouseOwner({...warehouseOwner, cardCode: e.target.value })} className="mb-2" id="inlineFormInput"  placeholder="Card code" />
-       
-</InputGroup>
+        <Form.Control.Feedback type="invalid">
+                  Please fill your card code.
+                </Form.Control.Feedback>
+</InputGroup></Form.Group>
 </Col>
- <Col className='col-6'><InputGroup>
+ <Col className='col-6'><Form.Group><InputGroup>
        
           
-          <Form.Control value={warehouseOwner.cardName} 
+          <Form.Control required value={warehouseOwner.cardName} 
     onChange={(e) => setWarehouseOwner({...warehouseOwner, cardName: e.target.value })} className="mb-2" id="inlineFormInput"  placeholder="Name on card" />
-       
-</InputGroup></Col>
+       <Form.Control.Feedback type="invalid">
+                  Please fill your card Name
+                </Form.Control.Feedback>
+</InputGroup></Form.Group></Col>
         </Row>
      
       
@@ -105,7 +146,7 @@ const [warehouseOwner, setWarehouseOwner] = useState({
         Submit 
       </Button> 
     </Row> 
-
+</Form>
   </div>
   )
 }
