@@ -20,6 +20,8 @@ import AdminSignIn from './Routes/Admin/AdminSignIn/AdminSignIn'
 import ManageUsers from './Routes/Admin/ManageUsers/ManageUsers';
 import ViewWarehouseDetails from './Routes/WarehouseOwner/ViewWarehouseDetails/ViewWarehouseDetails';
 import CustomerRequests from './Routes/Customer/CustomerRequests/CustomerRequests';
+import UserDetails from './Components/UserDetails/UserDetails';
+
 
 
 
@@ -66,10 +68,11 @@ function App() {
 
 
        
-
+        
         <Route path='admin/' element={<SideBar></SideBar>}>
 
              <Route path='' element={<ManageUsers></ManageUsers>}></Route>
+             <Route path='userdetails' element={<UserDetails></UserDetails>}></Route>
 
         </Route>
         
