@@ -1,4 +1,4 @@
-const {register,login,logout,addWarehouses, getWarehouses, acceptDeclineRequest, deleteWarehouse, getRequests} = require('../controllers/wareHouseOwnerController')
+const {register,login,logout,addWarehouses, getWarehouses, acceptDeclineRequest, deleteWarehouse, getRequests, getWarehouseDetails} = require('../controllers/wareHouseOwnerController')
 const Router = require('express').Router;
 const jwtDecode = require('jwt-decode')
 const {
@@ -35,6 +35,8 @@ warehouseOwnerRouter.get('/', validateWarehouseOwner ,getWarehouses);
 
 // DELETE request to delete a warehouseOwner
 warehouseOwnerRouter.delete('/:id/delete', validateWarehouseOwner, deleteWarehouse);
+
+warehouseOwnerRouter.post('/getWarehouseDetails', validateWarehouseOwner, getWarehouseDetails)
 
 warehouseOwnerRouter.post('/requests', validateWarehouseOwner,getRequests)
 

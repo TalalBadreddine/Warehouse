@@ -287,7 +287,7 @@ const SearchWarehouse = ({role}) => {
                 <div className="d-flex d-sm-block flex-wrap col-sm-6  col-12">
 
 
-                    <div className={`overflow-auto  ${styles.warehousesContainer}`}>
+                    <div className={`overflow-auto  ${styles.warehousesContainer}`} style={{overflowY:'auto', height:'600px'}}>
 
                         {
                             filtredWarehousesInfo && filtredWarehousesInfo.map((warehouse) => {
@@ -306,8 +306,8 @@ const SearchWarehouse = ({role}) => {
 
                     </div>
                 </div>
-
-                <div className={`col-6 position-fixed ${styles.mapContainer}`}>
+{/* position-fixed ${styles.mapContainer} */}
+                <div className={`col-6 `} style={{position:'fixed', top:'23%',right:'0'}}>
                     <WarehousesMap info={filtredWarehousesInfo} flyToMap={flyToMap} setMylocation={setMylocation} getMyLocation={getMyLocation} canPin={canPin} setPinLocation={setPinLocation}  ></WarehousesMap>
                 </div>
 

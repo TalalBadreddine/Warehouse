@@ -28,7 +28,6 @@ import axios from 'axios'
 const WarehouseDetails = () => {
 
     const [showPayments, setShowPayments] = useState(false)
-    const [totalPrice, setTotalPrice] = useState(0)
     const [dataSettings, setDataSettings] = useState({
         endDate: null,
         disabledDates: [],
@@ -89,9 +88,7 @@ const WarehouseDetails = () => {
             return
         }
 
-        let totalPrice = datediff(state.startDate, state.endDate) * parseInt(warehouseData.pricePerDay)
-
-        await axios.post('/user/rentWarehouse', {warehouseData, totalPrice:totalPrice, rentingDate: [state.startDate, state.endDate ]}).then((data)=>{
+        await axios.get('/user/testPayment').then((data)=>{
             console.log(data.data)
             window.location = `${data.data.url}`
         })
@@ -140,7 +137,7 @@ const WarehouseDetails = () => {
                 <div className="d-flex">
 
                     <div style={{ height: '404px' }} >
-                        <img src={warehouseData.images[0]} alt='warehouseImg' width={'300px'} height={'404px'} className="rounded border" ></img>
+                        <img src={warehouseData.images[0]} alt='warehouseImg' style={{objectFit:'cover'}} width={'300px'} height={'404px'} className="rounded border" ></img>
                     </div>
 
                     <div>
@@ -148,12 +145,12 @@ const WarehouseDetails = () => {
                         <div className="ms-3 ">
 
                             <div>
-                                <img src={warehouseData.images[1]} alt='warehouseImg' width={'300px'} height={'190px'} className="rounded m-1 border" ></img>
-                                <img src={warehouseData.images[2]} alt='warehouseImg' width={'300px'} height={'190px'} className="rounded ms-2 border" ></img>
+                                <img src={warehouseData.images[1]} alt='warehouseImg' style={{objectFit:'cover'}} width={'300px'} height={'190px'} className="rounded m-1 border" ></img>
+                                <img src={warehouseData.images[2]} alt='warehouseImg' style={{objectFit:'cover'}} width={'300px'} height={'190px'} className="rounded ms-2 border" ></img>
                             </div>
 
                             <div>
-                                <img src={warehouseData.images[0]} alt='warehouseImg' width={'610px'} height={'200px'} className="rounded m-1 border" ></img>
+                                <img src={warehouseData.images[3]} alt='warehouseImg' style={{objectFit:'cover'}} width={'610px'} height={'200px'} className="rounded m-1 border" ></img>
                             </div>
 
                         </div>
@@ -315,7 +312,7 @@ const WarehouseDetails = () => {
                     <h1>Select Rental Date:</h1>
                     <p>Select a rental date so your request to rent the warehouse will be sent to the owner</p>
                     <p>Availble Dates: {warehouseData && warehouseData.datesAvailable.map((currentDate) => {
-                        return <span className="ms-3 px-3 py-1 d-inline-block rounded-4" style={{ backgroundColor: '#90ee90' }}>{new Date(currentDate[0]).toISOString().slice(0, 10)} / {new Date(currentDate[1]).toISOString().slice(0, 10)}</span>
+                        return <span className="ms-3 px-3 py-1 d-inline-block rounded-4" style={{ backgroundColor: '#90ee90' }}>{currentDate[0].replaceAll('/', '-')} / {currentDate[1].replaceAll('/', '-')}</span>
                     })}</p>
                     {state.endDate && <p> From: {new Date(state.startDate).toISOString().slice(0, 10)}<span className="ms-3"></span> Till: {new Date(state.endDate).toISOString().slice(0, 10)}</p>}
                     {dataSettings.showDateAlert && <p className={`${styles.dateAlert} fs-4`}> Fill Date To Continue !</p>}

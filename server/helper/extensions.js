@@ -43,7 +43,8 @@ const getEveryWarehouseOwnerAndHisWareHouses = async () => {
 //@params wareHouseTime is a array
 
 const formatDate = (currentDate) => {
-    return currentDate.split('T')[0]
+    let date = `${currentDate}`
+    return date.split('T')[0]
 }
 
 // @params date always Array()  @return bool
@@ -79,7 +80,76 @@ const checkIfTimeIsAvailbleWithWarehouseTime = async  (wareHouseTime, askedTime)
     }
 }
 
-//TODO: test this function
+const splitTimeByRequestedTime = (availbleTime, askedTime) => {
+    try{
+
+        const requestedStartDate = new Date(askedTime[0]);
+        const requestedStartDateInSeconds = Math.floor(requestedStartDate.getTime() / 1000);
+
+
+        const requestedEndDate = new Date(askedTime[1])
+        const requestedEndDateInSeconds = Math.floor(requestedEndDate.getTime() / 1000);
+        
+        let wareHouseTime = availbleTime
+        
+        for(let i = 0 ; i < wareHouseTime.length ; i++){
+           
+            let startTime = new Date(wareHouseTime[i][0]); 
+            let startTimeInSeconde = Math.floor(startTime.getTime() / 1000);
+
+            let endTime = new Date(wareHouseTime[i][1])
+            let endTimeInSeconde = Math.floor(endTime.getTime() / 1000);
+
+            if(requestedStartDateInSeconds >= startTimeInSeconde && requestedEndDateInSeconds <= endTimeInSeconde){
+        
+                console.log('test2')
+                if(startTimeInSeconde == requestedStartDateInSeconds && requestedEndDateInSeconds != endTimeInSeconde){
+                    
+                    wareHouseTime[i] = [askedTime[1], wareHouseTime[i][1]]
+
+                    return warehouseTime
+                }
+
+                if(requestedEndDateInSeconds == endTimeInSeconde && startTimeInSeconde != requestedStartDateInSeconds ){
+                    wareHouseTime[i] = [wareHouseTime[i][0], askedTime[0]]
+
+
+                    return warehouseTime
+                }
+
+                if(requestedEndDateInSeconds == endTimeInSeconde && startTimeInSeconde == requestedStartDateInSeconds ){
+
+                    wareHouseTime = wareHouseTime.filter((element, index) => {
+                        return index != i 
+                    })
+
+                    return warehouseTime
+                }
+
+                let firstHalfArr = [wareHouseTime[i][0], requestedStartDate ]
+                let secondHalfArr = [requestedEndDate, wareHouseTime[i][1]]
+
+                wareHouseTime = wareHouseTime.filter((element, index) => {
+                    return index != i 
+                })
+
+                wareHouseTime.push(firstHalfArr)
+                wareHouseTime.push(secondHalfArr)
+
+
+                return warehouseTime
+            }
+
+        }
+
+        return false
+
+    }
+    catch(err){
+        console.log(`error at splitTimeByRequestedTime ${err.message}`)
+    }
+}
+
 const userRentAWarehouseInSpecificDate = async (wareHouseId, askedTime) => {
 
     try{
@@ -199,5 +269,6 @@ module.exports = {
     getEveryWarehouseOwnerAndHisWareHouses,
     checkIfTimeIsAvailbleWithWarehouseTime,
     userRentAWarehouseInSpecificDate,
+    splitTimeByRequestedTime,
     formatDate
 }

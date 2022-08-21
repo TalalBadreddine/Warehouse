@@ -1,5 +1,22 @@
 const mongoose = require('mongoose')
- const axios = require('axios')
+const axios = require('axios')
+
+
+const feedback = new mongoose.Schema({
+
+    comentorEmail: {
+        type:String
+    },
+    content:{
+        type:String
+    },
+    addedIn:{
+        type: Date,
+        default: new Date()
+    }
+})
+
+// feedback will be nested arrays feedback[i][0] will be the comment and the rest will be the comments
 
  const warehouseSchema = new mongoose.Schema({
 
@@ -57,9 +74,16 @@ const mongoose = require('mongoose')
          default: 'pending'
 
      },
+
      address:{
          type: [[String]],
+     },
+
+     feedback:{
+         type:[[feedback]],
+         default:[[]]
      }
+
  })
 
  warehouseSchema.address

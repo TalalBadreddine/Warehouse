@@ -207,7 +207,19 @@ const addWarehouses = async (req, res) => {
 
     try {
         const warehouse = req.body;
+        const decodedInfo = jwtDecode(req.cookies['jwt'])
         const result = await warehouseSchema.create(warehouse);
+        console.log(decodedInfo)
+        console.log(result)
+
+        await warehouseOwnerModel.updateOne({
+            _id: decodedInfo.user._id
+        },{
+            $push: {
+                myWarehouses: result._id
+            }
+        })
+
         if (result) {
             res.status(201).json({ message: "added WareHouse" })
 
@@ -266,6 +278,33 @@ const deleteWarehouse = async (req, res) => {
 
 }
 
+const getWarehouseDetails = async (req, res) => {
+    try{
+
+        const warehouseId = req.body.warehouseId
+
+        const oldRequests = await manageUsersAndWarehousesSchema.find({
+            WarehouseId: warehouseId,
+            status: 'accepted'
+        })
+
+        const warehouseInfo = await warehouseSchema.find({
+        _id: warehouseId
+        })
+
+        let object = {
+            oldRequests:oldRequests,
+            warehouseInfo: warehouseInfo
+        }
+
+        return res.send(object).status(200)
+
+    }
+    catch(err){
+        console.log(`error at getWarehouseDetails in warehouseOwnerController ${err.message}`)
+    }
+}
+
 
 
 
@@ -277,5 +316,6 @@ module.exports = {
     addWarehouses,
     getWarehouses,
     acceptDeclineRequest,
-    deleteWarehouse
+    deleteWarehouse,
+    getWarehouseDetails
 }

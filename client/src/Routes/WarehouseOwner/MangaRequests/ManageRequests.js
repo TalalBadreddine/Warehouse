@@ -8,6 +8,8 @@ import { acceptDeclineRequest } from '../../../Services/acceptDeclineRequest';
 import { useNavigate } from 'react-router-dom';
 import { Modal } from 'react-bootstrap'
 import { Accordion } from 'react-bootstrap'
+import ViewWarehouseDetails from '../ViewWarehouseDetails/ViewWarehouseDetails'
+import axios from 'axios';
 
 
 
@@ -18,6 +20,12 @@ function ManageRequests() {
   const [show, setShow] = useState(false)
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const [showDetailsModal, setShowDetailsModal] = useState(false)
+  const [currentRequestDetails, setCurrentRequestDetails] = useState()
+
+  const handleCloseDetailsModal = () => setShowDetailsModal(false)
+  const handleShowDetailsModal = () => setShowDetailsModal(false)
 
   const [currentWarehouse, setCurrentWarehouse] = useState()
 
@@ -140,6 +148,32 @@ function ManageRequests() {
 
   }
 
+  const handleViewDetails = (requestData) =>{
+    let warehouseId = requestData.WarehouseId
+
+    let endRentDate = new Date(requestData.endRentDate).getTime()
+
+    let requestForThisWarehouse = requests.filter((request) => {
+      let currentRequestStartDate = new Date(request.startRentDate).getTime()
+      return request.WarehouseId == warehouseId && currentRequestStartDate < endRentDate && requestData._id != request._id
+    })
+
+    axios.post('/warehouseOwner/getWarehouseDetails', {warehouseId}).then((results) => {
+
+      setCurrentRequestDetails({
+        oldRequests: results.data.oldRequests,
+        warehouseInfo: results.data.warehouseInfo,
+        conflictedWarehouse: requestForThisWarehouse,
+        thisRequest: requestData
+      })
+
+    }).catch((err) => {
+      alert(err.message)
+    })
+
+    setShowDetailsModal(true)
+  }
+
   //for the search functionality
   const [query, setQuery] = useState("")
 
@@ -181,7 +215,7 @@ function ManageRequests() {
                       </Modal.Header>
                       <Modal.Body>
                         <h5 style={{fontWeight:'meduim', letterSpacing:'1px'}}>The current request have conflict with {modalContent.arrOfWarehouses.length} other warehouses By accepting the request, you will be by default declining other requests.</h5>
-                        {/* <img></img> */}
+
                         <Accordion className="mt-4 mb-4">
                           <Accordion.Item eventKey="0">
                             <Accordion.Header>Current Customer</Accordion.Header>
@@ -212,8 +246,6 @@ function ManageRequests() {
                           </Accordion.Item>
                         </Accordion>
 
-
-
                       </Modal.Body>
                       <Modal.Footer>
                         <Button variant="secondary" onClick={handleClose}>
@@ -224,6 +256,9 @@ function ManageRequests() {
                         </Button>
                       </Modal.Footer>
                     </Modal>}
+
+
+                    {showDetailsModal && currentRequestDetails && <ViewWarehouseDetails data={currentRequestDetails} showState={showDetailsModal} showAction={() => {setShowDetailsModal(true)}} hideAction={() => {setShowDetailsModal(false)}} ></ViewWarehouseDetails>}
 
                     <td>
                       <Button className="m-1" variant="success" style={{ backgroundColor: "#54d494", borderColor: "#54d494" }}
@@ -238,7 +273,7 @@ function ManageRequests() {
                           setCurrentWarehouse(item)
                         }}>Decline</Button>{' '}
 
-                      <Button className="m-1" variant="light" style={{ backgroundColor: "#c1c1c1", borderColor: "#c1c1c1" }}>View Details</Button>{' '}
+                      <Button className="m-1" variant="light" style={{ backgroundColor: "#c1c1c1", borderColor: "#c1c1c1" }} onClick={() => {handleViewDetails(item)}}>View Details</Button>{' '}
                     </td>
                   </tr>
                   // }

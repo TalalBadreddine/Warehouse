@@ -18,7 +18,10 @@ import MyWarehouses from './Routes/WarehouseOwner/MyWarehouses/MyWarehouses';
 import SideBar from './Components/SideBar/SideBar'
 import AdminSignIn from './Routes/Admin/AdminSignIn/AdminSignIn'
 import ManageUsers from './Routes/Admin/ManageUsers/ManageUsers';
+import ViewWarehouseDetails from './Routes/WarehouseOwner/ViewWarehouseDetails/ViewWarehouseDetails';
+import CustomerRequests from './Routes/Customer/CustomerRequests/CustomerRequests';
 import UserDetails from './Components/UserDetails/UserDetails';
+
 
 
 
@@ -46,6 +49,7 @@ function App() {
 
           <Route path='' element={<SearchWarehouse role={'customer'}></SearchWarehouse>}></Route>
           <Route path='warehouseDetails' element={<WarehouseDetails></WarehouseDetails>}></Route>
+          <Route path='requests' element={<CustomerRequests></CustomerRequests>}></Route>
 
         </Route>
 
@@ -58,6 +62,7 @@ function App() {
           <Route path='myWarehouses' element={<MyWarehouses></MyWarehouses>}></Route>
           <Route path='addWarehouse' element={<PostNewWarehouse></PostNewWarehouse>}></Route>
           <Route path='warehouseRequests' element={<ManageRequests> </ManageRequests>}></Route>
+          <Route path='viewWarehouseDetails' element={<ViewWarehouseDetails></ViewWarehouseDetails>}></Route>
 
         </Route>
 

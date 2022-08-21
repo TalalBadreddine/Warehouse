@@ -10,7 +10,10 @@ const {
     userRegister,
     requestRentWarehouse,
     getAllUserRequests,
-    testPayment
+    testPayment,
+    getWarehouseInfo,
+    addComment,
+    addReply
 } = require('../controllers/userController')
 
 
@@ -25,6 +28,12 @@ userRouter.get('/getAllUserRequests', validateUser, getAllUserRequests)
 userRouter.post('/login', userLogin)
 
 userRouter.post('/register', userRegister)
+
+userRouter.post('/addComment', validateUser, addComment)
+
+userRouter.post('/addReply', validateUser, addReply)
+
+userRouter.post('/getWarehouseInfo', validateUser, getWarehouseInfo)
 
 userRouter.get('/checkUserValidation', validateUser, (req, res) => {
     return res.status(200).send(true)
