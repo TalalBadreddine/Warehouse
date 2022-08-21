@@ -16,8 +16,7 @@ import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import AccessibilityIcon from '@mui/icons-material/Accessibility';
 import LogoutIcon from '@mui/icons-material/Logout';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-import Link from '@mui/material/Link';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 
 
@@ -54,9 +53,9 @@ const [state, setState] = React.useState({
       <List>
         {['Manage' ].map((text, index) => (
           <ListItem key={text} disablePadding>
-            <ListItemButton href="/manageusers" variant="contained">
-             <ManageAccountsIcon  style={{color:'#54d494',  minWidth: '50px'}}/>
-              <ListItemText primary={text} />
+            <ListItemButton variant="contained">
+             <Link to={'/admin/'} className='d-flex' style={{textDecoration:'none', color: 'black'}} ><ManageAccountsIcon  style={{color:'#54d494',  minWidth: '50px'}}/> <ListItemText primary={text} /> </Link>
+              
             </ListItemButton>
           </ListItem>
         ))}
@@ -66,9 +65,10 @@ const [state, setState] = React.useState({
               <List>
         {['Dashboard' ].map((text, index) => (
           <ListItem key={text} disablePadding>
-            <ListItemButton href="/2" variant="contained">
-             <DashboardIcon style={{color:'#54d494' , minWidth: '50px'}}/>
-              <ListItemText primary={text} />
+            <ListItemButton variant="contained">
+            <Link to={'/admin/dashboard/'} className='d-flex' style={{textDecoration:'none', color: 'black'}} >
+              <DashboardIcon style={{color:'#54d494' , minWidth: '50px'}}/><ListItemText primary={text} />
+              </Link>
             </ListItemButton>
           </ListItem>
         ))}
@@ -79,9 +79,11 @@ const [state, setState] = React.useState({
                   <List>
         {['Requests' ].map((text, index) => (
           <ListItem key={text} disablePadding>
-            <ListItemButton href="/3" variant="contained">
-             <ArrowDownwardIcon style={{color:'#54d494' , minWidth: '50px'}}/>
+            <ListItemButton variant="contained">
+            <Link to={'/admin/requests'} className='d-flex' style={{textDecoration:'none', color: 'black'}} >
+            <ArrowDownwardIcon style={{color:'#54d494' , minWidth: '50px'}}/>
               <ListItemText primary={text} />
+              </Link>
             </ListItemButton>
           </ListItem>
         ))}
@@ -90,9 +92,11 @@ const [state, setState] = React.useState({
                <List>
         {['User Activity' ].map((text, index) => (
           <ListItem key={text} disablePadding>
-            <ListItemButton href="/4" variant="contained">
-             <AccessibilityIcon style={{color:'#54d494' , minWidth: '50px'}}/>
+            <ListItemButton variant="contained">
+            <Link to={'/admin/userActivity/'} className='d-flex' style={{textDecoration:'none', color: 'black'}} >
+              <AccessibilityIcon style={{color:'#54d494' , minWidth: '50px'}}/>
               <ListItemText primary={text} />
+              </Link>
             </ListItemButton>
           </ListItem>
         ))}
@@ -105,7 +109,7 @@ const [state, setState] = React.useState({
       <List>
 
           <ListItem disablePadding>
-            <ListItemButton href="/5" variant="contained">
+            <ListItemButton variant="contained">
               <LogoutIcon style={{color:'#54d494' , minWidth: '50px'}}/>
               <ListItemText primary={'Logout'}  onClick={(e) =>{
                 e.preventDefault()

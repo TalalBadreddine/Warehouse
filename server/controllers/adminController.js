@@ -118,19 +118,18 @@ const activeDeactiveCustomer = async (req,res) => {
 
 // We need to get all warehouses owner with the warehouses
 const getAllWarehouses = async (req, res) => {
-       try{
-           let warehousesWithOwners = 
+    try{
 
-            extension.getEveryWarehouseOwnerAndHisWareHouses().then((results) => {
-                warehousesWithOwners = results.data
-            })
-        if (warehousesWithOwners){
-             res.status(200).json(warehouse);
-        }}
-    catch(error){
-        res.status(500).json({message : "internal error with function get all warehouses"})
+         await extension.getEveryWarehouseOwnerAndHisWareHousesPending().then((results) => {
+             console.log(results)
+             return res.send(results).status(200)
 
-    }
+         })
+     }
+     catch(error){
+     res.status(500).json({message : "internal error with function get all warehouses"})
+
+     }
 }
 
 const addWarehouse = async(req, res) => {
@@ -224,8 +223,8 @@ const  deleteWarehouseOwners = async(req, res) => {
 //warehouses with a pending status
 const getAllWarehousesPending = async (req, res) => {
 
-    try {
-
+    try {   
+        console.log('test')
         const warehouse =  await warehouseSchema.find({status: 'pending'});
         return res.send(warehouse).status(200)
     } catch(error){
