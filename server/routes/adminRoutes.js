@@ -34,8 +34,8 @@ adminRouter.put('/activeDeactiveCustomer',validateAdmin,  activeDeactiveCustomer
 
 adminRouter.get('/getCurrentCustomerInfo', validateAdmin, getCurrentCustomerInfo )
 
-adminRouter.get('/getAllWarehouses',  getAllWarehouses )
-// validateAdmin,
+adminRouter.get('/getAllWarehouses',validateAdmin, getAllWarehouses )
+
 adminRouter.post('/addWarehouse', validateAdmin, addWarehouse )
 adminRouter.delete('/deleteWarehouse', validateAdmin, deleteWarehouse )
 
@@ -45,7 +45,7 @@ adminRouter.delete('/deleteWarehouseOwners', validateAdmin, deleteWarehouseOwner
 
 adminRouter.get('/getAllWarehousesPending', validateAdmin , getAllWarehousesPending)
 
-adminRouter.post('/acceptRejectWarehouseRequest', acceptRejectWarehouseRequest)
-// , validateAdmin
+adminRouter.post('/acceptRejectWarehouseRequest',validateAdmin, acceptRejectWarehouseRequest)
+
 module.exports = {adminRouter}
 
