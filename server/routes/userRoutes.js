@@ -11,7 +11,9 @@ const {
     requestRentWarehouse,
     getAllUserRequests,
     testPayment,
-    getWarehouseInfo
+    getWarehouseInfo,
+    addComment,
+    addReply
 } = require('../controllers/userController')
 
 
@@ -26,6 +28,10 @@ userRouter.get('/getAllUserRequests', validateUser, getAllUserRequests)
 userRouter.post('/login', userLogin)
 
 userRouter.post('/register', userRegister)
+
+userRouter.post('/addComment', validateUser, addComment)
+
+userRouter.post('/addReply', validateUser, addReply)
 
 userRouter.post('/getWarehouseInfo', validateUser, getWarehouseInfo)
 

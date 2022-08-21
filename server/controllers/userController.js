@@ -213,6 +213,71 @@ const getWarehouseInfo =  async (req, res) => {
     }
 }
 
+const addComment = async (req, res) => {
+    try{
+        const content = req.body.content
+        const warehouseId = req.body.warehouseId
+        const decodedInfo = jwtDecode(req.cookies['jwt'])
+
+
+        const results = await warehouseSchema.updateOne({
+            _id: warehouseId
+        },{
+            $push: {
+                feedback: [{
+
+                    comentorEmail: decodedInfo.user.email,
+                    content: content
+                }]
+            }
+        })
+       if(results.acknowledged){
+           return res.send('comment added').status(200)
+       }else{
+           return res.status(424).send('Failed to add the comment')
+       }
+    }
+    catch(err){
+        console.log(`error in addComment  => ${err.message}`)
+    }
+}
+
+const addReply = async (req, res) => {
+    try{
+        const warehouseId = req.body.warehouseId
+        const content = req.body.content
+        const arrOfCommentsIndex = req.body.arrIndex
+        const decodedInfo = jwtDecode(req.cookies['jwt'])
+        const test = 'feedback.'+ arrOfCommentsIndex
+
+        // 'feedback.pos': {
+
+        //     comentorEmail: decodedInfo.user.email,
+        //     content: content
+
+        // }
+        
+        // await warehouseSchema.updateOne({
+        //     _id: warehouseId
+        // },{
+        //     $push:{
+        //         "feedback.arrOfCommentsIndex": {
+
+        //             comentorEmail: decodedInfo.user.email,
+        //             content: content
+
+        //         }
+        //     }
+        // },)
+        return res.send('good')
+    }
+    catch(err){
+        console.log(`Error at addReply => ${err.message}`)
+    }
+
+}
+
+
 module.exports = {
     getWareHousesForUsers,
     userLogin,
@@ -220,6 +285,8 @@ module.exports = {
     requestRentWarehouse,
     getAllUserRequests,
     testPayment,
-    getWarehouseInfo
+    addComment,
+    getWarehouseInfo,
+    addReply
 }
 
