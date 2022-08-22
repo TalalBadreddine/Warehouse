@@ -22,10 +22,20 @@ function Navigationbar({ role }) {
 
   }
 
-  const logout = () => {
-    axios.get('/logout').then((data) => {
+  const logout = async () => {
+
+    await axios.post('/userActivity', {
+      action: `Logged out`,
+      role: 'customer'
+    }).then(async (results) => {
+      console.log(results)
+    await axios.get('/logout').then((data) => {
       navigate('/')
     })
+    
+    })
+
+
   }
 
   const fontColor = 'black'
