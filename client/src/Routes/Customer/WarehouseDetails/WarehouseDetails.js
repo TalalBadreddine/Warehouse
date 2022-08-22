@@ -87,12 +87,21 @@ const WarehouseDetails = () => {
             window.scroll({ top: dateRangeRef.current.offsetTop, left: 0 })
             return
         }
+        
+        await axios.post('/userActivity',{
+            action: `requested to rent ${warehouseData.name} warehouse for ${datediff(state.startDate, state.endDate)} day from ${warehouseData.Owner.email} at a ${warehouseData.pricePerDay}$ per day`,
+            role: 'customer'
+        })
 
-        await axios.get('/user/testPayment').then((data)=>{
-            console.log(data.data)
+        await axios.post('/user/rentWarehouse',{
+            warehouseData: warehouseData,
+            rentingDate: [state.startDate, state.endDate],
+            totalPrice: datediff(state.startDate, state.endDate) * parseInt(warehouseData.pricePerDay)
+        }).then((data)=>{
             window.location = `${data.data.url}`
         })
-        setShowPayments(true)
+        //TODO: DO NOT DELETE THIS
+        // setShowPayments(true)
     }
 
     return (

@@ -94,28 +94,6 @@ const activeDeactiveCustomer = async (req,res) => {
     }
 }
 
-// warehouses
-
-// const currentWarehouse = req.body
-// const {name, space, location, datesAvailable, type, pricePerDay, description, isFireSafe, isSecurityCameras, isAirConditioning, isWorkers } = currentWarehouse
-
-// let warehouse = new warehouseSchema({
-//     name: name,
-//     space: space,
-//     location: location,
-//     datesAvailable: datesAvailable,
-//     type: type,
-//     pricePerDay: pricePerDay,
-//     description: description,
-//     isFireSafe: Boolean(isFireSafe),
-//     isSecurityCameras: Boolean(isSecurityCameras),
-//     isAirConditioning: Boolean(isAirConditioning),
-//     isWorkers: Boolean(isWorkers)
-    
-// })
-// await warehouse.save()
-// return res.send('added')
-
 // We need to get all warehouses owner with the warehouses
 const getAllWarehouses = async (req, res) => {
     try{

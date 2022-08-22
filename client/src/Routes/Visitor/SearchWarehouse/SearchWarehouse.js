@@ -72,15 +72,12 @@ const SearchWarehouse = ({role}) => {
                     arrOfWarehouses.push(warehouse)
                 }
             }
-   
-     
         
             let maxPrice = -Infinity
             let minPrice = Infinity
 
             let maxSpace = -Infinity
             let minSpace = Infinity
-
 
             for (let i = 0; i < arrOfWarehouses.length; i++) {
                 maxPrice = Math.max(maxPrice, arrOfWarehouses[i].pricePerDay)

@@ -162,7 +162,7 @@ const requestRentWarehouse = async (req, res) => {
                 }],
     
                 mode: 'payment',
-                success_url: 'http://localhost:3000/customer/',
+                success_url: 'http://localhost:3000/customer/requests',
                 cancel_url: 'http://localhost:3000/customer/',
               });
               //TODO: add path for payment

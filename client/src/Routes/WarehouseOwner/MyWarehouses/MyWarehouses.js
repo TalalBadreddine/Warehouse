@@ -28,7 +28,6 @@ const MyWarehouses = () => {
                 </div>
                 <div  >
                    { myWarehouses && myWarehouses.map((warehouse) => {
-
                     return(
                         <div className="m-2">
                             <WarehouseCard info={warehouse} role={'owner'} ></WarehouseCard>
