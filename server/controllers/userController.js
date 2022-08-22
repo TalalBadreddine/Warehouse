@@ -218,7 +218,7 @@ const addComment = async (req, res) => {
         const content = req.body.content
         const warehouseId = req.body.warehouseId
         const decodedInfo = jwtDecode(req.cookies['jwt'])
-
+    
 
         const results = await warehouseSchema.updateOne({
             _id: warehouseId
@@ -232,7 +232,7 @@ const addComment = async (req, res) => {
             }
         })
        if(results.acknowledged){
-           return res.send('comment added').status(200)
+           return res.send( {comentorEmail: decodedInfo.user.email, content: content, addedIn: new Date()} ).status(200)
        }else{
            return res.status(424).send('Failed to add the comment')
        }

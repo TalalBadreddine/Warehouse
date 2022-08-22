@@ -40,16 +40,32 @@ function CustomerRequests() {
     const handleClose = () => setShow(false);
     const [requests, setRequests] = useState([])
 
-    const handleComment = () => {
+    const handleComment = async () => {
+
         let content = textAreaRef.current.value
         if (content == '') {
             alert('empty Comment Will not be added')
             return
         }
 
-        axios.post('/user/addComment', { content, warehouseId: currentWarehouseData._id }).then((results) => {
+        await axios.post('/userActivity',{
+            action: `add a feedback to  ${currentWarehouseData.name} warehouse, the comment content: ${content}`,
+            role: 'customer'
+        }).then((results) => {
             console.log(results.data)
         })
+
+        let currentComment
+        await axios.post('/user/addComment', { content, warehouseId: currentWarehouseData._id }).then((results) => {
+            currentComment = results.data
+
+        })
+
+        textAreaRef.current.value = ''
+        let warehouse = currentWarehouseData
+        warehouse.feedback.push([currentComment])
+        setCurrentWarehouseData({...currentWarehouseData, ['feedback']: warehouse.feedback})
+
     }
 
     const [ownerDetails, setOwnerDetails] = useState({
@@ -61,6 +77,9 @@ function CustomerRequests() {
     useEffect(() => {
 
         axios.get('/user/getAllUserRequests').then((results) => {
+            if (results.data == 'forbidden') {
+                navigate('/')
+            }
             setRequests(results.data)
         })
 
@@ -98,25 +117,25 @@ function CustomerRequests() {
         arr[indexOfRef] = 10000
         setViewAllReply([...arr])
 
-        for(let i = 0 ; i < replyBtnRef.current.length ; i++){
+        for (let i = 0; i < replyBtnRef.current.length; i++) {
             console.log(replyBtnRef)
-            if(i != indexOfRef)replyBtnRef.current[i].className = 'd-none'
+            if (i != indexOfRef) replyBtnRef.current[i].className = 'd-none'
         }
 
         let target = replyBtnRef.current[indexOfRef]
-       console.log(target.className)
-        if(target.className == ' '){
+        console.log(target.className)
+        if (target.className == ' ') {
             target.className = 'd-none'
-        }else{
+        } else {
             target.className = " "
         }
-       
+
     }
 
     const addReply = (arrIndex) => {
-        let content = replyInputRef.current[arrIndex].value 
+        let content = replyInputRef.current[arrIndex].value
 
-        if(content == ''){
+        if (content == '') {
             alert('cannot add a empty comment')
             return
         }
@@ -139,7 +158,7 @@ function CustomerRequests() {
             let feedback = currentWarehouseData.feedback
             feedbackObject['addedIn'] = new Date()
             feedback[arrIndex].push(feedbackObject)
-            setCurrentWarehouseData({...currentWarehouseData, ['feedback']:feedback })
+            setCurrentWarehouseData({ ...currentWarehouseData, ['feedback']: feedback })
 
         })
     }
@@ -175,7 +194,7 @@ function CustomerRequests() {
                     </thead>
                     <tbody>
 
-                        {
+                        {requests != undefined &&
                             requests.map((item, i) => (
                                 <tr key={i}>
                                     <td className='p-3'> {item.warehouseName}</td>
@@ -283,10 +302,13 @@ function CustomerRequests() {
                         <h2>Feedback</h2>
 
                         <div className='col-11 m-auto mt-3'>
-                            <textarea ref={textAreaRef} className='col-12 rounded ps-2 pr-1' style={{ height: '120px' }} placeholder={'Feedback...'}></textarea>
-                            <div className='d-flex justify-content-end'>
-                                <Button className='col-2' onClick={() => { handleComment() }}>Comment</Button>
-                            </div>
+        {   currentWarehouseRequest.status == 'accepted' &&   <div>
+                                <textarea ref={textAreaRef} className='col-12 rounded ps-2 pr-1' style={{ height: '120px' }} placeholder={'Feedback...'}></textarea>
+                                <div className='d-flex justify-content-end'>
+                                    <Button className='col-2' onClick={() => { handleComment() }}>Comment</Button>
+                                </div>
+
+                            </div>}
 
 
                             <div className='mt-3' style={{ height: '400px', overflowY: 'scroll' }}>
@@ -302,8 +324,8 @@ function CustomerRequests() {
                                                     return (
                                                         <div className='mt-4'>
                                                             <div>
-                                                                <span style={{ fontSize: '1.3rem' }}><BiUserCircle size={37}></BiUserCircle> <span style={{color: commentArr[index].comentorEmail == currentWarehouseRequest.warehouseOwnerEmail ? 'green' : 'black' }}>{commentArr[index].comentorEmail}</span> {currentWarehouseRequest.warehouseOwnerEmail ==  commentArr[index].comentorEmail && <span style={{fontSize:'0.8rem'}}>(warehouse owner)</span>}</span>
-                                                                <span className='ms-3' style={{ fontSize: '0.8rem', color: 'rgb(0,0,0, 0.6)' }}>{calculateDaysDifference(new Date(), commentArr[index].addedIn ) > 0 ? `${calculateDaysDifference(new Date(), commentArr[index].addedIn )} day ago `: 'Today'} </span>
+                                                                <span style={{ fontSize: '1.3rem' }}><BiUserCircle size={37}></BiUserCircle> <span style={{ color: commentArr[index].comentorEmail == currentWarehouseRequest.warehouseOwnerEmail ? 'green' : 'black' }}>{commentArr[index].comentorEmail}</span> {currentWarehouseRequest.warehouseOwnerEmail == commentArr[index].comentorEmail && <span style={{ fontSize: '0.8rem' }}>(warehouse owner)</span>}</span>
+                                                                <span className='ms-3' style={{ fontSize: '0.8rem', color: 'rgb(0,0,0, 0.6)' }}>{calculateDaysDifference(new Date(), commentArr[index].addedIn) > 0 ? `${calculateDaysDifference(new Date(), commentArr[index].addedIn)} day ago ` : 'Today'} </span>
                                                             </div>
                                                             <div className='col-12 ps-1 m-auto'>
                                                                 <p style={{ fontSize: '1rem' }}>{commentArr[index].content}</p>
@@ -315,24 +337,24 @@ function CustomerRequests() {
                                                                         arr[helperIndex] = arr[helperIndex] == 0 ? 10000 : 0
                                                                         setViewAllReply([...arr])
                                                                         console.log(arr)
-                                                                  
+
                                                                     }}><AiFillCaretDown></AiFillCaretDown> View replies</p>}
-                                                                    {currentWarehouseRequest.status == 'accepted' && <p style={{ fontSize: '1rem', color: 'rgb(0,0,0, 0.6)' }} className={commentArr.length > 1 ? `ms-5 ${styles.returnBtn}` : `ms-2 ${styles.returnBtn}` } onClick={(e) => {
-                                                                                let arr = viewAllReply
-                                                                                arr[helperIndex] = 10000
-                                                                                setViewAllReply([...arr])
-                                                                                handleReplyBtn(helperIndex)
-                                                                        
-                                                                        }} ><BsFillReplyAllFill></BsFillReplyAllFill> REPLY</p>}
+                                                                    {currentWarehouseRequest.status == 'accepted' && <p style={{ fontSize: '1rem', color: 'rgb(0,0,0, 0.6)' }} className={commentArr.length > 1 ? `ms-5 ${styles.returnBtn}` : `ms-2 ${styles.returnBtn}`} onClick={(e) => {
+                                                                        let arr = viewAllReply
+                                                                        arr[helperIndex] = 10000
+                                                                        setViewAllReply([...arr])
+                                                                        handleReplyBtn(helperIndex)
+
+                                                                    }} ><BsFillReplyAllFill></BsFillReplyAllFill> REPLY</p>}
                                                                 </div>
-                                                                {index == commentArr.length - 1 && 
-                                                                <div className='d-none' ref={el => replyBtnRef.current[helperIndex] = el}>
-                                                                    <div className='d-flex'>
-                                                                    <textarea type='text' className='border rounded col-9' ref={(el) => {replyInputRef.current[helperIndex] = el}}></textarea>
-                                                                    <Button className='ms-1' onClick={() => {addReply(helperIndex)}}>reply</Button>
+                                                                {index == commentArr.length - 1 &&
+                                                                    <div className='d-none' ref={el => replyBtnRef.current[helperIndex] = el}>
+                                                                        <div className='d-flex'>
+                                                                            <textarea type='text' className='border rounded col-9' ref={(el) => { replyInputRef.current[helperIndex] = el }}></textarea>
+                                                                            <Button className='ms-1' onClick={() => { addReply(helperIndex) }}>reply</Button>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                                    }
+                                                                }
 
                                                             </div>
                                                         </div>
@@ -341,25 +363,25 @@ function CustomerRequests() {
                                                 } else {
 
                                                     return (
-                                                        index < parseInt(viewAllReply[helperIndex]) &&  <div>
+                                                        index < parseInt(viewAllReply[helperIndex]) && <div>
 
-                                                        <div className='ms-5' >
-                                                            <div>
-                                                                <span style={{ fontSize: '1.3rem' }}> <BiUserCircle size={37}></BiUserCircle> <span style={{color: commentArr[index].comentorEmail == currentWarehouseRequest.warehouseOwnerEmail ? 'green' : 'black' }}> {commentArr[index].comentorEmail}</span> {currentWarehouseRequest.warehouseOwnerEmail ==  commentArr[index].comentorEmail && <span style={{fontSize:'0.8rem'}}>(warehouse owner)</span>} </span>
-                                                                <span className='ms-2' style={{ fontSize: '0.8rem', color: 'rgb(0,0,0, 0.6)' }}>{calculateDaysDifference(new Date(), commentArr[index].addedIn ) > 0 ? `${calculateDaysDifference(new Date(), commentArr[index].addedIn )} day ago `: 'Today'}</span>
+                                                            <div className='ms-5' >
+                                                                <div>
+                                                                    <span style={{ fontSize: '1.3rem' }}> <BiUserCircle size={37}></BiUserCircle> <span style={{ color: commentArr[index].comentorEmail == currentWarehouseRequest.warehouseOwnerEmail ? 'green' : 'black' }}> {commentArr[index].comentorEmail}</span> {currentWarehouseRequest.warehouseOwnerEmail == commentArr[index].comentorEmail && <span style={{ fontSize: '0.8rem' }}>(warehouse owner)</span>} </span>
+                                                                    <span className='ms-2' style={{ fontSize: '0.8rem', color: 'rgb(0,0,0, 0.6)' }}>{calculateDaysDifference(new Date(), commentArr[index].addedIn) > 0 ? `${calculateDaysDifference(new Date(), commentArr[index].addedIn)} day ago ` : 'Today'}</span>
+                                                                </div>
+                                                                <p style={{ fontSize: '1rem' }}>{commentArr[index].content}</p>
                                                             </div>
-                                                            <p style={{ fontSize: '1rem' }}>{commentArr[index].content}</p>
+                                                            {index == commentArr.length - 1 &&
+                                                                <div className='d-none' id={`${helperIndex}-${index}`} ref={el => replyBtnRef.current[helperIndex] = el} >
+                                                                    <div className='d-flex'>
+                                                                        <textarea type='text' className='border rounded col-9' ref={(el) => { replyInputRef.current[helperIndex] = el }} ></textarea>
+                                                                        <Button className='ms-1' onClick={() => { addReply(helperIndex) }}>reply</Button>
+                                                                    </div>
+                                                                </div>
+                                                            }
+
                                                         </div>
-                                                         {index == commentArr.length - 1 && 
-                                                            <div className='d-none' id={`${helperIndex}-${index}`} ref ={el => replyBtnRef.current[helperIndex] = el} >
-                                                                <div className='d-flex'>
-                                                                <textarea type='text' className='border rounded col-9' ref={(el) => {replyInputRef.current[helperIndex] = el}} ></textarea>
-                                                                <Button className='ms-1' onClick={() => {addReply(helperIndex)}}>reply</Button>
-                                                                </div>
-                                                            </div>
-                                                                }
-
-                                                                </div>
 
                                                     )
 
