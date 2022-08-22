@@ -12,6 +12,7 @@ import ViewWarehouseDetails from '../ViewWarehouseDetails/ViewWarehouseDetails'
 import axios from 'axios';
 
 
+  //TODO: SOMTIMES DATE is not availble (it will return that in the back end ) but not in the front end
 
 function ManageRequests() {
 
@@ -34,7 +35,7 @@ function ManageRequests() {
     acceptRequest: false
   })
 
-  const sendRequest = (ID, STATUS, WAREHOUSEID, STARTRENTDATE, ENDRENTDATE) => {
+  const sendRequest = async (ID, STATUS, WAREHOUSEID, STARTRENTDATE, ENDRENTDATE, userEmail) => {
 
     acceptDeclineRequest({
       requestId: ID,
@@ -46,7 +47,16 @@ function ManageRequests() {
       console.log(result)
     })
 
+    await axios.post('/userActivity', {
+      action: `${STATUS} renting warehouse for ${userEmail} from ${new Date(STARTRENTDATE).toISOString().slice(0, 10)} To: ${new Date(ENDRENTDATE).toISOString().slice(0, 10)}`,
+      role: 'warehouseOwner'
+    }).then((results) => {
+      console.log(results.data)
+    })
+
     console.log(`request Is Sent for ${ID, STATUS, WAREHOUSEID, STARTRENTDATE, ENDRENTDATE}`)
+
+
     let currentrequest = requests.filter((request) => {
       return request._id != ID
     })
@@ -55,26 +65,41 @@ function ManageRequests() {
 
   }
 
-  const HandleAccept = (ID, STATUS, WAREHOUSEID, STARTRENTDATE, ENDRENTDATE) => {
+  const HandleAccept = (ID, STATUS, WAREHOUSEID, STARTRENTDATE, ENDRENTDATE, userEmail) => {
 
     if (STATUS == 'rejected') {
 
-      sendRequest(ID, STATUS, WAREHOUSEID, STARTRENTDATE, ENDRENTDATE)
+      sendRequest(ID, STATUS, WAREHOUSEID, STARTRENTDATE, ENDRENTDATE, userEmail)
 
     } else {
 
-      let endRentDate = new Date(ENDRENTDATE).getTime()
 
+      let endRentDate = new Date(ENDRENTDATE).getTime()
+      let startRentDate = new Date(STARTRENTDATE).getTime()
+  
       let requestForThisWarehouse = requests.filter((request) => {
+  
         let currentRequestStartDate = new Date(request.startRentDate).getTime()
-        return request.WarehouseId == WAREHOUSEID && currentRequestStartDate < endRentDate && ID != request._id
+        let currentRequestEndDate = new Date(request.endRentDate).getTime()
+  
+        if(ID == request._id)return false
+        
+        return currentRequestStartDate < endRentDate && startRentDate < currentRequestEndDate
       })
+
+
+      // let endRentDate = new Date(ENDRENTDATE).getTime()
+
+      // let requestForThisWarehouse = requests.filter((request) => {
+      //   let currentRequestStartDate = new Date(request.startRentDate).getTime()
+      //   return request.WarehouseId == WAREHOUSEID && currentRequestStartDate < endRentDate && ID != request._id
+      // })
 
       setModalContent({ ...modalContent, ['arrOfWarehouses']: requestForThisWarehouse })
 
       if (requestForThisWarehouse.length == 0) {
 
-        sendRequest(ID, STATUS, WAREHOUSEID, STARTRENTDATE, ENDRENTDATE)
+        sendRequest(ID, STATUS, WAREHOUSEID, STARTRENTDATE, ENDRENTDATE, userEmail)
 
       } else {
 
@@ -122,8 +147,15 @@ function ManageRequests() {
         warehouseId: currentRequest.WarehouseId,
         requestedDate: currentRequest.startRentDate
 
-      }).then(result => {
-        console.log(result)
+      }).then( async (result) => {
+
+        await axios.post('/userActivity', {
+          action: `Rejected renting warehouse for ${currentRequest.userEmail} from ${new Date(currentRequest.startRentDate).toISOString().slice(0, 10)} To: ${new Date(currentRequest.endRentDate).toISOString().slice(0, 10)}`,
+          role: 'warehouseOwner'
+        }).then((results) => {
+          console.log(results.data)
+        })
+
       })
 
 
@@ -134,8 +166,15 @@ function ManageRequests() {
       warehouseId: currentWarehouse.WarehouseId,
       requestedDate: currentWarehouse.startRentDate
 
-    }).then(result => {
-      console.log(result)
+    }).then( async (result) => {
+
+      await axios.post('/userActivity', {
+        action: `Accepted renting warehouse for ${currentWarehouse.userEmail} from ${new Date(currentWarehouse.startRentDate).toISOString().slice(0, 10)} To: ${new Date(currentWarehouse.endRentDate).toISOString().slice(0, 10)}`,
+        role: 'warehouseOwner'
+      }).then((results) => {
+        console.log(results.data)
+      })
+
     })
 
     filteredRequests = filteredRequests.filter((request) => {
@@ -148,17 +187,24 @@ function ManageRequests() {
 
   }
 
-  const handleViewDetails = (requestData) =>{
+  const handleViewDetails = (requestData) => {
     let warehouseId = requestData.WarehouseId
 
     let endRentDate = new Date(requestData.endRentDate).getTime()
+    let startRentDate = new Date(requestData.startRentDate).getTime()
 
     let requestForThisWarehouse = requests.filter((request) => {
+
       let currentRequestStartDate = new Date(request.startRentDate).getTime()
-      return request.WarehouseId == warehouseId && currentRequestStartDate < endRentDate && requestData._id != request._id
+      let currentRequestEndDate = new Date(request.endRentDate).getTime()
+
+      if(request.WarehouseId != warehouseId)return false
+      if(requestData._id == request._id)return false
+
+      return currentRequestStartDate < endRentDate && startRentDate < currentRequestEndDate
     })
 
-    axios.post('/warehouseOwner/getWarehouseDetails', {warehouseId}).then((results) => {
+    axios.post('/warehouseOwner/getWarehouseDetails', { warehouseId }).then((results) => {
 
       setCurrentRequestDetails({
         oldRequests: results.data.oldRequests,
@@ -202,6 +248,55 @@ function ManageRequests() {
               </tr>
             </thead>
             <tbody>
+
+              {currentWarehouse && <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                  <Modal.Title><h3 style={{ color: 'red' }}>Attention !</h3></Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <h5 style={{ fontWeight: 'meduim', letterSpacing: '1px' }}>The current request have conflict with {modalContent.arrOfWarehouses.length} other warehouses By accepting the request, you will be by default declining other requests.</h5>
+
+                  <Accordion className="mt-4 mb-4">
+                    <Accordion.Item eventKey="0">
+                      <Accordion.Header>Current Customer</Accordion.Header>
+                      <Accordion.Body>
+                        <div className='d-flex justify-content-between' style={{ fontSize: '0.9rem' }}>
+                          <p>Rentor: {currentWarehouse.userEmail.split('@')[0]}</p>
+                          <p>From: {new Date(currentWarehouse.startRentDate).toISOString().slice(0, 10)}</p>
+                          <p>To: {new Date(currentWarehouse.endRentDate).toISOString().slice(0, 10)}</p>
+                        </div>
+                      </Accordion.Body>
+                    </Accordion.Item>
+                    <Accordion.Item eventKey="1">
+                      <Accordion.Header>Other Customers</Accordion.Header>
+                      <Accordion.Body>
+                        {modalContent.arrOfWarehouses.length != 0 && modalContent.arrOfWarehouses.map((warehouse) => {
+                          console.log(warehouse)
+                          return (
+                            <div className="d-flex justify-content-between" style={{ fontSize: '0.9rem' }}>
+                              <p>Rentor: {warehouse.userEmail.split('@')[0]}</p>
+                              <p>From: {new Date(warehouse.startRentDate).toISOString().slice(0, 10)}</p>
+                              <p>To: {new Date(warehouse.endRentDate).toISOString().slice(0, 10)}</p>
+                              <hr></hr>
+                            </div>
+                          )
+                        })}
+
+                      </Accordion.Body>
+                    </Accordion.Item>
+                  </Accordion>
+
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button variant="secondary" onClick={handleClose}>
+                    Close
+                  </Button>
+                  <Button variant="primary" onClick={() => { handleAccpetBtn() }}>
+                    Accept
+                  </Button>
+                </Modal.Footer>
+              </Modal>}
+
               {
                 requests.filter(item => item.warehouseName.toLowerCase().includes(query)).map((item, i) => {
                   // if(item.status === 'pending'){
@@ -209,71 +304,23 @@ function ManageRequests() {
                     <td>{item.userEmail}</td>
                     <td>{item.warehouseName}</td>
 
-                    {currentWarehouse && <Modal show={show} onHide={handleClose}>
-                      <Modal.Header closeButton>
-                        <Modal.Title><h3 style={{color:'red'}}>Attention !</h3></Modal.Title>
-                      </Modal.Header>
-                      <Modal.Body>
-                        <h5 style={{fontWeight:'meduim', letterSpacing:'1px'}}>The current request have conflict with {modalContent.arrOfWarehouses.length} other warehouses By accepting the request, you will be by default declining other requests.</h5>
 
-                        <Accordion className="mt-4 mb-4">
-                          <Accordion.Item eventKey="0">
-                            <Accordion.Header>Current Customer</Accordion.Header>
-                            <Accordion.Body>
-                              <div className='d-flex justify-content-between' style={{ fontSize: '0.9rem' }}>
-                                <p>Rentor: {currentWarehouse.userEmail.split('@')[0]}</p>
-                                <p>From: {new Date(currentWarehouse.startRentDate).toISOString().slice(0, 10)}</p>
-                                <p>To: {new Date(currentWarehouse.endRentDate).toISOString().slice(0, 10)}</p>
-                              </div>
-                            </Accordion.Body>
-                          </Accordion.Item>
-                          <Accordion.Item eventKey="1">
-                            <Accordion.Header>Other Customers</Accordion.Header>
-                            <Accordion.Body>
-                              {modalContent.arrOfWarehouses.length != 0 && modalContent.arrOfWarehouses.map((warehouse) => {
-                                console.log(warehouse)
-                                return (
-                                  <div className="d-flex justify-content-between" style={{ fontSize: '0.9rem' }}>
-                                    <p>Rentor: {warehouse.userEmail.split('@')[0]}</p>
-                                    <p>From: {new Date(warehouse.startRentDate).toISOString().slice(0, 10)}</p>
-                                    <p>To: {new Date(warehouse.endRentDate).toISOString().slice(0, 10)}</p>
-                                    <hr></hr>
-                                  </div>
-                                )
-                              })}
-
-                            </Accordion.Body>
-                          </Accordion.Item>
-                        </Accordion>
-
-                      </Modal.Body>
-                      <Modal.Footer>
-                        <Button variant="secondary" onClick={handleClose}>
-                          Close
-                        </Button>
-                        <Button variant="primary" onClick={() => { handleAccpetBtn() }}>
-                          Accept
-                        </Button>
-                      </Modal.Footer>
-                    </Modal>}
-
-
-                    {showDetailsModal && currentRequestDetails && <ViewWarehouseDetails data={currentRequestDetails} showState={showDetailsModal} showAction={() => {setShowDetailsModal(true)}} hideAction={() => {setShowDetailsModal(false)}} ></ViewWarehouseDetails>}
+                    {showDetailsModal && currentRequestDetails && <ViewWarehouseDetails data={currentRequestDetails} showState={showDetailsModal} showAction={() => { setShowDetailsModal(true) }} hideAction={() => { setShowDetailsModal(false) }} ></ViewWarehouseDetails>}
 
                     <td>
                       <Button className="m-1" variant="success" style={{ backgroundColor: "#54d494", borderColor: "#54d494" }}
                         onClick={() => {
-                          HandleAccept(item._id, 'accepted', item.WarehouseId, item.startRentDate, item.endRentDate)
+                          HandleAccept(item._id, 'accepted', item.WarehouseId, item.startRentDate, item.endRentDate, item.userEmail)
                           setCurrentWarehouse(item)
                         }}>Accept</Button>{' '}
 
                       <Button className="m-1" variant="danger" style={{ backgroundColor: "#ff0000", borderColor: "#ff0000" }}
                         onClick={() => {
-                          HandleAccept(item._id, 'rejected', item.WarehouseId, item.startRentDate, item.endRentDate)
+                          HandleAccept(item._id, 'rejected', item.WarehouseId, item.startRentDate, item.endRentDate, item.userEmail)
                           setCurrentWarehouse(item)
                         }}>Decline</Button>{' '}
 
-                      <Button className="m-1" variant="light" style={{ backgroundColor: "#c1c1c1", borderColor: "#c1c1c1" }} onClick={() => {handleViewDetails(item)}}>View Details</Button>{' '}
+                      <Button className="m-1" variant="light" style={{ backgroundColor: "#c1c1c1", borderColor: "#c1c1c1" }} onClick={() => { handleViewDetails(item) }}>View Details</Button>{' '}
                     </td>
                   </tr>
                   // }
