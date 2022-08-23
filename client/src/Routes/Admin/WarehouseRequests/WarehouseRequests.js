@@ -49,9 +49,16 @@ import * as React from 'react';
 
  function WarehouseRequests() {
 
+    const [currentWarehouseView, setCurrentWarehouseView] = React.useState();
+
+
      const [open, setOpen] = React.useState(false);
      const handleOpen = () => setOpen(true);
      const handleClose = () => setOpen(false);
+
+      const [openView, setOpenView] = React.useState(false);
+     const handleOpenView = () => setOpenView(true);
+     const handleCloseView = () => setOpenView(false);
 
 
      const HandleAcceptReject = (WAREHOUSEID,STATUS) =>{
@@ -158,9 +165,36 @@ import * as React from 'react';
 
 
 
-                         <Button style={{margin:2, borderColor:'#54d494',color:'#54d494'}} variant="outlined">
+                         <Button style={{margin:2, borderColor:'#54d494',color:'#54d494'}} 
+                                  variant="outlined" 
+                                  onClick={() => {
+                                    setCurrentWarehouseView(warehouse[0])
+                                    console.log(warehouse[0])
+                                    handleOpenView()
+                                  }}>
                              View
                          </Button>
+                           { currentWarehouseView && <Modal
+                                 open={openView}
+                                 onClose={handleCloseView}
+                                 aria-labelledby="modal-modal-title"
+                                 aria-describedby="modal-modal-description"
+                             >
+                                 <Box sx={style}>
+                                 <Typography id="modal-modal-title" variant="h6" component="h2">
+                                     WareHouse Details
+                                 </Typography>
+                                 <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                                     Warehouse Name: {currentWarehouseView.name} <br/>
+                                     Price Per Day: {currentWarehouseView.PricePerDay}<br/>
+                                     Register Date: {currentWarehouseView.registerDate}<br/>
+                                     Space:{currentWarehouseView.space}<br/>
+                                     Status:{currentWarehouseView.status}<br/>
+                                     Type:{currentWarehouseView.type}<br/>
+                                 </Typography>
+                                 </Box>
+                             </Modal>}
+
                          <Button style={{margin:2, backgroundColor:'#54d494'}}
                                  variant="contained" 
                                  onClick={() =>{HandleAcceptReject(warehouse[0]._id,'accepted')}}>
