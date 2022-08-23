@@ -12,7 +12,7 @@ import ViewWarehouseDetails from '../ViewWarehouseDetails/ViewWarehouseDetails'
 import axios from 'axios';
 
 
-  //TODO: SOMTIMES DATE is not availble (it will return that in the back end ) but not in the front end
+  //TODO: SOMTIMES DATE is not availble (it will be returned from the back end ) but not in the front end
 
 function ManageRequests() {
 

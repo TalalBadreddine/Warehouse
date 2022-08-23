@@ -114,11 +114,19 @@ function PostNewWarehouse() {
     images: [],
   });
 
-  const handleAddWarehouse = (e) => {
+  const handleAddWarehouse = async (e) => {
     
   
     if(validated){
       addWarehouse(warehouse);
+
+      await axios.post('/userActivity',{
+        action: `listed a new warehouse for renting, the warehouse name: ${warehouse.name}, with a space of ${warehouse.space} meters squared`,
+        role: 'warehouseOwner'
+    }).then((results) => {
+        console.log(results.data)
+    })
+
       e.preventDefault()
     }
   }
