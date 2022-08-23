@@ -2,3 +2,12 @@
     height: 600px;
     width: 98%;
 }
+
+
+body{
+    background-color: #011e3c !important;
+}
+
+Link,p,h1,h2,h3{
+    color: white !important;
+}

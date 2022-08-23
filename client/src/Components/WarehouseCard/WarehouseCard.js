@@ -50,7 +50,7 @@ const WarehouseCard = (props) => {
 
     return (
         <div>
-        <div className={`col-5 col-sm-12 m-2 p-2 d-sm-flex border rounded border-dark d-block ${styles.cardDiv}`} onClick={() => { navigateToWarehouseDetails(props.role, props.info) }}  >
+        <div className={`col-5 col-sm-12 m-2 p-2 d-sm-flex rounded d-block ${styles.cardDiv}`} onClick={() => { navigateToWarehouseDetails(props.role, props.info) }}  >
 
             <div className='col-sm-4 '>
                 <Carousel>
@@ -87,7 +87,7 @@ const WarehouseCard = (props) => {
 
 
 
-            <div className="ms-sm-2 col-sm-8 p-sm-2 p-1 col-12 ">
+            <div className="ms-sm-2 col-sm-8 p-sm-2 p-1 col-12 " >
                 <h1 className={styles.bigTypo}>{props.info.name}'s warehouse   </h1>
                 <h1 className={styles.smallTypo} style={{ color: 'gray' }}>address:{props.info.address[0][1]}, {props.info.address[0][0]}</h1>
                 <div className=' h-50'>

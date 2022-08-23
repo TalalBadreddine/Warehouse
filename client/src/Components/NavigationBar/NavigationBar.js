@@ -38,14 +38,14 @@ function Navigationbar({ role }) {
 
   }
 
-  const fontColor = 'black'
+  const fontColor = 'white'
 
   //TODO: nav logout btn and change i ui
   return (
     <>
 
 
-      <Navbar bg="white" expand="lg">
+      <Navbar expand="lg" className={styles.navBar}>
         <Container fluid>
           <Navbar.Brand href="#Logo"  style={{ color: fontColor }}>Logo</Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
