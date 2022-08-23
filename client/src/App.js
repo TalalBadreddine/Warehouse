@@ -23,6 +23,7 @@ import CustomerRequests from './Routes/Customer/CustomerRequests/CustomerRequest
 import UserDetails from './Components/UserDetails/UserDetails';
 import WarehouseRequests from './Routes/Admin/WarehouseRequests/WarehouseRequests';
 import ManageWarehouseOwner from './Routes/Admin/ManageWarehouseOwner/ManageWarehouseOwner'
+import UserActivity from './Routes/Admin/UserActivity/UserActivity';
 
 
 function App() {
@@ -76,6 +77,7 @@ function App() {
              <Route path='userdetails' element={<UserDetails></UserDetails>}></Route>
              <Route path='requests' element={<WarehouseRequests></WarehouseRequests>}></Route>
              <Route  path='manageOwner' element={<ManageWarehouseOwner></ManageWarehouseOwner>}></Route>
+             <Route path = 'userActivity' element={<UserActivity></UserActivity>}></Route>
 
         </Route>
         

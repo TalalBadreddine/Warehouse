@@ -5,6 +5,7 @@ const warehouseOwnerSchema = require('../models/WarehouseOwner')
 const extension = require('../helper/extensions')
 const dotenv = require('dotenv')
 const jwt = require('jsonwebtoken')
+const logsSchema = require("../models/logsSchema");
 
 dotenv.config({path: __dirname + '../.env'})
 
@@ -264,6 +265,37 @@ const  getUserRequests = async (req, res) => {
     }
 }
 
+const getAllLogs = async (req, res) => {
+    try{
+        const results = await logsSchema.find()
+
+        return res.send(results).status(200)
+    }
+    catch(err){
+        console.log(`error with getAllLogs function ${err.message}`)
+    }
+}
+
+const getAllCustomerAndOwnersAndLogs = async (req, res) => {
+    try{
+
+        const allCustomers = await usersSchema.find()
+        const allWarehouseOwners = await warehouseOwnerSchema.find()
+        const allLogs = await logsSchema.find()
+        
+        let allUsersAndLogs = {
+            customers: allCustomers,
+            warehouseOwners: allWarehouseOwners,
+            logs: allLogs
+        }
+
+        return res.send(allUsersAndLogs).status(200)
+    }
+    catch(err){
+        console.log(`error at getAllCustomerAndOwners ${err.message}`)
+    }
+}
+
 
 module.exports = {
     getAllCustomer,
@@ -280,5 +312,7 @@ module.exports = {
     acceptRejectWarehouseRequest,
     adminLogin,
     activeDeactiveCustomer,
-    getUserRequests
+    getUserRequests,
+    getAllLogs,
+    getAllCustomerAndOwnersAndLogs
 }

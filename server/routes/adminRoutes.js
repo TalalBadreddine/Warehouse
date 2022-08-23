@@ -20,7 +20,9 @@ const {
     acceptRejectWarehouseRequest,
     adminLogin,
     activeDeactiveCustomer,
-    getUserRequests
+    getUserRequests,
+    getAllLogs,
+    getAllCustomerAndOwnersAndLogs
 } = require('../controllers/adminController')
 
 adminRouter.post('/login', adminLogin)
@@ -46,6 +48,10 @@ adminRouter.delete('/deleteWarehouseOwners', validateAdmin, deleteWarehouseOwner
 adminRouter.get('/getAllWarehousesPending', validateAdmin, getAllWarehousesPending)
 adminRouter.post('/acceptRejectWarehouseRequest', validateAdmin, acceptRejectWarehouseRequest)
 adminRouter.post('/getUserRequests',validateAdmin, getUserRequests)
+
+adminRouter.get('/getAllLogs', validateAdmin, getAllLogs)
+
+adminRouter.get('/getAllCustomerAndOwnersAndLogs', validateAdmin, getAllCustomerAndOwnersAndLogs)
 
 module.exports = {adminRouter}
 

@@ -5,7 +5,9 @@ const logsSchema = new mongoose.Schema({
     userId:{
         type: String
     },
-
+    userName:{
+        type: String
+    },
     action: {
         type: String
     },

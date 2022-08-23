@@ -65,6 +65,7 @@ async function startServer(){
                 const role = req.body.role
                 const logs = new logsSchema({
                     userId: decodedInfo.user._id,
+                    email: decodedInfo.user.email,
                     action: userAction,
                     role: role
                 })
