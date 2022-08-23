@@ -46,15 +46,31 @@ const SearchWarehouse = ({role}) => {
         spaceMax: Infinity
     })
 
-    useEffect(() => {
+    useEffect( () => {
         if(role == 'visitor'){
             return
         }else{
-            axios.get('/user/checkUserValidation').then((data) => {
-               
-            }).catch((err) => {
-                if(err.response.data == 'forbidden'){navigate('/')}
-            })
+
+            const startedFunction = async () => {
+    
+                 await axios.get('/user/checkUserValidation').then(async (data) => {
+
+                    await axios.post('/userActivity',{
+                        action: `navigated to search for a warehouse`,
+                        role: 'customer'
+                    }).then((results) => {
+                        console.log(results.data)
+                    })
+                    
+                   
+                }).catch((err) => {
+                    if(err.response.data == 'forbidden'){navigate('/')}
+                })
+
+            }
+
+            startedFunction()
+
         }
     },[])
 
@@ -72,15 +88,12 @@ const SearchWarehouse = ({role}) => {
                     arrOfWarehouses.push(warehouse)
                 }
             }
-   
-     
         
             let maxPrice = -Infinity
             let minPrice = Infinity
 
             let maxSpace = -Infinity
             let minSpace = Infinity
-
 
             for (let i = 0; i < arrOfWarehouses.length; i++) {
                 maxPrice = Math.max(maxPrice, arrOfWarehouses[i].pricePerDay)
@@ -165,7 +178,7 @@ const SearchWarehouse = ({role}) => {
 
     }
 
-    const sortByAction = (test) => {
+    const sortByAction = async (test) => {
         let sortType = test
         let sortedArr = []
         setCanPin(false)
@@ -202,15 +215,29 @@ const SearchWarehouse = ({role}) => {
 
         }
 
+        await axios.post('/userActivity',{
+            action: `searched for warehouses and sorted them by ${sortType}`,
+            role: 'customer'
+        }).then((results) => {
+            console.log(results.data)
+        })
+
         setFiltredWarehousesInfo([...sortedArr])
 
     }
 
-    const usingMyLocation = () => {
+    const usingMyLocation = async () => {
         setFlyToMap([myLocation.coordinates.lat, myLocation.coordinates.lng])
         setShowLocationNotification(false)
         let sortedArr = filtredWarehousesInfo.sort((a, b) => {
             return Math.sqrt(Math.pow(myLocation.coordinates.lat - a.location[0], 2) + Math.pow(myLocation.coordinates.lng - a.location[1], 2)) - Math.sqrt(Math.pow(myLocation.coordinates.lat - b.location[0], 2) + Math.pow(myLocation.coordinates.lng - b.location[1], 2))
+        })
+
+        await axios.post('/userActivity',{
+            action: `searched for warehouses and sorted them by neareset to his Location`,
+            role: 'customer'
+        }).then((results) => {
+            console.log(results.data)
         })
 
         setFiltredWarehousesInfo([...sortedArr])

@@ -6,9 +6,11 @@ const warehouseOwnerRouter = require('../routes/wareHouseOwnerRoutes')
 const {userRouter} = require('../routes/userRoutes')
 const {adminRouter} = require('../routes/adminRoutes')
 const {visitorRouter} = require('../routes/visitorRoutes')
+const logsSchema = require("../models/logsSchema");
+const bodyParser = require('body-parser')
 const multer = require("multer");
 const cors = require('cors')
-
+const jwtDecode = require('jwt-decode')
 
 
 dotenv.config({path: __dirname + '/../.env'})
@@ -42,8 +44,8 @@ async function startServer(){
         }))
 
         app.use(express.json())
-        // app.use(express.json({limit: '50mb'}));
-
+        app.use(bodyParser.json({limit: '50mb'}));
+        app.use(bodyParser.urlencoded({limit: '50mb', extended: true, parameterLimit:50000}));
 
         // Insert Routest here
 
@@ -54,6 +56,29 @@ async function startServer(){
         app.use('/warehouseOwner', warehouseOwnerRouter )
 
         app.use('/visitor', visitorRouter)
+
+        app.use('/userActivity', async (req, res) => { 
+            try{
+
+                const decodedInfo = jwtDecode(req.cookies['jwt'])
+                const userAction = req.body.action
+                const role = req.body.role
+                const logs = new logsSchema({
+                    userId: decodedInfo.user._id,
+                    email: decodedInfo.user.email,
+                    action: userAction,
+                    role: role
+                })
+
+                await logs.save()
+
+                return res.send(logs).status(200)
+            }
+            catch(err){
+                console.log(`error at express userActivity route ${err.message}`)
+            }
+
+        })
 
         app.use('/logout', (req, res) => {
             res.clearCookie('jwt')

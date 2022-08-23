@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import VisitorNavbar from '../../../Components/NavigationBar/NavigationBar'
 import Footer from '../../../Components/Footer/Footer'
 import InputGroup from "react-bootstrap/InputGroup";
@@ -21,9 +21,6 @@ function Landing() {
 
 
 
-
-  const FadeUp = batch(Fade(), Move(), Sticky());
-  const ZoomInScrollOut = batch(StickyIn(), FadeIn(), ZoomIn());
   return (
     <>
 

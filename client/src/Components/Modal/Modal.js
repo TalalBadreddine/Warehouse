@@ -5,7 +5,6 @@ import SignUpUser from '../../Routes/Visitor/SignUpUser/SignUpUser';
 
 
 function Example(props) {
-//   const [isCustomer,setIsCustomer] = useState(props.isCustomer)
 
   const [show, setShow] = useState(false);
 

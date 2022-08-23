@@ -43,38 +43,43 @@ function PostNewWarehouse() {
 
   const handleSubmit = (event) => {
     const form = event.currentTarget;
-    
+
     if (form.checkValidity() === false) {
       event.preventDefault();
-      event.stopPropagation();
+      // event.stopPropagation();
+      return false
     }
-                      
+
     if(warehouse.datesAvailable[0] == null){
-      
       setErrors({...errors, ['date']: 'Select a date where your warehouse is availble for renting'})
       window.scrollTo({top: 10,behavior:'smooth'})
-      return
+      return false
     }
 
 
     if(warehouse.images.length < 4 ){
       setErrors({...errors, ['images']: 'You need to add at least 4 images of your warehouse'})
       window.scrollTo({top: 100,behavior:'smooth'})
-      event.preventDefault();
-      event.stopPropagation();
-      return
+      return false
     }
 
     if(warehouse.location[0] == null){
+      console.log('test3')
       setErrors({...errors, ['map']: 'Select your warehouse location on the map'})
       window.scrollTo({top: 10,behavior:'smooth'})
-      event.preventDefault();
-      event.stopPropagation();
-      return
+      return false
     }
- 
+
+
     setValidated(true);
+    return true
   };
+
+  // const validateImageDateMap = () => {
+
+  
+ 
+  // }
 
 
   const navigate = useNavigate();
@@ -109,10 +114,19 @@ function PostNewWarehouse() {
     images: [],
   });
 
-  const handleAddWarehouse = (e) => {
-
+  const handleAddWarehouse = async (e) => {
+    
+  
     if(validated){
       addWarehouse(warehouse);
+
+      await axios.post('/userActivity',{
+        action: `listed a new warehouse for renting, the warehouse name: ${warehouse.name}, with a space of ${warehouse.space} meters squared`,
+        role: 'warehouseOwner'
+    }).then((results) => {
+        console.log(results.data)
+    })
+
       e.preventDefault()
     }
   }
@@ -142,10 +156,10 @@ function PostNewWarehouse() {
     setWarehouse({ ...warehouse, ['images']: [...images] })
   }
 
-
+//onSubmit={handleSubmit}
 
   return (
-    <Form noValidate validated={validated} onSubmit={handleSubmit}>
+    <Form noValidate validated={validated} onSubmit={handleSubmit} >
       <div className='row justify-content-center mt-5'>
         <h1 style={{ color: '#54d494' }} className='text-center '>Post Your Space</h1>
       </div>
