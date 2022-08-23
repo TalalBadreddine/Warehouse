@@ -94,6 +94,8 @@ const UserActivity = () => {
     const [currentLogs, setCurrentLogs] = useState()
     const [currentUser, setCurrentUser] = useState()
 
+    const [searchValue, setSearchValue] = useState()
+
     const [dateError, setDateError] = useState(null)
 
     const [selectedDate, setSelectedDate] = useState({
@@ -156,6 +158,12 @@ const UserActivity = () => {
 
             }
 
+            if(searchValue != '' && searchValue != null && searchValue != undefined){
+                usersArr = usersArr.filter((user) => {
+                    return user.email.toLowerCase().includes(searchValue.toLowerCase())
+                })
+            }
+
             let row = usersArr.map((user) => {
                 return createData(user.email, user.userName, user.registerDate ? new Date(user.registerDate).toISOString().slice(0, 10) : new Date().toISOString().slice(0, 10), user._id)
             })
@@ -178,7 +186,7 @@ const UserActivity = () => {
         changeUsersInTable()
 
 
-    }, [usersTableRole, allUsers, selectedDate])
+    }, [usersTableRole, allUsers, selectedDate, searchValue])
 
     const getCurrentUserLogs = (user) => {
         let type = usersTableRole
@@ -215,7 +223,7 @@ const UserActivity = () => {
 
                 <div className='col-4 d-flex align-baseline '>
 
-                    <input className="rounded border py-1 px-2 col-12 " placeholder='Search' ></input>
+                    <input className="rounded border py-1 px-2 col-12 " placeholder='Search' onChange={(e) => {setSearchValue(e.target.value)}} value={searchValue} ></input>
 
                 </div>
 
