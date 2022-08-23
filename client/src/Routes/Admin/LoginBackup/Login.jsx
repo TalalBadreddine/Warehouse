@@ -32,7 +32,7 @@ const Login = ({setLoginUser}) => {
     <div className="Auth-form-container">
       <form className="Auth-form">
         <div className="Auth-form-content">
-          <h3 className="Auth-form-title">Login</h3>
+          <h3 className="Auth-form-title"> Admin Login</h3>
           <div className="form-group mt-3">
             <label>Email address</label>
             <input
@@ -40,6 +40,7 @@ const Login = ({setLoginUser}) => {
               className="form-control mt-1"
               placeholder="Enter email"
               value={user.email}
+              required
               onChange={(e)=>{
                 setUser({...user,['email']: e.target.value})
               }}
@@ -50,6 +51,7 @@ const Login = ({setLoginUser}) => {
             <input type="password"
               className="form-control mt-1"
               placeholder="Enter password"
+              required
               value={user.password}
               onChange={(e)=>{
                 setUser({...user,['password']: e.target.value})
@@ -57,7 +59,7 @@ const Login = ({setLoginUser}) => {
              />
           </div>
           <div className="d-grid gap-2 mt-3">
-            <button style={{ backgroundColor: '#54d494', borderColor: '#54d494' }} type="submit" className="btn btn-primary" onClick={login}>
+            <button style={{ backgroundColor: '#54d494', borderColor: '#54d494', marginBottom:'8%', marginTop:'5%' }} type="submit" className="btn btn-primary" onClick={login}>
               Submit
             </button>
           </div>
