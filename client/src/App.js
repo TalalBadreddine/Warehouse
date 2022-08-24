@@ -72,7 +72,7 @@ function App() {
         
         <Route path='admin/' element={<SideBar></SideBar>}>
 
-             <Route path='' element={<ManageUsers></ManageUsers>}></Route>
+             <Route path='manageUsers' element={<ManageUsers></ManageUsers>}></Route>
              <Route path='userdetails' element={<UserDetails></UserDetails>}></Route>
              <Route path='requests' element={<WarehouseRequests></WarehouseRequests>}></Route>
              <Route  path='manageOwner' element={<ManageWarehouseOwner></ManageWarehouseOwner>}></Route>

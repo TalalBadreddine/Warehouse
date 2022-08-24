@@ -56,6 +56,8 @@ function ManageUsers() {
   const [allUsers, setAllUsers] = useState([])
   const [searchedUsers, setSearchedUsers] = useState([])
 
+
+  
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -124,15 +126,30 @@ function ManageUsers() {
             return (
                 createData( item.userName , 
                             item.email , 
-                            <Button onClick={()=>handleStatus(item._id ,item.isActive)} style={{borderColor: item.isActive ? 'green' : 'red',color: item.isActive ? 'green' : 'red'}}variant="outlined" >{item.isActive ? 'Active' : 'Deactive'}</Button>,
+                            <Button onClick={()=>handleStatus(item._id ,item.isActive)} style={{borderColor: item.isActive ? 'green' : 'red',color: item.isActive ? 'green' : 'red', borderRadius:'27px'}}variant="outlined" >{item.isActive ? 'Active' : 'Deactive'}</Button>,
                             <>
-                            <Button style={{color:'white', backgroundColor:'green', borderColor:'red' , margin: 5}}
+                            <Button style={{alignItems: 'center',
+                 
+              
+                  borderRadius:' 28px',
+                 
+                  cursor:' pointer' ,   fontSize:'16px',
+                  color:' blue',margin: 5,
+                borderColor:'blue'}}
                             onClick={()=>handleUserHistory(item)}
-                                    variant="Contained" 
+                                    variant="outlined" 
                                     size="medium">
                             User History
                             </Button> 
-                            <Button style={{color:'white', backgroundColor:'red', borderColor:'red' , margin: 5}} 
+                            <Button style={{
+                  alignItems: 'center',
+                  background:' none',
+                  
+                  borderRadius:' 28px',
+                  onHover:'background-color: lighten(red, 48%)',
+                  cursor:' pointer' ,   fontSize:'16px',
+                  color:' red',margin: 5,
+                borderColor:'red'}} 
                                     onClick={()=> {handleDeleteCustomer(item.email)}}
                                     variant="outlined" 
                                     size="medium">
@@ -170,28 +187,30 @@ function ManageUsers() {
   return (
 
     <div>
-    <Grid container spacing={2} sx={{ m: 2 }}>
+      
+    <Grid  container spacing={2} sx={{ m: 2 }}>
         <Grid item xs={2}></Grid>
     <Grid item xs={8}>
         <TextField onChange={(e) => setQuery(e.target.value)} style= {{width: '40%'}} sx={{m: 1}} id="outlined-basic" label="Search..." variant="outlined" size='small' />
             <Button 
                 onClick={handleShow}
-                style = {{backgroundColor: '#54d494', borderColor:'#54d494' , float: 'right'}} 
-                startIcon={<AddIcon/>}sx={{m: 1}} 
+                style = {{ display:' flex',
+                float: 'right'}} 
+                startIcon={<AddIcon/>}sx={{m:' 1'}} 
                 variant="contained" 
                 size="medium">
                 Create User
             </Button>
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-      <TableContainer sx={{ maxHeight: 440 }}>
-        <Table stickyHeader aria-label="sticky table">
+      <TableContainer style={{backgroundColor:'#eeee'}} sx={{ maxHeight: 440 }}>
+        <Table style={{backgroundColor:'#eeee'}} stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
               {columns.map((column) => (
-                <TableCell
+                <TableCell 
                   key={column.id}
                   align={column.align}
-                  style={{ minWidth: column.minWidth }}
+                  style={{ minWidth: column.minWidth  }}
                 >
                   {column.label}
                 </TableCell>
@@ -203,7 +222,7 @@ function ManageUsers() {
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
                 return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                  <TableRow  hover role="checkbox" tabIndex={-1} key={row.code}>
                     {columns.map((column) => {
                       const value = row[column.id];
                       return (
@@ -220,7 +239,7 @@ function ManageUsers() {
           </TableBody>
         </Table>
       </TableContainer>
-      <TablePagination
+      <TablePagination style={{backgroundColor:'#eeee'}}
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
         count={rows.length}
@@ -243,7 +262,7 @@ function ManageUsers() {
         centered
         keyboard={false}
       >
-        <Modal.Header closeButton>
+        <Modal.Header style={{backgroundColor:'#eeee'}} closeButton>
           <Modal.Title>Add a new user</Modal.Title>
         </Modal.Header>
 
