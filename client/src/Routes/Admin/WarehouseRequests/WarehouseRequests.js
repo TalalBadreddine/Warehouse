@@ -43,7 +43,6 @@ function WarehouseRequests() {
       warehouseId: WAREHOUSEID,
       status: STATUS
     }).then(result => {
-      console.log(result)
     })
     let array2 = pendingRequests
     for (let i = 0; i < array2.length; i++) {
@@ -94,7 +93,6 @@ function WarehouseRequests() {
                 {
                   pendingRequests.map((item, i) => {
                     return (item.warehouses.map((warehouse, index) => {
-                      console.log(warehouse[0].name)
                       return (<TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                         <TableCell align="left">{warehouse[0].name} </TableCell>
                         <TableCell align="center"> {item.warehouseOwner.userName}</TableCell>

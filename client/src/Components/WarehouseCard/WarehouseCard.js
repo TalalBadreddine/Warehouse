@@ -65,7 +65,7 @@ const WarehouseCard = (props) => {
                             key={index}
                             src={base64}
                             alt=""
-                            height={'180px'}
+                            height={'200px'}
                             width={'310px'}
                         />
 

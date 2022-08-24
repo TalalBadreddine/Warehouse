@@ -296,6 +296,24 @@ const getAllCustomerAndOwnersAndLogs = async (req, res) => {
     }
 }
 
+const getAllStatistics = async (req, res) => {
+    try{
+        const customers = await usersSchema.find()
+        const owners = await warehouseOwnerSchema.find()
+        const rentingRequests = await manageUsersAndWarehousesSchema.find()
+        const warehouses = await warehouseSchema.find()
+
+        return res.send({
+            customers,
+            owners,
+            rentingRequests,
+            warehouses
+        }).status(200)
+    }
+    catch(err){
+        console.log(`error at the getAllStatistics function => ${err.message}`)
+    }
+}
 
 module.exports = {
     getAllCustomer,
@@ -314,5 +332,6 @@ module.exports = {
     activeDeactiveCustomer,
     getUserRequests,
     getAllLogs,
+    getAllStatistics,
     getAllCustomerAndOwnersAndLogs
 }

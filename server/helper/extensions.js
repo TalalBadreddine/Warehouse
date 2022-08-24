@@ -146,7 +146,6 @@ const splitTimeByRequestedTime = (availbleTime, askedTime) => {
 
             if(requestedStartDateInSeconds >= startTimeInSeconde && requestedEndDateInSeconds <= endTimeInSeconde){
         
-                console.log('test2')
                 if(startTimeInSeconde == requestedStartDateInSeconds && requestedEndDateInSeconds != endTimeInSeconde){
                     
                     wareHouseTime[i] = [askedTime[1], wareHouseTime[i][1]]
@@ -293,7 +292,6 @@ const userRentAWarehouseInSpecificDate = async (wareHouseId, askedTime) => {
                     }
                 })
                 
-                console.log(wareHouseId)
                 return true
 
             }

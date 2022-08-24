@@ -55,8 +55,14 @@ const warehouseOwnerSchema = new mongoose.Schema({
         type:String
         
     },
+    
     stripeAccountId:{
         type: String
+    },
+
+    registrationDate:{
+        type: Date,
+        default: new Date()
     }
 
 })

@@ -44,17 +44,14 @@ function ManageRequests() {
       requestedDate: STARTRENTDATE
 
     }).then(result => {
-      console.log(result)
     })
 
     await axios.post('/userActivity', {
       action: `${STATUS} renting warehouse for ${userEmail} from ${new Date(STARTRENTDATE).toISOString().slice(0, 10)} To: ${new Date(ENDRENTDATE).toISOString().slice(0, 10)}`,
       role: 'warehouseOwner'
     }).then((results) => {
-      console.log(results.data)
     })
 
-    console.log(`request Is Sent for ${ID, STATUS, WAREHOUSEID, STARTRENTDATE, ENDRENTDATE}`)
 
 
     let currentrequest = requests.filter((request) => {
@@ -172,7 +169,6 @@ function ManageRequests() {
         action: `Accepted renting warehouse for ${currentWarehouse.userEmail} from ${new Date(currentWarehouse.startRentDate).toISOString().slice(0, 10)} To: ${new Date(currentWarehouse.endRentDate).toISOString().slice(0, 10)}`,
         role: 'warehouseOwner'
       }).then((results) => {
-        console.log(results.data)
       })
 
     })
