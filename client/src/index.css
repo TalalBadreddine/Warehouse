@@ -8,6 +8,14 @@ body{
     background-color: #011e3c !important;
 }
 
-Link,p,h1,h2,h3{
+/* Link,h1,h2,h3,h4,td,thead{
     color: white !important;
 }
+a{
+    text-decoration: none !important;
+    color: white !important
+}
+
+input{
+    background-color: '#132f4c !important';
+} */

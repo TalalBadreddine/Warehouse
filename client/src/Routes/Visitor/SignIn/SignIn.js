@@ -9,6 +9,7 @@ import SignUpWarehouse from '../../../Components/SignUpWarehouseOwner/SignUpWare
 import SignUpUser from '../../../Components/SignUpUser/SignUpUser';
 import LoginWarehouseOwner from '../../../Components/LoginWarehouseOwner/LoginWarehouseOwner';
 import LoginCustomer from '../../../Components/LoginCustomer/LoginCustomer';
+import ui from '../../../themes'
 
 function SignIn() {
 
@@ -57,9 +58,10 @@ function SignIn() {
 
         <Row className='mt-5'>
 
-          <Col className='mt-5'> <Card style={{ width: '21rem', outline: 'none', height: '415px', boxShadow: '1px 2px 9px #54d494' }}>
+          <Col className='mt-5'> 
+          <Card style={{ width: '21rem', outline: 'none', height: '415px', boxShadow: '1px 2px 9px', backgroundColor: ` ${ui.lightBg}`, borderColor: ` ${ui.borders}` }}>
             <Card.Body >
-              <Card.Title>Rent a space</Card.Title>
+              <Card.Title style={{ color: ` ${ui.normalText}`}}>Rent a space</Card.Title>
               <br></br>
               <br></br>
               <Card.Text>
@@ -67,10 +69,10 @@ function SignIn() {
                 bulk of the card's content.
               </Card.Text>
               <br></br>
-              <Button onClick={function (event) { openAndLoginCustomer() }} style={{ backgroundColor: '#54d494', borderColor: '#54d494' }} variant="secondary">Login</Button>
+              <Button onClick={function (event) { openAndLoginCustomer() }} style={{ backgroundColor: ` ${ui.Buttons} `, borderColor: ` ${ui.borders}` }} variant="secondary">Login</Button>
               <br></br>
               <br></br>
-              Don't have an account?<Card.Link onClick={function (event) { openAndCustomer() }} style={{ color: '#54d494', borderColor: '#54d494' }} > Sign-up</Card.Link>
+              Don't have an account?<Card.Link onClick={function (event) { openAndCustomer() }} style={{ borderColor: '#54d494' }}> <span style={{ color: ` ${ui.bigTitleSecondaryColor}`}}>Sign-up </span></Card.Link>
             </Card.Body>
             <Modal
               show={show}
@@ -116,7 +118,7 @@ function SignIn() {
 
             </Modal>
           </Card></Col>
-          <Col className='mt-5'><Card style={{ width: '21rem', height: '415px', boxShadow: '1px 2px 9px #54d494' }}>
+          <Col className='mt-5'><Card style={{ width: '21rem', height: '415px', boxShadow: '1px 2px 9px #54d494',  }}>
             <Card.Body >
               <Card.Title>List a space </Card.Title>
               <br></br>
@@ -129,7 +131,7 @@ function SignIn() {
               <Button onClick={function (event) { openAndLoginOwner() }} style={{ backgroundColor: '#54d494', borderColor: '#54d494' }} variant="secondary">Login</Button>
               <br></br>
               <br></br>
-              Don't have an account?<Card.Link style={{ color: '#54d494', borderColor: '#54d494' }} onClick={function (event) { openAndOwner() }}> Sign-up</Card.Link>
+              <p>Don't have an account?</p><Card.Link style={{ color: '#54d494', borderColor: '#54d494' }} onClick={function (event) { openAndOwner() }}> Sign-up</Card.Link>
             </Card.Body>
           </Card></Col>
           <Col > <Card.Img src={require("../../../Assets/Checking boxes-bro.png")} alt="Card image" style={{ width: '500px' }} /></Col>

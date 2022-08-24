@@ -12,6 +12,8 @@ import ac from './air-conditioner.png'
 import { useNavigate } from 'react-router-dom';
 import alternative from './warehouseAlternative.jpeg'
 
+import ui from '../../themes'
+
 const WarehouseCard = (props) => {
     const navigate = useNavigate()
 
@@ -92,15 +94,15 @@ const WarehouseCard = (props) => {
                 <h1 className={styles.smallTypo} style={{ color: 'gray' }}>address:{props.info.address[0][1]}, {props.info.address[0][0]}</h1>
                 <div className=' h-50'>
 
-                    <BiCctv style={{ color: 'black' }} className={`font-wight-700 m-2 ${styles.cctvIcon}`} size={27} ></BiCctv>
+                    <BiCctv style={{ color: `${ui.iconsColors}` }} className={`font-wight-700 m-2 ${styles.cctvIcon}`} size={27} ></BiCctv>
 
-                    <img src={sprinkler} width={'25px'} className="m-2"></img>
-
-
-                    <TbForklift style={{ color: 'gray' }} className="font-wight-700 m-2" size={32} ></TbForklift>
+                    <img src={sprinkler} width={'25px'} style={{ color: `${ui.iconsColors}` }} className="m-2"></img>
 
 
-                    <GrUserWorker style={{ color: 'black' }} className="font-wight-700 m-2" size={26}></GrUserWorker>
+                    <TbForklift style={{ color: `${ui.iconsColors}` }} className="font-wight-700 m-2" size={32} ></TbForklift>
+
+
+                    <GrUserWorker style={{ color: `${ui.iconsColors}` }} className="font-wight-700 m-2 " size={26}></GrUserWorker>
 
 
                     <img src={ac} width={'37px'} style={{ opacity: 0.4 }} className="m-2 mt-3"></img>
