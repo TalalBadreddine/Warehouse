@@ -25,6 +25,7 @@ import WarehouseRequests from './Routes/Admin/WarehouseRequests/WarehouseRequest
 import ManageWarehouseOwner from './Routes/Admin/ManageWarehouseOwner/ManageWarehouseOwner'
 import UserActivity from './Routes/Admin/UserActivity/UserActivity';
 import Statistics from './Routes/Admin/Statistics/Statistics';
+import WarehouseOwnerDetails from './Routes/Admin/WarehouseOwnerDetails/WarehouseOwnerDetails';
 
 function App() {
 
@@ -81,6 +82,7 @@ function App() {
              <Route  path='manageOwner' element={<ManageWarehouseOwner></ManageWarehouseOwner>}></Route>
              <Route path = 'userActivity' element={<UserActivity></UserActivity>}></Route>
              <Route path='statistics' element={<Statistics></Statistics>}></Route>
+             <Route path='WarehouseOwnerDetails' element={<WarehouseOwnerDetails></WarehouseOwnerDetails>}></Route>
 
         </Route>
 
