@@ -17,57 +17,6 @@ import axios from 'axios'
 import { Carousel } from 'react-bootstrap'
 
 
-const rows = [
-    createData('India', 'IN', 1324171354, 3287263),
-    createData('China', 'CN', 1403500365, 9596961),
-    createData('Italy', 'IT', 60483973, 301340),
-    createData('United States', 'US', 327167434, 9833520),
-    createData('Canada', 'CA', 37602103, 9984670),
-    createData('Australia', 'AU', 25475400, 7692024),
-    createData('Germany', 'DE', 83019200, 357578),
-    createData('Ireland', 'IE', 4857000, 70273),
-    createData('Mexico', 'MX', 126577691, 1972550),
-    createData('Japan', 'JP', 126317000, 377973),
-    createData('France', 'FR', 67022000, 640679),
-    createData('United Kingdom', 'GB', 67545757, 242495),
-    createData('Russia', 'RU', 146793744, 17098246),
-    createData('Nigeria', 'NG', 200962417, 923768),
-    createData('Brazil', 'BR', 210147125, 8515767),
-];
-
-
-
-function createData(name, code, population, size) {
-    const density = population / size;
-    return { name, code, population, size, density };
-}
-
-
-const columns = [
-    { id: 'name', label: 'name', minWidth: 130 },
-    { id: 'email', label: 'email', minWidth: 100 },
-    {
-        id: 'warehouses',
-        label: `nothing`,
-        minWidth: 170,
-        align: 'right',
-        format: (value) => value.toLocaleString('en-US'),
-    },
-    {
-        id: 'size',
-        label: 'Size\u00a0(km\u00b2)',
-        minWidth: 170,
-        align: 'right',
-        format: (value) => value.toLocaleString('en-US'),
-    },
-    {
-        id: 'density',
-        label: 'Density',
-        minWidth: 170,
-        align: 'right',
-        format: (value) => value.toFixed(2),
-    },
-];
 const allMonths = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
 
@@ -84,27 +33,6 @@ const Statistics = () => {
     const [revenueChartType, setRevenueChartType] = useState('Line')
     const [revenueData, setRevenueData] = useState(new Array(12))
 
-
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(10);
-
-    const handleChangePage = (event, newPage) => {
-        setPage(newPage);
-    };
-
-    const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(+event.target.value);
-        setPage(0);
-    };
-
-
-    const showDateRange = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
 
     const changeEarningGrapthType = (type) => {
         setEarningGraphType(type)
@@ -252,18 +180,18 @@ const Statistics = () => {
             <div className='col-12 mt-5 d-flex justify-content-between'>
 
                 <div className='col-7 rounded py-2 px-4' style={{ border: `1px solid ${ui.borders}`, height: '80%', backgroundColor: ` ${ui.lightBg}` }} >
-                    <p style={{ color: ` ${ui.normalText}` }}> Total Revenue Earned</p>
+                    <p style={{ color: ` ${ui.bigTitleSecondaryColor}` }}> Total Revenue Earned</p>
                     <CustomChart graphType={earningGraphType} graphTitle="" idHelper={`000000`} graphData={revenueData} graphLabels={months} ></CustomChart>
                     <div className='d-flex justify-content-between mt-4 col-7'>
-                        <p style={{ border: `1px solid ${ui.borders}`, background: earningGraphType == 'line' ? `${ui.bigTitleSecondaryColor}` : '#ffffff', borderRadius: '44%' }} className='px-3 py-1' onClick={() => { changeEarningGrapthType('line') }}>Line</p>
+                        <p style={{ border: `1px solid ${ui.borders}`, background: earningGraphType == 'line' ? `${ui.bigTitleSecondaryColor}` : `${ui.backgroundColor}`, borderRadius: '7px', border: `1px solid ${ui.borders}`,color:`${ui.normalText}` }} className='px-3 py-1' onClick={() => { changeEarningGrapthType('line') }}>Line</p>
 
-                        <p style={{ border: `1px solid ${ui.borders}`, background: earningGraphType == 'bar' ? `${ui.bigTitleSecondaryColor}` : '#ffffff', borderRadius: '44%' }} className='px-3 py-1' onClick={() => { changeEarningGrapthType('bar') }}>Bar</p>
+                        <p style={{ border: `1px solid ${ui.borders}`, background: earningGraphType == 'bar' ? `${ui.bigTitleSecondaryColor}` : `${ui.backgroundColor}`, borderRadius: '7px', border: `1px solid ${ui.borders}`,color:`${ui.normalText}` }} className='px-3 py-1' onClick={() => { changeEarningGrapthType('bar') }}>Bar</p>
 
-                        <p style={{ border: `1px solid ${ui.borders}`, background: earningGraphType == 'doughnut' ? `${ui.bigTitleSecondaryColor}` : '#ffffff', borderRadius: '44%' }} className='px-3 py-1' onClick={() => { changeEarningGrapthType('doughnut') }}>doughnut</p>
+                        <p style={{ border: `1px solid ${ui.borders}`, background: earningGraphType == 'doughnut' ? `${ui.bigTitleSecondaryColor}` : `${ui.backgroundColor}`, borderRadius: '7px', border: `1px solid ${ui.borders}`,color:`${ui.normalText}` }} className='px-3 py-1' onClick={() => { changeEarningGrapthType('doughnut') }}>doughnut</p>
 
-                        <p style={{ border: `1px solid ${ui.borders}`, background: earningGraphType == 'polarArea' ? `${ui.bigTitleSecondaryColor}` : '#ffffff', borderRadius: '44%' }} className='px-3 py-1' onClick={() => { changeEarningGrapthType('polarArea') }}>Polar</p>
+                        <p style={{ border: `1px solid ${ui.borders}`, background: earningGraphType == 'polarArea' ? `${ui.bigTitleSecondaryColor}` : `${ui.backgroundColor}`, borderRadius: '7px', border: `1px solid ${ui.borders}`,color:`${ui.normalText}` }} className='px-3 py-1' onClick={() => { changeEarningGrapthType('polarArea') }}>Polar</p>
 
-                        <p style={{ border: `1px solid ${ui.borders}`, background: earningGraphType == 'radar' ? `${ui.bigTitleSecondaryColor}` : '#ffffff', borderRadius: '44%' }} className='px-3 py-1' onClick={() => { changeEarningGrapthType('radar') }}>Radar</p>
+                        <p style={{ border: `1px solid ${ui.borders}`, background: earningGraphType == 'radar' ? `${ui.bigTitleSecondaryColor}` : `${ui.backgroundColor}`, borderRadius: '7px', border: `1px solid ${ui.borders}`,color:`${ui.normalText}` }} className='px-3 py-1' onClick={() => { changeEarningGrapthType('radar') }}>Radar</p>
 
                     </div>
                 </div>
@@ -271,7 +199,7 @@ const Statistics = () => {
                 <div className='col-4 rounded px-2 py-1' style={{ border: `1px solid ${ui.borders}`, backgroundColor: ` ${ui.lightBg}` }}>
 
                     <div className='text-center mt-2'>
-                        <h5 style={{ color: `${ui.normalText}` }} >Most owner with owned warehouses</h5>
+                        <h4 style={{ color: `${ui.bigTitleSecondaryColor}` }} >Most owner with owned warehouses</h4>
                         <div className='col-12'>
                             <hr style={{ color: `${ui.normalText}` }}></hr>
                         </div>
@@ -297,7 +225,7 @@ const Statistics = () => {
 
                 <div className='col-12 rounded px-5 py-2' style={{ backgroundColor: `${ui.lightBg}`, border: `1px solid ${ui.borders}` }}>
                     <div>
-                        <h3 style={{ color: `${ui.normalText}` }}>Most Rented Warehouses </h3>
+                        <h2 style={{ color: `${ui.bigTitleSecondaryColor}` }}>Most Rented Warehouses </h2>
                     </div>
 
                     <div style={{height:'500px', overflowY:'scroll'}}>

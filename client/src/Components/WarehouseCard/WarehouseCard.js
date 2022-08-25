@@ -107,7 +107,7 @@ const WarehouseCard = (props) => {
 
                     <img src={ac} width={'37px'} style={{ opacity: 0.4 }} className="m-2 mt-3"></img>
 
-                   {props.role == 'owner' ?  ownerDiv() : <p>Price starts from <span style={{filter: props.role == 'visitor' ?  'blur(4px)' : null }}>${props.info.pricePerDay}</span> with space: <span style={{filter: props.role == 'visitor' ?  'blur(4px)' : null }}>{props.info.space}</span> m<sup>2</sup> </p>}
+                   {props.role == 'owner' ?  ownerDiv() : <p style={{ color:`${ui.normalText}`}}>Price starts from <span style={{filter: props.role == 'visitor' ?  'blur(4px)' : null, color: `${ui.normalText}` }}>${props.info.pricePerDay}</span> with space: <span style={{filter: props.role == 'visitor' ?  'blur(4px)' : null }}>{props.info.space}</span> m<sup>2</sup> </p>}
         
                 </div>
           

@@ -82,7 +82,6 @@ function App() {
              <Route path = 'userActivity' element={<UserActivity></UserActivity>}></Route>
              <Route path='statistics' element={<Statistics></Statistics>}></Route>
 
-
         </Route>
 
         <Route path='adminLogin' element={<AdminSignIn></AdminSignIn>}></Route>

@@ -84,7 +84,7 @@ function PostNewWarehouse() {
   },[warehouse])
 
 
-  const validateForm = async (e) => {
+  const handleAddWarehouse = async (e) => {
     e.preventDefault()
     if (warehouse.name == null || warehouse.name == '') {
       setError("Warehouse name can't be empty ")
@@ -191,7 +191,7 @@ function PostNewWarehouse() {
                 </Form.Control.Feedback> </FloatingLabel></FormGroup>
 
             <FormGroup controlId="validationCustomUsername">
-              <FloatingLabel controlId="floatingPassword" label="Space For Warehouse" className="mb-3">
+              <FloatingLabel controlId="floatingPassword" label="Space For Warehouse (㎡)" className="mb-3">
                 <Form.Control style={{backgroundColor:`${ui.searchesInput}` , borderColor:`${ui.borders}` , color:`${ui.normalText}`}} required value={warehouse.space}
                   onChange={(e) => setWarehouse({ ...warehouse, space: e.target.value })} placeholder="Space For Warehouse" />
                 <Form.Control.Feedback type="invalid">
@@ -201,7 +201,7 @@ function PostNewWarehouse() {
             <FormGroup controlId="validationCustom03">
               <FloatingLabel controlId="floatingPassword" label="Warehouse Type" className="mb-3">
                 <Form.Select style={{backgroundColor:`${ui.searchesInput}` , borderColor:`${ui.borders}` , color:`${ui.normalText}`}} required value={warehouse.type}
-                  onChange={(e) => setWarehouse({ ...warehouse, type: e.target.value })} placeholder="Warehouse Type">
+                  onChange={(e) => setWarehouse({ ...warehouse, ['type']: e.target.value })} placeholder="Warehouse Type">
 
                   <option value="Public Warehouse">Public Warehouse</option>
                   <option value="Private Warehouse">Private Warehouse</option>
@@ -219,7 +219,7 @@ function PostNewWarehouse() {
             <FormGroup controlId="validationCustom04">
               <FloatingLabel
                 controlId="floatingInput"
-                label="Price"
+                label="Price (USD)"
                 className="mb-3"
               >
 
@@ -271,7 +271,7 @@ function PostNewWarehouse() {
                       {warehouse.images && warehouse.images.map((image, index) => {
                         return (
                           <div className='position-relative ms-2' style={{ width: '22%' }} key={index}>
-                            <img src={image.base64} width='100%' height='100px' className='border ms-3'></img>
+                            <img src={image} width='100%' height='100px' className='border ms-3'></img>
                             <p className={`position-absolute ${styles.trashIcon} `} onClick={() => { handleDeleteImage(index) }} style={{ bottom: 0, right: 3 }}><BsTrash></BsTrash></p>
                           </div>
                         )

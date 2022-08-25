@@ -206,8 +206,7 @@ function CustomerRequests() {
                                                 setCurrentWarehouseRequest(item)
                                             }}>View</button>
 
-                                            {item.status == 'accepted' &&
-                                                <button className="ms-5" style={{ color:'white', backgroundColor:`${ui.backgroundColor}`, border:`solid 2px ${ui.borders}`}} href="#" >Feedback</button>}
+                                            {/* {item.status == 'accepted' && <button className="ms-5" style={{ color:'white', backgroundColor:`${ui.backgroundColor}`, border:`solid 2px ${ui.borders}`}} href="#" >Feedback</button>} */}
                                         </div>
                                     </td>
                                 </tr>
@@ -308,7 +307,7 @@ function CustomerRequests() {
                             </div>}
 
 
-                            <div className='mt-3' style={{ height: '400px', overflowY: 'scroll' }}>
+                            <div className='mt-3' style={{ height: currentWarehouseData.feedback.length > 0 ? '400px' : '0px', overflowY: 'scroll' }}>
 
                                 <div className='ms-4'>
 

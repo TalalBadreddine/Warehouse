@@ -16,9 +16,6 @@ import landingImg from '../../../Assets/homePageBg.jpg'
 import SearchBar from '../../../Components/SearchBar/SearchBar'
 import ui from '../../../themes'
 
-import ui from '../../../themes'
-
-
 
 function Landing() {
 

@@ -132,7 +132,7 @@ const WarehouseDetails = () => {
             </div> */}
 
             <div className="col-2 ps-5 ">
-                <IoIosReturnLeft onClick={() => navigate(-1)} size={50}></IoIosReturnLeft>
+                <IoIosReturnLeft onClick={() => navigate(-1)} size={50} style={{color: `${ui.normalText}`}}></IoIosReturnLeft>
 
             </div>
 
@@ -322,7 +322,7 @@ const WarehouseDetails = () => {
                     <h1 style={{color:`${ui.normalText}`}}>Select Rental Date:</h1>
                     <p style={{color:`${ui.normalText}`}}>Select a rental date so your request to rent the warehouse will be sent to the owner</p>
                     <p style={{color:`${ui.normalText}`}}>Availble Dates: {warehouseData && warehouseData.datesAvailable.map((currentDate) => {
-                        return <span className="ms-3 px-3 py-1 d-inline-block rounded-4" style={{ backgroundColor:`${ui.Buttons}` }}>{currentDate[0].replaceAll('/', '-')} / {currentDate[1].replaceAll('/', '-')}</span>
+                        return <span className="ms-3 px-3 py-1 d-inline-block rounded-4" style={{ backgroundColor:`${ui.Buttons}` }}>{new Date(currentDate[0]).toISOString().slice(0, 10)} / {new Date(currentDate[1]).toISOString().slice(0, 10)}</span>
                     })}</p>
                     {state.endDate && <p> From: {new Date(state.startDate).toISOString().slice(0, 10)}<span className="ms-3"></span> Till: {new Date(state.endDate).toISOString().slice(0, 10)}</p>}
                     {dataSettings.showDateAlert && <p className={`${styles.dateAlert} fs-4`}> Fill Date To Continue !</p>}
