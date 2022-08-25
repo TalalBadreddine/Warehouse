@@ -71,7 +71,6 @@ const SearchWarehouse = ({role}) => {
                         action: `navigated to search for a warehouse`,
                         role: 'customer'
                     }).then((results) => {
-                        console.log(results.data)
                     })
                     
                    
@@ -249,7 +248,6 @@ const SearchWarehouse = ({role}) => {
             action: `searched for warehouses and sorted them by neareset to his Location`,
             role: 'customer'
         }).then((results) => {
-            console.log(results.data)
         })
 
         setFiltredWarehousesInfo([...sortedArr])

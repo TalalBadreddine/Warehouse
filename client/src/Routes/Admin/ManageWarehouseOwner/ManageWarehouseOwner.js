@@ -13,10 +13,11 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import Modal from 'react-bootstrap/Modal';
-
+import ui from '../../../themes'
 import { getAllWarehouseOwners } from "../../../Services/getAllWarehouseOwners"
 import { deleteWarehouseOwnerByAdmin } from "../../../Services/deleteWarehouseOwnerByAdmin"
 import AddWarehouseOwner from '../../../Components/AddWarehouseOwner/AddWarehouseOwner';
+
 
 const columns = [
     { id: 'userName', label: 'Warehouse Owner', minWidth: 170 },
@@ -95,12 +96,12 @@ function ManageWarehouseOwner() {
                 createData(item.userName,
                     item.email,
                     <>
-                        <Button style={{ color: 'white', backgroundColor: '#54d494', margin: 5, boxShadow: '3px 3px 6px green' }} onClick={() => { handleLogs(item) }}
+                        <Button style={{ color: `${ui.borders}`,border:`solid 2px ${ui.borders}`,backgroundColor:`${ui.backgroundColor}`, margin: 5 }} onClick={() => { handleLogs(item) }}
                             variant="Contained"
                             size="medium">
                             CheckLog
                         </Button>
-                        <Button className="ms-4" style={{ color: 'white', backgroundColor: 'red', borderColor: 'red', margin: 5, boxShadow: '3px 3px 6px #792727' }}
+                        <Button className="ms-4" style={{ color: 'red', backgroundColor: `${ui.backgroundColor}`, border: ' solid 2px red', margin: 5 }}
                             onClick={() => { handleDeleteWarehouseOwner(item.email) }}
                             variant="outlined"
                             size="medium">
@@ -136,9 +137,9 @@ function ManageWarehouseOwner() {
             <Grid container spacing={2} sx={{ m: 2 }}>
                 <Grid item xs={2}></Grid>
                 <Grid item xs={8}>
-                    <TextField style={{ width: '40%' }} sx={{ m: 1 }} id="outlined-basic" label="Search for a Warehouse Owner..." variant="outlined" size='small' onChange={(e) => setQuery(e.target.value)} />
+                    <TextField style={{ width: '40%', backgroundColor:`${ui.searchesInput}` , border: 'solid 1px #7890a9', borderRadius:'6px'}} sx={{ m: 1 }} id="outlined-basic" label="Search for a Warehouse Owner..." variant="outlined" size='small' onChange={(e) => setQuery(e.target.value)} />
                     <Button
-                        style={{ backgroundColor: 'gray', borderColor: '#54d494', float: 'right', boxShadow: '3px 3px 6px black' }}
+                        style={{ backgroundColor: `${ui.Buttons}`, borderColor: '#54d494', float: 'right', boxShadow: '3px 3px 6px black' }}
                         startIcon={<AddIcon />} sx={{ m: 1 }}
                         onClick={handleShow}
                         variant="contained"
@@ -149,13 +150,13 @@ function ManageWarehouseOwner() {
                     <Paper sx={{ width: '100%', overflow: 'hidden' }} style={{ marginTop: '5%' }}>
                         <TableContainer sx={{ maxHeight: 500 }} >
                             <Table stickyHeader aria-label="sticky table">
-                                <TableHead>
+                                <TableHead >
                                     <TableRow>
                                         {columns.map((column) => (
                                             <TableCell
                                                 key={column.id}
                                                 align={column.align}
-                                                style={{ minWidth: column.minWidth, fontSize: '20px', backgroundColor: 'lightgrey' }}
+                                                style={{ minWidth: column.minWidth, fontSize: '20px',color:'white', backgroundColor: `${ui.borders}`}}
                                             >
                                                 {column.label}
                                             </TableCell>
@@ -174,7 +175,7 @@ function ManageWarehouseOwner() {
                                                             <TableCell
                                                                 key={column.id}
                                                                 align={column.align}
-                                                                style={{ fontSize: '17px' }}
+                                                                style={{ fontSize: '17px', color:'white', backgroundColor: `${ui.searchesInput}`, borderBottom:'solid 1px white' }}
                                                             >
                                                                 {column.format && typeof value === 'number'
                                                                     ? column.format(value)

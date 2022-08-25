@@ -60,7 +60,7 @@ const userLogin = async (req, res) => {
         }else {
 
        
-        await jwt.sign({user: userInfo, role: 'user'}, jwtSecret, async (err, token) => {
+        await jwt.sign({user: userFromDb, role: 'user'}, jwtSecret, async (err, token) => {
             await res.cookie('jwt', `${token}`, { httpOnly: true, maxAge: 3 * 24 * 60 * 60 * 1000 })
             return res.status(200).send(true)
         })
