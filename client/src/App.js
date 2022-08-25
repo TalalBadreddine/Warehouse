@@ -24,15 +24,14 @@ import UserDetails from './Components/UserDetails/UserDetails';
 import WarehouseRequests from './Routes/Admin/WarehouseRequests/WarehouseRequests';
 import ManageWarehouseOwner from './Routes/Admin/ManageWarehouseOwner/ManageWarehouseOwner'
 import UserActivity from './Routes/Admin/UserActivity/UserActivity';
-// import WarehouseOwnerDetails from './Routes/Admin/WarehouseOwnerDetails/WarehouseOwnerDetails'
+import Statistics from './Routes/Admin/Statistics/Statistics';
 
 function App() {
 
 
   return (
     <div>
-      {/* <ManageWarehouseOwner /> */}
-      {/* <WarehouseOwnerDetails /> */}
+
 
       <Routes>
 
@@ -43,7 +42,8 @@ function App() {
         <Route path='/' element={<Navigationbar role='visitor'></Navigationbar>}>
 
           <Route path='' element={<Landing></Landing>}></Route>
-          <Route path='login' element={<SignIn></SignIn>}></Route>           <Route path='findASpace' element={<SearchWarehouse role={'visitor'} />}></Route>
+          <Route path='login' element={<SignIn></SignIn>}></Route>           
+          <Route path='findASpace' element={<SearchWarehouse role={'visitor'} />}></Route>
           <Route path='aboutUs' element={<AboutUs></AboutUs>}></Route>
           <Route path='postNewWarehouse' element={<PostNewWarehouse></PostNewWarehouse>}></Route>
 
@@ -75,11 +75,13 @@ function App() {
 
         <Route path='admin/' element={<SideBar></SideBar>}>
 
-          <Route path='' element={<ManageUsers></ManageUsers>}></Route>
-          <Route path='userdetails' element={<UserDetails></UserDetails>}></Route>
-          <Route path='requests' element={<WarehouseRequests></WarehouseRequests>}></Route>
-          <Route path='manageOwner' element={<ManageWarehouseOwner></ManageWarehouseOwner>}></Route>
-          <Route path='userActivity' element={<UserActivity></UserActivity>}></Route>
+             <Route path='' element={<ManageUsers></ManageUsers>}></Route>
+             <Route path='userdetails' element={<UserDetails></UserDetails>}></Route>
+             <Route path='requests' element={<WarehouseRequests></WarehouseRequests>}></Route>
+             <Route  path='manageOwner' element={<ManageWarehouseOwner></ManageWarehouseOwner>}></Route>
+             <Route path = 'userActivity' element={<UserActivity></UserActivity>}></Route>
+             <Route path='statistics' element={<Statistics></Statistics>}></Route>
+
 
         </Route>
 
@@ -94,17 +96,3 @@ function App() {
 }
 
 export default App;
-
-// import './index.css'
-// import WarehouseOwnerDetails from '../../client/src/Routes/Admin/WarehouseOwnerDetails/WarehouseOwnerDetails'
-
-// function App() {
-
-
-//   return (
-//     <div>
-// <WarehouseOwnerDetails/>
-//     </div>
-//   )
-// }
-// export default App;

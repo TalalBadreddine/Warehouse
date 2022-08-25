@@ -52,7 +52,6 @@ function CustomerRequests() {
             action: `add a feedback to  ${currentWarehouseData.name} warehouse, the comment content: ${content}`,
             role: 'customer'
         }).then((results) => {
-            console.log(results.data)
         })
 
         let currentComment
@@ -118,12 +117,10 @@ function CustomerRequests() {
         setViewAllReply([...arr])
 
         for (let i = 0; i < replyBtnRef.current.length; i++) {
-            console.log(replyBtnRef)
             if (i != indexOfRef) replyBtnRef.current[i].className = 'd-none'
         }
 
         let target = replyBtnRef.current[indexOfRef]
-        console.log(target.className)
         if (target.className == ' ') {
             target.className = 'd-none'
         } else {
@@ -336,7 +333,6 @@ function CustomerRequests() {
                                                                         let arr = viewAllReply
                                                                         arr[helperIndex] = arr[helperIndex] == 0 ? 10000 : 0
                                                                         setViewAllReply([...arr])
-                                                                        console.log(arr)
 
                                                                     }}><AiFillCaretDown></AiFillCaretDown> View replies</p>}
                                                                     {currentWarehouseRequest.status == 'accepted' && <p style={{ fontSize: '1rem', color: 'rgb(0,0,0, 0.6)' }} className={commentArr.length > 1 ? `ms-5 ${styles.returnBtn}` : `ms-2 ${styles.returnBtn}`} onClick={(e) => {

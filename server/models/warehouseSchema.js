@@ -64,7 +64,7 @@ const feedback = new mongoose.Schema({
         type: Boolean,
         default:false
     },
-    registerDate:{
+    registrationDate:{
         type: Date,
         default: new Date()
     },

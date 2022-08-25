@@ -45,7 +45,6 @@ const ViewWarehouseDetails = (props) => {
         let warehouseDetails = props.data.warehouseInfo[0]
         let thisRequest = props.data.thisRequest
 
-        console.log(props)
         return (
             <Modal
                 show={props.showState}

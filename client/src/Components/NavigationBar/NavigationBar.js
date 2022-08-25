@@ -28,7 +28,6 @@ function Navigationbar({ role }) {
       action: `Logged out`,
       role: 'customer'
     }).then(async (results) => {
-      console.log(results)
     await axios.get('/logout').then((data) => {
       navigate('/')
     })

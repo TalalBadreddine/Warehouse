@@ -43,7 +43,6 @@ const register = async (req, res) => {
             },
         });
 
-        console.log(account)
 
         await warehouseOwnerModel.create({
             userName: userName,
@@ -65,7 +64,6 @@ const register = async (req, res) => {
             collect: 'currently_due',
           });
 
-          console.log(accountLink)
 
         return res.send(accountLink).status(200)
 
@@ -209,7 +207,7 @@ const addWarehouses = async (req, res) => {
         const warehouse = req.body;
         const decodedInfo = jwtDecode(req.cookies['jwt'])
         const result = await warehouseSchema.create(warehouse);
-
+        await result.save()
         await warehouseOwnerModel.updateOne({
             _id: decodedInfo.user._id
         },{

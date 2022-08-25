@@ -1,6 +1,7 @@
 const warehouseSchema = require('../models/warehouseSchema')
 const userSchema = require('../models/usersSchema')
 const WarehouseOwnerSchema = require('../models/WarehouseOwner')
+const manageUsersAndWarehousesSchema = require('../models/manageUsersAndWarehousesSchema')
 
 
 const getEveryWarehouseOwnerAndHisWareHouses = async () => {
@@ -146,7 +147,6 @@ const splitTimeByRequestedTime = (availbleTime, askedTime) => {
 
             if(requestedStartDateInSeconds >= startTimeInSeconde && requestedEndDateInSeconds <= endTimeInSeconde){
         
-                console.log('test2')
                 if(startTimeInSeconde == requestedStartDateInSeconds && requestedEndDateInSeconds != endTimeInSeconde){
                     
                     wareHouseTime[i] = [askedTime[1], wareHouseTime[i][1]]
@@ -293,7 +293,6 @@ const userRentAWarehouseInSpecificDate = async (wareHouseId, askedTime) => {
                     }
                 })
                 
-                console.log(wareHouseId)
                 return true
 
             }
@@ -308,6 +307,56 @@ const userRentAWarehouseInSpecificDate = async (wareHouseId, askedTime) => {
     }
 }
 
+const getWarehousesAndNumberOfTimesRented = async () => {
+    try{
+
+        let map = new Map()
+
+        const acceptedRequests = await manageUsersAndWarehousesSchema.find({
+            status:'accepted'
+        })
+ 
+        for(let i =  0 ; i < acceptedRequests.length ; i++){
+            if(map.has(acceptedRequests[i].WarehouseId)){
+
+                map.set(acceptedRequests[i].WarehouseId,{
+                    warehouseDetails: map.get(acceptedRequests[i].WarehouseId).warehouseDetails,
+                    timesRented: map.get(acceptedRequests[i].WarehouseId).timesRented + 1  ,
+                    profit: acceptedRequests[i].price + map.get(acceptedRequests[i].WarehouseId).profit,
+                    owner: acceptedRequests[i].warehouseOwnerEmail
+                } )
+
+            }else{
+                const results = await warehouseSchema.findOne({
+                    _id: acceptedRequests[i].WarehouseId
+                })
+
+                map.set(acceptedRequests[i].WarehouseId, {
+                    warehouseDetails: results,
+                    timesRented: 1,
+                    profit: acceptedRequests[i].price,
+                    owner: acceptedRequests[i].warehouseOwnerEmail
+                })
+
+            }
+        }
+
+            let arr = []
+
+            map.forEach((val, key) => {
+                let obj ={}
+                obj[key] = val
+                arr.push(obj)
+            })
+   
+            return arr
+
+    }
+    catch(err){
+        console.log(`error at getWarehousesAndNumberOfTimesRented => ${err.message} in extension`)
+    }
+}
+
 
 module.exports = {
     getEveryWarehouseOwnerAndHisWareHouses,
@@ -315,5 +364,6 @@ module.exports = {
     userRentAWarehouseInSpecificDate,
     splitTimeByRequestedTime,
     formatDate,
-    getEveryWarehouseOwnerAndHisWareHousesPending
+    getEveryWarehouseOwnerAndHisWareHousesPending,
+    getWarehousesAndNumberOfTimesRented
 }
