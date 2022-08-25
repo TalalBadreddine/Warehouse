@@ -7,13 +7,15 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 
-import {BsPersonCircle} from 'react-icons/bs'
+import { BsPersonCircle } from 'react-icons/bs'
 
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import CustomChart from '../../../Components/CustomChart/CustomChart';
 import ui from '../../../themes'
 import axios from 'axios'
+import { Carousel } from 'react-bootstrap'
+
 
 const rows = [
     createData('India', 'IN', 1324171354, 3287263),
@@ -77,7 +79,7 @@ const Statistics = () => {
     const [earningGraphType, setEarningGraphType] = useState('doughnut')
 
     const currentMonth = new Date().getMonth()
-    const months = allMonths.slice(0, currentMonth+1)
+    const months = allMonths.slice(0, currentMonth + 1)
 
     const [revenueChartType, setRevenueChartType] = useState('Line')
     const [revenueData, setRevenueData] = useState(new Array(12))
@@ -111,7 +113,7 @@ const Statistics = () => {
 
         axios.get('/admin/getAllStatistics').then((results) => {
             let data = results.data
-
+            console.log(data)
             // @ [type, [arr], arr Of 11 for months]
             let arrOfAllObjects = Object.keys(data).map((key) => {
                 let arr = new Array(11)
@@ -119,12 +121,25 @@ const Statistics = () => {
                 for (let i = 0; i < arr.length; i++) {
                     arr[i] = []
                 }
-          
-                if(key == 'owners'){
-                    console.log(data[key])
-                    data[key] = data[key].sort((a,b) => {
+
+                if (key == 'owners') {
+                    data[key] = data[key].sort((a, b) => {
                         return a.myWarehouses - b.myWarehouses
                     })
+                }
+
+                if (key == 'customer') {
+                    data[key] = data[key].sort((a, b) => {
+                        return a.arrOfRequests - b.arrOfRequests
+                    })
+                }
+
+                if (key == 'warehousesMap') {
+
+                    data[key] = data[key].sort((a, b) => {
+                        return Object.values(b)[0].timesRented - Object.values(a)[0].timesRented
+                    })
+
                 }
 
                 return ([key, data[key], arr, 0])
@@ -133,9 +148,9 @@ const Statistics = () => {
             let currentYear = new Date().getFullYear()
 
             for (let i = 0; i < arrOfAllObjects.length; i++) {
+                if (arrOfAllObjects[i][0] == 'warehousesMap') continue
 
                 let currentObject = arrOfAllObjects[i]
-                let arrOfIncome = new Array(12)
 
                 currentObject[1].map((element) => {
                     let year = parseInt(element.registrationDate.split('T')[0].split('-')[0])
@@ -152,22 +167,22 @@ const Statistics = () => {
             let arrOfRequests = arrOfAllObjects[2][2]
             let arrOfIncomes = new Array(12).fill(0)
 
-            for(let j = 0 ; j < arrOfRequests.length ; j++){
-                   let sum = 0
+            for (let j = 0; j < arrOfRequests.length; j++) {
+                let sum = 0
 
-                for(let k = 0 ; k < arrOfRequests[j].length ;k++){
-            
-                    if(arrOfRequests[j][k].status == 'accepted'){
+                for (let k = 0; k < arrOfRequests[j].length; k++) {
+
+                    if (arrOfRequests[j][k].status == 'accepted') {
                         sum += parseInt(arrOfRequests[j][k].price * 0.05)
                     }
                 }
-                    arrOfIncomes[j] = sum
-                }
-                // console.log(arrOfIncomes)
-                setRevenueData(arrOfIncomes)
+                arrOfIncomes[j] = sum
+            }
+            // console.log(arrOfIncomes)
+            setRevenueData(arrOfIncomes)
 
 
-                console.log(arrOfAllObjects)
+            console.log(arrOfAllObjects)
             setAllData(arrOfAllObjects)
 
         })
@@ -236,39 +251,39 @@ const Statistics = () => {
 
             <div className='col-12 mt-5 d-flex justify-content-between'>
 
-                <div className='col-7 rounded py-2 px-4' style={{ border: `1px solid ${ui.borders}`, height:'80%', backgroundColor: ` ${ui.lightBg}` }} >
-                        <p style={{color: ` ${ui.normalText}`}}> Total Revenue Earned</p>
-                        <CustomChart graphType={earningGraphType} graphTitle="" idHelper={`000000`} graphData={revenueData} graphLabels={months} ></CustomChart>
-                        <div className='d-flex justify-content-between mt-4 col-7'>
-                            <p style={{ border:`1px solid ${ui.borders}`, background: earningGraphType == 'line' ? `${ui.bigTitleSecondaryColor}` : '#ffffff' , borderRadius:'44%'}} className='px-3 py-1' onClick={() =>{changeEarningGrapthType('line')}}>Line</p>
+                <div className='col-7 rounded py-2 px-4' style={{ border: `1px solid ${ui.borders}`, height: '80%', backgroundColor: ` ${ui.lightBg}` }} >
+                    <p style={{ color: ` ${ui.normalText}` }}> Total Revenue Earned</p>
+                    <CustomChart graphType={earningGraphType} graphTitle="" idHelper={`000000`} graphData={revenueData} graphLabels={months} ></CustomChart>
+                    <div className='d-flex justify-content-between mt-4 col-7'>
+                        <p style={{ border: `1px solid ${ui.borders}`, background: earningGraphType == 'line' ? `${ui.bigTitleSecondaryColor}` : '#ffffff', borderRadius: '44%' }} className='px-3 py-1' onClick={() => { changeEarningGrapthType('line') }}>Line</p>
 
-                            <p style={{ border:`1px solid ${ui.borders}`, background: earningGraphType == 'bar' ? `${ui.bigTitleSecondaryColor}` : '#ffffff' , borderRadius:'44%'}} className='px-3 py-1' onClick={() =>{changeEarningGrapthType('bar')}}>Bar</p>
+                        <p style={{ border: `1px solid ${ui.borders}`, background: earningGraphType == 'bar' ? `${ui.bigTitleSecondaryColor}` : '#ffffff', borderRadius: '44%' }} className='px-3 py-1' onClick={() => { changeEarningGrapthType('bar') }}>Bar</p>
 
-                            <p style={{ border:`1px solid ${ui.borders}`, background: earningGraphType == 'doughnut' ? `${ui.bigTitleSecondaryColor}` : '#ffffff' , borderRadius:'44%'}} className='px-3 py-1' onClick={() =>{changeEarningGrapthType('doughnut')}}>doughnut</p>
+                        <p style={{ border: `1px solid ${ui.borders}`, background: earningGraphType == 'doughnut' ? `${ui.bigTitleSecondaryColor}` : '#ffffff', borderRadius: '44%' }} className='px-3 py-1' onClick={() => { changeEarningGrapthType('doughnut') }}>doughnut</p>
 
-                            <p style={{ border:`1px solid ${ui.borders}`, background: earningGraphType == 'polarArea' ? `${ui.bigTitleSecondaryColor}` : '#ffffff' , borderRadius:'44%'}} className='px-3 py-1' onClick={() =>{changeEarningGrapthType('polarArea')}}>Polar</p>
+                        <p style={{ border: `1px solid ${ui.borders}`, background: earningGraphType == 'polarArea' ? `${ui.bigTitleSecondaryColor}` : '#ffffff', borderRadius: '44%' }} className='px-3 py-1' onClick={() => { changeEarningGrapthType('polarArea') }}>Polar</p>
 
-                            <p style={{ border:`1px solid ${ui.borders}`, background: earningGraphType == 'radar' ? `${ui.bigTitleSecondaryColor}` : '#ffffff' , borderRadius:'44%'}} className='px-3 py-1' onClick={() =>{changeEarningGrapthType('radar')}}>Radar</p>
+                        <p style={{ border: `1px solid ${ui.borders}`, background: earningGraphType == 'radar' ? `${ui.bigTitleSecondaryColor}` : '#ffffff', borderRadius: '44%' }} className='px-3 py-1' onClick={() => { changeEarningGrapthType('radar') }}>Radar</p>
 
-                        </div>
+                    </div>
                 </div>
 
-                <div className='col-4 rounded px-2 py-1'  style={{ border: `1px solid ${ui.borders}`, backgroundColor: ` ${ui.lightBg}` } }>
+                <div className='col-4 rounded px-2 py-1' style={{ border: `1px solid ${ui.borders}`, backgroundColor: ` ${ui.lightBg}` }}>
 
-                    <div  className='text-center mt-2'>
-                        <h5 style={{color:`${ui.normalText}`}} >Most warehouse owners with rented warehouses</h5>
+                    <div className='text-center mt-2'>
+                        <h5 style={{ color: `${ui.normalText}` }} >Most owner with owned warehouses</h5>
                         <div className='col-12'>
-                            <hr style={{color: `${ui.normalText}`}}></hr>
+                            <hr style={{ color: `${ui.normalText}` }}></hr>
                         </div>
                     </div>
 
-                    <div className='mt-4' style={{ height:'400px', overflowY:'scroll'}}>
+                    <div className='mt-4' style={{ height: '400px', overflowY: 'scroll' }}>
                         {allData[1][1].map((owner) => {
-                            return(
+                            return (
                                 <div className='d-flex justify-content-between col-10 m-auto'>
-                                    <p className='col-2 d-flex justify-content-center' style={{color:'white'}}><BsPersonCircle size={35}></BsPersonCircle></p>
-                                    <p className='col-5' style={{color: `${ui.normalText}`}}>{owner.email}</p>
-                                    <p className='col-4' style={{color: `${ui.normalText}`}}>{owner.myWarehouses.length} warehouse</p>
+                                    <p className='col-2 d-flex justify-content-center' style={{ color: 'white' }}><BsPersonCircle size={35}></BsPersonCircle></p>
+                                    <p className='col-5' style={{ color: `${ui.normalText}` }}>{owner.email}</p>
+                                    <p className='col-4' style={{ color: `${ui.normalText}` }}>{owner.myWarehouses.length} warehouse</p>
                                 </div>
                             )
                         })}
@@ -276,9 +291,69 @@ const Statistics = () => {
 
                 </div>
 
-                <div>
-                    
+            </div>
+
+            <div className='mt-5'>
+
+                <div className='col-12 rounded px-5 py-2' style={{ backgroundColor: `${ui.lightBg}`, border: `1px solid ${ui.borders}` }}>
+                    <div>
+                        <h3 style={{ color: `${ui.normalText}` }}>Most Rented Warehouses </h3>
+                    </div>
+
+                    <div style={{height:'500px', overflowY:'scroll'}}>
+                        {allData[4][1].map((object, index) => {
+                            let values = Object.values(object)[0]
+                            let warehouse = values.warehouseDetails
+                            let timesRented = values.timesRented
+
+                            return (
+                                <div>
+                                    <div className='d-flex mt-4 justify-content-between' style={{ color: `${ui.normalText}` }}>
+                                        <p className='col-2'>
+                                            <Carousel style={{ width: '210px', height: '130px' }}>
+                                                {warehouse.images.map((base64, index) => {
+                                                    return (
+                                                        <Carousel.Item>
+
+                                                            <img
+                                                                key={index}
+                                                                src={base64}
+                                                                alt=""
+                                                                width={'210px'}
+                                                                height={'130px'}
+                                                                style={{
+                                                                    borderRadius: '10px'
+                                                                }}
+                                                            />
+
+                                                        </Carousel.Item>
+                                                    )
+                                                })}
+
+                                            </Carousel>
+                                        </p>
+                                        <p className='col-2'>Name: {warehouse.name} <br></br> Space: {warehouse.space} m <sup>2</sup> <br></br> Cost Per Day: {warehouse.pricePerDay} $ <br></br>Owner Email: {values.owner}</p>
+                                        <p className='col-2'>Address: {`${warehouse.address[0]}, ${warehouse.address[1]} `}</p>
+                                        <p className='col-2'>Profit Made For Owner: <span className='fs-5'>{values.profit * 0.95}$</span> <br></br> Profit Made for Admin:<span className='fs-5'> {values.profit * 0.05}$</span> </p>
+                                        <p className='col-2'>Description: {warehouse.description}</p>
+                                        <p className='col-1'>Times Rented: {timesRented}</p>
+
+
+
+
+                                    </div>
+                                    { index != (allData[4][1].length - 1) &&  
+                                    <div>
+                                        <hr style={{ color: 'white' }}></hr>
+                                    </div>}
+                                    
+                                </div>
+                            )
+                        })}
+
+                    </div>
                 </div>
+
             </div>
 
         </div>
@@ -296,54 +371,5 @@ const getMonthIndexFromDate = (date) => {
     return (parseInt(date.split('T')[0].split('-')[1]) - 1)
 }
 
-{/* <div className='col-7'>
-                <Paper sx={{ width: '100%', overflow: 'hidden' }} >
-                    <TableContainer sx={{ maxHeight: 440 }}>
-                        <Table stickyHeader aria-label="sticky table" className='rounded'>
-                            <TableHead>
-                                <TableRow>
-                                    {columns.map((column) => (
-                                        <TableCell
-                                            key={column.id}
-                                            align={column.align}
-                                            style={{ minWidth: column.minWidth }}
-                                        >
-                                            {column.label}
-                                        </TableCell>
-                                    ))}
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {rows
-                                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                    .map((row) => {
-                                        return (
-                                            <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                                                {columns.map((column) => {
-                                                    const value = row[column.id];
-                                                    return (
-                                                        <TableCell key={column.id} align={column.align}>
-                                                            {column.format && typeof value === 'number'
-                                                                ? column.format(value)
-                                                                : value}
-                                                        </TableCell>
-                                                    );
-                                                })}
-                                            </TableRow>
-                                        );
-                                    })}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                    <TablePagination
-                        rowsPerPageOptions={[10, 25, 100]}
-                        component="div"
-                        count={rows.length}
-                        rowsPerPage={rowsPerPage}
-                        page={page}
-                        onPageChange={handleChangePage}
-                        onRowsPerPageChange={handleChangeRowsPerPage}
-                    />
-                </Paper>
-                </div> */}
+
 export default Statistics

@@ -302,12 +302,17 @@ const getAllStatistics = async (req, res) => {
         const owners = await warehouseOwnerSchema.find()
         const rentingRequests = await manageUsersAndWarehousesSchema.find()
         const warehouses = await warehouseSchema.find()
+        let warehousesMap = {}
+        await extension.getWarehousesAndNumberOfTimesRented().then((results) => {
+            warehousesMap = results
+        })
 
         return res.send({
             customers,
             owners,
             rentingRequests,
-            warehouses
+            warehouses,
+            warehousesMap
         }).status(200)
     }
     catch(err){
