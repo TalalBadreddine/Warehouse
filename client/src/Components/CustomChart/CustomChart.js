@@ -9,7 +9,7 @@ let chartDataSkeleton = {
 }
 
 const CustomChart = (props) => {
-    const { graphType, graphTitle, graphData, graphLabels, idHelper } = props
+    const { graphType, graphTitle, graphData, graphLabels, idHelper, backgroundColor, borderColor } = props
 
 
 
@@ -54,11 +54,17 @@ const CustomChart = (props) => {
                         beginAtZero: true
                     }
                 },
+                maintainAspectRatio: false,
             },
             hoverOffset:20,
             offset: [20,0,0,0,0,0,0,0,0,0]  
 
         });
+
+        // myChart.setOptions({
+        //     responsive: true,
+        //     maintainAspectRatio: false
+        // })
 
         return () => {
             myChart.destroy()
@@ -70,8 +76,8 @@ const CustomChart = (props) => {
 
 return (
 
-    <div className=''>
-        <canvas id={`myChart${idHelper}`} width="500" height="500"></canvas>
+    <div className='' >
+        <canvas id={`myChart${idHelper}`} width="500" height="400"></canvas>
 
     </div>
     
