@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useLayoutEffect } from 'react'
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
@@ -45,6 +45,24 @@ function PostNewWarehouse() {
     endDate: null,
     key: 'selection'
   })
+
+  const [windowWidth, setwindowWidth] = useState(window.innerWidth)
+
+
+  const useWindowSize = () => {
+
+      useLayoutEffect(() => {
+          const updateSize = () => {
+              setwindowWidth(window.innerWidth)
+              console.log(windowWidth)
+          };
+          window.addEventListener("resize", updateSize)
+
+      }, [])
+
+  }
+
+  useWindowSize()
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -244,7 +262,7 @@ function PostNewWarehouse() {
                       }
                       }
                       minDate={new Date()}
-                      months={2}
+                      months={windowWidth > 710 ? 2 : 1}
                       ranges={[selectedDate]}
                       direction="horizontal"
                     >

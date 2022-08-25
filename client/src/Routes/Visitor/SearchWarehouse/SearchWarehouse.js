@@ -345,7 +345,7 @@ const SearchWarehouse = ({role}) => {
                     </div>
                 </div>
 {/* position-fixed ${styles.mapContainer} */}
-                <div className={`col-6 `} style={{position:'fixed', top:'23%',right:'0'}}>
+                <div className={`col-6 d-sm-block  d-none`} style={{position:'fixed', top:'23%',right:'0'}}>
                     <WarehousesMap info={filtredWarehousesInfo} flyToMap={flyToMap} setMylocation={setMylocation} getMyLocation={getMyLocation} canPin={canPin} setPinLocation={setPinLocation}  ></WarehousesMap>
                 </div>
 

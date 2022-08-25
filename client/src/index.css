@@ -3,11 +3,11 @@
   width: 98%;
 }
 
-@media screen and (max-width: 700px) {
+/* @media screen and (max-width: 700px) {
   .leaflet-container{
     display: none;
   }
-}
+} */
 body {
   background-color: #011e3c !important;
 }

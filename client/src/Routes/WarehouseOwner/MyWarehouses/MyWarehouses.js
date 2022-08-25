@@ -21,17 +21,17 @@ const MyWarehouses = () => {
     },[])
 
     return(
-        <div className=" col-8 justify-content-center m-auto mt-4">
+        <div className=" col-sm-8 col-12 justify-content-center m-auto mt-4">
             <div>
                 <div className="d-flex justify-content-center mb-4 ">
                     <Button style={{
                         backgroundColor:'#027fff !important'
                     }} onClick={() => {navigate('/owner/addWarehouse')}}> Add Warehouse</Button>
                 </div>
-                <div  >
+                <div>
                    { myWarehouses && myWarehouses.map((warehouse) => {
                     return(
-                        <div className="m-2">
+                        <div className="m-2 col-sm-10 m-sm-auto col-5">
                             <WarehouseCard info={warehouse} role={'owner'} ></WarehouseCard>
                         </div>
                     )
