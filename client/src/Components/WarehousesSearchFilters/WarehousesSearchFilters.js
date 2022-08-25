@@ -18,6 +18,8 @@ const WarehousesSearchFilters = (props) => {
 
     const [spaceAnchor, setSpaceAnchor] = useState(null)
 
+    const [dateAnchor, setDateAnchor] = useState(null)
+
 
     return (
 
@@ -30,10 +32,10 @@ const WarehousesSearchFilters = (props) => {
                     <Button style={{ backgroundColor: `${ui.Buttons}` }} className='Buttons' onClick={(event) => setPriceAnchor(event.currentTarget)}> Price Per Day</Button>
 
                     <Popover
-                        id={Boolean(priceAnchor)? 'simple-popover' : undefined}
+                        id={Boolean(priceAnchor) ? 'simple-popover' : undefined}
                         open={Boolean(priceAnchor)}
                         anchorEl={priceAnchor}
-                        onClose={ () => setPriceAnchor(null)}
+                        onClose={() => setPriceAnchor(null)}
                         anchorOrigin={{
                             vertical: 'top',
                             horizontal: 'right',
@@ -60,73 +62,87 @@ const WarehousesSearchFilters = (props) => {
 
                     </Popover>
 
-
-                    {/* <OverlayTrigger
-                        trigger="click"
-                        placement='right'
-                        overlay={
-                            <Popover id={`popover-positioned-bottom`}>
-                                <Popover.Header as="h3">Select Price Range</Popover.Header>
-                                <Popover.Body>
-                                    
-                                    <br></br>
-                                </Popover.Body>
-                            </Popover>
-                        }
-                    >
-                        <Button style={{ backgroundColor: `${ui.Buttons}` }} className='Buttons'> Price Per Day</Button>
-                    </OverlayTrigger> */}
-
                 </div>
 
                 <div className='ms-4'>
 
-                    <OverlayTrigger
-                        trigger="click"
-                        placement='right'
-                        overlay={
-                            <Popover id={`popover-positioned-bottom`}>
-                                <Popover.Header as="h3">Select Space Range</Popover.Header>
-                                <Popover.Body>
+
+                    <Button style={{ backgroundColor: `${ui.Buttons}` }} className='Buttons' onClick={(event) => setSpaceAnchor(event.currentTarget)}> Space</Button>
+
+                    <Popover
+                        id={Boolean(spaceAnchor) ? 'simple-popover' : undefined}
+                        open={Boolean(spaceAnchor)}
+                        anchorEl={spaceAnchor}
+                        onClose={() => setSpaceAnchor(null)}
+                        anchorOrigin={{
+                            vertical: 'top',
+                            horizontal: 'right',
+                        }}
+                        transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'left',
+                        }}
+
+                    >
+                        <div style={{ width: '270px', height: '100px' }}>
+                            <div className='col-12 mt-3'>
+                                <h5 className='ms-3'>Select Space Range</h5>
+                                <hr></hr>
+
+                                <div className=''>
                                     <MultiRangeSlider min={spaceMin}
                                         max={spaceMax}
-                                        onChange={props.spaceChange} ></MultiRangeSlider>
-                                    <br></br>                                </Popover.Body>
-                            </Popover>
-                        }
-                    >
-                        <Button style={{ backgroundColor: `${ui.Buttons}` }} className='Buttons'>Space</Button>
-                    </OverlayTrigger>
+                                        onChange={props.spaceChange}
+                                    ></MultiRangeSlider>
+                                    <br></br>
+                                </div>
+                            </div>
+                        </div>
+
+                    </Popover>
 
                 </div>
 
                 <div className='ms-4'>
 
-                    <OverlayTrigger
-                        trigger="click"
-                        placement='right'
-                        overlay={
-                            <Popover id={`popover-positioned-bottom`}>
-                                <Popover.Header as="h3">Select Date</Popover.Header>
-                                <Popover.Body>
+                    <Button style={{ backgroundColor: `${ui.Buttons}` }} className='Buttons' onClick={(event) => setDateAnchor(event.currentTarget)}> Date</Button>
 
-                                    <DateRange
+                    <Popover
+                        id={Boolean(dateAnchor) ? 'simple-popover' : undefined}
+                        open={Boolean(dateAnchor)}
+                        anchorEl={dateAnchor}
+                        onClose={() => setDateAnchor(null)}
+                        anchorOrigin={{
+                            vertical: 'top',
+                            horizontal: 'right',
+                        }}
+                        transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'left',
+                        }}
+
+                    >
+                        <div style={{ width: '430px', height: '400px' }}>
+                            <div className='col-12 mt-3'>
+                                <h5 className='ms-3'>Select Date</h5>
+                                <hr></hr>
+
+                                <div className='d-flex justify-content-center'>
+                                <DateRange
                                         editableDateInputs={true}
                                         onChange={(item) => props.setDate([item.selection])}
                                         moveRangeOnFirstSelection={false}
                                         ranges={props.date}
                                         className="date"
                                         minDate={new Date()}
+                                        style={{color:`black`}}
                                     />
+                                    <br></br>
+                                </div>
+                            </div>
+                        </div>
 
-                                </Popover.Body>
-                            </Popover>
-                        }
-                    >
-                        <Button style={{ backgroundColor: `${ui.Buttons}` }} className='Buttons'>
-                            Date
-                        </Button>
-                    </OverlayTrigger>
+                    </Popover>
 
                 </div>
 
