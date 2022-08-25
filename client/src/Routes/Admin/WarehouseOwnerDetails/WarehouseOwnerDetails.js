@@ -12,8 +12,9 @@ import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
-
+import ui from '../../../themes'
 import { getCurrentCustomerInfo } from "../../../Services/getCurrentCustomerInfo"
+import css from '../../../index.css'
 
 const columns = [
   { id: 'warehouseName', label: 'Warehouse Name', minWidth: 170 },
@@ -102,7 +103,7 @@ function ManageUsers() {
                       <TableCell
                         key={column.id}
                         align={column.align}
-                        style={{ minWidth: column.minWidth, fontSize: '20px', backgroundColor: 'lightgrey' }}
+                        style={{ minWidth: column.minWidth, fontSize: '20px', backgroundColor: `${ui.borders}` }}
                       >
                         {column.label}
                       </TableCell>
@@ -123,7 +124,7 @@ function ManageUsers() {
                               <TableCell
                                 key={column.id}
                                 align={column.align}
-                                style={{ fontSize: '17px' }}
+                                style={{ fontSize: '17px'}}
                               >
                                 {column.format && typeof value === 'number'
                                   ? column.format(value)

@@ -19,3 +19,15 @@ a{
 input{
     background-color: '#132f4c !important';
 } */
+form,
+input,
+label {
+  color: #ffffff !important;
+  
+}
+
+table{
+border: solid 2px white;
+
+}
+
