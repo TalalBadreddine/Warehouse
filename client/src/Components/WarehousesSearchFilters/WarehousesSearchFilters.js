@@ -25,10 +25,10 @@ const WarehousesSearchFilters = (props) => {
 
         <div className="d-flex justify-content-between px-3 mb-2">
 
-            <div className="d-flex">
+            <div className="d-sm-flex">
                 <p style={{ color: `${ui.normalText}` }} className='fs-4'>Filter by: </p>
 
-                <div className='ms-4'>
+                <div className='ms-sm-4 mt-sm-0 mt-2'>
                     <Button style={{ backgroundColor: `${ui.Buttons}` }} className='Buttons' onClick={(event) => setPriceAnchor(event.currentTarget)}> Price Per Day</Button>
 
                     <Popover
@@ -64,7 +64,7 @@ const WarehousesSearchFilters = (props) => {
 
                 </div>
 
-                <div className='ms-4'>
+                <div className='ms-sm-4   mt-sm-0 mt-2'>
 
 
                     <Button style={{ backgroundColor: `${ui.Buttons}` }} className='Buttons' onClick={(event) => setSpaceAnchor(event.currentTarget)}> Space</Button>
@@ -103,7 +103,7 @@ const WarehousesSearchFilters = (props) => {
 
                 </div>
 
-                <div className='ms-4'>
+                <div className='ms-sm-4  mt-sm-0 mt-2'>
 
                     <Button style={{ backgroundColor: `${ui.Buttons}` }} className='Buttons' onClick={(event) => setDateAnchor(event.currentTarget)}> Date</Button>
 
@@ -149,7 +149,7 @@ const WarehousesSearchFilters = (props) => {
             </div>
 
 
-            <div className="d-flex">
+            <div className="d-sm-flex">
                 <p style={{ color: `${ui.normalText}` }} className='fs-4'>Sort By:</p>
                 <div className='ms-3'>
 

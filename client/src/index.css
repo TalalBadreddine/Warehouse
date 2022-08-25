@@ -3,6 +3,11 @@
   width: 98%;
 }
 
+@media screen and (max-width: 700px) {
+  .leaflet-container{
+    display: none;
+  }
+}
 body {
   background-color: #011e3c !important;
 }
@@ -46,3 +51,15 @@ table{
 border: solid 2px white;
 
 }
+
+.rdrDateDisplayItem input{
+  background-color: #132f4c !important;
+}
+
+/* .rdrCalendarWrapper{
+  background-color:;
+} */
+
+/* .rdrDateDisplayWrapper{
+  background-color: ;
+} */

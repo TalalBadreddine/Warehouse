@@ -17,8 +17,8 @@ const lightBg = '#142f4c'
 const borders = '#4177b2'
 
 const iconsColors = '#ffffff'
-const darkBg = '#0a1827'
 
+const darkBg = '#0a1827'
 
 export default {
 

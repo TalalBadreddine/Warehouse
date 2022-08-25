@@ -276,7 +276,7 @@ const SearchWarehouse = ({role}) => {
                 <WarehousesSearchFilters data={defaultSettings} setDate={setDate} date={date} priceChange={priceChange} spaceChange={spaceChange} sortByAction={sortByAction}></WarehousesSearchFilters>
             </div>
 
-            <div className="col-6 d-flex">
+            <div className="col-sm-6 col-12 d-flex mt-sm-0 mt-3">
                 <div className="col-6">
                     <SearchBar style={{backgroundColor: `${ui.searchesInput}`}} searchValue={searchValue} action={onSearch}></SearchBar>
                 </div>
@@ -325,12 +325,12 @@ const SearchWarehouse = ({role}) => {
                 <div className="d-flex d-sm-block flex-wrap col-sm-6  col-12">
 
 
-                    <div className={`overflow-auto  ${styles.warehousesContainer}`} style={{overflowY:'auto', height:'600px'}}>
+                    <div className={`overflow-auto col-12  ${styles.warehousesContainer}`} style={{overflowY:'auto', height:'600px'}}>
 
                         {
                             filtredWarehousesInfo && filtredWarehousesInfo.map((warehouse) => {
                                 return (
-                                    <div key={warehouse.location[0]} onMouseEnter={() => {
+                                    <div className="col-12" key={warehouse.location[0]} onMouseEnter={() => {
                                         isFlyToOn &&
                                             setFlyToMap([warehouse.location[0], warehouse.location[1]])
                                     }}>
