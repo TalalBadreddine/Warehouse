@@ -16,6 +16,8 @@ import landingImg from '../../../Assets/homePageBg.jpg'
 import SearchBar from '../../../Components/SearchBar/SearchBar'
 import ui from '../../../themes'
 
+import ui from '../../../themes'
+
 
 
 function Landing() {
@@ -37,7 +39,7 @@ function Landing() {
             <div>
               <img className='col-12 position-relative' src={landingImg}></img>
               <div style={{ position: 'absolute', top: '30%', left: '30%', color: 'white' }} >
-                <p style={{ fontSize: '4.5rem', fontWeight:'bold' }}>Search For A Space</p>
+                <p style={{ fontSize: '4.5rem', fontWeight:'bold' ,color: `${ui.bigTitleSecondaryColor}`}}>Search For A Space</p>
                 <div className='col-6 ms-3'>
                                  {/* TODO: add search Bar */}   
                 </div>

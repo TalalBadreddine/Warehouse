@@ -45,7 +45,7 @@ const WarehouseCard = (props) => {
     const ownerDiv = () => {
         return(
             <div>
-                <p className='fs-4 d-flex'>Status: <p style={{color: setColorByStatus(props.info.status)}} className="ms-3">{props.info.status == 'accepted' ? 'Listed' : props.info.status }</p> </p> 
+                <p style={{color:`${ui.normalText}`}} className='fs-4 d-flex'>Status: <p style={{color: setColorByStatus(props.info.status)}} className="ms-3">{props.info.status == 'accepted' ? 'Listed' : props.info.status }</p> </p> 
             </div>
         )
     }
@@ -65,7 +65,7 @@ const WarehouseCard = (props) => {
                             key={index}
                             src={base64}
                             alt=""
-                            height={'180px'}
+                            height={'200px'}
                             width={'310px'}
                         />
 
@@ -90,8 +90,8 @@ const WarehouseCard = (props) => {
 
 
             <div className="ms-sm-2 col-sm-8 p-sm-2 p-1 col-12 " >
-                <h1 className={styles.bigTypo}>{props.info.name}'s warehouse   </h1>
-                <h1 className={styles.smallTypo} style={{ color: 'gray' }}>address:{props.info.address[0][1]}, {props.info.address[0][0]}</h1>
+                <h1 style={{color:`${ui.normalText}`}} className={styles.bigTypo}>{props.info.name}'s warehouse   </h1>
+                <h1 className={styles.smallTypo} style={{color:`${ui.normalText}`}}>Address:{props.info.address[0][1]}, {props.info.address[0][0]}</h1>
                 <div className=' h-50'>
 
                     <BiCctv style={{ color: `${ui.iconsColors}` }} className={`font-wight-700 m-2 ${styles.cctvIcon}`} size={27} ></BiCctv>

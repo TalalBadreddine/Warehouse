@@ -71,7 +71,6 @@ const SearchWarehouse = ({role}) => {
                         action: `navigated to search for a warehouse`,
                         role: 'customer'
                     }).then((results) => {
-                        console.log(results.data)
                     })
                     
                    
@@ -249,7 +248,6 @@ const SearchWarehouse = ({role}) => {
             action: `searched for warehouses and sorted them by neareset to his Location`,
             role: 'customer'
         }).then((results) => {
-            console.log(results.data)
         })
 
         setFiltredWarehousesInfo([...sortedArr])
@@ -280,7 +278,7 @@ const SearchWarehouse = ({role}) => {
 
             <div className="col-6 d-flex">
                 <div className="col-6">
-                    <SearchBar searchValue={searchValue} action={onSearch}></SearchBar>
+                    <SearchBar style={{backgroundColor: `${ui.searchesInput}`}} searchValue={searchValue} action={onSearch}></SearchBar>
                 </div>
                 <div className=" ms-3 col-6">
                     <Form className="d-flex">
@@ -293,7 +291,7 @@ const SearchWarehouse = ({role}) => {
 
                             }}
                         />
-                        <p>Fly to Space</p>
+                        <p style={{color: `${ui.normalText}`}}>Fly to Space</p>
                         <Form.Check
                             className="ms-3"
                             type="switch"
@@ -302,7 +300,7 @@ const SearchWarehouse = ({role}) => {
                                 e.target.checked ? setSearchBy('address') : setSearchBy('name')
                             }}
                         />
-                        <p>Search By Location</p>
+                        <p style={{color: `${ui.normalText}`}}>Search By Location</p>
                     </Form>
                 </div>
             </div>

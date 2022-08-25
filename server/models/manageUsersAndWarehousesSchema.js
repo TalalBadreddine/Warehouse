@@ -30,6 +30,10 @@ const manageUsersAndWarehousesSchema = new mongoose.Schema({
         type: String,
         //['pending','accepted','rejected']
         default: 'pending'
+    },
+    registrationDate:{
+        type: Date,
+        default: new Date()
     }
 
 
