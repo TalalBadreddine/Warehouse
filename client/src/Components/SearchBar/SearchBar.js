@@ -1,3 +1,4 @@
+import ui from '../../themes'
 
 
 const SearchBar = ({ action, searchValue }) => {
@@ -5,7 +6,7 @@ const SearchBar = ({ action, searchValue }) => {
         <div className="col-12 d-flex">
 
             <div className='col-12'>
-            <input className="rounded border py-1 px-2 col-12 " placeholder='Search' value={searchValue} onChange={action}></input>
+            <input style={{backgroundColor:`${ui.searchesInput}`, borderColor:`${ui.borders}` , color:`${ui.normalText}`}} className="rounded border py-1 px-2 col-12 " placeholder='Search' value={searchValue} onChange={action}></input>
 
             </div>
 
