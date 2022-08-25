@@ -19,3 +19,11 @@ a{
 input{
     background-color: '#132f4c !important';
 } */
+
+.modal-content{
+    border: none !important;
+    /* outline-color: rgb(255, 255, 255) !important; */
+    
+}
+/* holle lal placeholder */
+
