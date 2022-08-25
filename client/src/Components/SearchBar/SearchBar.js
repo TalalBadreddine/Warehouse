@@ -1,4 +1,4 @@
-import { AiOutlineSearch } from 'react-icons/ai'
+
 
 const SearchBar = ({ action, searchValue }) => {
     return (

@@ -11,7 +11,7 @@ import styles from './customerRequestsCss.module.css'
 import { BsFillReplyAllFill } from 'react-icons/bs'
 import { AiFillCaretDown } from 'react-icons/ai'
 import { BiUserCircle } from 'react-icons/bi'
-
+import ui from '../../../themes'
 
 
 function CustomerRequests() {
@@ -85,10 +85,10 @@ function CustomerRequests() {
     }, []);
     const statusColor = (status) => {
         if (status === 'pending') {
-            return 'purple'
+            return 'orange'
         }
         if (status === 'accepted') {
-            return 'green'
+            return 'lightgreen'
         }
         else {
             return 'red'
@@ -175,13 +175,13 @@ function CustomerRequests() {
             <div className='mt-4'>
 
 
-                <span className={styles.returnBtn} onClick={() => { navigate(-1) }}><IoIosReturnLeft size={68}></IoIosReturnLeft></span>
+                <span className={styles.returnBtn} onClick={() => { navigate(-1) }}><IoIosReturnLeft size={68} style={{color:`${ui.borders}`}}></IoIosReturnLeft></span>
 
             </div>
 
             <div className='p-5'>
-                <Table striped bordered hover responsive="md" style={{ height: '60vh', width: '80vw', margin: 'auto' }}>
-                    <thead >
+                <Table striped  hover responsive="md" style={{ width: '75vw' }}>
+                    <thead style={{backgroundColor: `${ui.borders}`,color:'white', fontSize:'18px', height:'8vh' }} >
                         <tr>
                             <th>Warehouse Name</th>
                             <th>Provider</th>
@@ -189,25 +189,25 @@ function CustomerRequests() {
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody >
 
                         {requests != undefined &&
                             requests.map((item, i) => (
                                 <tr key={i}>
-                                    <td className='p-3'> {item.warehouseName}</td>
-                                    <td className='p-3'>{item.warehouseOwnerEmail}</td>
+                                    <td className='p-3' style={{color:'white'}}> {item.warehouseName}</td>
+                                    <td className='p-3' style={{color:'white'}}>{item.warehouseOwnerEmail}</td>
                                     <td style={{ color: statusColor(item.status) }} className='p-3'>{item.status}</td>
                                     <td className='p-3' >
                                         <div style={{ display: 'inline-block' }} >
-                                            <a style={{ color: 'darkblue' }} onClick={() => { handleShow(item) }} href="#">Contact</a>
+                                            <button style={{ color:'white', backgroundColor:`${ui.backgroundColor}`, border:`solid 2px ${ui.borders}`}} onClick={() => { handleShow(item) }} href="#">Contact</button>
 
-                                            <a className="ms-5" style={{ color: 'darkblue' }} href="#" onClick={() => {
+                                            <button className="ms-5" style={{ color:'white', backgroundColor:`${ui.backgroundColor}`, border:`solid 2px ${ui.borders}`}} href="#" onClick={() => {
                                                 handleViewBtn(item.WarehouseId)
                                                 setCurrentWarehouseRequest(item)
-                                            }}>View</a>
+                                            }}>View</button>
 
                                             {item.status == 'accepted' &&
-                                                <a className="ms-5" style={{ color: 'darkblue' }} href="#" >Feedback</a>}
+                                                <button className="ms-5" style={{ color:'white', backgroundColor:`${ui.backgroundColor}`, border:`solid 2px ${ui.borders}`}} href="#" >Feedback</button>}
                                         </div>
                                     </td>
                                 </tr>

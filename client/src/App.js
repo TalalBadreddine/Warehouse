@@ -26,12 +26,13 @@ import ManageWarehouseOwner from './Routes/Admin/ManageWarehouseOwner/ManageWare
 import UserActivity from './Routes/Admin/UserActivity/UserActivity';
 import Statistics from './Routes/Admin/Statistics/Statistics';
 
-
 function App() {
 
 
   return (
     <div>
+
+
       <Routes>
 
         {/* <Route path="" element={<Footer></Footer>}> */}
@@ -41,7 +42,7 @@ function App() {
         <Route path='/' element={<Navigationbar role='visitor'></Navigationbar>}>
 
           <Route path='' element={<Landing></Landing>}></Route>
-          <Route path='login' element={<SignIn></SignIn>}></Route>
+          <Route path='login' element={<SignIn></SignIn>}></Route>           
           <Route path='findASpace' element={<SearchWarehouse role={'visitor'} />}></Route>
           <Route path='aboutUs' element={<AboutUs></AboutUs>}></Route>
           <Route path='postNewWarehouse' element={<PostNewWarehouse></PostNewWarehouse>}></Route>
@@ -70,8 +71,8 @@ function App() {
           <Route path='viewWarehouseDetails' element={<ViewWarehouseDetails></ViewWarehouseDetails>}></Route>
 
         </Route>
-        
-        
+
+
         <Route path='admin/' element={<SideBar></SideBar>}>
 
              <Route path='' element={<ManageUsers></ManageUsers>}></Route>
@@ -81,8 +82,9 @@ function App() {
              <Route path = 'userActivity' element={<UserActivity></UserActivity>}></Route>
              <Route path='statistics' element={<Statistics></Statistics>}></Route>
 
+
         </Route>
-        
+
         <Route path='adminLogin' element={<AdminSignIn></AdminSignIn>}></Route>
 
         {/* <Route path='*' element={<Navigate to='/' />} /> */}
