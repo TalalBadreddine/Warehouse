@@ -325,12 +325,12 @@ const SearchWarehouse = ({role}) => {
                 <div className="d-flex d-sm-block flex-wrap col-sm-6  col-12">
 
 
-                    <div className={`overflow-auto col-12  ${styles.warehousesContainer}`} style={{overflowY:'auto', height:'600px'}}>
+                    <div className={`overflow-auto col-12 d-sm-block d-flex justify-content-center  ${styles.warehousesContainer}`} style={{overflowY:'auto', height:'600px'}}>
 
                         {
                             filtredWarehousesInfo && filtredWarehousesInfo.map((warehouse) => {
                                 return (
-                                    <div className="col-12" key={warehouse.location[0]} onMouseEnter={() => {
+                                    <div className="col-sm-12 col-5 ms-4 ms-sm-0 " key={warehouse.location[0]} onMouseEnter={() => {
                                         isFlyToOn &&
                                             setFlyToMap([warehouse.location[0], warehouse.location[1]])
                                     }}>

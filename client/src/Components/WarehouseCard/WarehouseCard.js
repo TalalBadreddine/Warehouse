@@ -52,7 +52,7 @@ const WarehouseCard = (props) => {
 
     return (
         <div>
-        <div className={`col-5 col-sm-12 m-2 p-2 d-sm-flex rounded d-block ${styles.cardDiv}`} onClick={() => { navigateToWarehouseDetails(props.role, props.info) }}  >
+        <div className={`col-12 col-sm-12 m-2 p-2 d-sm-flex rounded d-block ${styles.cardDiv}`} onClick={() => { navigateToWarehouseDetails(props.role, props.info) }}  >
 
             <div className='col-sm-4 '>
                 <Carousel>
