@@ -5,6 +5,7 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 
 import {registerCustomer} from '../../Services/registerCustomer'
+import ui from '../../themes'
 
 function SignUpUser() {
 
@@ -25,7 +26,7 @@ function SignUpUser() {
             Name 
           </Form.Label> 
           <InputGroup className="mb-2">
-          <Form.Control 
+          <Form.Control  style={{backgroundColor:`${ui.searchesInput}` ,color:`${ui.normalText}` ,borderColor:`${ui.borders}` }}
             className="mb-2" 
             id="inlineFormInput" 
             placeholder="Username" 
@@ -39,7 +40,7 @@ function SignUpUser() {
           </Form.Label> 
           <InputGroup className="mb-2"> 
             <InputGroup.Text>@</InputGroup.Text> 
-            <Form.Control 
+            <Form.Control style={{backgroundColor:`${ui.searchesInput}`,color:`${ui.normalText}`,borderColor:`${ui.borders}`  }}
             id="inlineFormInputGroup" 
             placeholder="email"
             onChange={(e) => setCustomer({...customer, email: e.target.value })}
@@ -52,7 +53,7 @@ function SignUpUser() {
             Name 
           </Form.Label> 
           <InputGroup className="mb-2">
-          <Form.Control 
+          <Form.Control style={{backgroundColor:`${ui.searchesInput}` ,color:`${ui.normalText}` ,borderColor:`${ui.borders}`}}
             className="mb-2" 
             id="inlineFormInput" 
             placeholder="password" 
@@ -65,7 +66,7 @@ function SignUpUser() {
             Name 
           </Form.Label> 
           <InputGroup className="mb-2">
-          <Form.Control 
+          <Form.Control style={{backgroundColor:`${ui.searchesInput}`,color:`${ui.normalText}`,borderColor:`${ui.borders}`  }}
             className="mb-2" 
             id="inlineFormInput" 
             placeholder="confirm password" 
@@ -73,7 +74,7 @@ function SignUpUser() {
           </InputGroup>
         </Row>
         <Row xs="auto" className='justify-content-center'> 
-          <Button onClick={handleregistration} type="submit" className="mb-2" style={{backgroundColor:'#54d494', borderColor:'#54d494'}}> 
+          <Button onClick={handleregistration} type="submit" className="mb-2" style={{backgroundColor:`${ui.Buttons}` }}> 
             Submit 
           </Button> 
         </Row> 

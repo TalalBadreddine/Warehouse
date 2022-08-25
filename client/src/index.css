@@ -19,6 +19,9 @@ input{
     background-color: '#132f4c !important';
 } */
 
+.modal-content{
+    border: none !important;    
+}
 
 form,
 input,

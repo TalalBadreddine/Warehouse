@@ -5,7 +5,7 @@ import { LoginWarehouseOwnerService } from '../../Services/LoginWarehouseOwnerSe
 import {useState} from 'react';
 import axios from "axios";
 import {useNavigate} from 'react-router-dom';
-
+import ui from '../../themes'
 function LoginWarehouseOwner() {
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
@@ -51,26 +51,26 @@ function LoginWarehouseOwner() {
               }
   return (
     <div><Form.Floating className="mb-3">
-    <Form.Control value={email} onChange={HandleEmail}
+    <Form.Control style={{backgroundColor:`${ui.lightBg}` , borderColor:`${ui.borders}`, color:`${ui.normalText}`}} value={email} onChange={HandleEmail}
       id="floatingInputCustom"
       type="email"
       placeholder="name@example.com"
     />
-    <label htmlFor="floatingInputCustom">Email address</label>
+    <label style={{color:`${ui.normalText}`}} htmlFor="floatingInputCustom">Email address</label>
     <Form.Control.Feedback id='email'>
               User does not exist
             </Form.Control.Feedback>
   </Form.Floating>
 
   <Form.Floating>
-    <Form.Control  value={password} onChange={HandlePassword}
+    <Form.Control style={{backgroundColor:`${ui.lightBg}` , borderColor:`${ui.borders}`, color:`${ui.normalText}`}} value={password} onChange={HandlePassword}
       id="floatingPasswordCustom"
       type="password"
       placeholder="Password"
     />
-    <label htmlFor="floatingPasswordCustom">Password</label>
+    <label  style={{color:`${ui.normalText}`}} htmlFor="floatingPasswordCustom">Password</label>
   </Form.Floating>
-  <Button onClick={HandleLogin}  style={{backgroundColor:'#54d494',borderColor:'#54d494'}} type="submit" className="mb-2 mt-2"> 
+  <Button onClick={HandleLogin}  style={{backgroundColor:`${ui.Buttons}`}} type="submit" className="mb-2 mt-2"> 
         Submit 
       </Button> 
   </div>
