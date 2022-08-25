@@ -5,6 +5,7 @@ import MultiRangeSlider from '../Slider/MultiRangeSlider';
 import Form from 'react-bootstrap/Form'
 import { DateRange } from 'react-date-range';
 import { useState } from 'react';
+import ui from '../../themes'
 
 
 
@@ -16,7 +17,7 @@ const WarehousesSearchFilters = (props) => {
         <div className="d-flex justify-content-between px-3 mb-2">
 
             <div className="d-flex">
-                <p className='fs-4'>Filter by: </p>
+                <p style={{color: `${ui.normalText}`}} className='fs-4'>Filter by: </p>
 
                 <div className='ms-4'>
 
@@ -35,7 +36,7 @@ const WarehousesSearchFilters = (props) => {
                             </Popover>
                         }
                     >
-                        <Button className='Buttons'> Price Per Day</Button>
+                        <Button style={{backgroundColor:`${ui.Buttons}`}} className='Buttons'> Price Per Day</Button>
                     </OverlayTrigger>
 
                 </div>
@@ -56,7 +57,7 @@ const WarehousesSearchFilters = (props) => {
                             </Popover>
                         }
                     >
-                        <Button className='Buttons'>Space</Button>
+                        <Button style={{backgroundColor:`${ui.Buttons}`}} className='Buttons'>Space</Button>
                     </OverlayTrigger>
 
                 </div>
@@ -84,7 +85,7 @@ const WarehousesSearchFilters = (props) => {
                             </Popover>
                         }
                     >
-                        <Button className='Buttons'>
+                        <Button style={{backgroundColor:`${ui.Buttons}`}} className='Buttons'>
                             Date
                         </Button>
                     </OverlayTrigger>
@@ -95,10 +96,10 @@ const WarehousesSearchFilters = (props) => {
 
 
             <div className="d-flex">
-                <p className='fs-4'>Sort By:</p>
+                <p style={{color: `${ui.normalText}`}} className='fs-4'>Sort By:</p>
                 <div className='ms-3'>
 
-                    <Form.Select  aria-label="Default select example" onChange={(e) => { props.sortByAction(e.target.value) }} >
+                    <Form.Select style={{backgroundColor: `${ui.searchesInput}` , color:`${ui.normalText}`,borderColor:`${ui.borders}`}} aria-label="Default select example" onChange={(e) => { props.sortByAction(e.target.value) }} >
                         <option selected disabled hidden value={'nothing'}   >Select an Option</option>
                         <option value={'location'}><p>Nearest To Me</p></option>
                         <option value={'lowPrice'}><p>Lowest Price</p></option>

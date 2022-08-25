@@ -20,6 +20,8 @@ import FileBase64 from 'react-file-base64';
 import { BsTrash } from 'react-icons/bs'
 import styles from './PostNewWarehouseCss.module.css'
 
+import ui from '../../../themes'
+
 
 //TODO: add back button to the page before
 function PostNewWarehouse() {
@@ -161,10 +163,10 @@ function PostNewWarehouse() {
   return (
     <Form noValidate validated={validated} onSubmit={handleSubmit} >
       <div className='row justify-content-center mt-5'>
-        <h1 style={{ color: '#54d494' }} className='text-center '>Post Your Space</h1>
+        <h1 style={{ color: `${ui.bigTitle}` }} className='text-center '>Post Your Space</h1>
       </div>
       <div className='row justify-content-center mt-5'>
-        <Card style={{ width: '65rem' }}>
+        <Card style={{ width: '65rem' , backgroundColor: `${ui.darkBg}` , borderColor: `${ui.borders}`  }}>
 
           <Card.Body>
             <FormGroup controlId="validationCustom01">
@@ -172,22 +174,25 @@ function PostNewWarehouse() {
                 controlId="floatingInput"
                 label="Warehouse Name"
                 className="mb-3"
+                style={{color:`${ui.normalText}`}}
               >
-                <Form.Control required value={warehouse.name}
+                <Form.Control style={{backgroundColor:`${ui.searchesInput}` , borderColor:`${ui.borders}` , color:`${ui.normalText}`}} required value={warehouse.name}
                   onChange={(e) => setWarehouse({ ...warehouse, name: e.target.value })} placeholder="Warehouse Name" />
                 <Form.Control.Feedback type="invalid">
                   Please choose a Warehouse name.
                 </Form.Control.Feedback> </FloatingLabel></FormGroup>
+
             <FormGroup controlId="validationCustomUsername">
               <FloatingLabel controlId="floatingPassword" label="Space For Warehouse" className="mb-3">
-                <Form.Control required value={warehouse.space}
+                <Form.Control style={{backgroundColor:`${ui.searchesInput}` , borderColor:`${ui.borders}` , color:`${ui.normalText}`}} required value={warehouse.space}
                   onChange={(e) => setWarehouse({ ...warehouse, space: e.target.value })} placeholder="Space For Warehouse" />
                 <Form.Control.Feedback type="invalid">
                   Please choose a Warehouse space.
                 </Form.Control.Feedback></FloatingLabel></FormGroup>
+
             <FormGroup controlId="validationCustom03">
               <FloatingLabel controlId="floatingPassword" label="Warehouse Type" className="mb-3">
-                <Form.Select required value={warehouse.type}
+                <Form.Select style={{backgroundColor:`${ui.searchesInput}` , borderColor:`${ui.borders}` , color:`${ui.normalText}`}} required value={warehouse.type}
                   onChange={(e) => setWarehouse({ ...warehouse, type: e.target.value })} placeholder="Warehouse Type">
 
                   <option value="Public Warehouse">Public Warehouse</option>
@@ -202,6 +207,7 @@ function PostNewWarehouse() {
                   <option value="Distribution Centers">Distribution Centers</option>
                 </Form.Select>
               </FloatingLabel></FormGroup>
+              
             <FormGroup controlId="validationCustom04">
               <FloatingLabel
                 controlId="floatingInput"
@@ -209,15 +215,15 @@ function PostNewWarehouse() {
                 className="mb-3"
               >
 
-                <Form.Control required value={warehouse.pricePerDay}
+                <Form.Control style={{backgroundColor:`${ui.searchesInput}` , borderColor:`${ui.borders}` , color:`${ui.normalText}`}} required value={warehouse.pricePerDay}
                   onChange={(e) => setWarehouse({ ...warehouse, pricePerDay: e.target.value })} className="mb-3" placeholder="Price" />
                 <Form.Control.Feedback type="invalid">
                   Please choose a price.
                 </Form.Control.Feedback></FloatingLabel></FormGroup>
 
             <Accordion className="mb-3" >
-              <Accordion.Item >
-                <Accordion.Header>Choose Availble Dates {errors.date != null && <span className='ms-3 fs-5' style={{color:'red'}}> {errors.date} !</span>}</Accordion.Header>
+              <Accordion.Item style={{backgroundColor:`${ui.lightBg}`}} >
+                <Accordion.Header > <span style={{color:`${ui.normalText}`}}>Choose Availble Dates </span>{errors.date != null && <span className='ms-3 fs-5' style={{color:'red'}}> {errors.date} !</span>}</Accordion.Header>
                 <Accordion.Body>
                   <div className='d-flex justify-content-center'>
                   <DateRange
@@ -243,8 +249,8 @@ function PostNewWarehouse() {
 
 
             <Accordion className="mb-3" >
-              <Accordion.Item >
-                <Accordion.Header>Upload images {errors.images != null && <span className='ms-3 fs-5' style={{color:'red'}}> {errors.images} !</span>}</Accordion.Header>
+              <Accordion.Item style={{backgroundColor:`${ui.lightBg}`}} >
+                <Accordion.Header><span style={{color:`${ui.normalText}`}}> Upload images </span>{errors.images != null && <span className='ms-3 fs-5' style={{color:'red'}}> {errors.images} !</span>}</Accordion.Header>
                 <Accordion.Body>
 
                   <div>
@@ -275,8 +281,8 @@ function PostNewWarehouse() {
 
 
             <Accordion className="mb-3" >
-              <Accordion.Item >
-                <Accordion.Header>Choose Your location {errors.map != null && <span className='ms-3 fs-5' style={{color:'red'}}> {errors.map} !</span>}</Accordion.Header>
+              <Accordion.Item style={{backgroundColor:`${ui.lightBg}`}}>
+                <Accordion.Header> <span style={{color:`${ui.normalText}`}}>Choose Your location</span>  {errors.map != null && <span className='ms-3 fs-5' style={{color:'red'}}> {errors.map} !</span>}</Accordion.Header>
                 <Accordion.Body>
 
                   <MapContainer center={[0, 0]} zoom={3} >
@@ -305,8 +311,8 @@ function PostNewWarehouse() {
 
             <FormGroup controlId="validationCustom05">
               <FloatingLabel className="mb-3" controlId="floatingPassword" label="Description">
-                <Form.Control required value={warehouse.description}
-                  onChange={(e) => setWarehouse({ ...warehouse, description: e.target.value })} className="mb-3" style={{ height: '100px' }} placeholder="Description" />
+                <Form.Control style={{backgroundColor:`${ui.searchesInput}` , borderColor:`${ui.borders}` , color:`${ui.normalText}` , height: '100px'}} required value={warehouse.description}
+                  onChange={(e) => setWarehouse({ ...warehouse, description: e.target.value })} className="mb-3" placeholder="Description" />
                 <Form.Control.Feedback type="invalid">
                   Please write a description
                 </Form.Control.Feedback> </FloatingLabel></FormGroup>
@@ -317,6 +323,7 @@ function PostNewWarehouse() {
                 type="checkbox"
                 id="custom-switch"
                 label="Fire Safety"
+                style={{color:`${ui.normalText}`}}
               />
               <Form.Check
                 value={warehouse.isSecurityCameras}
@@ -349,7 +356,7 @@ function PostNewWarehouse() {
               label="Forklift"
               ></Form.Check>
             <div className='col-12 justify-content-center d-flex'>
-                <Button onClick={(e) => {handleAddWarehouse(e)}} className='mt-3 te' style={{ backgroundColor: '#54d494', borderColor: '#54d494' }} type="submit" variant="primary">Upload Space</Button>
+                <Button onClick={(e) => {handleAddWarehouse(e)}} className='mt-3 te' style={{backgroundColor:`${ui.Buttons}`}} type="submit" variant="primary">Upload Space</Button>
             </div>
           </Card.Body>
         </Card>

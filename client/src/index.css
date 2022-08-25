@@ -1,11 +1,10 @@
-.leaflet-container{
-    height: 600px;
-    width: 98%;
+.leaflet-container {
+  height: 600px;
+  width: 98%;
 }
 
-
-body{
-    background-color: #011e3c !important;
+body {
+  background-color: #011e3c !important;
 }
 
 /* Link,h1,h2,h3,h4,td,thead{
@@ -19,3 +18,21 @@ a{
 input{
     background-color: '#132f4c !important';
 } */
+
+form,
+input,
+label,
+i,
+select {
+  color: #ffffff !important;
+}
+
+select {
+  background-image: url("./Assets/dropdownarrow.png") !important;
+}
+
+/* for the accordions */
+.accordion-button {
+  background-color: #132f4c !important;
+  color: #ffffff !important;
+}
