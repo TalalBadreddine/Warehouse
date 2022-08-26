@@ -11,7 +11,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import SearchBar from '../../../Components/SearchBar/SearchBar';
 import { BiUserCircle } from 'react-icons/bi'
-
+import ui from '../../../themes'
 
 
 import DatePicker from "react-datepicker";
@@ -228,9 +228,9 @@ const UserActivity = () => {
                 </div>
 
                 <div className='col-3 ms-5'>
-                    <FormControl fullWidth>
-                        <InputLabel id="demo-simple-select-label">Type</InputLabel>
-                        <Select
+                    <FormControl  fullWidth>
+                        <InputLabel style={{color:`${ui.normalText}`}} id="demo-simple-select-label">Type</InputLabel>
+                        <Select style={{color:`${ui.normalText}`}}
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
                             value={usersTableRole}
@@ -251,12 +251,12 @@ const UserActivity = () => {
                 <div className='col-7'>
 
                     {usersTableRows && <TableContainer component={Paper} >
-                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                            <TableHead>
+                        <Table  style={{backgroundColor:`${ui.lightBg} `, borderColor:`${ui.borders}`, color:`${ui.normalText} `}}  sx={{ minWidth: 650 }} aria-label="simple table">
+                            <TableHead style={{backgroundColor:`${ui.borders}` }}>
                                 <TableRow>
-                                    <TableCell>user name</TableCell>
-                                    <TableCell align="right">email</TableCell>
-                                    <TableCell align="right">register date</TableCell>
+                                    <TableCell style={{color:`${ui.normalText}`}}>user name</TableCell>
+                                    <TableCell style={{color:`${ui.normalText}`}} align="right">email</TableCell>
+                                    <TableCell style={{color:`${ui.normalText}`}} align="right">register date</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -265,11 +265,11 @@ const UserActivity = () => {
                                         key={index}
                                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                     >
-                                        <TableCell component="th" scope="row" >
+                                        <TableCell style={{color:`${ui.normalText}`}} component="th" scope="row" >
                                             {row.userName}
                                         </TableCell>
-                                        <TableCell align="right">{row.email}</TableCell>
-                                        <TableCell align="right">{row.registerDate}</TableCell>
+                                        <TableCell style={{color:`${ui.normalText}`}} align="right">{row.email}</TableCell>
+                                        <TableCell style={{color:`${ui.normalText}`}} align="right">{row.registerDate}</TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>
@@ -332,7 +332,7 @@ const UserActivity = () => {
                                             <div className='ps-3 d-flex mb-0'>
 
                                                 <div className='col-8'>
-                                                    <p>{log.action}</p>
+                                                    <p  style={{color:`${ui.normalText}`}}>{log.action}</p>
                                                 </div>
 
                                                 <div className='col-4 ps-5' style={{ fontSize: '0.8rem' }}>
@@ -342,7 +342,7 @@ const UserActivity = () => {
                                             </div>
 
                                             <div className='col-10 mx-auto ' style={{ marginTop: '-5px' }}>
-                                                <hr style={{ opacity: '.2' }}></hr>
+                                                <hr  style={{color:`${ui.normalText}`}}></hr>
                                             </div>
 
                                         </div>
@@ -351,7 +351,7 @@ const UserActivity = () => {
                             </div>
                             :
                             <div className='p-4 fs-3'>
-                                <p>NO LOGS </p>
+                                <p  style={{color:`${ui.normalText}`}}>NO LOGS </p>
                             </div>
                         }
 

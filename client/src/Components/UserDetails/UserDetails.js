@@ -13,7 +13,7 @@ import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-
+import ui from '../../themes';
 
 function UserDetails() {
   const navigate = useNavigate()
@@ -36,30 +36,30 @@ function UserDetails() {
           <div>
 
             <h3>
-              <Button style={{ color: 'black' }} startIcon={<ArrowBackIcon />} onClick={() => navigate(-1)}></Button>
+              <Button style={{backgroundColor:`${ui.lightBg}` , color:`${ui.normalText} `, borderColor:`${ui.normalText}`}}  startIcon={<ArrowBackIcon />} onClick={() => navigate(-1)}></Button>
               {userInfo.userName}
               {userInfo.isActive ? <Button style={{ color: 'black', backgroundColor: '#83f28f', borderColor: 'black', margin: 5 }}>Active</Button> : <Button style={{ color: 'black', backgroundColor: 'pink', borderColor: 'black', margin: 5 }}>Deactive</Button>}
 
             </h3>
           </div>
           <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-              <TableHead>
+            <Table style={{backgroundColor:`${ui.lightBg}` , borderColor:`${ui.borders}`, color:`${ui.normalText}` }}  sx={{ minWidth: 650 }} aria-label="simple table">
+              <TableHead style={{backgroundColor:`${ui.borders}` }} >
                 <TableRow>
-                  <TableCell><h6 style={{ fontWeight: 'bold' }}>Warehouse Name</h6></TableCell>
-                  <TableCell align="right"><h6 style={{ fontWeight: 'bold' }}>Provider</h6></TableCell>
-                  <TableCell align="right"><h6 style={{ fontWeight: 'bold' }}>Status</h6></TableCell>
-                  <TableCell align="right"><h6 style={{ fontWeight: 'bold' }}>Date</h6></TableCell>
+                  <TableCell style={{color:`${ui.normalText}`}}><h6 style={{ fontWeight: 'bold' }}>Warehouse Name</h6></TableCell>
+                  <TableCell style={{color:`${ui.normalText}`}} align="right"><h6 style={{ fontWeight: 'bold' }}>Provider</h6></TableCell>
+                  <TableCell style={{color:`${ui.normalText}`}} align="right"><h6 style={{ fontWeight: 'bold' }}>Status</h6></TableCell>
+                  <TableCell style={{color:`${ui.normalText}`}} align="right"><h6 style={{ fontWeight: 'bold' }}>Date</h6></TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {
                   printed.map((item, i) => {
                     return <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                      <TableCell align="left">{item.warehouseName}</TableCell>
-                      <TableCell align="right">{item.warehouseOwnerName}</TableCell>
-                      <TableCell align="right">{item.status}</TableCell>
-                      <TableCell align="right">{item.startRentDate} - {item.endRentDate}</TableCell>
+                      <TableCell style={{color:`${ui.normalText}`}} align="left">{item.warehouseName}</TableCell>
+                      <TableCell style={{color:`${ui.normalText}`}} align="right">{item.warehouseOwnerName}</TableCell>
+                      <TableCell style={{color:`${ui.normalText}`}} align="right">{item.status}</TableCell>
+                      <TableCell style={{color:`${ui.normalText}`}} align="right">{item.startRentDate} - {item.endRentDate}</TableCell>
                     </TableRow>
                   })
                 }
