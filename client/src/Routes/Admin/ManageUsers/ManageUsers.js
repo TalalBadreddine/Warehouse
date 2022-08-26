@@ -172,9 +172,8 @@ function ManageUsers() {
   return (
 
     <div>
-    <Grid className='justify-content-center p-3' container spacing={2} sx={{ m: 1 }}>
-        <Grid  item xs={5}></Grid>
-    <Grid item xs={10}>
+    <Grid container spacing={5} sx={{ m: 1 }}>
+    <Grid item xs={11}>
         <TextField onChange={(e) => setQuery(e.target.value)}style={{ width: '40%', backgroundColor:`${ui.searchesInput}` , border: 'solid 1px #7890a9', borderRadius:'6px'}} sx={{m: 1}} id="outlined-basic" label="Search..." variant="outlined" size='small' />
             <Button 
                 onClick={handleShow}
@@ -184,9 +183,8 @@ function ManageUsers() {
                 size="medium">
                 Create User
             </Button>
-            <br></br>
-            <br></br>
-    <Paper sx={{ width: '100%', overflow: 'hidden',backgroundColor:`${ui.backgroundColor} `,color:`${ui.normalText}` }}>
+
+    <Paper sx={{ width: '100%', overflow: 'hidden',backgroundColor:`${ui.backgroundColor} `,color:`${ui.normalText}`, marginTop:'3%' }}>
       <TableContainer  sx={{ maxHeight: 440 }}>
         <Table style={{backgroundColor:`${ui.lightBg}` , color:`${ui.normalText}` }}  stickyHeader aria-label="sticky table">
           <TableHead  >

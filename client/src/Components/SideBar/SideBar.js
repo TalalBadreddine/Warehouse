@@ -244,7 +244,7 @@ function SideBar() {
         </SidebarMenu>
 
       </div>
-      <div className='col-10'>
+      <div className='col-10 px-2 mt-5'>
         <Outlet></Outlet></div>
     </div>
   )

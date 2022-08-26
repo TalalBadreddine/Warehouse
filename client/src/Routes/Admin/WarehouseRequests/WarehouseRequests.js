@@ -75,9 +75,8 @@ function WarehouseRequests() {
 
   return (
     <div>
-      <Grid container spacing={2} sx={{ m: 2 }}>
-        <Grid item xs={2}></Grid>
-        <Grid item xs={8}>
+      <Grid container spacing={5} sx={{ m: 1 }}>
+        <Grid item xs={11}>
           <TableContainer component={Paper}>
 
             <Table style={{backgroundColor:`${ui.lightBg}` , borderColor:`${ui.borders}`, color:`${ui.normalText} `}}  sx={{ minWidth: 650 }} aria-label="simple table">
