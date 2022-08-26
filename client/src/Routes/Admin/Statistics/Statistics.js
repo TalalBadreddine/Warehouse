@@ -208,9 +208,9 @@ const Statistics = () => {
                     <div className='mt-4' style={{ height: '400px', overflowY: 'scroll' }}>
                         {allData[1][1].map((owner) => {
                             return (
-                                <div className='d-flex justify-content-between col-10 m-auto'>
+                                <div className='d-flex justify-content-between col-12 m-auto'>
                                     <p className='col-2 d-flex justify-content-center' style={{ color: 'white' }}><BsPersonCircle size={35}></BsPersonCircle></p>
-                                    <p className='col-5' style={{ color: `${ui.normalText}` }}>{owner.email}</p>
+                                    <p className='col-6' style={{ color: `${ui.normalText}`, wordWrap:'break-word' }}>{owner.email}</p>
                                     <p className='col-4' style={{ color: `${ui.normalText}` }}>{owner.myWarehouses.length} warehouse</p>
                                 </div>
                             )

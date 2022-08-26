@@ -84,7 +84,7 @@ function App() {
              <Route path='requests' element={<WarehouseRequests></WarehouseRequests>}></Route>
              <Route  path='manageOwner' element={<ManageWarehouseOwner></ManageWarehouseOwner>}></Route>
              <Route path = 'userActivity' element={<UserActivity></UserActivity>}></Route>
-             <Route path='statistics' element={<Statistics></Statistics>}></Route>
+             <Route path='' element={<Statistics></Statistics>}></Route>
              <Route path='WarehouseOwnerDetails' element={<WarehouseOwnerDetails></WarehouseOwnerDetails>}></Route>
              <Route path='login' element={<LoginAdmin></LoginAdmin>}></Route>
 
