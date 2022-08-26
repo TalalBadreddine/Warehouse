@@ -85,7 +85,7 @@ function SideBar() {
     <div className='col-12 d-flex'>
       <div className='col-2' style={{backgroundColor: `${ui.searchesInput}`}}>
 
-        <SidebarMenu style={{ width: '100%', height: '100%' }}>
+        <SidebarMenu style={{ width: '100%', height: '100vh' }}>
           <Title>Dashboard</Title>
           <List>
             <Link to="/admin/" style={{ color: 'white', textDecoration:'none'  }} className="link">
