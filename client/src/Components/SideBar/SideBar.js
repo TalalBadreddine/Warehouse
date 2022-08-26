@@ -170,19 +170,21 @@ function SideBar() {
               </Link>
 
           </List>
-          {/* <List>
+          <List>
+          <Link to="/warehouses" style={{ color: 'white', textDecoration:'none' }} className="link">
+
             {['Warehouses'].map((text, index) => (
               <ListItem key={text} disablePadding>
-                <Link to="/warehouses" style={{ color: 'white' }} className="link">
 
                   <ListItem>
                     <Storefront className="icon" />
                     <div>{text}</div>
                   </ListItem>
-                </Link>
               </ListItem>
             ))}
-          </List> */}
+                            </Link>
+
+          </List>
           <Divider />
           <List>
           <Link to="/admin/userActivity" style={{ color: 'white', textDecoration:'none' }} className="link">
