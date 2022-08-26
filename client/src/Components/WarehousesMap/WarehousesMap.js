@@ -51,9 +51,11 @@ const WarehousesMap = (props) => {
     const MapEvents = () => {
         useMapEvents({
             click(e) {
+                if(props && props.canPin){
+                    setClickLocation([e.latlng.lat, e.latlng.lng])
+                    props.setPinLocation([e.latlng.lat, e.latlng.lng])
+                }
 
-                props.canPin && setClickLocation([e.latlng.lat, e.latlng.lng])
-                props.canPin && props.setPinLocation([e.latlng.lat, e.latlng.lng])
             },
         });
         return false;
@@ -93,7 +95,7 @@ const WarehousesMap = (props) => {
                         )
                     })}
 
-                    {showPinLocation && 
+                    {props.canPin && 
                         <Marker position={[parseFloat(clickLocation[0]), parseFloat(clickLocation[1])]} icon={markerIcon}>
                             <Popup>
                                 <h3 className="fs-4">PingLocation</h3>  
