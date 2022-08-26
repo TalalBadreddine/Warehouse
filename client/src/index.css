@@ -7,6 +7,9 @@
 body{
     background-color: #011e3c !important;
 }
+table{
+    border: solid 1px white;
+}
 
 /* Link,h1,h2,h3,h4,td,thead{
     color: white !important;

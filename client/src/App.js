@@ -26,6 +26,7 @@ import ManageWarehouseOwner from './Routes/Admin/ManageWarehouseOwner/ManageWare
 import UserActivity from './Routes/Admin/UserActivity/UserActivity';
 
 
+
 function App() {
 
 
@@ -71,9 +72,10 @@ function App() {
         </Route>
         
         
-        <Route path='admin/' element={<SideBar></SideBar>}>
-
-             <Route path='' element={<ManageUsers></ManageUsers>}></Route>
+        <Route path='admin/' element={ <SideBar></SideBar>}>
+     
+       
+             <Route path='manageUsers' element={<ManageUsers></ManageUsers>}></Route>
              <Route path='userdetails' element={<UserDetails></UserDetails>}></Route>
              <Route path='requests' element={<WarehouseRequests></WarehouseRequests>}></Route>
              <Route  path='manageOwner' element={<ManageWarehouseOwner></ManageWarehouseOwner>}></Route>
