@@ -28,6 +28,7 @@ import Statistics from './Routes/Admin/Statistics/Statistics';
 import WarehouseOwnerDetails from './Routes/Admin/WarehouseOwnerDetails/WarehouseOwnerDetails';
 import LoginAdmin from './Routes/Admin/AdminLogin(Test)/LoginAdmin';
 
+
 function App() {
 
 
@@ -73,11 +74,12 @@ function App() {
           <Route path='viewWarehouseDetails' element={<ViewWarehouseDetails></ViewWarehouseDetails>}></Route>
 
         </Route>
-
-
-        <Route path='admin/' element={<SideBar></SideBar>}>
-
-             <Route path='' element={<ManageUsers></ManageUsers>}></Route>
+        
+        
+        <Route path='admin/' element={ <SideBar></SideBar>}>
+     
+       
+             <Route path='manageUsers' element={<ManageUsers></ManageUsers>}></Route>
              <Route path='userdetails' element={<UserDetails></UserDetails>}></Route>
              <Route path='requests' element={<WarehouseRequests></WarehouseRequests>}></Route>
              <Route  path='manageOwner' element={<ManageWarehouseOwner></ManageWarehouseOwner>}></Route>

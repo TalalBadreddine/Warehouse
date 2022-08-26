@@ -13,7 +13,7 @@ import { Button } from '@mui/material';
 import { getAllWarehousesPending } from '../../../Services/GetWarehousesPending';
 import { acceptRejectWarehouseRequest } from '../../../Services/acceptRejectWarehouseRequest';
 import Box from '@mui/material/Box';
-
+import ui from '../../../themes';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 
@@ -80,12 +80,12 @@ function WarehouseRequests() {
         <Grid item xs={8}>
           <TableContainer component={Paper}>
 
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-              <TableHead>
+            <Table style={{backgroundColor:`${ui.lightBg}` , borderColor:`${ui.borders}`, color:`${ui.normalText} `}}  sx={{ minWidth: 650 }} aria-label="simple table">
+              <TableHead style={{backgroundColor:`${ui.borders}` }}>
                 <TableRow>
-                  <TableCell style={{ fontWeight: '600' }}>WarehouseName</TableCell>
-                  <TableCell style={{ fontWeight: '600' }} align="center">Provider</TableCell>
-                  <TableCell style={{ fontWeight: '600' }} align="center">Actions</TableCell>
+                  <TableCell style={{ fontWeight: '600',color:`${ui.normalText}` }}>WarehouseName</TableCell>
+                  <TableCell style={{ fontWeight: '600',color:`${ui.normalText}` }} align="center">Provider</TableCell>
+                  <TableCell style={{ fontWeight: '600',color:`${ui.normalText}` }} align="center">Actions</TableCell>
 
                 </TableRow>
               </TableHead>
@@ -122,15 +122,15 @@ function WarehouseRequests() {
                             </Box>
                           </Modal>
 
-                          <Button style={{ margin: 2, borderColor: '#54d494', color: '#54d494' }} variant="outlined">
+                          <Button style={{ backgroundColor: `${ui.Buttons}`, borderColor: `${ui.normalText} `}} variant="outlined">
                             View
                           </Button>
-                          <Button style={{ margin: 2, backgroundColor: '#54d494' }}
+                          <Button style={{ backgroundColor: `${ui.Buttons}`, borderColor: `${ui.normalText} `}}
                             variant="contained"
                             onClick={() => { HandleAcceptReject(warehouse[0]._id, 'accepted') }}>
                             Accept
                           </Button>
-                          <Button style={{ margin: 2, backgroundColor: 'red' }}
+                          <Button style={{ backgroundColor: `${ui.Buttons}`, borderColor: `${ui.normalText} `}}
                             variant="contained"
                             onClick={() => { HandleAcceptReject(warehouse[0]._id, 'rejected') }}>
                             Reject

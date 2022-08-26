@@ -13,7 +13,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import Modal from 'react-bootstrap/Modal';
-
+import ui from '../../../themes'
 import { getAllCustomer } from '../../../Services/getAllUsers';
 import AddUser from '../../../Components/AddUser/AddUser';
 import { deleteCustomer } from '../../../Services/DeleteUserByAdmin';
@@ -120,18 +120,21 @@ function ManageUsers() {
     if(searchedUsers == null || searchedUsers.length == 0)return
 
             let arr = searchedUsers.map((item ,i)=>{
+
+
+
             return (
                 createData( item.userName , 
                             item.email , 
                             <Button onClick={()=>handleStatus(item._id ,item.isActive)} style={{borderColor: item.isActive ? 'green' : 'red',color: item.isActive ? 'green' : 'red'}}variant="outlined" >{item.isActive ? 'Active' : 'Deactive'}</Button>,
                             <>
-                            <Button style={{color:'white', backgroundColor:'green', borderColor:'red' , margin: 5}}
+                            <Button style={{ color: `${ui.borders}`,border:`solid 2px ${ui.borders}`,backgroundColor:`${ui.backgroundColor}`, margin: 5 }}
                             onClick={()=>handleUserHistory(item)}
                                     variant="Contained" 
                                     size="medium">
                             User History
                             </Button> 
-                            <Button style={{color:'white', backgroundColor:'red', borderColor:'red' , margin: 5}} 
+                            <Button style={{ color: 'red', backgroundColor: `${ui.backgroundColor}`, border: ' solid 2px red', margin: 5 }} 
                                     onClick={()=> {handleDeleteCustomer(item.email)}}
                                     variant="outlined" 
                                     size="medium">
@@ -169,28 +172,30 @@ function ManageUsers() {
   return (
 
     <div>
-    <Grid container spacing={2} sx={{ m: 2 }}>
-        <Grid item xs={2}></Grid>
-    <Grid item xs={8}>
-        <TextField onChange={(e) => setQuery(e.target.value)} style= {{width: '40%'}} sx={{m: 1}} id="outlined-basic" label="Search..." variant="outlined" size='small' />
+    <Grid className='justify-content-center p-3' container spacing={2} sx={{ m: 1 }}>
+        <Grid  item xs={5}></Grid>
+    <Grid item xs={10}>
+        <TextField onChange={(e) => setQuery(e.target.value)}style={{ width: '40%', backgroundColor:`${ui.searchesInput}` , border: 'solid 1px #7890a9', borderRadius:'6px'}} sx={{m: 1}} id="outlined-basic" label="Search..." variant="outlined" size='small' />
             <Button 
                 onClick={handleShow}
-                style = {{backgroundColor: '#54d494', borderColor:'#54d494' , float: 'right'}} 
+                style={{ backgroundColor: `${ui.Buttons}`, borderColor: `${ui.normalText}` ,float:'right'}}
                 startIcon={<AddIcon/>}sx={{m: 1}} 
                 variant="contained" 
                 size="medium">
                 Create User
             </Button>
-    <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-      <TableContainer sx={{ maxHeight: 440 }}>
-        <Table stickyHeader aria-label="sticky table">
-          <TableHead>
-            <TableRow>
+            <br></br>
+            <br></br>
+    <Paper sx={{ width: '100%', overflow: 'hidden',backgroundColor:`${ui.backgroundColor} `,color:`${ui.normalText}` }}>
+      <TableContainer  sx={{ maxHeight: 440 }}>
+        <Table style={{backgroundColor:`${ui.lightBg}` , color:`${ui.normalText}` }}  stickyHeader aria-label="sticky table">
+          <TableHead  >
+            <TableRow >
               {columns.map((column) => (
                 <TableCell
                   key={column.id}
                   align={column.align}
-                  style={{ minWidth: column.minWidth }}
+                  style={{ backgroundColor:`${ui.borders}`, minWidth: column.minWidth , color:`${ui.normalText}`,fontSize:'20px'}}
                 >
                   {column.label}
                 </TableCell>
@@ -206,7 +211,8 @@ function ManageUsers() {
                     {columns.map((column) => {
                       const value = row[column.id];
                       return (
-                        <TableCell key={column.id} align={column.align}>
+                        <TableCell style={{color:`${ui.normalText}` , backgroundColor:`${ui.backgroundColor}`} }key={column.id} align={column.align}>
+                          
                           {column.format && typeof value === 'number'
                             ? column.format(value)
                             : value}
@@ -220,6 +226,7 @@ function ManageUsers() {
         </Table>
       </TableContainer>
       <TablePagination
+      style={{color:`${ui.normalText}`, border:'solid 1px white'} }
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
         count={rows.length}
