@@ -27,6 +27,7 @@ import UserActivity from './Routes/Admin/UserActivity/UserActivity';
 import Statistics from './Routes/Admin/Statistics/Statistics';
 import WarehouseOwnerDetails from './Routes/Admin/WarehouseOwnerDetails/WarehouseOwnerDetails';
 import LoginAdmin from './Routes/Admin/AdminLogin(Test)/LoginAdmin';
+import ManageWarehouse from './Routes/Admin/ManageWarehouse/ManageWarehouse';
 
 
 function App() {
@@ -78,7 +79,6 @@ function App() {
         
         <Route path='admin/' element={ <SideBar></SideBar>}>
      
-       
              <Route path='manageUsers' element={<ManageUsers></ManageUsers>}></Route>
              <Route path='userdetails' element={<UserDetails></UserDetails>}></Route>
              <Route path='requests' element={<WarehouseRequests></WarehouseRequests>}></Route>
@@ -87,6 +87,7 @@ function App() {
              <Route path='' element={<Statistics></Statistics>}></Route>
              <Route path='WarehouseOwnerDetails' element={<WarehouseOwnerDetails></WarehouseOwnerDetails>}></Route>
              <Route path='login' element={<LoginAdmin></LoginAdmin>}></Route>
+             <Route path='manageWarehouses'element={<ManageWarehouse></ManageWarehouse>}></Route>
 
         </Route>
 

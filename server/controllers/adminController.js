@@ -139,8 +139,8 @@ const  deleteWarehouse = async(req, res) => {
       try{
           const _Id= req.body._Id
           await warehouseSchema.findOneAndDelete({_Id:_Id})
-          res.status(200).json({message : "warehouse deleted"})
-    }
+          res.status(201).json(result)
+            }
     catch(error){
         res.status(500).json({message :"internal error with fucntion delete warehouse"})
 

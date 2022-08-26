@@ -5,9 +5,21 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 
 import {registerCustomer} from '../../Services/registerCustomer'
-import ui from '../../themes'
 
 function SignUpUser() {
+
+  const [validated, setValidated] = useState(false);
+
+  const handleSubmit = (event) => {
+
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+    setValidated(true);
+  };
 
   const [customer, setCustomer] = useState({
     userName: "",
@@ -20,65 +32,80 @@ function SignUpUser() {
 
   return (
     <>
-    <Row className="align-items-center"> 
-        <Row xs="auto"> 
+    <Form noValidate validated={validated} onSubmit={handleSubmit}>
+    <Row className="mb-2 col-8 m-auto justify-content-center"> 
+        <Row  xs="auto">
+          <Form.Group className='col-12'> 
           <Form.Label htmlFor="inlineFormInput" visuallyHidden> 
             Name 
           </Form.Label> 
           <InputGroup className="mb-2">
-          <Form.Control  style={{backgroundColor:`${ui.searchesInput}` ,color:`${ui.normalText}` ,borderColor:`${ui.borders}` }}
-            className="mb-2" 
+          <Form.Control required 
+            className="mb-2 " 
             id="inlineFormInput" 
             placeholder="Username" 
             onChange={(e) => setCustomer({...customer, userName: e.target.value })}
           /> 
-          </InputGroup>
+           <Form.Control.Feedback type="invalid">
+                  Please fill your username.
+                </Form.Control.Feedback></InputGroup></Form.Group>
         </Row> 
-        <Row xs="auto"> 
+        <Row xs="auto">
+          <Form.Group className='col-12'> 
           <Form.Label htmlFor="inlineFormInputGroup" visuallyHidden> 
             Username 
           </Form.Label> 
           <InputGroup className="mb-2"> 
-            <InputGroup.Text>@</InputGroup.Text> 
-            <Form.Control style={{backgroundColor:`${ui.searchesInput}`,color:`${ui.normalText}`,borderColor:`${ui.borders}`  }}
+           
+            <Form.Control required 
             id="inlineFormInputGroup" 
             placeholder="email"
             onChange={(e) => setCustomer({...customer, email: e.target.value })}
             /> 
-          </InputGroup> 
+           <Form.Control.Feedback type="invalid">
+                  Please fill your email.
+                </Form.Control.Feedback></InputGroup></Form.Group> 
         </Row> 
-        
-        <Row xs="auto"> 
+      
+        <Row xs="auto">
+          <Form.Group className='col-12'> 
         <Form.Label htmlFor="inlineFormInput" visuallyHidden> 
             Name 
           </Form.Label> 
           <InputGroup className="mb-2">
-          <Form.Control style={{backgroundColor:`${ui.searchesInput}` ,color:`${ui.normalText}` ,borderColor:`${ui.borders}`}}
+          <Form.Control required 
             className="mb-2" 
             id="inlineFormInput" 
             placeholder="password" 
+            type="password"
             onChange={(e) => setCustomer({...customer, password: e.target.value })}
           /> 
-          </InputGroup>
+           <Form.Control.Feedback type="invalid">
+                  Please fill your password.
+                </Form.Control.Feedback></InputGroup></Form.Group>
         </Row> 
-        <Row xs="auto"> 
+        <Row xs="auto">
+          <Form.Group className='col-12'> 
         <Form.Label htmlFor="inlineFormInput" visuallyHidden> 
             Name 
           </Form.Label> 
           <InputGroup className="mb-2">
-          <Form.Control style={{backgroundColor:`${ui.searchesInput}`,color:`${ui.normalText}`,borderColor:`${ui.borders}`  }}
+          <Form.Control required 
             className="mb-2" 
             id="inlineFormInput" 
             placeholder="confirm password" 
+            type="password"
           /> 
-          </InputGroup>
+           <Form.Control.Feedback type="invalid">
+                  Please fill confirm your password
+                </Form.Control.Feedback></InputGroup></Form.Group>
         </Row>
-        <Row xs="auto" className='justify-content-center'> 
-          <Button onClick={handleregistration} type="submit" className="mb-2" style={{backgroundColor:`${ui.Buttons}` }}> 
+        <Row xs="auto" className="justify-content-center"> 
+          <Button onClick={handleregistration} type="submit" className="mb-2" style={{backgroundColor:'#54d494', borderColor:'#54d494'}}> 
             Submit 
           </Button> 
         </Row> 
-      </Row>
+      </Row></Form>
     </>
 
   )

@@ -226,29 +226,23 @@ const acceptDeclineRequest = async (req, res) => {
 
 const addWarehouses = async (req, res) => {
 
-    try {
-        const warehouse = req.body;
-        const decodedInfo = jwtDecode(req.cookies['jwt'])
+    try{
+
+        console.log(req.body);
+        const warehouse=req.body;
+        const alreadyExist = await warehouseSchema.find({name: warehouse.name, space:warehouse.space})
+        if(alreadyExist.length >=1){
+            return res.status(409).json({message:'warehouse already exists'})
+        }
         const result = await warehouseSchema.create(warehouse);
-        await result.save()
-        await warehouseOwnerModel.updateOne({
-            _id: decodedInfo.user._id
-        },{
-            $push: {
-                myWarehouses: result._id
-            }
-        })
-
-        if (result) {
-            res.status(201).json({ message: "added WareHouse" })
-
-
-        } else {
-            res.status(409).json({ message: "failed to add WareHouse" })
+        if(result){
+            res.status(201).json(result)
+        }else{
+            res.status(409).json({message:"failed to add warehouse"})
         }
 
-    } catch (error) {
-        res.status(500).json({ message: "error at addWarehouse function" })
+    }catch(error){
+        res.status(500).json({error})
 
     }
 }
