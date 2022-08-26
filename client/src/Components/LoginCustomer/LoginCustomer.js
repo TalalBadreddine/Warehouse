@@ -29,6 +29,10 @@ function LoginCustomer() {
       e.preventDefault()
       axios.post(apiUri, {email,password}).then(async(data) => {
           if(data.data == true){
+            await axios.post('/userActivity', {
+              action: `Logged in`,
+              role: 'customer'
+          })
               navigate('/customer/')
           }else{
             setError(data.data)

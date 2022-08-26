@@ -27,12 +27,17 @@ function LoginWarehouseOwner() {
         const HandleLogin = (e) => {
 
             e.preventDefault()
-            
+
               // LoginWarehouseOwnerService(email,password)
 
                 const data=(email,password);
                 axios.post(apiUri, {email,password})
                 .then(async (data) => {
+                  await axios.post('/userActivity', {
+                    action: `Logged in`,
+                    role: 'customer'
+                })
+
                 navigate('/owner/myWarehouses');
                     
                 })
