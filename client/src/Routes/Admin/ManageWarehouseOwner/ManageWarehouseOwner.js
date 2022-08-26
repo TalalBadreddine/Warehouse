@@ -175,7 +175,7 @@ function ManageWarehouseOwner() {
                                                             <TableCell
                                                                 key={column.id}
                                                                 align={column.align}
-                                                                style={{ fontSize: '17px', color:'white', backgroundColor: `${ui.searchesInput}`, borderBottom:'solid 1px white' }}
+                                                                style={{ fontSize: '17px', color:'white', backgroundColor: `${ui.backgroundColor}`, borderBottom:'solid 1px white' }}
                                                             >
                                                                 {column.format && typeof value === 'number'
                                                                     ? column.format(value)
