@@ -12,6 +12,7 @@ import Paper from '@mui/material/Paper';
 import SearchBar from '../../../Components/SearchBar/SearchBar';
 import { BiUserCircle } from 'react-icons/bi'
 import ui from '../../../themes'
+import { useNavigate } from 'react-router-dom';
 
 // logged in icon
 import loginIcon from './../../../Assets/loggedIn.svg'
@@ -30,6 +31,9 @@ import rejectIcon from './../../../Assets/reject.svg'
 
 // search
 import {FcSearch} from 'react-icons/fc'
+
+// feeddback
+import feedback from '../../../Assets/feedback.svg'
 
 
 import DatePicker from "react-datepicker";
@@ -83,6 +87,10 @@ const getIcon = (content) => {
         return(<img src={rejectIcon} width='40px' height='40px'></img>)
     }
 
+    if(line.includes('feedback')){
+        return(<img src={feedback} width='40px' height='40px'></img>)
+    }
+
     if(line.includes('rent')){
         return(<img src={rentIcon} width='40px' height='40px'></img>)
     }
@@ -125,6 +133,7 @@ const isDateInRange = (date, range) => {
 
 
 const UserActivity = () => {
+    const navigate = useNavigate()
     const [allUsers, setAllUsers] = useState()
     const [customers, setCustomers] = useState()
     const [warehouseOwners, setWarehouseOwners] = useState()
@@ -153,6 +162,7 @@ const UserActivity = () => {
         const getData = async () => {
 
             axios.get('/admin/getAllCustomerAndOwnersAndLogs').then((results) => {
+                if(results.data == 'forbidden'){navigate('/')}
                 let data = results.data
 
                 setAllUsers([...data.customers, ...data.warehouseOwners])
@@ -171,6 +181,8 @@ const UserActivity = () => {
                 setWarehouseOwnersLogs(fetchedWarehouseOwnersLogs)
                 setAllLogs(logs)
 
+            }).catch((err) => {
+                if(err.response.data == 'forbidden'){navigate('/')}
             })
 
         }

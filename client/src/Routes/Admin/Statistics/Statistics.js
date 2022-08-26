@@ -16,12 +16,16 @@ import ui from '../../../themes'
 import axios from 'axios'
 import { Carousel } from 'react-bootstrap'
 
+import { useNavigate } from 'react-router-dom';
+
+import Loading from '../../../Components/Loading/Loading'
+
 
 const allMonths = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
 
 const Statistics = () => {
-
+    const navigate = useNavigate()
     const [anchorEl, setAnchorEl] = useState(null);
     const [allData, setAllData] = useState()
 
@@ -40,6 +44,7 @@ const Statistics = () => {
     useEffect(() => {
 
         axios.get('/admin/getAllStatistics').then((results) => {
+            if(results.data == 'forbidden'){navigate('/')}
             let data = results.data
             console.log(data)
             // @ [type, [arr], arr Of 11 for months]
@@ -113,6 +118,8 @@ const Statistics = () => {
             console.log(arrOfAllObjects)
             setAllData(arrOfAllObjects)
 
+        }).catch((err) => {
+            if(err.response.data == 'forbidden'){navigate('/')}
         })
 
     }, [])
@@ -124,7 +131,7 @@ const Statistics = () => {
     if (allData == null || allData == undefined) {
         return (
             <div>
-
+                <Loading></Loading>
             </div>
         )
     }
@@ -228,7 +235,7 @@ const Statistics = () => {
                         <h2 style={{ color: `${ui.bigTitleSecondaryColor}` }}>Most Rented Warehouses </h2>
                     </div>
 
-                    <div style={{height:'500px', overflowY:'scroll'}}>
+                    <div style={{height:'300px', overflowY:'scroll'}}>
                         {allData[4][1].map((object, index) => {
                             let values = Object.values(object)[0]
                             let warehouse = values.warehouseDetails
@@ -238,7 +245,7 @@ const Statistics = () => {
                                 <div>
                                     <div className='d-flex mt-4 justify-content-between' style={{ color: `${ui.normalText}` }}>
                                         <p className='col-2'>
-                                            <Carousel style={{ width: '210px', height: '130px' }}>
+                                            <Carousel style={{ width: '100%', height: '100%' }}>
                                                 {warehouse.images.map((base64, index) => {
                                                     return (
                                                         <Carousel.Item>

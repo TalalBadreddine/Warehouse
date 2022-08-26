@@ -171,7 +171,7 @@ function SideBar() {
 
           </List>
           <List>
-          <Link to="/warehouses" style={{ color: 'white', textDecoration:'none' }} className="link">
+          <Link to="/admin/manageWarehouses" style={{ color: 'white', textDecoration:'none' }} className="link">
 
             {['Warehouses'].map((text, index) => (
               <ListItem key={text} disablePadding>

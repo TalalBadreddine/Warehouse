@@ -59,6 +59,7 @@ function WarehouseOwnerDetails() {
   useEffect(() => {
 
     getCurrentCustomerInfo(userinfo.email).then(result => {
+      if(result.data == 'forbidden'){navigate('/')}
       setRequests(result.data)
 
       let x = 0;
@@ -77,6 +78,8 @@ function WarehouseOwnerDetails() {
       })
       setRows([...arr])
       setSum(x)
+    }).catch((err) => {
+      if(err.response.data == 'forbidden'){navigate('/')} 
     })
   }, []);
 

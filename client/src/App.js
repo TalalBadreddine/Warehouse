@@ -16,7 +16,6 @@ import WarehouseDetails from './Routes/Customer/WarehouseDetails/WarehouseDetail
 import ManageRequests from './Routes/WarehouseOwner/MangaRequests/ManageRequests'
 import MyWarehouses from './Routes/WarehouseOwner/MyWarehouses/MyWarehouses';
 import SideBar from './Components/SideBar/SideBar'
-import AdminSignIn from './Routes/Admin/AdminSignIn/AdminSignIn'
 import ManageUsers from './Routes/Admin/ManageUsers/ManageUsers';
 import ViewWarehouseDetails from './Routes/WarehouseOwner/ViewWarehouseDetails/ViewWarehouseDetails';
 import CustomerRequests from './Routes/Customer/CustomerRequests/CustomerRequests';
@@ -26,7 +25,7 @@ import ManageWarehouseOwner from './Routes/Admin/ManageWarehouseOwner/ManageWare
 import UserActivity from './Routes/Admin/UserActivity/UserActivity';
 import Statistics from './Routes/Admin/Statistics/Statistics';
 import WarehouseOwnerDetails from './Routes/Admin/WarehouseOwnerDetails/WarehouseOwnerDetails';
-import LoginAdmin from './Routes/Admin/AdminLogin(Test)/LoginAdmin';
+import LoginAdmin from './Routes/Admin/AdminLogin/LoginAdmin';
 import ManageWarehouse from './Routes/Admin/ManageWarehouse/ManageWarehouse';
 
 
@@ -86,12 +85,11 @@ function App() {
              <Route path = 'userActivity' element={<UserActivity></UserActivity>}></Route>
              <Route path='' element={<Statistics></Statistics>}></Route>
              <Route path='WarehouseOwnerDetails' element={<WarehouseOwnerDetails></WarehouseOwnerDetails>}></Route>
-             <Route path='login' element={<LoginAdmin></LoginAdmin>}></Route>
              <Route path='manageWarehouses'element={<ManageWarehouse></ManageWarehouse>}></Route>
 
         </Route>
 
-        <Route path='adminLogin' element={<AdminSignIn></AdminSignIn>}></Route>
+        <Route path='adminLogin' element={<LoginAdmin></LoginAdmin>}></Route>
 
         {/* <Route path='*' element={<Navigate to='/' />} /> */}
 
