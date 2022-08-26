@@ -64,13 +64,36 @@ const register = async (req, res) => {
             collect: 'currently_due',
           });
 
+          let obj = {accountLink: accountLink, accountId: account.id}   
 
-        return res.send(accountLink).status(200)
+        return res.send(obj).status(200)
 
     } catch (error) {
         console.log(error)
         res.status(500).json({ message: "an error occured at register function " });
     }
+}
+
+// TODO: add it to the login phase
+const completeStripeAccount = async  (accountId) => {
+
+    try{
+
+        const accountId = accountId
+
+
+        const capability = await stripe.accounts.updateCapability(
+            `${accountId}`,
+            'card_payments',
+            {requested: true}
+          );
+
+          return capability
+    }
+    catch(err){
+        console.log(`error at completeStripeAccount ${err.message}`)
+    }
+
 }
 
 //Login
@@ -313,5 +336,6 @@ module.exports = {
     getWarehouses,
     acceptDeclineRequest,
     deleteWarehouse,
-    getWarehouseDetails
+    getWarehouseDetails,
+    completeStripeAccount
 }
