@@ -165,7 +165,7 @@ const UserActivity = () => {
             }
 
             let row = usersArr.map((user) => {
-                return createData(user.email, user.userName, user.registerDate ? new Date(user.registerDate).toISOString().slice(0, 10) : new Date().toISOString().slice(0, 10), user._id)
+                return createData(user.email, user.userName, user.registrationDate ? new Date(user.registrationDate).toISOString().slice(0, 10) : new Date().toISOString().slice(0, 10), user._id)
             })
 
             logs = logs.filter((log) => {

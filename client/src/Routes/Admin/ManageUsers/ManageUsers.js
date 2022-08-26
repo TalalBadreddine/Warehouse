@@ -117,7 +117,6 @@ function ManageUsers() {
   },[allUsers])
 
   useEffect(()=>{
-    console.log(searchedUsers)
     if(searchedUsers == null || searchedUsers.length == 0)return
 
             let arr = searchedUsers.map((item ,i)=>{

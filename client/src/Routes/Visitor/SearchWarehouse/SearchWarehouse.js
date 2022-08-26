@@ -71,7 +71,6 @@ const SearchWarehouse = ({role}) => {
                         action: `navigated to search for a warehouse`,
                         role: 'customer'
                     }).then((results) => {
-                        console.log(results.data)
                     })
                     
                    
@@ -249,7 +248,6 @@ const SearchWarehouse = ({role}) => {
             action: `searched for warehouses and sorted them by neareset to his Location`,
             role: 'customer'
         }).then((results) => {
-            console.log(results.data)
         })
 
         setFiltredWarehousesInfo([...sortedArr])
@@ -278,9 +276,9 @@ const SearchWarehouse = ({role}) => {
                 <WarehousesSearchFilters data={defaultSettings} setDate={setDate} date={date} priceChange={priceChange} spaceChange={spaceChange} sortByAction={sortByAction}></WarehousesSearchFilters>
             </div>
 
-            <div className="col-6 d-flex">
+            <div className="col-sm-6 col-12 d-flex mt-sm-0 mt-3">
                 <div className="col-6">
-                    <SearchBar searchValue={searchValue} action={onSearch}></SearchBar>
+                    <SearchBar style={{backgroundColor: `${ui.searchesInput}`}} searchValue={searchValue} action={onSearch}></SearchBar>
                 </div>
                 <div className=" ms-3 col-6">
                     <Form className="d-flex">
@@ -293,7 +291,7 @@ const SearchWarehouse = ({role}) => {
 
                             }}
                         />
-                        <p>Fly to Space</p>
+                        <p style={{color: `${ui.normalText}`}}>Fly to Space</p>
                         <Form.Check
                             className="ms-3"
                             type="switch"
@@ -302,7 +300,7 @@ const SearchWarehouse = ({role}) => {
                                 e.target.checked ? setSearchBy('address') : setSearchBy('name')
                             }}
                         />
-                        <p>Search By Location</p>
+                        <p style={{color: `${ui.normalText}`}}>Search By Location</p>
                     </Form>
                 </div>
             </div>
@@ -327,12 +325,12 @@ const SearchWarehouse = ({role}) => {
                 <div className="d-flex d-sm-block flex-wrap col-sm-6  col-12">
 
 
-                    <div className={`overflow-auto  ${styles.warehousesContainer}`} style={{overflowY:'auto', height:'600px'}}>
+                    <div className={`overflow-auto col-12 d-sm-block d-flex justify-content-center  ${styles.warehousesContainer}`} style={{overflowY:'auto', height:'600px'}}>
 
                         {
                             filtredWarehousesInfo && filtredWarehousesInfo.map((warehouse) => {
                                 return (
-                                    <div key={warehouse.location[0]} onMouseEnter={() => {
+                                    <div className="col-sm-12 col-5 ms-4 ms-sm-0 " key={warehouse.location[0]} onMouseEnter={() => {
                                         isFlyToOn &&
                                             setFlyToMap([warehouse.location[0], warehouse.location[1]])
                                     }}>
@@ -347,7 +345,7 @@ const SearchWarehouse = ({role}) => {
                     </div>
                 </div>
 {/* position-fixed ${styles.mapContainer} */}
-                <div className={`col-6 `} style={{position:'fixed', top:'23%',right:'0'}}>
+                <div className={`col-6 d-sm-block  d-none`} style={{position:'fixed', top:'23%',right:'0'}}>
                     <WarehousesMap info={filtredWarehousesInfo} flyToMap={flyToMap} setMylocation={setMylocation} getMyLocation={getMyLocation} canPin={canPin} setPinLocation={setPinLocation}  ></WarehousesMap>
                 </div>
 

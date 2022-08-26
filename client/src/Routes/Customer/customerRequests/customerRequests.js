@@ -11,7 +11,7 @@ import styles from './customerRequestsCss.module.css'
 import { BsFillReplyAllFill } from 'react-icons/bs'
 import { AiFillCaretDown } from 'react-icons/ai'
 import { BiUserCircle } from 'react-icons/bi'
-
+import ui from '../../../themes'
 
 
 function CustomerRequests() {
@@ -52,7 +52,6 @@ function CustomerRequests() {
             action: `add a feedback to  ${currentWarehouseData.name} warehouse, the comment content: ${content}`,
             role: 'customer'
         }).then((results) => {
-            console.log(results.data)
         })
 
         let currentComment
@@ -86,10 +85,10 @@ function CustomerRequests() {
     }, []);
     const statusColor = (status) => {
         if (status === 'pending') {
-            return 'purple'
+            return 'orange'
         }
         if (status === 'accepted') {
-            return 'green'
+            return 'lightgreen'
         }
         else {
             return 'red'
@@ -118,12 +117,10 @@ function CustomerRequests() {
         setViewAllReply([...arr])
 
         for (let i = 0; i < replyBtnRef.current.length; i++) {
-            console.log(replyBtnRef)
             if (i != indexOfRef) replyBtnRef.current[i].className = 'd-none'
         }
 
         let target = replyBtnRef.current[indexOfRef]
-        console.log(target.className)
         if (target.className == ' ') {
             target.className = 'd-none'
         } else {
@@ -178,13 +175,13 @@ function CustomerRequests() {
             <div className='mt-4'>
 
 
-                <span className={styles.returnBtn} onClick={() => { navigate(-1) }}><IoIosReturnLeft size={68}></IoIosReturnLeft></span>
+                <span className={styles.returnBtn} onClick={() => { navigate(-1) }}><IoIosReturnLeft size={68} style={{color:`${ui.borders}`}}></IoIosReturnLeft></span>
 
             </div>
 
             <div className='p-5'>
-                <Table striped bordered hover responsive="md" style={{ height: '60vh', width: '80vw', margin: 'auto' }}>
-                    <thead >
+                <Table striped  hover responsive="md" style={{ width: '75vw' }}>
+                    <thead style={{backgroundColor: `${ui.borders}`,color:'white', fontSize:'18px', height:'8vh' }} >
                         <tr>
                             <th>Warehouse Name</th>
                             <th>Provider</th>
@@ -192,25 +189,24 @@ function CustomerRequests() {
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody >
 
                         {requests != undefined &&
                             requests.map((item, i) => (
                                 <tr key={i}>
-                                    <td className='p-3'> {item.warehouseName}</td>
-                                    <td className='p-3'>{item.warehouseOwnerEmail}</td>
+                                    <td className='p-3' style={{color:'white'}}> {item.warehouseName}</td>
+                                    <td className='p-3' style={{color:'white'}}>{item.warehouseOwnerEmail}</td>
                                     <td style={{ color: statusColor(item.status) }} className='p-3'>{item.status}</td>
                                     <td className='p-3' >
                                         <div style={{ display: 'inline-block' }} >
-                                            <a style={{ color: 'darkblue' }} onClick={() => { handleShow(item) }} href="#">Contact</a>
+                                            <button style={{ color:'white', backgroundColor:`${ui.backgroundColor}`, border:`solid 2px ${ui.borders}`}} onClick={() => { handleShow(item) }} href="#">Contact</button>
 
-                                            <a className="ms-5" style={{ color: 'darkblue' }} href="#" onClick={() => {
+                                            <button className="ms-5" style={{ color:'white', backgroundColor:`${ui.backgroundColor}`, border:`solid 2px ${ui.borders}`}} href="#" onClick={() => {
                                                 handleViewBtn(item.WarehouseId)
                                                 setCurrentWarehouseRequest(item)
-                                            }}>View</a>
+                                            }}>View</button>
 
-                                            {item.status == 'accepted' &&
-                                                <a className="ms-5" style={{ color: 'darkblue' }} href="#" >Feedback</a>}
+                                            {/* {item.status == 'accepted' && <button className="ms-5" style={{ color:'white', backgroundColor:`${ui.backgroundColor}`, border:`solid 2px ${ui.borders}`}} href="#" >Feedback</button>} */}
                                         </div>
                                     </td>
                                 </tr>
@@ -311,7 +307,7 @@ function CustomerRequests() {
                             </div>}
 
 
-                            <div className='mt-3' style={{ height: '400px', overflowY: 'scroll' }}>
+                            <div className='mt-3' style={{ height: currentWarehouseData.feedback.length > 0 ? '400px' : '0px', overflowY: 'scroll' }}>
 
                                 <div className='ms-4'>
 
@@ -336,7 +332,6 @@ function CustomerRequests() {
                                                                         let arr = viewAllReply
                                                                         arr[helperIndex] = arr[helperIndex] == 0 ? 10000 : 0
                                                                         setViewAllReply([...arr])
-                                                                        console.log(arr)
 
                                                                     }}><AiFillCaretDown></AiFillCaretDown> View replies</p>}
                                                                     {currentWarehouseRequest.status == 'accepted' && <p style={{ fontSize: '1rem', color: 'rgb(0,0,0, 0.6)' }} className={commentArr.length > 1 ? `ms-5 ${styles.returnBtn}` : `ms-2 ${styles.returnBtn}`} onClick={(e) => {

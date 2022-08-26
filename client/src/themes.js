@@ -1,5 +1,3 @@
-
-
 const bigTitle = '#ffffff'
 
 const bigTitleSecondaryColor = '#66b2ff'
@@ -20,6 +18,8 @@ const borders = '#4177b2'
 
 const iconsColors = '#ffffff'
 
+const darkBg = '#0a1827'
+
 export default {
 
     bigTitle,
@@ -31,5 +31,6 @@ export default {
     xsTexts,
     lightBg,
     borders,
-    iconsColors
+    iconsColors,
+    darkBg
 }

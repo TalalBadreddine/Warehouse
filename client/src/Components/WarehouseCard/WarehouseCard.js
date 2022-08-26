@@ -45,14 +45,14 @@ const WarehouseCard = (props) => {
     const ownerDiv = () => {
         return(
             <div>
-                <p className='fs-4 d-flex'>Status: <p style={{color: setColorByStatus(props.info.status)}} className="ms-3">{props.info.status == 'accepted' ? 'Listed' : props.info.status }</p> </p> 
+                <p style={{color:`${ui.normalText}`}} className='fs-4 d-flex'>Status: <p style={{color: setColorByStatus(props.info.status)}} className="ms-3">{props.info.status == 'accepted' ? 'Listed' : props.info.status }</p> </p> 
             </div>
         )
     }
 
     return (
         <div>
-        <div className={`col-5 col-sm-12 m-2 p-2 d-sm-flex rounded d-block ${styles.cardDiv}`} onClick={() => { navigateToWarehouseDetails(props.role, props.info) }}  >
+        <div className={`col-12 col-sm-12 m-2 p-2 d-sm-flex rounded d-block ${styles.cardDiv}`} onClick={() => { navigateToWarehouseDetails(props.role, props.info) }}  >
 
             <div className='col-sm-4 '>
                 <Carousel>
@@ -65,7 +65,7 @@ const WarehouseCard = (props) => {
                             key={index}
                             src={base64}
                             alt=""
-                            height={'180px'}
+                            height={'200px'}
                             width={'310px'}
                         />
 
@@ -90,8 +90,8 @@ const WarehouseCard = (props) => {
 
 
             <div className="ms-sm-2 col-sm-8 p-sm-2 p-1 col-12 " >
-                <h1 className={styles.bigTypo}>{props.info.name}'s warehouse   </h1>
-                <h1 className={styles.smallTypo} style={{ color: 'gray' }}>address:{props.info.address[0][1]}, {props.info.address[0][0]}</h1>
+                <h1 style={{color:`${ui.normalText}`}} className={styles.bigTypo}>{props.info.name}'s warehouse   </h1>
+                <h1 className={styles.smallTypo} style={{color:`${ui.normalText}`}}>Address:{props.info.address[0][1]}, {props.info.address[0][0]}</h1>
                 <div className=' h-50'>
 
                     <BiCctv style={{ color: `${ui.iconsColors}` }} className={`font-wight-700 m-2 ${styles.cctvIcon}`} size={27} ></BiCctv>
@@ -107,7 +107,7 @@ const WarehouseCard = (props) => {
 
                     <img src={ac} width={'37px'} style={{ opacity: 0.4 }} className="m-2 mt-3"></img>
 
-                   {props.role == 'owner' ?  ownerDiv() : <p>Price starts from <span style={{filter: props.role == 'visitor' ?  'blur(4px)' : null }}>${props.info.pricePerDay}</span> with space: <span style={{filter: props.role == 'visitor' ?  'blur(4px)' : null }}>{props.info.space}</span> m<sup>2</sup> </p>}
+                   {props.role == 'owner' ?  ownerDiv() : <p style={{ color:`${ui.normalText}`}}>Price starts from <span style={{filter: props.role == 'visitor' ?  'blur(4px)' : null, color: `${ui.normalText}` }}>${props.info.pricePerDay}</span> with space: <span style={{filter: props.role == 'visitor' ?  'blur(4px)' : null }}>{props.info.space}</span> m<sup>2</sup> </p>}
         
                 </div>
           

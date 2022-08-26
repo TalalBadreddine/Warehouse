@@ -1,11 +1,15 @@
-.leaflet-container{
-    height: 600px;
-    width: 98%;
+.leaflet-container {
+  height: 600px;
+  width: 98%;
 }
 
-
-body{
-    background-color: #011e3c !important;
+/* @media screen and (max-width: 700px) {
+  .leaflet-container{
+    display: none;
+  }
+} */
+body {
+  background-color: #011e3c !important;
 }
 table{
     border: solid 1px white;
@@ -21,4 +25,44 @@ a{
 
 input{
     background-color: '#132f4c !important';
+} */
+
+.modal-content{
+    border: none !important;    
+}
+
+form,
+input,
+label,
+i,
+select {
+  color: #ffffff !important;
+}
+
+select {
+  background-image: url("./Assets/dropdownarrow.png") !important;
+}
+
+/* for the accordions */
+.accordion-button {
+  background-color: #132f4c !important;
+  color: #ffffff !important;
+}
+
+
+table{
+border: solid 2px white;
+
+}
+
+.rdrDateDisplayItem input{
+  background-color: #132f4c !important;
+}
+
+/* .rdrCalendarWrapper{
+  background-color:;
+} */
+
+/* .rdrDateDisplayWrapper{
+  background-color: ;
 } */
