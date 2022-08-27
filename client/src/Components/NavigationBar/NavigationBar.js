@@ -5,6 +5,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { Outlet, Link, useNavigate } from 'react-router-dom';
 import styles from './NavigationCss.module.css'
+import ui from '../../themes'
 
 
 function Navigationbar({ role }) {
@@ -28,7 +29,6 @@ function Navigationbar({ role }) {
       action: `Logged out`,
       role: 'customer'
     }).then(async (results) => {
-      console.log(results)
     await axios.get('/logout').then((data) => {
       navigate('/')
     })
@@ -38,14 +38,14 @@ function Navigationbar({ role }) {
 
   }
 
-  const fontColor = 'black'
+  const fontColor = 'white'
 
   //TODO: nav logout btn and change i ui
   return (
     <>
 
 
-      <Navbar bg="white" expand="lg">
+      <Navbar expand="lg" className={styles.navBar}>
         <Container fluid>
           <Navbar.Brand href="#Logo"  style={{ color: fontColor }}>Logo</Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
@@ -78,7 +78,7 @@ function Navigationbar({ role }) {
 
 
               {/* CUSTOMER AND OWNER*/}
-              {(role == 'owner' || role == 'customer') && <Nav.Link><p onClick={() => { logout() }} >Logout</p></Nav.Link>}
+              {(role == 'owner' || role == 'customer') && <Nav.Link><p style={{color:`${ui.normalText}`}} onClick={() => { logout() }} >Logout</p></Nav.Link>}
 
             </Nav>
 

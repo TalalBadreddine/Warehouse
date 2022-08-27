@@ -22,6 +22,7 @@ import CreditCardForm from '../../../Components/CreditCard/CreditCardForm'
 import { Modal } from 'react-bootstrap'
 import Button from 'react-bootstrap/Button'
 import axios from 'axios'
+import ui from '../../../themes'
 
 
 
@@ -131,15 +132,15 @@ const WarehouseDetails = () => {
             </div> */}
 
             <div className="col-2 ps-5 ">
-                <IoIosReturnLeft onClick={() => navigate(-1)} size={50}></IoIosReturnLeft>
+                <IoIosReturnLeft onClick={() => navigate(-1)} size={50} style={{color: `${ui.normalText}`}}></IoIosReturnLeft>
 
             </div>
 
             <div className="col-9  p-4">
 
-                <div className="col-12">
-                    <h1>{warehouseData.name}</h1>
-                    <h3 className="d-flex">{warehouseData.address[0][0]} ,<h3 className="ms-2">{warehouseData.address[0][1]}</h3> </h3>
+                <div   className="col-12">
+                    <h1 style={{color:`${ui.bigTitle}`}}>{warehouseData.name}</h1>
+                    <h3 style={{color:`${ui.bigTitleSecondaryColor}`}} className="d-flex">{warehouseData.address[0][0]} ,<h3 className="ms-2">{warehouseData.address[0][1]}</h3> </h3>
                 </div>
 
 
@@ -173,34 +174,34 @@ const WarehouseDetails = () => {
                     <div className="col-6">
 
 
-                        <h1>Details:</h1>
+                        <h1 style={{color:`${ui.bigTitle}` }}>Details:</h1>
 
                         <div className="mt-5">
-                            <h4>Property size: <span className="ms-1" style={{ fontWeight: '350' }}>{warehouseData.space} m<sup>2</sup> / {Math.floor(parseInt(warehouseData.space) * 10.7639)} ft<sup>2</sup></span> </h4>
+                            <h4 style={{color:`${ui.normalText}` }}>Property size: <span className="ms-1" style={{ fontWeight: '350' , color:`${ui.normalText}`  }}>{warehouseData.space} m<sup>2</sup> / {Math.floor(parseInt(warehouseData.space) * 10.7639)} ft<sup>2</sup></span> </h4>
                         </div>
 
                         <div className="mt-5">
-                            <h4>Cost per day: <span className="ms-1" style={{ fontWeight: '350' }}>${warehouseData.pricePerDay}</span></h4>
+                            <h4 style={{color:`${ui.normalText}` }}>Cost per day: <span className="ms-1" style={{ fontWeight: '350',color:`${ui.normalText}` }}>${warehouseData.pricePerDay}</span></h4>
                         </div>
 
                         <div className="mt-5">
-                            <h4>Type: <span className="ms-1" style={{ fontWeight: '350' }}>{warehouseData.type}</span></h4>
+                            <h4 style={{color:`${ui.normalText}` }}>Type: <span className="ms-1" style={{ fontWeight: '350',color:`${ui.normalText}`  }}>{warehouseData.type}</span></h4>
                         </div>
 
                     </div>
 
-                    <div className="col-5 rounded-4 d-flex border border-dark ">
-                        <div className="p-3 col-12 rounded py-4">
+                    <div  className="col-5 rounded-4 d-flex border border-dark ">
+                        <div  className="p-3 col-12 rounded py-4">
 
-                            <div className="col-12 px-1">
-                                <Table bordered>
-                                    <tbody>
-                                        <tr >
-                                            <td className="w-50 p-2">From: {state.startDate ? new Date(state.startDate).toISOString().slice(0, 10) : 'No Date Selected'}</td>
-                                            <td className="w-50 p-2">Till: {state.endDate ? new Date(state.endDate).toISOString().slice(0, 10) : 'No Date Selected'}</td>
+                            <div  className="col-12 px-1">
+                                <Table  bordered>
+                                    <tbody style={{borderColor:`${ui.borders}`}}>
+                                        <tr style={{borderColor:`${ui.borders}`}}>
+                                            <td style={{color:`${ui.normalText}` , borderColor:`${ui.borders}` }} className="w-50 p-2">From: {state.startDate ? new Date(state.startDate).toISOString().slice(0, 10) : 'No Date Selected'}</td>
+                                            <td style={{color:`${ui.normalText}`,borderColor:`${ui.borders}` }} className="w-50 p-2">Till: {state.endDate ? new Date(state.endDate).toISOString().slice(0, 10) : 'No Date Selected'}</td>
                                         </tr>
                                         <tr className={styles.requestBtn}>
-                                            <td colSpan={2} className={`text-center bg-success text-white fs-5 `} onClick={() => {
+                                            <td style={{color:`${ui.Buttons}`}}  colSpan={2} className={`text-center bg-primary text-white fs-5 `} onClick={() => {
                                                 manageRequest()
                                             }}>Request</td>
                                         </tr>
@@ -209,18 +210,18 @@ const WarehouseDetails = () => {
                             </div>
 
                             <div className="mt-4 px-5">
-                                <p className="fs-4">{datediff(state.startDate, state.endDate)} Day X {warehouseData.pricePerDay}$ Per Day</p>
-                                <p className="col-12 m-auto"><hr></hr></p>
-                                <p className=" fs-4">Total: {datediff(state.startDate, state.endDate) * parseInt(warehouseData.pricePerDay)}$</p>
+                                <p style={{color:`${ui.normalText}`}} className="fs-4">{datediff(state.startDate, state.endDate)} Day X {warehouseData.pricePerDay}$ Per Day</p>
+                                <p style={{color:`${ui.normalText}`}}  className="col-12 m-auto"><hr></hr></p>
+                                <p style={{color:`${ui.normalText}`}} className=" fs-4">Total: {datediff(state.startDate, state.endDate) * parseInt(warehouseData.pricePerDay)}$</p>
                             </div>
 
                             <div className="mt-5 d-flex justify-content-between px-4">
 
-                                <p className={`fs-4`} onClick={() => {
+                                <p style={{color:`${ui.normalText}`}} className={`fs-4`} onClick={() => {
                                     setDataSettings({ ...dataSettings, ['showEmail']: true })
                                 }}> {dataSettings.showEmail ? <p className="fs-5">{warehouseData.Owner.email} </p> : <p className={styles.emailIcon}><AiOutlineMail size={40}></AiOutlineMail> Mail </p>}</p>
 
-                                <p className="fs-4" onClick={() => {
+                                <p style={{color:`${ui.normalText}`}} className="fs-4" onClick={() => {
                                     setDataSettings({ ...dataSettings, ['showPhoneNumber']: true })
                                 }}>{dataSettings.showPhoneNumber ? <p className="fs-5"> {warehouseData.Owner.phoneNumber} </p> : <p className={`${styles.emailIcon}`}><FiPhone size={40}></FiPhone> Phone </p>}</p>
                             </div>
@@ -231,12 +232,12 @@ const WarehouseDetails = () => {
                 </div>
 
                 <div className="mt-5 col-12">
-                    <h3>Features:</h3>
+                    <h3 style={{color:`${ui.normalText}`}}>Features:</h3>
 
-                    <div className="mt-4 justify-content-between d-flex flex-wrap w-75" >
+                    <div style={{color:`${ui.normalText}`}} className="mt-4 justify-content-between d-flex flex-wrap w-75" >
                         {warehouseData.isSecurityCameras &&
 
-                            <div className="d-flex m-4">
+                            <div  className="d-flex m-4">
                                 <BiCctv size={38}></BiCctv>
                                 <p className="ms-3 fs-4">CCTV</p>
                             </div>
@@ -250,7 +251,7 @@ const WarehouseDetails = () => {
                         }
                         {warehouseData.isAirConditioning &&
 
-                            <div className="d-flex m-4">
+                            <div  className="d-flex m-4">
                                 <img src={ac} width={'35px'} height={'40px'}></img>
                                 <p className="ms-3 fs-4">Air Conditioner</p>
                             </div>
@@ -275,8 +276,8 @@ const WarehouseDetails = () => {
 
                 <div className="mt-4 d-flex col-12">
                     <div className="col-12">
-                        <h3>Description:</h3>
-                        <p className="mt-4 ms-2 fs-5">{warehouseData.description}
+                        <h3 style={{color:`${ui.normalText}`}}>Description:</h3>
+                        <p style={{color:`${ui.normalText}`}} className="mt-4 ms-2 fs-5">{warehouseData.description}
                             Offering over 2000SQM of elegant working space, Best Option For to Open Gym . This well-presented Gym is arranged on the 3 floors level with a lovely Place within a calm surrounding.
                             This Gym comprises generous open space and 2 Sauna room , with bright interiors and very good finishing, and Many bathrooms For Male & Female , in addition there Is Pool & Private Rooms For Managers , …. etc .
                         </p>
@@ -318,10 +319,10 @@ const WarehouseDetails = () => {
                 </div>
 
                 <div>
-                    <h1>Select Rental Date:</h1>
-                    <p>Select a rental date so your request to rent the warehouse will be sent to the owner</p>
-                    <p>Availble Dates: {warehouseData && warehouseData.datesAvailable.map((currentDate) => {
-                        return <span className="ms-3 px-3 py-1 d-inline-block rounded-4" style={{ backgroundColor: '#90ee90' }}>{currentDate[0].replaceAll('/', '-')} / {currentDate[1].replaceAll('/', '-')}</span>
+                    <h1 style={{color:`${ui.normalText}`}}>Select Rental Date:</h1>
+                    <p style={{color:`${ui.normalText}`}}>Select a rental date so your request to rent the warehouse will be sent to the owner</p>
+                    <p style={{color:`${ui.normalText}`}}>Availble Dates: {warehouseData && warehouseData.datesAvailable.map((currentDate) => {
+                        return <span className="ms-3 px-3 py-1 d-inline-block rounded-4" style={{ backgroundColor:`${ui.Buttons}` }}>{new Date(currentDate[0]).toISOString().slice(0, 10)} / {new Date(currentDate[1]).toISOString().slice(0, 10)}</span>
                     })}</p>
                     {state.endDate && <p> From: {new Date(state.startDate).toISOString().slice(0, 10)}<span className="ms-3"></span> Till: {new Date(state.endDate).toISOString().slice(0, 10)}</p>}
                     {dataSettings.showDateAlert && <p className={`${styles.dateAlert} fs-4`}> Fill Date To Continue !</p>}

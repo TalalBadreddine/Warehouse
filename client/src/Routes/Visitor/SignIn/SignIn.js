@@ -9,6 +9,7 @@ import SignUpWarehouse from '../../../Components/SignUpWarehouseOwner/SignUpWare
 import SignUpUser from '../../../Components/SignUpUser/SignUpUser';
 import LoginWarehouseOwner from '../../../Components/LoginWarehouseOwner/LoginWarehouseOwner';
 import LoginCustomer from '../../../Components/LoginCustomer/LoginCustomer';
+import ui from '../../../themes'
 
 function SignIn() {
 
@@ -57,22 +58,23 @@ function SignIn() {
 
         <Row className='mt-5'>
 
-          <Col className='mt-5'> <Card style={{ width: '21rem', outline: 'none', height: '415px', boxShadow: '1px 2px 9px #54d494' }}>
+          <Col className='mt-5'> 
+          <Card style={{ width: '21rem', outline: 'none', height: '415px', boxShadow: '1px 2px 9px #027fff', backgroundColor: ` ${ui.lightBg}`, borderColor: ` ${ui.borders}` }}>
             <Card.Body >
-              <Card.Title>Rent a space</Card.Title>
+              <Card.Title style={{ color: ` ${ui.normalText}`}}>Rent a space</Card.Title>
               <br></br>
               <br></br>
-              <Card.Text>
+              <Card.Text style={{color:`${ui.normalText}`}} >
                 Some quick example text to build on the card title and make up the
                 bulk of the card's content.
               </Card.Text>
               <br></br>
-              <Button onClick={function (event) { openAndLoginCustomer() }} style={{ backgroundColor: '#54d494', borderColor: '#54d494' }} variant="secondary">Login</Button>
+              <Button onClick={function (event) { openAndLoginCustomer() }} style={{ backgroundColor: ` ${ui.Buttons} `, borderColor: ` ${ui.borders}` }} variant="secondary">Login</Button>
               <br></br>
               <br></br>
-              Don't have an account?<Card.Link onClick={function (event) { openAndCustomer() }} style={{ color: '#54d494', borderColor: '#54d494' }} > Sign-up</Card.Link>
+             <span style={{color:`${ui.normalText}`}} > Don't have an account?</span><Card.Link onClick={function (event) { openAndCustomer() }} style={{ color: ` ${ui.Buttons}` }}> <span style={{ color: ` ${ui.Buttons}`}}>Sign-up </span></Card.Link>
             </Card.Body>
-            <Modal
+            <Modal 
               show={show}
               onHide={handleClose}
               backdrop="static"
@@ -81,11 +83,11 @@ function SignIn() {
               centered
               keyboard={false}
             >
-              <Modal.Header closeButton>
-                <Modal.Title>Register</Modal.Title>
+              <Modal.Header  style={{backgroundColor:`${ui.lightBg}` , }} closeButton>
+                <Modal.Title  style={{color:`${ui.normalText}` , }}>Register</Modal.Title>
               </Modal.Header>
 
-              <Modal.Body>
+              <Modal.Body  style={{backgroundColor:`${ui.lightBg}` , }}>
                 {/* {isCustomer && <SignUpUser/>} */}
                 {/* <SignUpWarehouse/> */}
                 {isOwner ? <SignUpWarehouse /> : <SignUpUser />}
@@ -93,7 +95,8 @@ function SignIn() {
 
 
             </Modal>
-            <Modal
+            <Modal style={{borderColor:`${ui.borders}`}}
+           
               show={showLogin}
               onHide={handleCloseLogin}
               backdrop="static"
@@ -102,11 +105,11 @@ function SignIn() {
               centered
               keyboard={false}
             >
-              <Modal.Header closeButton>
-                <Modal.Title>Login</Modal.Title>
+              <Modal.Header style={{backgroundColor:`${ui.lightBg}`, borderColor:`${ui.borders}` , color:`${ui.normalText}` }}  closeButton>
+                <Modal.Title style={{color:`${ui.normalText}`}}>Login</Modal.Title>
               </Modal.Header>
 
-              <Modal.Body>
+              <Modal.Body style={{backgroundColor:`${ui.lightBg}` , borderColor:`${ui.borders}`}}>
                 {/* {isCustomer && <SignUpUser/>} */}
                 {/* <SignUpWarehouse/> */}
                 {isLoginOwner ? <LoginWarehouseOwner /> : <LoginCustomer />}
@@ -116,20 +119,20 @@ function SignIn() {
 
             </Modal>
           </Card></Col>
-          <Col className='mt-5'><Card style={{ width: '21rem', height: '415px', boxShadow: '1px 2px 9px #54d494' }}>
-            <Card.Body >
-              <Card.Title>List a space </Card.Title>
+          <Col className='mt-5'><Card style={{ width: '21rem', height: '415px', boxShadow: '1px 2px 9px #027fff', backgroundColor: ` ${ui.lightBg}`, borderColor: ` ${ui.borders}` }}>
+            <Card.Body>
+              <Card.Title style={{color:`${ui.normalText}`}} >List a space </Card.Title>
               <br></br>
               <br></br>
-              <Card.Text>
+              <Card.Text style={{color:`${ui.normalText}`}} >
                 Some quick example text to build on the card title and make up the
                 bulk of the card's content.
               </Card.Text>
               <br></br>
-              <Button onClick={function (event) { openAndLoginOwner() }} style={{ backgroundColor: '#54d494', borderColor: '#54d494' }} variant="secondary">Login</Button>
+              <Button onClick={function (event) { openAndLoginOwner() }} style={{ backgroundColor: '#027fff', borderColor: '#027fff' }} variant="secondary">Login</Button>
               <br></br>
               <br></br>
-              Don't have an account?<Card.Link style={{ color: '#54d494', borderColor: '#54d494' }} onClick={function (event) { openAndOwner() }}> Sign-up</Card.Link>
+              <span style={{color:`${ui.normalText}`}} >Don't have an account?</span><Card.Link style={{ color: '#027fff', borderColor: '#027fff' }} onClick={function (event) { openAndOwner() }}> Sign-up</Card.Link>
             </Card.Body>
           </Card></Col>
           <Col > <Card.Img src={require("../../../Assets/Checking boxes-bro.png")} alt="Card image" style={{ width: '500px' }} /></Col>

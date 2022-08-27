@@ -10,6 +10,7 @@ import { Modal } from 'react-bootstrap'
 import { Accordion } from 'react-bootstrap'
 import ViewWarehouseDetails from '../ViewWarehouseDetails/ViewWarehouseDetails'
 import axios from 'axios';
+import ui from '../../../themes'
 
 
   //TODO: SOMTIMES DATE is not availble (it will be returned from the back end ) but not in the front end
@@ -44,17 +45,14 @@ function ManageRequests() {
       requestedDate: STARTRENTDATE
 
     }).then(result => {
-      console.log(result)
     })
 
     await axios.post('/userActivity', {
       action: `${STATUS} renting warehouse for ${userEmail} from ${new Date(STARTRENTDATE).toISOString().slice(0, 10)} To: ${new Date(ENDRENTDATE).toISOString().slice(0, 10)}`,
       role: 'warehouseOwner'
     }).then((results) => {
-      console.log(results.data)
     })
 
-    console.log(`request Is Sent for ${ID, STATUS, WAREHOUSEID, STARTRENTDATE, ENDRENTDATE}`)
 
 
     let currentrequest = requests.filter((request) => {
@@ -172,7 +170,6 @@ function ManageRequests() {
         action: `Accepted renting warehouse for ${currentWarehouse.userEmail} from ${new Date(currentWarehouse.startRentDate).toISOString().slice(0, 10)} To: ${new Date(currentWarehouse.endRentDate).toISOString().slice(0, 10)}`,
         role: 'warehouseOwner'
       }).then((results) => {
-        console.log(results.data)
       })
 
     })
@@ -234,9 +231,9 @@ function ManageRequests() {
 
 
 
-          <Table className={mytable.mytableone} striped bordered hover >
+          <Table style={{backgroundColor:`${ui.lightBg}` , borderColor:`${ui.borders}`, color:`${ui.normalText}` }} className={mytable.mytableone} striped bordered hover >
 
-            <thead className={mytable.tablehaed}>
+            <thead style={{backgroundColor:`${ui.borders}` }} className={mytable.tablehaed}>
               <tr>
 
                 <th>Costumer Email</th>
@@ -301,26 +298,26 @@ function ManageRequests() {
                 requests.filter(item => item.warehouseName.toLowerCase().includes(query)).map((item, i) => {
                   // if(item.status === 'pending'){
                   return <tr key={i}>
-                    <td>{item.userEmail}</td>
-                    <td>{item.warehouseName}</td>
+                    <td  style={{color:`${ui.normalText}`}}>{item.userEmail}</td>
+                    <td  style={{color:`${ui.normalText}`}}>{item.warehouseName}</td>
 
 
                     {showDetailsModal && currentRequestDetails && <ViewWarehouseDetails data={currentRequestDetails} showState={showDetailsModal} showAction={() => { setShowDetailsModal(true) }} hideAction={() => { setShowDetailsModal(false) }} ></ViewWarehouseDetails>}
 
                     <td>
-                      <Button className="m-1" variant="success" style={{ backgroundColor: "#54d494", borderColor: "#54d494" }}
+                      <Button className="m-1" variant="success" style={{ backgroundColor: `${ui.Buttons}`, borderColor: `${ui.normalText}` }}
                         onClick={() => {
                           HandleAccept(item._id, 'accepted', item.WarehouseId, item.startRentDate, item.endRentDate, item.userEmail)
                           setCurrentWarehouse(item)
                         }}>Accept</Button>{' '}
 
-                      <Button className="m-1" variant="danger" style={{ backgroundColor: "#ff0000", borderColor: "#ff0000" }}
+                      <Button className="m-1" variant="danger" style={{ backgroundColor: "#ff0000", borderColor: `${ui.normalText}` }}
                         onClick={() => {
                           HandleAccept(item._id, 'rejected', item.WarehouseId, item.startRentDate, item.endRentDate, item.userEmail)
                           setCurrentWarehouse(item)
                         }}>Decline</Button>{' '}
 
-                      <Button className="m-1" variant="light" style={{ backgroundColor: "#c1c1c1", borderColor: "#c1c1c1" }} onClick={() => { handleViewDetails(item) }}>View Details</Button>{' '}
+                      <Button className="m-1" variant="light"  style={{backgroundColor:`${ui.lightBg}` , color:`${ui.normalText}` , borderColor:`${ui.normalText}`}} onClick={() => { handleViewDetails(item) }}>View Details</Button>{' '}
                     </td>
                   </tr>
                   // }

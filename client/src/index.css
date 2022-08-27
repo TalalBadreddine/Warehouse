@@ -1,4 +1,48 @@
-.leaflet-container{
-    height: 600px;
-    width: 98%;
+.leaflet-container {
+  height: 600px;
+  width: 98%;
+}
+
+body {
+  background-color: #011e3c !important;
+}
+
+/* Link,h1,h2,h3,h4,td,thead{
+    color: white !important;
+}
+a{
+    text-decoration: none !important;
+    color: white !important
+}
+
+input{
+    background-color: '#132f4c !important';
+} */
+
+.modal-content{
+    border: none !important;    
+}
+
+form,
+input,
+label,
+i,
+select {
+  color: #ffffff !important;
+}
+
+select {
+  background-image: url("./Assets/dropdownarrow.png") !important;
+}
+
+/* for the accordions */
+.accordion-button {
+  background-color: #132f4c !important;
+  color: #ffffff !important;
+}
+
+
+table{
+border: solid 2px white;
+
 }
