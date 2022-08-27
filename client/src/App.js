@@ -27,6 +27,7 @@ import Statistics from './Routes/Admin/Statistics/Statistics';
 import WarehouseOwnerDetails from './Routes/Admin/WarehouseOwnerDetails/WarehouseOwnerDetails';
 import LoginAdmin from './Routes/Admin/AdminLogin/LoginAdmin';
 import ManageWarehouse from './Routes/Admin/ManageWarehouse/ManageWarehouse';
+import StripePayment from './Components/StripePaymentPage/StripePayment';
 
 
 function App() {
@@ -59,6 +60,7 @@ function App() {
           <Route path='' element={<SearchWarehouse role={'customer'}></SearchWarehouse>}></Route>
           <Route path='warehouseDetails' element={<WarehouseDetails></WarehouseDetails>}></Route>
           <Route path='requests' element={<CustomerRequests></CustomerRequests>}></Route>
+          <Route path='stripePayment' element={<StripePayment></StripePayment>}></Route>
 
         </Route>
 

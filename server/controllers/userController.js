@@ -36,28 +36,28 @@ const getWareHousesForUsers = async (req, res) => {
 
 const userLogin = async (req, res) => {
     try {
-            const {email, password} = req.body; 
-   
-            const user = await userSchema.findOne({
-                email
-            })
-   
-            if(!user) return res.status(400).json({message : "user does not exist"});        
-   
-            // verify password
-            if(( crypto.createHash(hashType).update(password).digest(encodeAs) != user.password)) 
-                return res.status(403).json({message : "incorrect password!"})
-   
-            // create token
-            const payload = {
-                user          
-            }
-   
-            await jwt.sign({user: user, role: 'user'}, jwtSecret, async (err, token) => {
-   
-                await res.cookie('jwt', `${token}`, { httpOnly: true })
-                 res.status(200).json(true)
-            })
+        const { email, password } = req.body;
+
+        const user = await userSchema.findOne({
+            email
+        })
+
+        if (!user) return res.status(400).json({ message: "user does not exist" });
+
+        // verify password
+        if ((crypto.createHash(hashType).update(password).digest(encodeAs) != user.password))
+            return res.status(403).json({ message: "incorrect password!" })
+
+        // create token
+        const payload = {
+            user
+        }
+
+        await jwt.sign({ user: user, role: 'user' }, jwtSecret, async (err, token) => {
+
+            await res.cookie('jwt', `${token}`, { httpOnly: true })
+            res.status(200).json(true)
+        })
 
     }
     catch (err) {
@@ -68,7 +68,6 @@ const userLogin = async (req, res) => {
 
 const userRegister = async (req, res) => {
     try {
-        console.log(req.body)
         const userInfo = req.body
 
         const usersWithSameEmail = await userSchema.find({
@@ -77,13 +76,19 @@ const userRegister = async (req, res) => {
 
         if (usersWithSameEmail.length >= 1) return res.send('exist').status(409)   // 409 => conflict
 
+        const customer = await stripe.customers.create({
+
+        });
+
         let user = new userSchema({
 
             email: userInfo.email,
             password: crypto.createHash(hashType).update(userInfo.password).digest(encodeAs),
-            userName: userInfo.userName
+            userName: userInfo.userName,
+            stripeAccountId: customer.id
 
         })
+
 
         await user.save()
 
@@ -128,6 +133,20 @@ const requestRentWarehouse = async (req, res) => {
 
             if (results) {
 
+                const session = await  stripe.paymentIntents.create({
+                    customer: decodedInfo.user.stripeAccountId,
+                    setup_future_usage: 'off_session',
+                    amount: parseInt(totalPrice),
+                    currency: 'usd',
+                    automatic_payment_methods: {
+                        enabled: true,
+                    },
+                    transfer_data: {
+                        destination: `${warehouseOwnerDetails.stripeAccountId}`,
+                      },
+                });
+                
+
                 let relation = new manageUsersAndWarehousesSchema({
 
                     userEmail: decodedInfo.user.email,
@@ -137,43 +156,15 @@ const requestRentWarehouse = async (req, res) => {
                     price: parseInt(totalPrice),
                     warehouseName: warehouseInfo.name,
                     warehouseOwnerName: warehouseOwnerDetails.ownerName,
-                    warehouseOwnerEmail: warehouseOwnerDetails.email
+                    warehouseOwnerEmail: warehouseOwnerDetails.email,
+                    clientSecret: session.client_secret,
+                    paymentId: session.id
 
                 })
 
                 await relation.save()
 
-                const session = await stripe.checkout.sessions.create({
-                    payment_method_types: ['card'],
-                    line_items: [{
-                        price_data: {
-                            currency: 'usd',
-                            unit_amount: totalPrice * 100,
-                            product_data: {
-                                name: warehouseInfo.name,
-                                description: `renting ${warehouseInfo.name} from ${new Date(relation.startRentDate).toISOString().slice(0, 10)} to ${new Date(relation.endRentDate).toISOString().slice(0, 10)}`,
-                            },
-                        },
-                        quantity: 1,
-                    }],
-
-                    mode: 'payment',
-                    success_url: 'http://localhost:3000/customer/requests',
-                    cancel_url: 'http://localhost:3000/customer/',
-                    payment_intent_data: {
-                        transfer_data: {
-                            destination: `${warehouseOwnerDetails.stripeId}`
-                        }
-                    }});
-
-                //TODO: add path for payment
-                //   payment_intent_data: {
-                //     transfer_data: {
-                //         destination: warehouseOwnerDetails.stripeId
-                //     }
-                // },
-
-                return res.send(session).status(200)
+                return res.send(relation).status(200)
 
             }
 

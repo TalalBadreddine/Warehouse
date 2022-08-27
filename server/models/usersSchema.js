@@ -12,6 +12,9 @@ const usersSchema = new mongoose.Schema({
     isActive: {
         type: Boolean,
         default: true
+    },
+    stripeAccountId:{
+        type: String
     }
 
 })

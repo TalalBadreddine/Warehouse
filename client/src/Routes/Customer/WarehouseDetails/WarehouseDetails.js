@@ -10,7 +10,6 @@ import ac from '../../../Components/WarehouseCard/air-conditioner.png'
 import { DateRange } from 'react-date-range';
 import { DateRangePicker } from 'react-date-range';
 
-
 import { useEffect, useState, useRef, useLayoutEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom"
 
@@ -26,11 +25,17 @@ import Button from 'react-bootstrap/Button'
 import axios from 'axios'
 import ui from '../../../themes'
 import { Carousel } from 'react-bootstrap'
+import StripePayment from '../../../Components/StripePaymentPage/StripePayment'
 
 
 
 const WarehouseDetails = () => {
+    const data = useLocation()
+    const navigate = useNavigate();
 
+    const [warehouseData, setWarehouseData] = useState(data.state)
+
+    const [stripeUserSecret, setStripeUserSecret] = useState(data.state.clientSecret)
     const [showPayments, setShowPayments] = useState(false)
     const [dataSettings, setDataSettings] = useState({
         endDate: null,
@@ -56,9 +61,7 @@ const WarehouseDetails = () => {
         iconSize: [30, 40]
     })
 
-    const data = useLocation()
-    const navigate = useNavigate();
-    const [warehouseData, setWarehouseData] = useState(data.state)
+
 
     const [windowWidth, setwindowWidth] = useState(window.innerWidth)
 
@@ -81,7 +84,6 @@ const WarehouseDetails = () => {
         if (warehouseData == null) return
         let maxDate = -Infinity
         let disabledDates = []
-
         for (let i = 0; i < warehouseData.datesAvailable.length; i++) {
             maxDate = Math.max(maxDate, new Date(warehouseData.datesAvailable[i][1]).getTime())
         }
@@ -123,35 +125,36 @@ const WarehouseDetails = () => {
             if (data.data == 'forbidden') {
                 navigate('/')
             }else{
-
-                window.location = `${data.data.url}`
-
+                setStripeUserSecret(data.data.clientSecret)
+                // window.location = `${data.data.url}`
+                setShowPayments(true)
             }
         })
-        //TODO: DO NOT DELETE THIS
-        // setShowPayments(true)
     }
+
 
     return (
         <div className="mt-3 d-sm-flex d-block">
 
 
-            <Modal
+            {stripeUserSecret != null && stripeUserSecret != undefined && <Modal
                 show={showPayments}
                 onHide={() => setShowPayments(false)}
                 size="lg"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
             >
-                <Modal.Header closeButton>
-                    <Modal.Title id="contained-modal-title-vcenter">
+                <Modal.Header closeButton style={{ backgroundColor:`${ui.lightBg}`}}>
+                    <Modal.Title id="contained-modal-title-vcenter"  style={{ color:`${ui.normalText}`}}>
                         Payments
                     </Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
-                    <CreditCardForm></CreditCardForm>
+                <Modal.Body style={{ backgroundColor:`${ui.backgroundColor}`}}>
+                     <StripePayment customerSecret={stripeUserSecret}></StripePayment>
+                    {/* TODO: Use this in login */}
+                    {/* <CreditCardForm></CreditCardForm> */}
                 </Modal.Body>
-            </Modal>
+            </Modal>}
 
 
 
