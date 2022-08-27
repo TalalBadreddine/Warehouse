@@ -77,6 +77,7 @@ table {
 /* .rdrDateDisplayWrapper{
   background-color: ;
 } */
+
 .css-zylse7-MuiButtonBase-root-MuiIconButton-root.Mui-disabled {
   background-color: transparent !important;
   color: rgb(255 255 255) !important;
@@ -88,3 +89,57 @@ table {
 .modal-header .btn-close {
   background-color: #ffffff !important;
 }
+
+.rdrStaticRangeLabel{
+  background-color:#132f4c !important;
+  color: #ffffff !important;
+}
+.rdrDefinedRangesWrapper{
+   background-color:#132f4c !important;
+  color: #ffffff !important;
+}
+.rdrDateDisplayWrapper{
+    background-color:#132f4c !important;
+
+}
+.rdrMonthAndYearWrapper{
+  background-color:#132f4c!important;
+}
+.rdrMonthAndYearPicker{
+   background-color:#132f4c !important;
+} 
+.rdrMonthName{
+   background-color:#132f4c !important;
+   color: #ffffff !important;
+}
+.rdrWeekDay{
+  background-color:#132f4c !important;
+  color: #ffffff !important;
+}
+.rdrMonth{
+   background-color:#132f4c !important;
+  color: #ffffff !important;
+}
+.rdrDayDisabled{
+   background-color:#132f4c !important;
+
+} 
+.rdrNextPrevButton.rdrNextBu{
+   background-color:#027fff !important;
+  color: #ffffff !important; 
+}
+
+
+.rdrDateDisplayItem {
+  border-radius: 4px;
+  background-color: #132f4c !important;
+  box-shadow: 0 1px 2px 0 rgb(35 57 66 / 21%);
+  border: 1px solid transparent;
+
+}
+.rdrMonthPicker select{
+   background-color: #132f4c !important;
+   background-image: none !important;
+
+}
+

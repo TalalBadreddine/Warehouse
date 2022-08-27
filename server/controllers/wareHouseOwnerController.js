@@ -169,6 +169,7 @@ const acceptDeclineRequest = async (req, res) => {
         const requestId = req.body.requestId
         let requestStatus = req.body.status
         const warehouseId = req.body.warehouseId
+        const decodedInfo = jwtDecode(req.cookies['jwt'])
 
         const results = await manageUsersAndWarehousesSchema.findOne({
             _id: requestId
@@ -176,9 +177,11 @@ const acceptDeclineRequest = async (req, res) => {
 
         const requestedDate = [results.startRentDate, results.endRentDate]
         let returnStatus = ''
+        
+        console.log(results)
 
         if (requestStatus == 'accepted') {
-
+         
             await extensions.userRentAWarehouseInSpecificDate(warehouseId, requestedDate).then(async (response) => {
               
                 if (response) { 
@@ -186,6 +189,17 @@ const acceptDeclineRequest = async (req, res) => {
                     returnStatus = 'accepted'
 
              } else { 
+
+
+                  await stripe.refunds.create({
+                    payment_intent: `${results.paymentId}`,
+                    amount: results.price,
+                },{
+                        stripeAccount: `${decodedInfo.user.stripeAccountId}`,
+                      }
+                  );
+
+
                  requestStatus = 'rejected'
                  returnStatus = 'rejected cause of time conflict'
                  }
@@ -201,6 +215,12 @@ const acceptDeclineRequest = async (req, res) => {
             })
             
         }else{
+            
+            await stripe.refunds.create({
+                payment_intent: `${results.paymentId}`,
+                amount: results.price,
+                reverse_transfer:'true'
+            });
 
             returnStatus = 'rejected'
             await manageUsersAndWarehousesSchema.updateOne({
