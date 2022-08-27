@@ -2,10 +2,12 @@ import { IoIosReturnLeft } from 'react-icons/io'
 import { AiOutlineMail } from "react-icons/ai"
 import { FiPhone } from "react-icons/fi"
 import { BiCctv } from 'react-icons/bi'
-import sprinkler from '../../../Components/WarehouseCard/sprinkler.png'
+import sprinkler from '../../../Components/WarehouseCard/sprinkler.svg'
 import { TbForklift } from 'react-icons/tb'
 import { GrUserWorker } from 'react-icons/gr'
-import ac from '../../../Components/WarehouseCard/air-conditioner.png'
+import ac from '../../../Components/WarehouseCard/air-conditioner.svg'
+import worker from '../../../Components/WarehouseCard/worker.svg'
+
 
 import { DateRange } from 'react-date-range';
 import { DateRangePicker } from 'react-date-range';
@@ -313,7 +315,7 @@ const WarehouseDetails = () => {
                         {warehouseData.isWorkers &&
 
                             <div className="d-flex m-4">
-                                <GrUserWorker size={38}></GrUserWorker>
+                             <img src={worker} width={'25px'} style={{ opacity: 1, color: 'white' }} className="m-2 mt-1"></img>
                                 <p className="ms-3 fs-4">Workers</p>
                             </div>
                         }
