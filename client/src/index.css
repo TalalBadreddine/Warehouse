@@ -217,3 +217,7 @@ table {
    background-image: none !important;
 
 }
+
+.react-datepicker__input-container input{
+    background-color: #132f4c !important;
+}
