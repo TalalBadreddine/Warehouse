@@ -280,23 +280,23 @@ const UserActivity = () => {
 
                 <div className='col-4 d-flex'>
 
-                    <input style={{'height':'42px', marginTop:'auto'}} className="rounded border py-1 px-2 col-12 " placeholder='Search' onChange={(e) => {setSearchValue(e.target.value)}} value={searchValue} ></input>
+                    <input style={{'height':'42px', marginTop:'auto' , backgroundColor:`${ui.lightBg}`}} className="rounded border py-1 px-2 col-12 " placeholder='Search' onChange={(e) => {setSearchValue(e.target.value)}} value={searchValue} ></input>
 
                 </div>
 
                 <div className='col-3 ms-5'>
-                    <FormControl  fullWidth>
+                    <FormControl style={{backgroundColor:`${ui.lightBg}` , color:`${ui.normalText}`}} fullWidth>
                         <InputLabel style={{color:`${ui.normalText}`}} id="demo-simple-select-label">Type</InputLabel>
-                        <Select style={{color:`${ui.normalText}`}}
+                        <Select style={{color:`${ui.normalText}` , backgroundColor:`${ui.lightBg}`}}
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
                             value={usersTableRole}
                             label="Age"
                             onChange={(e) => { setUsersTableRole(e.target.value) }}
                         >
-                            <MenuItem value={'all'}>All Users</MenuItem>
-                            <MenuItem value={'customer'}>Customer</MenuItem>
-                            <MenuItem value={'warehouseOwner'}>Warehouse Owner</MenuItem>
+                            <MenuItem style={{backgroundColor:`${ui.lightBg}` , color:`${ui.normalText}`}} value={'all'}>All Users</MenuItem>
+                            <MenuItem style={{backgroundColor:`${ui.lightBg}` , color:`${ui.normalText}`}} value={'customer'}>Customer</MenuItem>
+                            <MenuItem style={{backgroundColor:`${ui.lightBg}` , color:`${ui.normalText}`}} value={'warehouseOwner'}>Warehouse Owner</MenuItem>
                         </Select>
                     </FormControl>
                 </div>

@@ -3,6 +3,7 @@ import React, {useState} from 'react'
  import Button from 'react-bootstrap/Button';  
  import Form from 'react-bootstrap/Form';  
  import InputGroup from 'react-bootstrap/InputGroup'; 
+ import ui from '../../themes'
 
  import {AddWarehouseOwnerByAdmin} from '../../Services/AddWarehouseOwnerByAdmin';
 
@@ -33,8 +34,8 @@ import React, {useState} from 'react'
            <Form.Label htmlFor="inlineFormInput" visuallyHidden>  
              Name  
            </Form.Label>  
-           <InputGroup className="mb-2"> 
-           <Form.Control  
+           <InputGroup   className="mb-2"> 
+           <Form.Control  style={{backgroundColor:`${ui.searchesInput}` , color:`${ui.normalText}` , borderColor:`${ui.borders}`}} 
              className="mb-2"  
              id="inlineFormInput"  
              placeholder="Username"  
@@ -48,7 +49,7 @@ import React, {useState} from 'react'
            </Form.Label>  
            <InputGroup className="mb-2">  
              <InputGroup.Text>@</InputGroup.Text>  
-             <Form.Control  
+             <Form.Control  style={{backgroundColor:`${ui.searchesInput}` , color:`${ui.normalText}`,borderColor:`${ui.borders}`}}
              id="inlineFormInputGroup"  
              placeholder="email" 
              onChange={(e) => setWarehouseOwner({...warehouseOwner, email: e.target.value })} 
@@ -61,7 +62,7 @@ import React, {useState} from 'react'
              Name  
            </Form.Label>  
            <InputGroup className="mb-2"> 
-           <Form.Control  
+           <Form.Control  style={{backgroundColor:`${ui.searchesInput}` , color:`${ui.normalText}`,borderColor:`${ui.borders}`}}
              className="mb-2"  
              id="inlineFormInput"  
              placeholder="password" 
@@ -72,7 +73,7 @@ import React, {useState} from 'react'
            </InputGroup> 
          </Row>  
          <Row xs="auto" className='justify-content-center'>  
-           <Button onClick={(e)=>{handleAddWarehouseOwnerByAdmin(e)}} type="submit" className="mb-2" style={{backgroundColor:'#54d494', borderColor:'#54d494'}}>  
+           <Button onClick={(e)=>{handleAddWarehouseOwnerByAdmin(e)}} type="submit" className="mb-2" style={{backgroundColor:`${ui.Buttons}` , color:`${ui.normalText}`}}>  
              Submit  
            </Button>  
          </Row>  
