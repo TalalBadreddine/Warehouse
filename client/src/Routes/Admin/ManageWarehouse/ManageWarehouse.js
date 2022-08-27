@@ -174,9 +174,8 @@ function ManageWarehouse() {
   return (
 
     <div>
-      <Grid container spacing={2} sx={{ m: 2 }}>
-        <Grid item xs={2}></Grid>
-        <Grid item xs={8}>
+      <Grid container spacing={5} sx={{ m: 1 }}>
+        <Grid item xs={11}>
           <TextField onChange={(e) => setQuery(e.target.value)} style={{ width: '40%' }} sx={{ m: 1 }} id="outlined-basic" label="Search..." variant="outlined" size='small' />
           <Button
             onClick={handleShow}

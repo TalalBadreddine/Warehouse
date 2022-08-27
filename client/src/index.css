@@ -59,6 +59,17 @@ border: solid 2px white;
   background-color: #132f4c !important;
 }
 
+.rdrDayDisabled, .rdrMonthAndYearPickers{
+  background-color: #132f4c !important;}
+
+.rdrMonthPicker select{
+    background-image: none !important;
+  }
+
+.rdrDateDisplayItem input {
+  color: white !important
+}
+
 /* .rdrCalendarWrapper{
   background-color:;
 } */

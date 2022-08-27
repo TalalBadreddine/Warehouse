@@ -83,7 +83,7 @@ function SideBar() {
 
   return (
     <div className='col-12 d-flex'>
-      <div className='col-2' style={{backgroundColor: `${ui.searchesInput}`}}>
+      <div className='col-2' style={{backgroundColor: `${ui.lightBg}`}}>
 
         <SidebarMenu style={{ width: '100%', height: '100vh' }}>
           <Title>Dashboard</Title>
