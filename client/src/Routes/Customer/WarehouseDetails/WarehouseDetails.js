@@ -338,7 +338,7 @@ const WarehouseDetails = () => {
 
 
                 <div>
-                    <MapContainer center={[warehouseData.location[0], warehouseData.location[1]]} zoom={14}  >
+                    <MapContainer  center={[warehouseData.location[0], warehouseData.location[1]]} zoom={14}  >
                         <TileLayer
                             url={osm.maptiler.url}
                             attribution={osm.maptiler.attribution}
@@ -368,10 +368,10 @@ const WarehouseDetails = () => {
                     <p style={{ color: `${ui.normalText}` }}>Availble Dates: {warehouseData && warehouseData.datesAvailable.map((currentDate) => {
                         return <span className="ms-3 px-3 py-1 d-inline-block rounded-4" style={{ backgroundColor: `${ui.Buttons}` }}>{new Date(currentDate[0]).toISOString().slice(0, 10)} / {new Date(currentDate[1]).toISOString().slice(0, 10)}</span>
                     })}</p>
-                    {state.endDate && <p className='rounded px-2' style={{color: `${ui.normalText}`, border: ` 1px solid ${ui.borders}`, display:'inline-block', backgroundColor: `${ui.lightBg}`}}> From: {new Date(state.startDate).toISOString().slice(0, 10)}<span className="ms-3"></span> Till: {new Date(state.endDate).toISOString().slice(0, 10)}</p>}
+                    {state.endDate && <p className='rounded px-2' style={{color: `${ui.normalText}`,color: `${ui.normalText}`, border: ` 1px solid ${ui.borders}`, display:'inline-block', backgroundColor: `${ui.lightBg}`}}> From: {new Date(state.startDate).toISOString().slice(0, 10)}<span className="ms-3"></span> Till: {new Date(state.endDate).toISOString().slice(0, 10)}</p>}
                     {dataSettings.showDateAlert && <p className={`${styles.dateAlert} fs-4`}> Fill Date To Continue !</p>}
-                    <div ref={dateRangeRef}>
-                        {dataSettings.endDate && (windowWidth > 600 ? <DateRangePicker
+                    <div  ref={dateRangeRef}>
+                        {dataSettings.endDate && (windowWidth > 600 ? <DateRangePicker 
 
                             onChange={item => {
                                 setState(item.selection)
@@ -387,7 +387,7 @@ const WarehouseDetails = () => {
                             ranges={[state]}
                             direction={windowWidth > 600 ? "horizontal" : 'vertical'}
                         /> :
-                            <DateRange
+                            <DateRange style={{ backgtoundColor: `${ui.lightBg}` }}
 
                                 onChange={item => {
                                     setState(item.selection)
