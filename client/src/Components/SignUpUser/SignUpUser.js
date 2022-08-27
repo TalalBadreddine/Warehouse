@@ -3,8 +3,15 @@ import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button'; 
 import Form from 'react-bootstrap/Form'; 
 import InputGroup from 'react-bootstrap/InputGroup';
+import ui from '../../themes'
 
 import {registerCustomer} from '../../Services/registerCustomer'
+
+const inputStyle = {
+  backgroundColor: `${ui.backgroundColor}`,
+  color: `${ui.normalText}`,
+  border: `1px solid ${ui.borders}`
+}
 
 function SignUpUser() {
 
@@ -47,6 +54,7 @@ function SignUpUser() {
             id="inlineFormInput" 
             placeholder="Username" 
             onChange={(e) => setCustomer({...customer, userName: e.target.value })}
+            style={{...inputStyle}}
           /> 
            <Form.Control.Feedback type="invalid">
                   Please fill your username.
@@ -63,6 +71,7 @@ function SignUpUser() {
             id="inlineFormInputGroup" 
             placeholder="email"
             onChange={(e) => setCustomer({...customer, email: e.target.value })}
+            style={{...inputStyle}}
             /> 
            <Form.Control.Feedback type="invalid">
                   Please fill your email.
@@ -81,6 +90,7 @@ function SignUpUser() {
             placeholder="password" 
             type="password"
             onChange={(e) => setCustomer({...customer, password: e.target.value })}
+            style={{...inputStyle}}
           /> 
            <Form.Control.Feedback type="invalid">
                   Please fill your password.
@@ -97,13 +107,14 @@ function SignUpUser() {
             id="inlineFormInput" 
             placeholder="confirm password" 
             type="password"
+            style={{...inputStyle}}
           /> 
            <Form.Control.Feedback type="invalid">
                   Please fill confirm your password
                 </Form.Control.Feedback></InputGroup></Form.Group>
         </Row>
         <Row xs="auto" className="justify-content-center"> 
-          <Button onClick={handleregistration} type="submit" className="mb-2" style={{backgroundColor:'#54d494', borderColor:'#54d494'}}> 
+          <Button onClick={handleregistration} type="submit" className="mb-2" style={{backgroundColor:`${ui.Buttons}`, borderColor:`${ui.borders}`}}> 
             Submit 
           </Button> 
         </Row> 
