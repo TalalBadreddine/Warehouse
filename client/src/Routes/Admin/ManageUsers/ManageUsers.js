@@ -27,14 +27,14 @@ const columns = [
     id: 'accountStatus',
     label: 'Account Status',
     minWidth: 170,
-    align: 'right',
+    align: 'center',
     format: (value) => value.toLocaleString('en-US'),
   },
   {
     id: 'action',
     label: 'Action',
     minWidth: 170,
-    align: 'right',
+    align: 'center',
     format: (value) => value.toLocaleString('en-US'),
   },
   
@@ -126,15 +126,15 @@ function ManageUsers() {
             return (
                 createData( item.userName , 
                             item.email , 
-                            <Button onClick={()=>handleStatus(item._id ,item.isActive)} style={{borderColor: item.isActive ? 'green' : 'red',color: item.isActive ? 'green' : 'red'}}variant="outlined" >{item.isActive ? 'Active' : 'Deactive'}</Button>,
+                            <Button onClick={()=>handleStatus(item._id ,item.isActive)} style={{borderColor:'black',backgroundColor: item.isActive ? '#90EE90' : '#ffcccb',color: 'black', width:'100%'}}variant="contained" >{item.isActive ? 'Active' : 'Deactive'}</Button>,
                             <>
-                            <Button style={{ color: `${ui.borders}`,border:`solid 2px ${ui.borders}`,backgroundColor:`${ui.backgroundColor}`, margin: 5 }}
+                            <Button style={{ color: `${ui.normalText}`,border:`solid 1px ${ui.normalText}`,backgroundColor:`${ui.backgroundColor}`, margin: 5 }}
                             onClick={()=>handleUserHistory(item)}
                                     variant="Contained" 
                                     size="medium">
                             User History
                             </Button> 
-                            <Button style={{ color: 'red', backgroundColor: `${ui.backgroundColor}`, border: ' solid 2px red', margin: 5 }} 
+                            <Button style={{ color: 'white', backgroundColor: 'red', border: ' solid 2px red', margin: 5 }} 
                                     onClick={()=> {handleDeleteCustomer(item.email)}}
                                     variant="outlined" 
                                     size="medium">
@@ -186,21 +186,21 @@ function ManageUsers() {
 
     <Paper sx={{ width: '100%', overflow: 'hidden',backgroundColor:`${ui.backgroundColor} `,color:`${ui.normalText}`, marginTop:'3%' }}>
       <TableContainer  sx={{ maxHeight: 440 }}>
-        <Table style={{backgroundColor:`${ui.lightBg}` , color:`${ui.normalText}` }}  stickyHeader aria-label="sticky table">
-          <TableHead  >
-            <TableRow >
+        <Table style={{backgroundColor:`${ui.lightBg}` , color:`${ui.normalText}`,borderColor:`${ui.borders}` }}  stickyHeader aria-label="sticky table">
+          <TableHead style={{borderColor:`${ui.borders}`}}>
+            <TableRow style={{borderColor:`${ui.borders}`}}>
               {columns.map((column) => (
                 <TableCell
                   key={column.id}
                   align={column.align}
-                  style={{ backgroundColor:`${ui.borders}`, minWidth: column.minWidth , color:`${ui.normalText}`,fontSize:'20px'}}
+                  style={{borderColor:`${ui.borders}`, backgroundColor:`${ui.borders}`, minWidth: column.minWidth , color:`${ui.normalText}`,fontSize:'20px'}}
                 >
                   {column.label}
                 </TableCell>
               ))}
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody style={{borderColor:`${ui.borders}`}}>
             {rows && rows
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
@@ -224,7 +224,7 @@ function ManageUsers() {
         </Table>
       </TableContainer>
       <TablePagination
-      style={{color:`${ui.normalText}`, border:'solid 1px white'} }
+      style={{color:`${ui.normalText}`, border:`solid 1px ${ui.borders}` } }
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
         count={rows.length}
@@ -247,11 +247,11 @@ function ManageUsers() {
         centered
         keyboard={false}
       >
-        <Modal.Header closeButton>
-          <Modal.Title>Add a new user</Modal.Title>
+        <Modal.Header style={{backgroundColor:`${ui.backgroundColor}`}} closeButton>
+          <Modal.Title style={{color:`${ui.normalText}` , borderColor:`${ui.borders}`}}>Add a new user</Modal.Title>
         </Modal.Header>
 
-        <Modal.Body>
+        <Modal.Body style={{backgroundColor:`${ui.backgroundColor}`, borderColor:`${ui.borders}`}}>
           <AddUser addAction={handleAddRow} closeAction={()=>{handleClose()}}/>
         </Modal.Body>
 
