@@ -27,7 +27,9 @@ function SignUpUser() {
     password:"",
     });
     const handleregistration=(e)=>{
+      e.preventDefault()
         registerCustomer(customer);
+        
     }
 
   return (

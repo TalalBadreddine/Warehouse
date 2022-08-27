@@ -68,7 +68,7 @@ const userLogin = async (req, res) => {
 
 const userRegister = async (req, res) => {
     try {
-
+        console.log(req.body)
         const userInfo = req.body
 
         const usersWithSameEmail = await userSchema.find({
@@ -80,7 +80,8 @@ const userRegister = async (req, res) => {
         let user = new userSchema({
 
             email: userInfo.email,
-            password: crypto.createHash(hashType).update(userInfo.password).digest(encodeAs)
+            password: crypto.createHash(hashType).update(userInfo.password).digest(encodeAs),
+            userName: userInfo.userName
 
         })
 

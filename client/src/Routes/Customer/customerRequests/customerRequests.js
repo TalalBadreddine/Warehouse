@@ -48,7 +48,7 @@ function CustomerRequests() {
             return
         }
 
-        await axios.post('/userActivity',{
+        await axios.post('/userActivity', {
             action: `add a feedback to  ${currentWarehouseData.name} warehouse, the comment content: ${content}`,
             role: 'customer'
         }).then((results) => {
@@ -63,7 +63,7 @@ function CustomerRequests() {
         textAreaRef.current.value = ''
         let warehouse = currentWarehouseData
         warehouse.feedback.push([currentComment])
-        setCurrentWarehouseData({...currentWarehouseData, ['feedback']: warehouse.feedback})
+        setCurrentWarehouseData({ ...currentWarehouseData, ['feedback']: warehouse.feedback })
 
     }
 
@@ -175,13 +175,13 @@ function CustomerRequests() {
             <div className='mt-4'>
 
 
-                <span className={styles.returnBtn} onClick={() => { navigate(-1) }}><IoIosReturnLeft size={68} style={{color:`${ui.borders}`}}></IoIosReturnLeft></span>
+                <span className={styles.returnBtn} onClick={() => { navigate(-1) }}><IoIosReturnLeft size={68} style={{ color: `${ui.borders}` }}></IoIosReturnLeft></span>
 
             </div>
 
             <div className='p-5'>
-                <Table striped  hover responsive="md" style={{ width: '75vw' }}>
-                    <thead style={{backgroundColor: `${ui.borders}`,color:'white', fontSize:'18px', height:'8vh' }} >
+                <Table striped hover responsive="md" style={{ width: '75vw', marginLeft: '8%' }}>
+                    <thead style={{ backgroundColor: `${ui.borders}`, color: 'white', fontSize: '18px', height: '8vh' }} >
                         <tr>
                             <th>Warehouse Name</th>
                             <th>Provider</th>
@@ -194,14 +194,14 @@ function CustomerRequests() {
                         {requests != undefined &&
                             requests.map((item, i) => (
                                 <tr key={i}>
-                                    <td className='p-3' style={{color:'white'}}> {item.warehouseName}</td>
-                                    <td className='p-3' style={{color:'white'}}>{item.warehouseOwnerEmail}</td>
+                                    <td className='p-3' style={{ color: 'white' }}> {item.warehouseName}</td>
+                                    <td className='p-3' style={{ color: 'white' }}>{item.warehouseOwnerEmail}</td>
                                     <td style={{ color: statusColor(item.status) }} className='p-3'>{item.status}</td>
                                     <td className='p-3' >
                                         <div style={{ display: 'inline-block' }} >
-                                            <button style={{ color:'white', backgroundColor:`${ui.backgroundColor}`, border:`solid 2px ${ui.borders}`}} onClick={() => { handleShow(item) }} href="#">Contact</button>
+                                            <button style={{ color: 'white', backgroundColor: `${ui.backgroundColor}`, border: `solid 2px ${ui.borders}` }} onClick={() => { handleShow(item) }} href="#">Contact</button>
 
-                                            <button className="ms-5" style={{ color:'white', backgroundColor:`${ui.backgroundColor}`, border:`solid 2px ${ui.borders}`}} href="#" onClick={() => {
+                                            <button className="ms-5" style={{ color: 'white', backgroundColor: `${ui.backgroundColor}`, border: `solid 2px ${ui.borders}` }} href="#" onClick={() => {
                                                 handleViewBtn(item.WarehouseId)
                                                 setCurrentWarehouseRequest(item)
                                             }}>View</button>
@@ -226,6 +226,7 @@ function CustomerRequests() {
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
                 keyboard={false}
+
 
             >
                 <Modal.Body style={{
@@ -257,49 +258,52 @@ function CustomerRequests() {
                 centered
                 keyboard={false}
 
+
             >
-                <Modal.Header closeButton>
-                    <h2>{currentWarehouseData.name}</h2>
+                <Modal.Header closeButton style={{ backgroundColor: `${ui.borders}` }}>
+                    <h2 style={{ color: `${ui.normalText}` }}>{currentWarehouseData.name}</h2>
                 </Modal.Header>
-                <Modal.Body className='p-4' >
-                    <img style={{ height: '350px', width: '100%' }} src={currentWarehouseData.images[0]} alt={'no image'}></img>
+                <Modal.Body className='p-5' style={{ backgroundColor: `${ui.lightBg}`, color: `${ui.normalText}` }}>
+                    <img style={{ height: '250px', width: '100%' }} src={currentWarehouseData.images[0]} alt={'no image'}></img>
+                    <br></br>
+                    <br></br>
 
                     <div className='d-flex'>
 
                         <div>
-                            <h2>Details</h2>
+                            <h3>Details</h3>
                             <div className='mt-3 d-flex justify-content-between'>
-                                <span className='fs-5'> <span style={{ fontWeight: 'bold' }}>Address:</span>   <span>{currentWarehouseData.address[0].join(' , ')}</span> </span>
+                                <span className='fs-6'> <span style={{ fontWeight: 'bold', color: `${ui.borders}` }}>Address:</span>   <span style={{ fontWeight: 'lighter' }}>{currentWarehouseData.address[0].join(' , ')}</span> </span>
                             </div>
 
                             <div className='mt-3'>
-                                <span className='fs-5'> <span style={{ fontWeight: 'bold' }}>Price per Day:</span>   <span>${currentWarehouseData.pricePerDay}</span> </span>
+                                <span className='fs-6'> <span style={{ fontWeight: 'bold', color: `${ui.borders}` }}>Price per Day:</span>   <span style={{ fontWeight: 'lighter' }}>${currentWarehouseData.pricePerDay}</span> </span>
                             </div>
 
                             <div className='mt-3'>
-                                <span className='fs-5'> <span style={{ fontWeight: 'bold' }}>Space:</span>   <span>{currentWarehouseData.space} </span>m<sup>2</sup>  </span>
+                                <span className='fs-6'> <span style={{ fontWeight: 'bold', color: `${ui.borders}` }}>Space:</span>   <span style={{ fontWeight: 'lighter' }}>{currentWarehouseData.space} </span>m<sup>2</sup>  </span>
                             </div>
 
                             <div className='mt-3'>
-                                <span className='fs-5'> <span style={{ fontWeight: 'bold' }}>Requested date: </span>   <span>{new Date(currentWarehouseRequest.startRentDate).toISOString().slice(0, 10)} => {new Date(currentWarehouseRequest.endRentDate).toISOString().slice(0, 10)}</span> </span>
+                                <span className='fs-6'> <span style={{ fontWeight: 'bold', color: `${ui.borders}` }}>Requested date: </span>   <span style={{ fontWeight: 'lighter' }}>{new Date(currentWarehouseRequest.startRentDate).toISOString().slice(0, 10)} => {new Date(currentWarehouseRequest.endRentDate).toISOString().slice(0, 10)}</span> </span>
                             </div>
 
 
                         </div>
 
                         <div>
-                            <h2>Status: <span className='fs-3' style={{ color: statusColor(currentWarehouseRequest.status) }}> {currentWarehouseRequest.status.toUpperCase()}</span></h2>
+                            <h3>Status: <span className='fs-4' style={{ color: statusColor(currentWarehouseRequest.status) }}> {currentWarehouseRequest.status.toUpperCase()}</span></h3>
                         </div>
 
 
                     </div>
 
                     <div className='mt-5'>
-                        <h2>Feedback</h2>
+                        <h3>Feedback</h3>
 
                         <div className='col-11 m-auto mt-3'>
-        {   currentWarehouseRequest.status == 'accepted' &&   <div>
-                                <textarea ref={textAreaRef} className='col-12 rounded ps-2 pr-1' style={{ height: '120px' }} placeholder={'Feedback...'}></textarea>
+                            {currentWarehouseRequest.status == 'accepted' && <div>
+                                <textarea ref={textAreaRef} className='col-12 rounded ps-2 pr-1' style={{ height: '100px', color: `${ui.normalText}`, backgroundColor: `${ui.backgroundColor}`, border: `solid 2px ${ui.borders}` }} placeholder={'Feedback...'}></textarea>
                                 <div className='d-flex justify-content-end'>
                                     <Button className='col-2' onClick={() => { handleComment() }}>Comment</Button>
                                 </div>
@@ -307,7 +311,7 @@ function CustomerRequests() {
                             </div>}
 
 
-                            <div className='mt-3' style={{ height: currentWarehouseData.feedback.length > 0 ? '400px' : '0px', overflowY: 'scroll' }}>
+                            <div className='mt-3' style={{height: currentWarehouseData.feedback.length > 0 ? '400px' : '0px', overflowY: 'scroll' }}>
 
                                 <div className='ms-4'>
 
@@ -320,11 +324,11 @@ function CustomerRequests() {
                                                     return (
                                                         <div className='mt-4'>
                                                             <div>
-                                                                <span style={{ fontSize: '1.3rem' }}><BiUserCircle size={37}></BiUserCircle> <span style={{ color: commentArr[index].comentorEmail == currentWarehouseRequest.warehouseOwnerEmail ? 'green' : 'black' }}>{commentArr[index].comentorEmail}</span> {currentWarehouseRequest.warehouseOwnerEmail == commentArr[index].comentorEmail && <span style={{ fontSize: '0.8rem' }}>(warehouse owner)</span>}</span>
-                                                                <span className='ms-3' style={{ fontSize: '0.8rem', color: 'rgb(0,0,0, 0.6)' }}>{calculateDaysDifference(new Date(), commentArr[index].addedIn) > 0 ? `${calculateDaysDifference(new Date(), commentArr[index].addedIn)} day ago ` : 'Today'} </span>
+                                                                <span style={{ fontSize: '1rem' }}><BiUserCircle size={37}></BiUserCircle> <span style={{ color: commentArr[index].comentorEmail == currentWarehouseRequest.warehouseOwnerEmail ? 'green' : 'white' }}>{commentArr[index].comentorEmail}</span> {currentWarehouseRequest.warehouseOwnerEmail == commentArr[index].comentorEmail && <span style={{ fontSize: '0.8rem' }}>(warehouse owner)</span>}</span>
+                                                                <span className='ms-3' style={{ fontSize: '0.8rem', color: `${ui.xsTexts}` }}>{calculateDaysDifference(new Date(), commentArr[index].addedIn) > 0 ? `${calculateDaysDifference(new Date(), commentArr[index].addedIn)} day ago ` : 'Today'} </span>
                                                             </div>
                                                             <div className='col-12 ps-1 m-auto'>
-                                                                <p style={{ fontSize: '1rem' }}>{commentArr[index].content}</p>
+                                                                <p style={{ marginLeft:'10%',color:`${ui.borders}`,fontWeight:'bolder',fontSize: '1rem' }}>"{commentArr[index].content}"</p>
 
                                                                 <div className='d-flex'>
 
@@ -334,7 +338,7 @@ function CustomerRequests() {
                                                                         setViewAllReply([...arr])
 
                                                                     }}><AiFillCaretDown></AiFillCaretDown> View replies</p>}
-                                                                    {currentWarehouseRequest.status == 'accepted' && <p style={{ fontSize: '1rem', color: 'rgb(0,0,0, 0.6)' }} className={commentArr.length > 1 ? `ms-5 ${styles.returnBtn}` : `ms-2 ${styles.returnBtn}`} onClick={(e) => {
+                                                                    {currentWarehouseRequest.status == 'accepted' && <p style={{ fontSize: '1rem', color: `black`, float:'right' }} className={commentArr.length > 1 ? `ms-5 ${styles.returnBtn}` : `ms-2 ${styles.returnBtn}`} onClick={(e) => {
                                                                         let arr = viewAllReply
                                                                         arr[helperIndex] = 10000
                                                                         setViewAllReply([...arr])
@@ -403,7 +407,6 @@ function CustomerRequests() {
                                             </div>
                                             <p style={{ fontSize: '1rem' }}>Lorem LoremLoremLorem Lorem Lorem Lorem LoremLoremLorem Lorem LoremLorem LoremLoremLorem Lorem LoremLorem LoremLoremLorem Lorem Lorem</p>
                                         </div>
-
                                         <div className='ms-5'>
                                             <div>
                                                 <span style={{ fontSize: '1.3rem' }}> User@user.com</span>
