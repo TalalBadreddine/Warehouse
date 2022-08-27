@@ -12,6 +12,7 @@ import { BsFillReplyAllFill } from 'react-icons/bs'
 import { AiFillCaretDown } from 'react-icons/ai'
 import { BiUserCircle } from 'react-icons/bi'
 import ui from '../../../themes'
+import PaymentStatus from './../../../Components/StripePaymentStatus/PaymentStatus'
 
 
 function CustomerRequests() {
@@ -216,7 +217,6 @@ function CustomerRequests() {
                     </tbody>
                 </Table>
             </div>
-
 
             <Modal
                 show={show}

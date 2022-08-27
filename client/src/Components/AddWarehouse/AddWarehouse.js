@@ -18,6 +18,7 @@ import { DateRange } from 'react-date-range';
 import FileBase64 from 'react-file-base64';
 
 import { BsTrash } from 'react-icons/bs'
+import ui from '../../themes'
 
 
 
@@ -143,10 +144,10 @@ function AddWarehouse(props) {
 
 
   return (
-    <Form noValidate validated={validated} onSubmit={handleSubmit}>
+    <Form style={{backgroundColor:`${ui.lightBg}`,color:`${ui.normalText}`}} noValidate validated={validated} onSubmit={handleSubmit}>
       
       <div className='row justify-content-center mt-5'>
-        <Card style={{ width: '65rem' }}>
+        <Card style={{backgroundColor:`${ui.lightBg}`,color:`${ui.normalText}`,width: '65rem',borderColor:`${ui.borders}`}}>
 
           <Card.Body>
             <FormGroup controlId="validationCustom01">
@@ -155,21 +156,21 @@ function AddWarehouse(props) {
                 label="Warehouse Name"
                 className="mb-3"
               >
-                <Form.Control required value={warehouse.name}
+                <Form.Control required value={warehouse.name} style={{backgroundColor:`${ui.searchesInput}` , borderColor:`${ui.borders}` , color:`${ui.normalText}`}}
                   onChange={(e) => setWarehouse({ ...warehouse, name: e.target.value })} placeholder="Warehouse Name" />
                 <Form.Control.Feedback type="invalid">
                   Please choose a Warehouse name.
                 </Form.Control.Feedback> </FloatingLabel></FormGroup>
             <FormGroup controlId="validationCustomUsername">
               <FloatingLabel controlId="floatingPassword" label="Space For Warehouse" className="mb-3">
-                <Form.Control required value={warehouse.space}
+                <Form.Control required value={warehouse.space} style={{backgroundColor:`${ui.searchesInput}` , borderColor:`${ui.borders}` , color:`${ui.normalText}`}}
                   onChange={(e) => setWarehouse({ ...warehouse, space: e.target.value })} placeholder="Space For Warehouse" />
                 <Form.Control.Feedback type="invalid">
                   Please choose a Warehouse space.
                 </Form.Control.Feedback></FloatingLabel></FormGroup>
             <FormGroup controlId="validationCustom03">
               <FloatingLabel controlId="floatingPassword" label="Warehouse Type" className="mb-3">
-                <Form.Select required value={warehouse.type}
+                <Form.Select required value={warehouse.type} style={{backgroundColor:`${ui.searchesInput}` , borderColor:`${ui.borders}` , color:`${ui.normalText}`}}
                   onChange={(e) => setWarehouse({ ...warehouse, type: e.target.value })} placeholder="Warehouse Type">
 
                   <option value="Public Warehouse">Public Warehouse</option>
@@ -191,14 +192,14 @@ function AddWarehouse(props) {
                 className="mb-3"
               >
 
-                <Form.Control required value={warehouse.pricePerDay}
+                <Form.Control required value={warehouse.pricePerDay} style={{backgroundColor:`${ui.searchesInput}` , borderColor:`${ui.borders}` , color:`${ui.normalText}`}}
                   onChange={(e) => setWarehouse({ ...warehouse, pricePerDay: e.target.value })} className="mb-3" placeholder="Price" />
                 <Form.Control.Feedback type="invalid">
                   Please choose a price.
                 </Form.Control.Feedback></FloatingLabel></FormGroup>
 
             <Accordion className="mb-3" >
-              <Accordion.Item >
+              <Accordion.Item style={{backgroundColor:`${ui.lightBg}`}} >
                 <Accordion.Header>Choose Availble Dates {errors.date != null && <span className='ms-3 fs-5' style={{color:'red'}}> {errors.date} !</span>}</Accordion.Header>
                 <Accordion.Body>
                   <div className='d-flex justify-content-center'>
@@ -224,7 +225,7 @@ function AddWarehouse(props) {
 
 
             <Accordion className="mb-3" >
-              <Accordion.Item >
+              <Accordion.Item style={{backgroundColor:`${ui.lightBg}`}} >
                 <Accordion.Header>Upload images {errors.images != null && <span className='ms-3 fs-5' style={{color:'red'}}> {errors.images} !</span>}</Accordion.Header>
                 <Accordion.Body>
 
@@ -255,8 +256,8 @@ function AddWarehouse(props) {
 
 
 
-            <Accordion className="mb-3" >
-              <Accordion.Item >
+            <Accordion className="mb-3" style={{borderColor:`${ui.borders}`}} >
+              <Accordion.Item style={{backgroundColor:`${ui.lightBg}`,borderColor:`${ui.borders}`}} >
                 <Accordion.Header>Choose Your location {errors.map != null && <span className='ms-3 fs-5' style={{color:'red'}}> {errors.map} !</span>}</Accordion.Header>
                 <Accordion.Body>
 
@@ -286,8 +287,8 @@ function AddWarehouse(props) {
 
             <FormGroup controlId="validationCustom05">
               <FloatingLabel className="mb-3" controlId="floatingPassword" label="Description">
-                <Form.Control required value={warehouse.description}
-                  onChange={(e) => setWarehouse({ ...warehouse, description: e.target.value })} className="mb-3" style={{ height: '100px' }} placeholder="Description" />
+                <Form.Control required value={warehouse.description} style={{backgroundColor:`${ui.searchesInput}` , borderColor:`${ui.borders}` , color:`${ui.normalText}`,height: '100px'}}
+                  onChange={(e) => setWarehouse({ ...warehouse, description: e.target.value })} className="mb-3" placeholder="Description" />
                 <Form.Control.Feedback type="invalid">
                   Please write a description
                 </Form.Control.Feedback> </FloatingLabel></FormGroup>
@@ -330,7 +331,7 @@ function AddWarehouse(props) {
               label="Forklift"
               ></Form.Check>
             <div className='col-12 justify-content-center d-flex'>
-                <Button onClick={(e) => {handleAddWarehouseByAdmin(e)}} className='mt-3 te' style={{ backgroundColor: '#54d494', borderColor: '#54d494' }} type="submit" variant="primary">Upload Space</Button>
+                <Button onClick={(e) => {handleAddWarehouseByAdmin(e)}} className='mt-3 te' style={{ backgroundColor: `${ui.Buttons}`}} type="submit" variant="primary">Upload Space</Button>
             </div>
           </Card.Body>
         </Card>
