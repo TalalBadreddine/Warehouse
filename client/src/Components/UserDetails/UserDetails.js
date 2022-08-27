@@ -30,15 +30,13 @@ function UserDetails() {
 
   return (
     <div>
-      <Grid container spacing={2} sx={{ m: 2 }}>
-        <Grid item xs={2}></Grid>
-        <Grid item xs={8}>
+      <Grid container spacing={5} sx={{ m: 1 }}>
+        <Grid item xs={11}>
           <div>
 
-            <h3>
-              <Button style={{backgroundColor:`${ui.lightBg}` , color:`${ui.normalText} `, borderColor:`${ui.normalText}`}}  startIcon={<ArrowBackIcon />} onClick={() => navigate(-1)}></Button>
+            <h3 style={{color: `${ui.normalText}`}}>
               {userInfo.userName}
-              {userInfo.isActive ? <Button style={{ color: 'black', backgroundColor: '#83f28f', borderColor: 'black', margin: 5 }}>Active</Button> : <Button style={{ color: 'black', backgroundColor: 'pink', borderColor: 'black', margin: 5 }}>Deactive</Button>}
+              {userInfo.isActive ? <Button className='ms-3' style={{ color: 'black', backgroundColor: '#83f28f', borderColor: 'black', margin: 5 }}>Active</Button> : <Button style={{ color: 'black', backgroundColor: 'pink', borderColor: 'black', margin: 5 }}>Deactive</Button>}
 
             </h3>
           </div>
@@ -59,7 +57,7 @@ function UserDetails() {
                       <TableCell style={{color:`${ui.normalText}`}} align="left">{item.warehouseName}</TableCell>
                       <TableCell style={{color:`${ui.normalText}`}} align="right">{item.warehouseOwnerName}</TableCell>
                       <TableCell style={{color:`${ui.normalText}`}} align="right">{item.status}</TableCell>
-                      <TableCell style={{color:`${ui.normalText}`}} align="right">{item.startRentDate} - {item.endRentDate}</TableCell>
+                      <TableCell style={{color:`${ui.normalText}`}} align="right">{new Date(item.startRentDate).toISOString().slice(0, 10)} - {new Date(item.endRentDate).toISOString().slice(0, 10)}</TableCell>
                     </TableRow>
                   })
                 }
