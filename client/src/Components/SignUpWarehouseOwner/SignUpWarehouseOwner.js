@@ -32,7 +32,18 @@ const [warehouseOwner, setWarehouseOwner] = useState({
     cardName: "",
     });
     const handleregistration=(e)=>{
-        registerWarehouseOwner(warehouseOwner);
+      e.preventDefault()
+      registerWarehouseOwner(warehouseOwner).then((results) => {
+        let data = results.data
+        if(data == 'alreadyExist'){
+          alert('alreadyExist')
+          return
+        }else{
+          let accountId = data.accountId
+          let accountLink = data.accountLink
+          window.open(`${accountLink.url}`)
+        }
+      })
       }
     
   return (

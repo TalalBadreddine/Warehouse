@@ -75,11 +75,11 @@ const register = async (req, res) => {
 }
 
 // TODO: add it to the login phase
-const completeStripeAccount = async  (accountId) => {
+const completeStripeAccount = async  (ownerAccountId) => {
 
     try{
 
-        const accountId = accountId
+        const accountId = ownerAccountId
 
 
         const capability = await stripe.accounts.updateCapability(
@@ -88,7 +88,7 @@ const completeStripeAccount = async  (accountId) => {
             {requested: true}
           );
 
-          return capability
+          console.log(capability)
     }
     catch(err){
         console.log(`error at completeStripeAccount ${err.message}`)
@@ -118,7 +118,7 @@ const login = async (req, res) => {
         }
 
         await jwt.sign({ user: user, role: 'warehouseOwner' }, jwtSecret, async (err, token) => {
-
+            completeStripeAccount(user.stripeAccountId)
             await res.cookie('jwt', `${token}`, { httpOnly: true })
             res.status(200).json(token)
         })
@@ -225,24 +225,29 @@ const acceptDeclineRequest = async (req, res) => {
 // POST request to add a warehouseowner
 
 const addWarehouses = async (req, res) => {
-
-    try{
-
-        console.log(req.body);
-        const warehouse=req.body;
-        const alreadyExist = await warehouseSchema.find({name: warehouse.name, space:warehouse.space})
-        if(alreadyExist.length >=1){
-            return res.status(409).json({message:'warehouse already exists'})
-        }
+    try {
+        const warehouse = req.body;
+        const decodedInfo = jwtDecode(req.cookies['jwt'])
         const result = await warehouseSchema.create(warehouse);
-        if(result){
-            res.status(201).json(result)
-        }else{
-            res.status(409).json({message:"failed to add warehouse"})
+        await result.save()
+        await warehouseOwnerModel.updateOne({
+            _id: decodedInfo.user._id
+        },{
+            $push: {
+                myWarehouses: result._id
+            }
+        })
+
+        if (result) {
+            res.status(201).json({ message: "added WareHouse" })
+
+
+        } else {
+            res.status(409).json({ message: "failed to add WareHouse" })
         }
 
-    }catch(error){
-        res.status(500).json({error})
+    } catch (error) {
+        res.status(500).json({ message: "error at addWarehouse function" })
 
     }
 }

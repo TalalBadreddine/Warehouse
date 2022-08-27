@@ -143,8 +143,6 @@ function PostNewWarehouse() {
 
     setIsSuccessMarkHidden(false)
 
-
-    //TODO: payload + success 
     window.scrollTo({ top: 10, behavior: 'smooth' })
     setTimeout(() => { navigate('/owner/') }, 4000)
 
