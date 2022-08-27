@@ -16,6 +16,7 @@ import Box from '@mui/material/Box';
 import ui from '../../../themes';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -32,7 +33,7 @@ const style = {
 };
 
 function WarehouseRequests() {
-
+  const navigate = useNavigate()
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -60,24 +61,28 @@ function WarehouseRequests() {
 
   useEffect(() => {
     getAllWarehousesPending().then(result => {
+      if(result.data == 'forbidden'){
+        navigate('/')
+      }
       let array = result.data.filter((item) => {
         return item.warehouses.length > 0
       })
-      console.log(array)
+
       setPendingRequests(array)
 
 
     }).catch((error) => {
-      console.log(error)
+      if(error.response.data == 'forbidden'){
+        navigate('/')
+      }
     })
 
   }, [])
 
   return (
     <div>
-      <Grid container spacing={2} sx={{ m: 2 }}>
-        <Grid item xs={2}></Grid>
-        <Grid item xs={8}>
+      <Grid container spacing={5} sx={{ m: 1 }}>
+        <Grid item xs={11}>
           <TableContainer component={Paper}>
 
             <Table style={{backgroundColor:`${ui.lightBg}` , borderColor:`${ui.borders}`, color:`${ui.normalText} `}}  sx={{ minWidth: 650 }} aria-label="simple table">

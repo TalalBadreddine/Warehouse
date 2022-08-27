@@ -36,36 +36,28 @@ const getWareHousesForUsers = async (req, res) => {
 
 const userLogin = async (req, res) => {
     try {
-
-        const userInfo = req.body
-
-        const userFromDb = await userSchema.findOne({
-            email: userInfo.email
-        })
-
-
-        if (!userFromDb) {
-            return res.send('Does not exist').status(404)
-
-        }
-
-        else if (userFromDb.password != crypto.createHash(hashType).update(userInfo.password).digest(encodeAs)) {
-            return res.send('wrong password').status(403)
-
-        }
-
-        else if (!userFromDb.isActive) {
-            return res.send('Inactive').status(403)
-
-        } else {
-
-
-            await jwt.sign({ user: userFromDb, role: 'user' }, jwtSecret, async (err, token) => {
-                await res.cookie('jwt', `${token}`, { httpOnly: true, maxAge: 3 * 24 * 60 * 60 * 1000 })
-                return res.status(200).send(true)
+            const {email, password} = req.body; 
+   
+            const user = await userSchema.findOne({
+                email
             })
-
-        }
+   
+            if(!user) return res.status(400).json({message : "user does not exist"});        
+   
+            // verify password
+            if(( crypto.createHash(hashType).update(password).digest(encodeAs) != user.password)) 
+                return res.status(403).json({message : "incorrect password!"})
+   
+            // create token
+            const payload = {
+                user          
+            }
+   
+            await jwt.sign({user: user, role: 'user'}, jwtSecret, async (err, token) => {
+   
+                await res.cookie('jwt', `${token}`, { httpOnly: true })
+                 res.status(200).json(true)
+            })
 
     }
     catch (err) {
@@ -76,7 +68,7 @@ const userLogin = async (req, res) => {
 
 const userRegister = async (req, res) => {
     try {
-
+        console.log(req.body)
         const userInfo = req.body
 
         const usersWithSameEmail = await userSchema.find({
@@ -88,7 +80,8 @@ const userRegister = async (req, res) => {
         let user = new userSchema({
 
             email: userInfo.email,
-            password: crypto.createHash(hashType).update(userInfo.password).digest(encodeAs)
+            password: crypto.createHash(hashType).update(userInfo.password).digest(encodeAs),
+            userName: userInfo.userName
 
         })
 

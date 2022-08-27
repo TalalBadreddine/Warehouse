@@ -119,7 +119,14 @@ const WarehouseDetails = () => {
             rentingDate: [state.startDate, state.endDate],
             totalPrice: datediff(state.startDate, state.endDate) * parseInt(warehouseData.pricePerDay)
         }).then((data) => {
-            window.location = `${data.data.url}`
+
+            if (data.data == 'forbidden') {
+                navigate('/')
+            }else{
+
+                window.location = `${data.data.url}`
+
+            }
         })
         //TODO: DO NOT DELETE THIS
         // setShowPayments(true)

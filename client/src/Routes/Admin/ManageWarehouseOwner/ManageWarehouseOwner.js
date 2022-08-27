@@ -134,9 +134,8 @@ function ManageWarehouseOwner() {
 
     return (
         <div>
-            <Grid container spacing={2} sx={{ m: 2 }}>
-                <Grid item xs={2}></Grid>
-                <Grid item xs={8}>
+            <Grid container spacing={5} sx={{ m: 1 }}>
+                <Grid item xs={11}>
                     <TextField style={{ width: '40%', backgroundColor:`${ui.searchesInput}` , border: 'solid 1px #7890a9', borderRadius:'6px'}} sx={{ m: 1 }} id="outlined-basic" label="Search for a Warehouse Owner..." variant="outlined" size='small' onChange={(e) => setQuery(e.target.value)} />
                     <Button
                         style={{ backgroundColor: `${ui.Buttons}`, borderColor: '#54d494', float: 'right', boxShadow: '3px 3px 6px black' }}
@@ -147,7 +146,7 @@ function ManageWarehouseOwner() {
                         Create
                     </Button>
 
-                    <Paper sx={{ width: '100%', overflow: 'hidden' }} style={{ marginTop: '5%' }}>
+                    <Paper sx={{ width: '100%', overflow: 'hidden' }} style={{ marginTop: '3%' }}>
                         <TableContainer sx={{ maxHeight: 500 }} >
                             <Table stickyHeader aria-label="sticky table">
                                 <TableHead >
@@ -175,7 +174,7 @@ function ManageWarehouseOwner() {
                                                             <TableCell
                                                                 key={column.id}
                                                                 align={column.align}
-                                                                style={{ fontSize: '17px', color:'white', backgroundColor: `${ui.searchesInput}`, borderBottom:'solid 1px white' }}
+                                                                style={{ fontSize: '17px', color:'white', backgroundColor: `${ui.backgroundColor}`, borderBottom:'solid 1px white' }}
                                                             >
                                                                 {column.format && typeof value === 'number'
                                                                     ? column.format(value)

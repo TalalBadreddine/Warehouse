@@ -12,6 +12,28 @@ import Paper from '@mui/material/Paper';
 import SearchBar from '../../../Components/SearchBar/SearchBar';
 import { BiUserCircle } from 'react-icons/bi'
 import ui from '../../../themes'
+import { useNavigate } from 'react-router-dom';
+
+// logged in icon
+import loginIcon from './../../../Assets/loggedIn.svg'
+
+// logged out
+import logoutIcon from './../../../Assets/loggedOut.svg'
+
+// rent
+import rentIcon from './../../../Assets/rent.svg'
+
+// accept
+import acceptedIcon from './../../../Assets/accept.svg'
+
+// reject
+import rejectIcon from './../../../Assets/reject.svg'
+
+// search
+import {FcSearch} from 'react-icons/fc'
+
+// feeddback
+import feedback from '../../../Assets/feedback.svg'
 
 
 import DatePicker from "react-datepicker";
@@ -42,6 +64,37 @@ const formatDate = (date) => {
 
 }
 
+const getIcon = (content) => {
+    let line = content.toLowerCase()
+    console.log(line)
+    if(line.includes('logged in')){
+        return(<img src={loginIcon} width='40px' height='40px'></img>)
+    }
+
+    if(line.includes('logged out')){
+        return(<img src={logoutIcon} width='40px' height='40px'></img>)
+    }
+
+    if(line.includes('search')){
+        return(<FcSearch size={40}></FcSearch>)
+    }
+
+    if(line.includes('accepted')){
+        return(<img src={acceptedIcon} width='40px' height='40px'></img>)
+    }
+
+    if(line.includes('rejected')){
+        return(<img src={rejectIcon} width='40px' height='40px'></img>)
+    }
+
+    if(line.includes('feedback')){
+        return(<img src={feedback} width='40px' height='40px'></img>)
+    }
+
+    if(line.includes('rent')){
+        return(<img src={rentIcon} width='40px' height='40px'></img>)
+    }
+}
 
 const convertMilitaryTimeToStandard = (time) => {
 
@@ -80,6 +133,7 @@ const isDateInRange = (date, range) => {
 
 
 const UserActivity = () => {
+    const navigate = useNavigate()
     const [allUsers, setAllUsers] = useState()
     const [customers, setCustomers] = useState()
     const [warehouseOwners, setWarehouseOwners] = useState()
@@ -108,6 +162,7 @@ const UserActivity = () => {
         const getData = async () => {
 
             axios.get('/admin/getAllCustomerAndOwnersAndLogs').then((results) => {
+                if(results.data == 'forbidden'){navigate('/')}
                 let data = results.data
 
                 setAllUsers([...data.customers, ...data.warehouseOwners])
@@ -126,6 +181,8 @@ const UserActivity = () => {
                 setWarehouseOwnersLogs(fetchedWarehouseOwnersLogs)
                 setAllLogs(logs)
 
+            }).catch((err) => {
+                if(err.response.data == 'forbidden'){navigate('/')}
             })
 
         }
@@ -218,12 +275,12 @@ const UserActivity = () => {
 
 
     return (
-        <div className='m-auto col-11 mt-5 bg-'>
-            <div className='d-flex col-6 mb-2 '>
+        <div className='m-auto col-11 mt-5 '>
+            <div className='d-flex col-7 mb-2  justify-content-between'>
 
-                <div className='col-4 d-flex align-baseline '>
+                <div className='col-4 d-flex'>
 
-                    <input className="rounded border py-1 px-2 col-12 " placeholder='Search' onChange={(e) => {setSearchValue(e.target.value)}} value={searchValue} ></input>
+                    <input style={{'height':'42px', marginTop:'auto'}} className="rounded border py-1 px-2 col-12 " placeholder='Search' onChange={(e) => {setSearchValue(e.target.value)}} value={searchValue} ></input>
 
                 </div>
 
@@ -251,12 +308,12 @@ const UserActivity = () => {
                 <div className='col-7'>
 
                     {usersTableRows && <TableContainer component={Paper} >
-                        <Table  style={{backgroundColor:`${ui.lightBg} `, borderColor:`${ui.borders}`, color:`${ui.normalText} `}}  sx={{ minWidth: 650 }} aria-label="simple table">
+                        <Table  style={{backgroundColor:`${ui.lightBg} `, borderColor:`${ui.borders}`, color:`${ui.normalText} `}}  sx={{ minWidth: 600 }} aria-label="simple table">
                             <TableHead style={{backgroundColor:`${ui.borders}` }}>
                                 <TableRow>
                                     <TableCell style={{color:`${ui.normalText}`}}>user name</TableCell>
-                                    <TableCell style={{color:`${ui.normalText}`}} align="right">email</TableCell>
-                                    <TableCell style={{color:`${ui.normalText}`}} align="right">register date</TableCell>
+                                    <TableCell style={{color:`${ui.normalText}`}} align="center">email</TableCell>
+                                    <TableCell style={{color:`${ui.normalText}`}} align="center">register date</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -268,8 +325,8 @@ const UserActivity = () => {
                                         <TableCell style={{color:`${ui.normalText}`}} component="th" scope="row" >
                                             {row.userName}
                                         </TableCell>
-                                        <TableCell style={{color:`${ui.normalText}`}} align="right">{row.email}</TableCell>
-                                        <TableCell style={{color:`${ui.normalText}`}} align="right">{row.registerDate}</TableCell>
+                                        <TableCell style={{color:`${ui.normalText}`}} align="center">{row.email}</TableCell>
+                                        <TableCell style={{color:`${ui.normalText}`}} align="center">{row.registerDate}</TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>
@@ -284,12 +341,12 @@ const UserActivity = () => {
                         {currentUser &&
 
                             <div className='p-3'>
-                                <span> <h4><span><BiUserCircle size={35}></BiUserCircle> </span>user: {currentUser.userName}</h4></span>
+                                <span style={{color:`${ui.normalText}`}}> <h4><span><BiUserCircle size={35}></BiUserCircle> </span>user: {currentUser.userName}</h4></span>
 
                                 <div className='mt-3 d-flex'>
 
                                     <div className='col-6 d-flex'>
-                                        <span className='d-flex col-2'>From</span>
+                                        <span className='d-flex col-2' style={{color:`${ui.normalText}`}} >From</span>
                                         <DatePicker
                                             selected={selectedDate.startDate}
                                             onSelect={(e) => setSelectedDate({ ...selectedDate, ['startDate']: e })} 
@@ -303,7 +360,7 @@ const UserActivity = () => {
 
 
                                     <div className='col-6 d-flex'>
-                                        <span className='ms-2 dd-flex col-2'>Till</span>
+                                        <span className='ms-2 dd-flex col-2' style={{color:`${ui.normalText}`}}>Till</span>
                                         <DatePicker
                                             selected={selectedDate.endDate}
                                             onSelect={(e) => setSelectedDate({ ...selectedDate, ['endDate']: e })} //when day is clicked
@@ -324,19 +381,23 @@ const UserActivity = () => {
 
                         {currentLogs ?
 
-                            <div className='mt-3' style={{ height: '400px', display: 'block', overflowY: 'auto' }}>
+                            <div className='mt-3' style={{ height: '300px', display: 'block', overflowY: 'auto' }}>
                                 {currentLogs.map((log) => {
                                     return (
                                         <div>
 
                                             <div className='ps-3 d-flex mb-0'>
 
-                                                <div className='col-8'>
+                                                <div className='col-2'>
+                                                    {getIcon(log.action)}
+                                                </div>
+
+                                                <div className='col-7'>
                                                     <p  style={{color:`${ui.normalText}`}}>{log.action}</p>
                                                 </div>
 
-                                                <div className='col-4 ps-5' style={{ fontSize: '0.8rem' }}>
-                                                    <p>{formatDate(log.date)}</p>
+                                                <div className='col-3' style={{ fontSize: '0.8rem' }}>
+                                                    <p style={{color: 'white'}}>{formatDate(log.date)}</p>
                                                 </div>
 
                                             </div>

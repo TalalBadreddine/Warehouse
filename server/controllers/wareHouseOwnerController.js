@@ -75,11 +75,11 @@ const register = async (req, res) => {
 }
 
 // TODO: add it to the login phase
-const completeStripeAccount = async  (accountId) => {
+const completeStripeAccount = async  (ownerAccountId) => {
 
     try{
 
-        const accountId = accountId
+        const accountId = ownerAccountId
 
 
         const capability = await stripe.accounts.updateCapability(
@@ -88,7 +88,7 @@ const completeStripeAccount = async  (accountId) => {
             {requested: true}
           );
 
-          return capability
+          console.log(capability)
     }
     catch(err){
         console.log(`error at completeStripeAccount ${err.message}`)
@@ -118,7 +118,7 @@ const login = async (req, res) => {
         }
 
         await jwt.sign({ user: user, role: 'warehouseOwner' }, jwtSecret, async (err, token) => {
-
+            completeStripeAccount(user.stripeAccountId)
             await res.cookie('jwt', `${token}`, { httpOnly: true })
             res.status(200).json(token)
         })
@@ -225,7 +225,6 @@ const acceptDeclineRequest = async (req, res) => {
 // POST request to add a warehouseowner
 
 const addWarehouses = async (req, res) => {
-
     try {
         const warehouse = req.body;
         const decodedInfo = jwtDecode(req.cookies['jwt'])
