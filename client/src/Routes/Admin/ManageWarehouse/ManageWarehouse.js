@@ -32,13 +32,6 @@ const Warehousecolumns = [
     format: (value) => value.toLocaleString('en-US'),
   },
   {
-    id: 'dateAvailable',
-    label: 'Date Available',
-    minWidth: 170,
-    align: 'right',
-    format: (value) => value.toLocaleString('en-US'),
-  },
-  {
     id: 'price',
     label: 'Price',
     minWidth: 170,
@@ -128,7 +121,6 @@ function ManageWarehouse() {
     console.log(searchedWarehouses)
 
     let arr = searchedWarehouses.map((item, i) => {
-      console.log(item);
       return (
 
         createWarehouseData(item.name,
@@ -158,8 +150,23 @@ function ManageWarehouse() {
 
   useEffect(() => {
     getAllWarehousesAdmin().then(result => {
-      setAllWarehouses(result.data)
-      setSearchedWarehouses(result.data)
+      let arr = []
+      let data = result.data
+
+      for(let i = 0 ; i < data.length ; i++){
+
+        if(data[i].warehouses.length == 0)continue
+        let warehouses = data[i].warehouses
+        console.log(warehouses)
+        for(let j = 0 ; j < warehouses.length ; j++){
+          arr.push(warehouses[j][0])
+        }
+
+      }
+
+
+      setAllWarehouses(arr)
+      setSearchedWarehouses(arr)
 
     }).catch((err) => {
       if (err.response.data == 'forbidden') { navigate('/') }
