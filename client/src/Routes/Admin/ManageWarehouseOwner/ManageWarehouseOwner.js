@@ -19,6 +19,7 @@ import { deleteWarehouseOwnerByAdmin } from "../../../Services/deleteWarehouseOw
 import AddWarehouseOwner from '../../../Components/AddWarehouseOwner/AddWarehouseOwner';
 
 
+
 const columns = [
     { id: 'userName', label: 'Warehouse Owner', minWidth: 170 },
     { id: 'email', label: 'Email', minWidth: 100 },
@@ -96,12 +97,12 @@ function ManageWarehouseOwner() {
                 createData(item.userName,
                     item.email,
                     <>
-                        <Button style={{ color: `${ui.borders}`,border:`solid 2px ${ui.borders}`,backgroundColor:`${ui.backgroundColor}`, margin: 5 }} onClick={() => { handleLogs(item) }}
+                        <Button style={{ color: `${ui.normalText}`,border:`solid 2px ${ui.normalText}`,backgroundColor:`${ui.backgroundColor}`, margin: 5 }} onClick={() => { handleLogs(item) }}
                             variant="Contained"
                             size="medium">
                             CheckLog
                         </Button>
-                        <Button className="ms-4" style={{ color: 'red', backgroundColor: `${ui.backgroundColor}`, border: ' solid 2px red', margin: 5 }}
+                        <Button className="ms-4" style={{ color: `${ui.normalText}`, backgroundColor: 'red', border: ' solid 2px red', margin: 5 }}
                             onClick={() => { handleDeleteWarehouseOwner(item.email) }}
                             variant="outlined"
                             size="medium">
@@ -146,23 +147,23 @@ function ManageWarehouseOwner() {
                         Create
                     </Button>
 
-                    <Paper sx={{ width: '100%', overflow: 'hidden' }} style={{ marginTop: '3%' }}>
-                        <TableContainer sx={{ maxHeight: 500 }} >
-                            <Table stickyHeader aria-label="sticky table">
-                                <TableHead >
-                                    <TableRow>
+                    <Paper  sx={{ width: '100%', overflow: 'hidden' }} style={{ marginTop: '3%',borderColor:`${ui.borders}` }}>
+                        <TableContainer style={{borderColor:`${ui.borders}`}} sx={{ maxHeight: 500 }} >
+                            <Table style={{borderColor:`${ui.borders}`}} stickyHeader aria-label="sticky table">
+                                <TableHead style={{borderColor:`${ui.borders}`}}>
+                                    <TableRow style={{borderColor:`${ui.borders}`}}>
                                         {columns.map((column) => (
-                                            <TableCell
+                                            <TableCell 
                                                 key={column.id}
                                                 align={column.align}
-                                                style={{ minWidth: column.minWidth, fontSize: '20px',color:'white', backgroundColor: `${ui.borders}`}}
+                                                style={{ minWidth: column.minWidth, fontSize: '20px',color:'white', backgroundColor: `${ui.borders}` ,borderColor:`${ui.borders}`}}
                                             >
                                                 {column.label}
                                             </TableCell>
                                         ))}
                                     </TableRow>
                                 </TableHead>
-                                <TableBody>
+                                <TableBody style={{borderColor:`${ui.borders}`}}>
                                     {rows && rows
                                         .slice()
                                         .map((row) => {
@@ -193,7 +194,7 @@ function ManageWarehouseOwner() {
                 </Grid>
                 <Grid item xs={2}></Grid>
             </Grid>
-            <Modal
+            <Modal 
                 show={show}
                 onHide={handleClose}
                 backdrop="static"
@@ -202,11 +203,11 @@ function ManageWarehouseOwner() {
                 centered
                 keyboard={false}
             >
-                <Modal.Header closeButton>
-                    <Modal.Title>Add a Warehouse Owner</Modal.Title>
+                <Modal.Header style={{backgroundColor:`${ui.lightBg}` , color:`${ui.normalText}`}} closeButton>
+                    <Modal.Title >Add a Warehouse Owner</Modal.Title>
                 </Modal.Header>
 
-                <Modal.Body>
+                <Modal.Body style={{backgroundColor:`${ui.lightBg}` , color:`${ui.normalText}`}} >
                     <AddWarehouseOwner addAction={handleAddRow} closeAction={() => { handleClose() }} />
                 </Modal.Body>
 
