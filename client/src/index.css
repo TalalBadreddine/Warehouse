@@ -11,8 +11,8 @@
 body {
   background-color: #011e3c !important;
 }
-table{
-    border: solid 1px white;
+table {
+  border: solid 1px white;
 }
 
 /* Link,h1,h2,h3,h4,td,thead{
@@ -27,8 +27,8 @@ input{
     background-color: '#132f4c !important';
 } */
 
-.modal-content{
-    border: none !important;    
+.modal-content {
+  border: none !important;
 }
 
 form,
@@ -49,25 +49,25 @@ select {
   color: #ffffff !important;
 }
 
-
-table{
-border: solid 2px white;
-
+table {
+  border: solid 2px white;
 }
 
-.rdrDateDisplayItem input{
+.rdrDateDisplayItem input {
   background-color: #132f4c !important;
 }
 
-.rdrDayDisabled, .rdrMonthAndYearPickers{
-  background-color: #132f4c !important;}
+.rdrDayDisabled,
+.rdrMonthAndYearPickers {
+  background-color: #132f4c !important;
+}
 
-.rdrMonthPicker select{
-    background-image: none !important;
-  }
+.rdrMonthPicker select {
+  background-image: none !important;
+}
 
 .rdrDateDisplayItem input {
-  color: white !important
+  color: white !important;
 }
 
 /* .rdrCalendarWrapper{
@@ -77,6 +77,19 @@ border: solid 2px white;
 /* .rdrDateDisplayWrapper{
   background-color: ;
 } */
+
+.css-zylse7-MuiButtonBase-root-MuiIconButton-root.Mui-disabled {
+  background-color: transparent !important;
+  color: rgb(255 255 255) !important;
+}
+
+.css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon {
+  color: rgb(255 255 255) !important;
+}
+.modal-header .btn-close {
+  background-color: #ffffff !important;
+}
+
 .rdrStaticRangeLabel{
   background-color:#132f4c !important;
   color: #ffffff !important;
@@ -117,8 +130,6 @@ border: solid 2px white;
 }
 
 
-
-
 .rdrDateDisplayItem {
   border-radius: 4px;
   background-color: #132f4c !important;
@@ -131,3 +142,4 @@ border: solid 2px white;
    background-image: none !important;
 
 }
+

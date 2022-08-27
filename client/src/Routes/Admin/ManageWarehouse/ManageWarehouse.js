@@ -18,6 +18,7 @@ import AddWarehouse from '../../../Components/AddWarehouse/AddWarehouse';
 import { getAllWarehousesAdmin } from '../../../Services/getAllWarehouses';
 import { deleteWarehouseByAdmin } from '../../../Services/DeleteWarehouseByAdmin';
 import { useNavigate } from 'react-router-dom';
+import ui from '../../../themes'
 
 
 const Warehousecolumns = [
@@ -176,10 +177,10 @@ function ManageWarehouse() {
     <div>
       <Grid container spacing={5} sx={{ m: 1 }}>
         <Grid item xs={11}>
-          <TextField onChange={(e) => setQuery(e.target.value)} style={{ width: '40%' }} sx={{ m: 1 }} id="outlined-basic" label="Search..." variant="outlined" size='small' />
+          <TextField onChange={(e) => setQuery(e.target.value)} style={{ width: '40%' , backgroundColor:`${ui.searchesInput}` , border: 'solid 1px #7890a9', borderRadius:'6px' }} sx={{ m: 1 }} id="outlined-basic" label="Search..." variant="outlined" size='small' />
           <Button
             onClick={handleShow}
-            style={{ backgroundColor: '#54d494', borderColor: '#54d494', float: 'right' }}
+            style={{ backgroundColor: `${ui.Buttons}`, float: 'right' }}
             startIcon={<AddIcon />} sx={{ m: 1 }}
             variant="contained"
             size="medium">
@@ -187,14 +188,14 @@ function ManageWarehouse() {
           </Button>
           <Paper sx={{ width: '100%', overflow: 'hidden' }}>
             <TableContainer sx={{ maxHeight: 440 }}>
-              <Table stickyHeader aria-label="sticky table">
-                <TableHead>
-                  <TableRow>
+              <Table style={{backgroundColor:`${ui.lightBg}`,borderColor:`${ui.borders}`,color:`${ui.normalText}`}} stickyHeader aria-label="sticky table">
+                <TableHead style={{backgroundColor:`${ui.lightBg}`}}>
+                  <TableRow >
                     {Warehousecolumns.map((column) => (
-                      <TableCell
+                      <TableCell 
                         key={column.id}
                         align={column.align}
-                        style={{ minWidth: column.minWidth }}
+                        style={{ minWidth: column.minWidth ,backgroundColor:`${ui.borders}` , borderColor:`${ui.borders}`,color:`${ui.normalText}`}}
                       >
                         {column.label}
                       </TableCell>
@@ -226,6 +227,7 @@ function ManageWarehouse() {
               </Table>
             </TableContainer>
             <TablePagination
+            style={{backgroundColor:`${ui.lightBg}`,borderColor:`${ui.borders}`,color:`${ui.normalText}`}}
               rowsPerPageOptions={[10, 25, 100]}
               component="div"
               count={rows.length}
@@ -248,11 +250,11 @@ function ManageWarehouse() {
         centered
         keyboard={false}
       >
-        <Modal.Header closeButton>
-          <Modal.Title>Add a new Warehouse</Modal.Title>
+        <Modal.Header style={{backgroundColor:`${ui.lightBg}`}} closeButton>
+          <Modal.Title style={{color:`${ui.normalText}`}}>Add a new Warehouse</Modal.Title>
         </Modal.Header>
 
-        <Modal.Body>
+        <Modal.Body style={{backgroundColor:`${ui.lightBg}`,color:`${ui.normalText}`}}>
           <AddWarehouse
             addAction={handleAddRow} closeAction={() => { handleClose() }} />
         </Modal.Body>
