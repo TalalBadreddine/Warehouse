@@ -343,6 +343,35 @@ const getWarehouseDetails = async (req, res) => {
     }
 }
 
+const addComment = async (req, res) => {
+    try {
+        const content = req.body.content
+        const warehouseId = req.body.warehouseId
+        const decodedInfo = jwtDecode(req.cookies['jwt'])
+
+
+        const results = await warehouseSchema.updateOne({
+            _id: warehouseId
+        }, {
+            $push: {
+                feedback: [{
+
+                    comentorEmail: decodedInfo.user.email,
+                    content: content
+                }]
+            }
+        })
+        if (results.acknowledged) {
+            return res.send({ comentorEmail: decodedInfo.user.email, content: content, addedIn: new Date() }).status(200)
+        } else {
+            return res.status(424).send('Failed to add the comment')
+        }
+    }
+    catch (err) {
+        console.log(`error in addComment  => ${err.message}`)
+    }
+}
+
 
 
 
@@ -356,5 +385,6 @@ module.exports = {
     acceptDeclineRequest,
     deleteWarehouse,
     getWarehouseDetails,
-    completeStripeAccount
+    completeStripeAccount,
+    addComment
 }
