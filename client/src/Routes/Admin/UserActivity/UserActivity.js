@@ -280,14 +280,14 @@ const UserActivity = () => {
 
                 <div className='col-4 d-flex'>
 
-                    <input style={{'height':'42px', marginTop:'auto' , backgroundColor:`${ui.lightBg}`}} className="rounded border py-1 px-2 col-12 " placeholder='Search' onChange={(e) => {setSearchValue(e.target.value)}} value={searchValue} ></input>
+                    <input style={{'height':'50px', marginTop:'auto' , backgroundColor:`${ui.lightBg}` , borderColor:`${ui.borders}`}} className="rounded border py-1 px-2 col-12 " placeholder='Search' onChange={(e) => {setSearchValue(e.target.value)}} value={searchValue} ></input>
 
                 </div>
 
                 <div className='col-3 ms-5'>
-                    <FormControl style={{backgroundColor:`${ui.lightBg}` , color:`${ui.normalText}`}} fullWidth>
+                    <FormControl  fullWidth>
                         <InputLabel style={{color:`${ui.normalText}`}} id="demo-simple-select-label">Type</InputLabel>
-                        <Select style={{color:`${ui.normalText}` , backgroundColor:`${ui.lightBg}`}}
+                        <Select style={{color:`${ui.normalText}` , backgroundColor:`${ui.lightBg}`, 'height': '50px'}}
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
                             value={usersTableRole}
@@ -345,9 +345,9 @@ const UserActivity = () => {
 
                                 <div className='mt-3 d-flex'>
 
-                                    <div className='col-6 d-flex'>
-                                        <span className='d-flex col-2' style={{color:`${ui.normalText}`}} >From</span>
-                                        <DatePicker
+                                    <div  className='col-6 d-flex'>
+                                        <span className='d-flex col-2' style={{color:`${ui.normalText}` }} >From</span>
+                                        <DatePicker 
                                             selected={selectedDate.startDate}
                                             onSelect={(e) => setSelectedDate({ ...selectedDate, ['startDate']: e })} 
                                             onChange={() => setDateError(null)}
@@ -360,8 +360,8 @@ const UserActivity = () => {
 
 
                                     <div className='col-6 d-flex'>
-                                        <span className='ms-2 dd-flex col-2' style={{color:`${ui.normalText}`}}>Till</span>
-                                        <DatePicker
+                                        <span className='ms-2 dd-flex col-2' style={{color:`${ui.normalText}` }}>Till</span>
+                                        <DatePicker style={{color:`${ui.normalText}` , backgroundColor:`${ui.lightBg}` }}
                                             selected={selectedDate.endDate}
                                             onSelect={(e) => setSelectedDate({ ...selectedDate, ['endDate']: e })} //when day is clicked
                                             onChange={() => setDateError(null)}
