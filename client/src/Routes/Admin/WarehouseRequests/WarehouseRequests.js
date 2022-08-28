@@ -17,6 +17,7 @@ import ui from '../../../themes';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { useNavigate } from 'react-router-dom';
+import ContactMailIcon from '@mui/icons-material/ContactMail';
 
 
 
@@ -99,11 +100,11 @@ function WarehouseRequests() {
                   pendingRequests.map((item, i) => {
                     return (item.warehouses.map((warehouse, index) => {
                       return (<TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                        <TableCell align="left">{warehouse[0].name} </TableCell>
-                        <TableCell align="center"> {item.warehouseOwner.userName}</TableCell>
-                        <TableCell align="center">
+                        <TableCell style={{ fontWeight: '300',color:`${ui.normalText}` }} align="left">{warehouse[0].name} </TableCell>
+                        <TableCell style={{ fontWeight: '300',color:`${ui.normalText}` }} align="center"> {item.warehouseOwner.userName}</TableCell>
+                        <TableCell style={{ fontWeight: '300',color:`${ui.normalText}` }} align="center">
 
-                          <Button style={{ margin: 2, borderColor: '#54d494', color: '#54d494' }}
+                          <Button style={{ margin: 5, borderColor: `${ui.normalText}`, color: `${ui.backgroundColor}`,color:`${ui.normalText}` }}
                             variant="outlined"
                             onClick={handleOpen}
                           >
@@ -115,27 +116,29 @@ function WarehouseRequests() {
                             onClose={handleClose}
                             aria-labelledby="modal-modal-title"
                             aria-describedby="modal-modal-description"
+                            
                           >
-                            <Box sx={style}>
+                            <Box sx={style} style={{backgroundColor:`${ui.lightBg}` , color:`${ui.normalText}`}}>
+                              <div display='flex' justifyContent='center' align='left'>
                               <Typography id="modal-modal-title" variant="h6" component="h2">
-                                Contact Information
+                               <ContactMailIcon style={{fontSize:'300%'}} /> Contact Information
                               </Typography>
                               <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                                Email: {item.warehouseOwner.email} <br />
-                                Phone Number: {item.warehouseOwner.phoneNumber}
-                              </Typography>
+                               <p > Email: {item.warehouseOwner.email} </p>
+                               <p> Phone Number: {item.warehouseOwner.phoneNumber}</p>
+                              </Typography></div>
                             </Box>
                           </Modal>
 
-                          <Button style={{ backgroundColor: `${ui.Buttons}`, borderColor: `${ui.normalText} `}} variant="outlined">
+                          <Button style={{ margin: 5, borderColor: `${ui.normalText}`, color: `${ui.backgroundColor}`,color:`${ui.normalText}` }} variant="outlined">
                             View
                           </Button>
-                          <Button style={{ backgroundColor: `${ui.Buttons}`, borderColor: `${ui.normalText} `}}
+                          <Button style={{ margin: 5, borderColor: `${ui.normalText}`, backgroundColor: 'green',color:`${ui.normalText}` }}
                             variant="contained"
                             onClick={() => { HandleAcceptReject(warehouse[0]._id, 'accepted') }}>
                             Accept
                           </Button>
-                          <Button style={{ backgroundColor: `${ui.Buttons}`, borderColor: `${ui.normalText} `}}
+                          <Button style={{ margin: 5, borderColor: `${ui.normalText}`, backgroundColor: 'red',color:`${ui.normalText}` }}
                             variant="contained"
                             onClick={() => { HandleAcceptReject(warehouse[0]._id, 'rejected') }}>
                             Reject

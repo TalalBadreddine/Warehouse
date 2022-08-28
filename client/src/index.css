@@ -197,8 +197,14 @@ table {
 }
 .rdrDayDisabled{
    background-color:#132f4c !important;
+   color: white !important;
 
 } 
+
+.rdrDayNumber span{
+  color: white !important;
+} 
+
 .rdrNextPrevButton.rdrNextBu{
    background-color:#027fff !important;
   color: #ffffff !important; 
@@ -220,4 +226,8 @@ table {
 
 .react-datepicker__input-container input{
     background-color: #132f4c !important;
+
+.rdrInputRangeInput{
+  background-color:  #142f4c !important;
+
 }

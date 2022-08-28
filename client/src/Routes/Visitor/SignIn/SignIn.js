@@ -90,7 +90,7 @@ function SignIn() {
               <Modal.Body  style={{backgroundColor:`${ui.lightBg}` , }}>
                 {/* {isCustomer && <SignUpUser/>} */}
                 {/* <SignUpWarehouse/> */}
-                {isOwner ? <SignUpWarehouse /> : <SignUpUser />}
+                {isOwner ? <SignUpWarehouse /> : <SignUpUser closeModal={handleClose} />}
               </Modal.Body>
 
 
