@@ -22,34 +22,34 @@ import ui from '../../../themes'
 
 
 const Warehousecolumns = [
-  { id: 'warehouseName', label: 'Warehouse Name', minWidth: 170 },
-  { id: 'warehouseSpace', label: 'Warehouse Space', minWidth: 100 },
+  { id: 'warehouseName', label: 'Warehouse Name', minWidth: 170 ,align:'left'},
+  { id: 'warehouseSpace', label: 'Warehouse Space', minWidth: 100 ,align:'center' },
   {
     id: 'warehouseType',
     label: 'Warehouse Type',
     minWidth: 170,
-    align: 'right',
+    align: 'center',
     format: (value) => value.toLocaleString('en-US'),
   },
   {
     id: 'price',
     label: 'Price',
     minWidth: 170,
-    align: 'right',
+    align: 'center',
     format: (value) => value.toLocaleString('en-US'),
   },
   {
     id: 'location',
     label: 'Location',
     minWidth: 170,
-    align: 'right',
+    align: 'center',
     format: (value) => value.toLocaleString('en-US'),
   },
   {
     id: 'action',
     label: 'Action',
     minWidth: 170,
-    align: 'right',
+    align: 'center',
     format: (value) => value.toLocaleString('en-US'),
   },
 
@@ -193,7 +193,7 @@ function ManageWarehouse() {
             size="medium">
             Create Warehouse
           </Button>
-          <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+          <Paper sx={{ width: '100%', overflow: 'hidden' , borderColor:`${ui.borderColor}`}}>
             <TableContainer sx={{ maxHeight: 440 }}>
               <Table style={{backgroundColor:`${ui.lightBg}`,borderColor:`${ui.borders}`,color:`${ui.normalText}`}} stickyHeader aria-label="sticky table">
                 <TableHead style={{backgroundColor:`${ui.lightBg}`}}>
@@ -209,7 +209,7 @@ function ManageWarehouse() {
                     ))}
                   </TableRow>
                 </TableHead>
-                <TableBody>
+                <TableBody style={{ border:`solid 2px ${ui.borders}`}}>
                   {rows && rows
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => {
@@ -218,7 +218,7 @@ function ManageWarehouse() {
                           {Warehousecolumns.map((column) => {
                             const value = row[column.id];
                             return (
-                              <TableCell key={column.id} align={column.align} style={{color:'black'}}>
+                              <TableCell key={column.id} align={column.align} style={{color:`${ui.normalText}` , fontColor:'0.89rem'}}>
                                 {column.format && typeof value === 'number'
                                   ? column.format(value)
                                   : value}
@@ -234,7 +234,7 @@ function ManageWarehouse() {
               </Table>
             </TableContainer>
             <TablePagination
-            style={{backgroundColor:`${ui.lightBg}`,borderColor:`${ui.borders}`,color:`${ui.normalText}`}}
+            style={{backgroundColor:`${ui.lightBg}`,borderColor:`${ui.borders}` ,border:`solid 2px ${ui.borders}`,color:`${ui.normalText}`}}
               rowsPerPageOptions={[10, 25, 100]}
               component="div"
               count={rows.length}
