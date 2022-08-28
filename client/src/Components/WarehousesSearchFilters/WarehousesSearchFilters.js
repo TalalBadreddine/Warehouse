@@ -44,14 +44,15 @@ const WarehousesSearchFilters = (props) => {
                             vertical: 'top',
                             horizontal: 'left',
                         }}
+                       
 
                     >
-                        <div style={{ width: '270px', height: '100px' }}>
+                        <div style={{ width: '270px', height: '100px', backgroundColor: `${ui.lightBg}` }} >
                             <div className='col-12 mt-3'>
-                                <h5 className='ms-3'>Price Per Day</h5>
-                                <hr></hr>
+                                <h5 style={{color: `${ui.normalText}`}} className='ms-3'>Price Per Day</h5>
+                                <hr style={{color: 'white'}}></hr>
 
-                                <div className='bg-primary'>
+                                <div className='m-auto col-10 mt-3'>
                                     <MultiRangeSlider min={priceMin}
                                         max={priceMax}
                                         onChange={props.priceChange}
@@ -86,10 +87,10 @@ const WarehousesSearchFilters = (props) => {
                     >
                         <div style={{ width: '270px', height: '100px' }}>
                             <div className='col-12 mt-3'>
-                                <h5 className='ms-3'>Select Space Range</h5>
-                                <hr></hr>
+                                <h5 className='ms-3' style={{color: `${ui.normalText}`}} >Select Space Range</h5>
+                                <hr style={{color: 'white'}}></hr>
 
-                                <div className=''>
+                                <div className='m-auto col-10 mt-3'>
                                     <MultiRangeSlider min={spaceMin}
                                         max={spaceMax}
                                         onChange={props.spaceChange}
@@ -124,8 +125,8 @@ const WarehousesSearchFilters = (props) => {
                     >
                         <div style={{ width: '430px', height: '400px' }}>
                             <div className='col-12 mt-3'>
-                                <h5 className='ms-3'>Select Date</h5>
-                                <hr></hr>
+                                <h5 className='ms-3' style={{color: `${ui.normalText}`}}>Select Date</h5>
+                                <hr style={{color: 'white'}}></hr>
 
                                 <div className='d-flex justify-content-center'>
                                 <DateRange

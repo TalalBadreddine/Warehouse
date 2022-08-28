@@ -15,17 +15,10 @@ table {
   border: solid 1px white;
 }
 
-/* Link,h1,h2,h3,h4,td,thead{
-    color: white !important;
+.MuiPaper-elevation{
+  background-color: #132f4c !important;
+  border: 1px solid #027fff;
 }
-a{
-    text-decoration: none !important;
-    color: white !important
-}
-
-input{
-    background-color: '#132f4c !important';
-} */
 
 .modal-content {
   border: none !important;
@@ -230,4 +223,11 @@ table {
 .rdrInputRangeInput{
   background-color:  #142f4c !important;
 
+}
+.rdrDayDisabled{
+  background-color: gray !important;
+}
+
+.rdrDayPassive{
+  background-color: rgba(228, 224, 224, 0.177) !important;
 }
