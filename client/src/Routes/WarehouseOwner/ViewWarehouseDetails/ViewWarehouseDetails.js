@@ -267,9 +267,9 @@ const ViewWarehouseDetails = (props) => {
                                                 <TableRow
                                                         key={thisRequest.name}
                                                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                                        style={{background: '#d3d3d3'}}
+                                                        style={{background: '#ffffff2f'}}
                                                     >
-                                                        <TableCell component="th" scope="row" style={{fontWeight:'bold'}} >
+                                                        <TableCell component="th" scope="row" style={{fontWeight:'bold',color:`${ui.normalText}`}} >
                                                             {thisRequest.userEmail}
                                                         </TableCell>
                                                         <TableCell align="right" style={{fontWeight:'bold',color:`${ui.normalText}`}} >${thisRequest.price}</TableCell>

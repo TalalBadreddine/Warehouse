@@ -246,14 +246,14 @@ function ManageRequests() {
             </thead>
             <tbody>
 
-              {currentWarehouse && <Modal show={show} onHide={handleClose}>
-                <Modal.Header closeButton>
+              {currentWarehouse && <Modal show={show} onHide={handleClose} >
+                <Modal.Header closeButton style={{backgroundColor: `${ui.backgroundColor}`}}>
                   <Modal.Title><h3 style={{ color: 'red' }}>Attention !</h3></Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
+                <Modal.Body style={{backgroundColor: `${ui.backgroundColor}`, color: `${ui.normalText}`}}>
                   <h5 style={{ fontWeight: 'meduim', letterSpacing: '1px' }}>The current request have conflict with {modalContent.arrOfWarehouses.length} other warehouses By accepting the request, you will be by default declining other requests.</h5>
-
-                  <Accordion className="mt-4 mb-4">
+                  <p className='mt-4'>Note: To check the other requests click on view details button in the table</p>
+                  {/* <Accordion className="mt-4 mb-4">
                     <Accordion.Item eventKey="0">
                       <Accordion.Header>Current Customer</Accordion.Header>
                       <Accordion.Body>
@@ -268,7 +268,6 @@ function ManageRequests() {
                       <Accordion.Header>Other Customers</Accordion.Header>
                       <Accordion.Body>
                         {modalContent.arrOfWarehouses.length != 0 && modalContent.arrOfWarehouses.map((warehouse) => {
-                          console.log(warehouse)
                           return (
                             <div className="d-flex justify-content-between" style={{ fontSize: '0.9rem' }}>
                               <p>Rentor: {warehouse.userEmail.split('@')[0]}</p>
@@ -281,10 +280,10 @@ function ManageRequests() {
 
                       </Accordion.Body>
                     </Accordion.Item>
-                  </Accordion>
+                  </Accordion> */}
 
                 </Modal.Body>
-                <Modal.Footer>
+                <Modal.Footer style={{backgroundColor: `${ui.backgroundColor}`}}>
                   <Button variant="secondary" onClick={handleClose}>
                     Close
                   </Button>

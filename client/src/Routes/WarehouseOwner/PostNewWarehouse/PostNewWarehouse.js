@@ -104,6 +104,8 @@ function PostNewWarehouse() {
 
   const handleAddWarehouse = async (e) => {
     e.preventDefault()
+    setIsSuccessMarkHidden(false)
+
     if (warehouse.name == null || warehouse.name == '') {
       setError("Warehouse name can't be empty ")
       return false
@@ -379,6 +381,9 @@ function PostNewWarehouse() {
               id="custom-switch"
               label="Forklift"
               ></Form.Check>
+              {error && <div className='mt-3' style={{color: 'red'}}>
+                <p>{error}</p>
+              </div>}
             <div className='col-12 justify-content-center d-flex'>
                 <Button onClick={(e) => {handleAddWarehouse(e)}} className='mt-3 te' style={{backgroundColor:`${ui.Buttons}`}} type="submit" variant="primary">Upload Space</Button>
             </div>

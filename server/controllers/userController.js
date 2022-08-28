@@ -245,28 +245,25 @@ const addReply = async (req, res) => {
         const content = req.body.content
         const arrOfCommentsIndex = req.body.arrIndex
         const decodedInfo = jwtDecode(req.cookies['jwt'])
-        const test = 'feedback.' + arrOfCommentsIndex
 
-        // 'feedback.pos': {
+       const warehouse = await warehouseSchema.findOne({
+            _id: warehouseId
+        })
+        let currentFeedback = warehouse.feedback
+        currentFeedback[arrOfCommentsIndex].push({
+            comentorEmail: decodedInfo.user.email,
+            content: content
+        })
 
-        //     comentorEmail: decodedInfo.user.email,
-        //     content: content
+        await warehouseSchema.updateOne({
+            _id: warehouseId
+        },{
 
-        // }
+            feedback: currentFeedback
 
-        // await warehouseSchema.updateOne({
-        //     _id: warehouseId
-        // },{
-        //     $push:{
-        //         "feedback.arrOfCommentsIndex": {
+        })
 
-        //             comentorEmail: decodedInfo.user.email,
-        //             content: content
-
-        //         }
-        //     }
-        // },)
-        return res.send('good')
+        return res.send(decodedInfo.user.email)
     }
     catch (err) {
         console.log(`Error at addReply => ${err.message}`)

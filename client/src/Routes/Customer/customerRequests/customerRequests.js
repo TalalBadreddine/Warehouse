@@ -138,11 +138,7 @@ function CustomerRequests() {
             return
         }
 
-        let feedbackObject = {
-            comentorEmail: 'current User',
-            content: content,
-            warehouseId: currentWarehouseData._id
-        }
+
 
         axios.post('/user/addReply', {
 
@@ -151,6 +147,12 @@ function CustomerRequests() {
             warehouseId: currentWarehouseData._id
 
         }).then((results) => {
+
+            let feedbackObject = {
+                comentorEmail: `${results.data}`,
+                content: content,
+                warehouseId: currentWarehouseData._id
+            }
 
             console.log(results.data)
             let feedback = currentWarehouseData.feedback
@@ -324,11 +326,11 @@ function CustomerRequests() {
                                                     return (
                                                         <div className='mt-4'>
                                                             <div>
-                                                                <span style={{ fontSize: '1rem' }}><BiUserCircle size={37}></BiUserCircle> <span style={{ color: commentArr[index].comentorEmail == currentWarehouseRequest.warehouseOwnerEmail ? 'green' : 'white' }}>{commentArr[index].comentorEmail}</span> {currentWarehouseRequest.warehouseOwnerEmail == commentArr[index].comentorEmail && <span style={{ fontSize: '0.8rem' }}>(warehouse owner)</span>}</span>
+                                                                <span style={{ fontSize: '1.2rem', fontWeight: commentArr[index].comentorEmail == currentWarehouseRequest.warehouseOwnerEmail ? 'bold' : 'normal'  }}><BiUserCircle size={37}></BiUserCircle> <span style={{ color: commentArr[index].comentorEmail == currentWarehouseRequest.warehouseOwnerEmail ? `${ui.bigTitleSecondaryColor}` : 'white' }}>{commentArr[index].comentorEmail}</span> {currentWarehouseRequest.warehouseOwnerEmail == commentArr[index].comentorEmail && <span style={{ fontSize: '0.8rem' }}>(warehouse owner)</span>}</span>
                                                                 <span className='ms-3' style={{ fontSize: '0.8rem', color: `${ui.xsTexts}` }}>{calculateDaysDifference(new Date(), commentArr[index].addedIn) > 0 ? `${calculateDaysDifference(new Date(), commentArr[index].addedIn)} day ago ` : 'Today'} </span>
                                                             </div>
                                                             <div className='col-12 ps-1 m-auto'>
-                                                                <p style={{ marginLeft:'10%',color:`${ui.borders}`,fontWeight:'bolder',fontSize: '1rem' }}>"{commentArr[index].content}"</p>
+                                                                <p style={{ marginLeft:'8%',color:`${ui.normalText}`,fontSize: '1rem' }}>{commentArr[index].content}</p>
 
                                                                 <div className='d-flex'>
 
@@ -366,15 +368,15 @@ function CustomerRequests() {
 
                                                             <div className='ms-5' >
                                                                 <div>
-                                                                    <span style={{ fontSize: '1.3rem' }}> <BiUserCircle size={37}></BiUserCircle> <span style={{ color: commentArr[index].comentorEmail == currentWarehouseRequest.warehouseOwnerEmail ? 'green' : 'black' }}> {commentArr[index].comentorEmail}</span> {currentWarehouseRequest.warehouseOwnerEmail == commentArr[index].comentorEmail && <span style={{ fontSize: '0.8rem' }}>(warehouse owner)</span>} </span>
+                                                                    <span style={{ fontSize: '1.3rem' }}> <BiUserCircle size={37}></BiUserCircle> <span style={{ color: commentArr[index].comentorEmail == currentWarehouseRequest.warehouseOwnerEmail ? 'green' : `${ui.normalText}` }}> {commentArr[index].comentorEmail}</span> {currentWarehouseRequest.warehouseOwnerEmail == commentArr[index].comentorEmail && <span style={{ fontSize: '0.8rem' }}>(warehouse owner)</span>} </span>
                                                                     <span className='ms-2' style={{ fontSize: '0.8rem', color: 'rgb(0,0,0, 0.6)' }}>{calculateDaysDifference(new Date(), commentArr[index].addedIn) > 0 ? `${calculateDaysDifference(new Date(), commentArr[index].addedIn)} day ago ` : 'Today'}</span>
                                                                 </div>
-                                                                <p style={{ fontSize: '1rem' }}>{commentArr[index].content}</p>
+                                                                <p style={{ fontSize: '1rem',  marginLeft:'3%', marginTop: '1%' , color: `${ui.normalText}` }}>{commentArr[index].content}</p>
                                                             </div>
                                                             {index == commentArr.length - 1 &&
                                                                 <div className='d-none' id={`${helperIndex}-${index}`} ref={el => replyBtnRef.current[helperIndex] = el} >
                                                                     <div className='d-flex'>
-                                                                        <textarea type='text' className='border rounded col-9' ref={(el) => { replyInputRef.current[helperIndex] = el }} ></textarea>
+                                                                        <textarea style={{color: `${ui.normalText}`, backgroundColor: `${ui.backgroundColor}`, border: `solid 2px ${ui.borders}` }} type='text' className='border rounded col-9' ref={(el) => { replyInputRef.current[helperIndex] = el }} ></textarea>
                                                                         <Button className='ms-1' onClick={() => { addReply(helperIndex) }}>reply</Button>
                                                                     </div>
                                                                 </div>
