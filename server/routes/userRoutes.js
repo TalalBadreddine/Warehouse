@@ -4,6 +4,7 @@ const {
     validateUser
   } = require('../middleware/auth')
 
+
 const {
     getWareHousesForUsers,
     userLogin,
@@ -13,7 +14,8 @@ const {
     testPayment,
     getWarehouseInfo,
     addComment,
-    addReply
+    addReply,
+    getCurrentUser
 } = require('../controllers/userController')
 
 
@@ -38,7 +40,7 @@ userRouter.post('/getWarehouseInfo', validateUser, getWarehouseInfo)
 userRouter.get('/checkUserValidation', validateUser, (req, res) => {
     return res.status(200).send(true)
 })
-
+userRouter.get('/getCurrentUser',validateUser,getCurrentUser)
 module.exports = {
     userRouter,
     userRegister,
