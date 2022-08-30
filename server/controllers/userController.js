@@ -209,6 +209,20 @@ const getWarehouseInfo = async (req, res) => {
         console.log(`error at the getWarehouseInfo ${err.message}`)
     }
 }
+const getWarehouserequests = async (req, res) => {
+    try {
+        const userEmail = req.body.userEmail
+
+        const results = await manageUsersAndWarehousesSchema.find({
+            userEmail: userEmail
+        })
+
+        return res.send(results).status(200)
+    }
+    catch (err) {
+        console.log(`error at the getWarehouseInfo ${err.message}`)
+    }
+}
 
 const addComment = async (req, res) => {
     try {
@@ -292,6 +306,7 @@ module.exports = {
     addComment,
     getWarehouseInfo,
     addReply,
-    getCurrentUser
+    getCurrentUser,
+    getWarehouserequests
 };
 
