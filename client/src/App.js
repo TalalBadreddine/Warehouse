@@ -16,10 +16,7 @@ import WarehouseDetails from './Routes/Customer/WarehouseDetails/WarehouseDetail
 import ManageRequests from './Routes/WarehouseOwner/MangaRequests/ManageRequests'
 import MyWarehouses from './Routes/WarehouseOwner/MyWarehouses/MyWarehouses';
 import SideBar from './Components/SideBar/SideBar'
-// <<<<<<< HEAD
 
-// =======
-// >>>>>>> ba51793a3bcb7019d1ebcac8ef04554a99ee3f3c
 import ManageUsers from './Routes/Admin/ManageUsers/ManageUsers';
 import ViewWarehouseDetails from './Routes/WarehouseOwner/ViewWarehouseDetails/ViewWarehouseDetails';
 import CustomerRequests from './Routes/Customer/CustomerRequests/CustomerRequests';
