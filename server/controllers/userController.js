@@ -270,7 +270,17 @@ const addReply = async (req, res) => {
     }
 
 }
-
+const getCurrentUser =  (req, res) => {
+    try{
+        const decodedUser = jwtDecode(req.cookies['jwt'])
+       return res.send(decodedUser).status(200);
+      
+        
+}
+catch (err) {
+    console.log(`Error at addReply => ${err.message}`)
+}
+}
 
 module.exports = {
     getWareHousesForUsers,
@@ -281,6 +291,7 @@ module.exports = {
     testPayment,
     addComment,
     getWarehouseInfo,
-    addReply
-}
+    addReply,
+    getCurrentUser
+};
 

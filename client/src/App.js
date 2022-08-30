@@ -28,6 +28,7 @@ import WarehouseOwnerDetails from './Routes/Admin/WarehouseOwnerDetails/Warehous
 import LoginAdmin from './Routes/Admin/AdminLogin/LoginAdmin';
 import ManageWarehouse from './Routes/Admin/ManageWarehouse/ManageWarehouse';
 import StripePayment from './Components/StripePaymentPage/StripePayment';
+import EditProfile from './Routes/Customer/EditProfile/EditProfile';
 
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
         <Route path='/' element={<Navigationbar role='visitor'></Navigationbar>}>
 
           <Route path='' element={<Landing></Landing>}></Route>
+          
           <Route path='login' element={<SignIn></SignIn>}></Route>           
           <Route path='findASpace' element={<SearchWarehouse role={'visitor'} />}></Route>
           <Route path='aboutUs' element={<AboutUs></AboutUs>}></Route>
@@ -58,6 +60,7 @@ function App() {
         <Route path='customer/' element={<Navigationbar role='customer'></Navigationbar>}>
 
           <Route path='' element={<SearchWarehouse role={'customer'}></SearchWarehouse>}></Route>
+          <Route path='EditProfile' element={<EditProfile></EditProfile>}></Route>
           <Route path='warehouseDetails' element={<WarehouseDetails></WarehouseDetails>}></Route>
           <Route path='requests' element={<CustomerRequests></CustomerRequests>}></Route>
           <Route path='stripePayment' element={<StripePayment></StripePayment>}></Route>
