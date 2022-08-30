@@ -26,7 +26,7 @@ table {
 
 form,
 input,
-label,
+/* label, */
 i,
 select {
   color: #ffffff !important;
