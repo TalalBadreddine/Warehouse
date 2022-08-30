@@ -6,6 +6,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import { Outlet, Link, useNavigate } from 'react-router-dom';
 import styles from './NavigationCss.module.css'
 import ui from '../../themes'
+import Logo from '../../Assets/Logo.svg'
 
 
 function Navigationbar({ role }) {
@@ -47,7 +48,7 @@ function Navigationbar({ role }) {
 
       <Navbar expand="lg" className={styles.navBar}>
         <Container fluid>
-          <Navbar.Brand href="#Logo"  style={{ color: fontColor }}>Logo</Navbar.Brand>
+          <Navbar.Brand href="#Logo"  style={{ color: fontColor }}><img src={Logo} width='50px' height='45px'  style={{color:'white'}} ></img></Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
             <Nav></Nav>

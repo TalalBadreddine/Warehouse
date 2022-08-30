@@ -1,16 +1,18 @@
 import { BiCctv } from 'react-icons/bi'
 import { Carousel } from 'react-bootstrap'
 import { useState } from 'react';
-import sprinkler from './sprinkler.png'
+import sprinkler from './sprinkler.svg'
 import { TbForklift } from 'react-icons/tb'
 import { GrUserWorker } from 'react-icons/gr'
 import styles from './WarehouseCardCss.module.css'
 import Button from 'react-bootstrap/Button'
 import { Modal } from 'react-bootstrap';
 
-import ac from './air-conditioner.png'
+import ac from './air-conditioner.svg'
 import { useNavigate } from 'react-router-dom';
 import alternative from './warehouseAlternative.jpeg'
+
+import worker from './worker.svg'
 
 import ui from '../../themes'
 
@@ -52,7 +54,7 @@ const WarehouseCard = (props) => {
 
     return (
         <div>
-        <div className={`col-5 col-sm-12 m-2 p-2 d-sm-flex rounded d-block ${styles.cardDiv}`} onClick={() => { navigateToWarehouseDetails(props.role, props.info) }}  >
+        <div className={`col-12 col-sm-12 m-2 p-2 d-sm-flex rounded d-block ${styles.cardDiv}`} onClick={() => { navigateToWarehouseDetails(props.role, props.info) }}  >
 
             <div className='col-sm-4 '>
                 <Carousel>
@@ -94,18 +96,18 @@ const WarehouseCard = (props) => {
                 <h1 className={styles.smallTypo} style={{color:`${ui.normalText}`}}>Address:{props.info.address[0][1]}, {props.info.address[0][0]}</h1>
                 <div className=' h-50'>
 
-                    <BiCctv style={{ color: `${ui.iconsColors}` }} className={`font-wight-700 m-2 ${styles.cctvIcon}`} size={27} ></BiCctv>
+                {props.info.isSecurityCameras && <BiCctv style={{ color: `${ui.iconsColors}` }} className={` m-2 ${styles.cctvIcon}`} size={27} ></BiCctv>}
 
-                    <img src={sprinkler} width={'25px'} style={{ color: `${ui.iconsColors}` }} className="m-2"></img>
-
-
-                    <TbForklift style={{ color: `${ui.iconsColors}` }} className="font-wight-700 m-2" size={32} ></TbForklift>
+                    {props.info.isFireSafe &&<img src={sprinkler} width={'25px'} style={{ color: `${ui.iconsColors}` }} className="m-2"></img>}
 
 
-                    <GrUserWorker style={{ color: `${ui.iconsColors}` }} className="font-wight-700 m-2 " size={26}></GrUserWorker>
+                    {props.info.isForklift && <TbForklift style={{ color: `${ui.iconsColors}` }} className="m-2" size={32} ></TbForklift>}
 
 
-                    <img src={ac} width={'37px'} style={{ opacity: 0.4 }} className="m-2 mt-3"></img>
+                    {props.info.isWorkers &&  <img src={worker} width={'25px'} style={{ opacity: 1, color: 'white' }} className="m-2 mt-1"></img>}
+
+
+                    {props.info.isAirConditioning && <img src={ac} width={'27px'} style={{ opacity: 1, color: 'white' }} className="m-2 mt-3"></img>}
 
                    {props.role == 'owner' ?  ownerDiv() : <p style={{ color:`${ui.normalText}`}}>Price starts from <span style={{filter: props.role == 'visitor' ?  'blur(4px)' : null, color: `${ui.normalText}` }}>${props.info.pricePerDay}</span> with space: <span style={{filter: props.role == 'visitor' ?  'blur(4px)' : null }}>{props.info.space}</span> m<sup>2</sup> </p>}
         

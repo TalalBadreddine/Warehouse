@@ -15,11 +15,22 @@ const WarehousesMap = (props) => {
     useEffect(() => {
         setWarehousesInfo(props.warehousesInfo)
         setGoToMap(props.flyToMap)
+    
     }, [])
 
     const markerIcon = new L.icon({
         iconUrl: require('./warehouse.png'),
         iconSize: [30, 40]
+    })
+
+    const pinOnMap = new L.icon({
+        iconUrl: require('./pinLocation.gif'),
+        iconSize: [30,40]
+    })
+
+    const pinMyLocation = new L.icon({
+        iconUrl: require('./pinMyLocation.png'),
+        iconSize: [40,30]
     })
 
     const location = useGeoLocation()
@@ -51,9 +62,11 @@ const WarehousesMap = (props) => {
     const MapEvents = () => {
         useMapEvents({
             click(e) {
+                if(props && props.canPin){
+                    setClickLocation([e.latlng.lat, e.latlng.lng])
+                    props.setPinLocation([e.latlng.lat, e.latlng.lng])
+                }
 
-                props.canPin && setClickLocation([e.latlng.lat, e.latlng.lng])
-                props.canPin && props.setPinLocation([e.latlng.lat, e.latlng.lng])
             },
         });
         return false;
@@ -70,7 +83,7 @@ const WarehousesMap = (props) => {
                     />
 
                     {location.loaded && !location.error &&
-                        <Marker position={[location.coordinates.lat, location.coordinates.lng]} icon={markerIcon}>
+                        <Marker position={[location.coordinates.lat, location.coordinates.lng]} icon={pinMyLocation}>
                             <Popup>
                                 <div>
                                     <h1>My Location</h1>
@@ -93,8 +106,8 @@ const WarehousesMap = (props) => {
                         )
                     })}
 
-                    {showPinLocation && 
-                        <Marker position={[parseFloat(clickLocation[0]), parseFloat(clickLocation[1])]} icon={markerIcon}>
+                    {props.canPin && clickLocation != null && clickLocation != undefined && 
+                        <Marker position={[parseFloat(clickLocation[0]), parseFloat(clickLocation[1])]} icon={pinOnMap}>
                             <Popup>
                                 <h3 className="fs-4">PingLocation</h3>  
                             </Popup>

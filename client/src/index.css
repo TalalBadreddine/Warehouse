@@ -3,29 +3,30 @@
   width: 98%;
 }
 
+/* @media screen and (max-width: 700px) {
+  .leaflet-container{
+    display: none;
+  }
+} */
 body {
   background-color: #011e3c !important;
 }
-
-/* Link,h1,h2,h3,h4,td,thead{
-    color: white !important;
-}
-a{
-    text-decoration: none !important;
-    color: white !important
+table {
+  border: solid 1px white;
 }
 
-input{
-    background-color: '#132f4c !important';
-} */
+.MuiPaper-elevation{
+  background-color: #132f4c !important;
+  border: 1px solid #027fff;
+}
 
-.modal-content{
-    border: none !important;    
+.modal-content {
+  border: none !important;
 }
 
 form,
 input,
-label,
+/* label, */
 i,
 select {
   color: #ffffff !important;
@@ -41,8 +42,192 @@ select {
   color: #ffffff !important;
 }
 
+table {
+  border: solid 2px white;
+}
 
-table{
-border: solid 2px white;
+.rdrDateDisplayItem input {
+  background-color: #132f4c !important;
+  
+}
 
+.rdrDayDisabled,
+.rdrMonthAndYearPickers {
+  background-color: #132f4c !important;
+}
+
+.rdrMonthPicker select {
+  background-image: none !important;
+}
+
+.rdrDateDisplayItem input {
+  color: white !important;
+}
+
+/* .rdrCalendarWrapper{
+  background-color:;
+} */
+
+/* .rdrDateDisplayWrapper{
+  background-color: ;
+} */
+
+.rdrStaticRangeLabel{
+    background-color:#132f4c !important;
+    color: #ffffff !important;
+}
+.rdrDefinedRangesWrapper{
+     background-color:#132f4c !important;
+    color: #ffffff !important;
+}
+.rdrDateDisplayWrapper{
+      background-color:#132f4c !important;
+    
+}
+ .rdrMonthAndYearWrapper{
+    background-color:#132f4c!important;
+}
+.rdrMonthAndYearPicker{
+     background-color:#132f4c !important;
+} 
+.rdrMonthName{
+     background-color:#132f4c !important;
+     color: #ffffff !important;
+}
+.rdrWeekDay{
+    background-color:#132f4c !important;
+    color: #ffffff !important;
+}
+.rdrMonth{
+     background-color:#132f4c !important;
+    color: #ffffff !important;
+}
+.rdrDayDisabled{
+     background-color:#132f4c !important;
+     
+} 
+ .rdrNextPrevButton.rdrNextBu{
+     background-color:#027fff !important;
+    color: #ffffff !important; 
+}
+.css-6hp17o-MuiList-root-MuiMenu-list {
+
+    background-color: #132f4c !important;
+}
+
+
+
+.rdrDateDisplayItem {
+    border-radius: 4px;
+    background-color: #132f4c !important;
+    box-shadow: 0 1px 2px 0 rgb(35 57 66 / 21%);
+    border: 1px solid transparent;
+    
+}
+.rdrMonthPicker select{
+     background-color: #132f4c !important;
+     background-image: none !important;
+     
+}
+/* .rdrDateDisplayItem input {
+    cursor: pointer;
+    height: 2.5em;
+    line-height: 2.5em;
+    border: 0px;
+    background: transparent;
+    width: 100%;
+    color: #ffffff;
+}
+.rdrDateDisplayItemActive input {
+    color: #ffffff;
+} */
+.css-hfutr2-MuiSvgIcon-root-MuiSelect-icon {
+    color: #ffffff !important;
+}
+
+
+.css-zylse7-MuiButtonBase-root-MuiIconButton-root.Mui-disabled {
+  background-color: transparent !important;
+  color: rgb(255 255 255) !important;
+}
+
+.css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon {
+  color: rgb(255 255 255) !important;
+}
+.modal-header .btn-close {
+  background-color: #ffffff !important;
+}
+
+.rdrStaticRangeLabel{
+  background-color:#132f4c !important;
+  color: #ffffff !important;
+}
+.rdrDefinedRangesWrapper{
+   background-color:#132f4c !important;
+  color: #ffffff !important;
+}
+.rdrDateDisplayWrapper{
+    background-color:#132f4c !important;
+
+}
+.rdrMonthAndYearWrapper{
+  background-color:#132f4c!important;
+}
+.rdrMonthAndYearPicker{
+   background-color:#132f4c !important;
+} 
+.rdrMonthName{
+   background-color:#132f4c !important;
+   color: #ffffff !important;
+}
+.rdrWeekDay{
+  background-color:#132f4c !important;
+  color: #ffffff !important;
+}
+.rdrMonth{
+   background-color:#132f4c !important;
+  color: #ffffff !important;
+}
+.rdrDayDisabled{
+   background-color:#132f4c !important;
+   color: white !important;
+
+} 
+
+.rdrDayNumber span{
+  color: white !important;
+} 
+
+.rdrNextPrevButton.rdrNextBu{
+   background-color:#027fff !important;
+  color: #ffffff !important; 
+}
+
+
+.rdrDateDisplayItem {
+  border-radius: 4px;
+  background-color: #132f4c !important;
+  box-shadow: 0 1px 2px 0 rgb(35 57 66 / 21%);
+  border: 1px solid transparent;
+
+}
+.rdrMonthPicker select{
+   background-color: #132f4c !important;
+   background-image: none !important;
+
+}
+
+.react-datepicker__input-container input{
+    background-color: #132f4c !important;
+}
+.rdrInputRangeInput{
+  background-color:  #142f4c !important;
+
+}
+.rdrDayDisabled{
+  background-color: gray !important;
+}
+
+.rdrDayPassive{
+  background-color: rgba(228, 224, 224, 0.177) !important;
 }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useLayoutEffect } from 'react'
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
@@ -46,6 +46,24 @@ function PostNewWarehouse() {
     key: 'selection'
   })
 
+  const [windowWidth, setwindowWidth] = useState(window.innerWidth)
+
+
+  const useWindowSize = () => {
+
+      useLayoutEffect(() => {
+          const updateSize = () => {
+              setwindowWidth(window.innerWidth)
+              console.log(windowWidth)
+          };
+          window.addEventListener("resize", updateSize)
+
+      }, [])
+
+  }
+
+  useWindowSize()
+
   const navigate = useNavigate();
   useEffect(() => {
     axios.get('/warehouseOwner/validateWarehouseOwner').then((res) => {
@@ -86,6 +104,8 @@ function PostNewWarehouse() {
 
   const handleAddWarehouse = async (e) => {
     e.preventDefault()
+    setIsSuccessMarkHidden(false)
+
     if (warehouse.name == null || warehouse.name == '') {
       setError("Warehouse name can't be empty ")
       return false
@@ -125,8 +145,6 @@ function PostNewWarehouse() {
 
     setIsSuccessMarkHidden(false)
 
-
-    //TODO: payload + success 
     window.scrollTo({ top: 10, behavior: 'smooth' })
     setTimeout(() => { navigate('/owner/') }, 4000)
 
@@ -244,7 +262,7 @@ function PostNewWarehouse() {
                       }
                       }
                       minDate={new Date()}
-                      months={2}
+                      months={windowWidth > 710 ? 2 : 1}
                       ranges={[selectedDate]}
                       direction="horizontal"
                     >
@@ -363,6 +381,9 @@ function PostNewWarehouse() {
               id="custom-switch"
               label="Forklift"
               ></Form.Check>
+              {error && <div className='mt-3' style={{color: 'red'}}>
+                <p>{error}</p>
+              </div>}
             <div className='col-12 justify-content-center d-flex'>
                 <Button onClick={(e) => {handleAddWarehouse(e)}} className='mt-3 te' style={{backgroundColor:`${ui.Buttons}`}} type="submit" variant="primary">Upload Space</Button>
             </div>

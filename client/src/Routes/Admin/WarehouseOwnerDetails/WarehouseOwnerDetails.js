@@ -9,14 +9,14 @@ import TableHead from '@mui/material/TableHead';
 import { useLocation, useNavigate } from 'react-router-dom';
 import TableRow from '@mui/material/TableRow';
 import Grid from '@mui/material/Grid';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import AddIcon from '@mui/icons-material/Add';
 import ui from '../../../themes'
 import { getCurrentCustomerInfo } from "../../../Services/getCurrentCustomerInfo"
+<<<<<<< HEAD
 import css from '../../../index.css'
 import { IoIosReturnLeft } from 'react-icons/io'
 import styles from './WarehouseOwnerDetailsCss.module.css'
+=======
+>>>>>>> ba51793a3bcb7019d1ebcac8ef04554a99ee3f3c
 
 
 const columns = [
@@ -88,11 +88,16 @@ function WarehouseOwnerDetails() {
 
     <div>
 
+<<<<<<< HEAD
 <span className={styles.returnBtn} onClick={() => { navigate(-1) }}><IoIosReturnLeft size={68} style={{color:`${ui.borders}`, marginLeft:'5%'}}></IoIosReturnLeft></span>
 
       <Grid container spacing={2} sx={{ m: 2 }}>
         <Grid item xs={2}> </Grid>
         <Grid item xs={8}>
+=======
+      <Grid container spacing={5} sx={{ m: 1 }}>
+        <Grid item xs={11}>
+>>>>>>> ba51793a3bcb7019d1ebcac8ef04554a99ee3f3c
           <p style={{ fontSize: '30px', fontWeight: 'bolder', color:`${ui.bigTitleSecondaryColor}` }}> WarehouseOwner's Name : {userinfo.userName}</p>
 
 
