@@ -4,6 +4,7 @@ import Card from 'react-bootstrap/Card';
 import { MDBRow, MDBCol } from 'mdb-react-ui-kit';
 import ui from '../../../themes'
 
+
 const AboutUs = () => {
 
     return (
@@ -13,7 +14,7 @@ const AboutUs = () => {
             <MDBRow>
 
                 <MDBCol md='6' xs='10' >
-                    <Card border="none" className='p-sm-3 p-1' style={{backgroundColor:`${ui.backgroundColor}`, color:'white'}} >
+                    <Card border="none" className='p-sm-3 p-1' style={{backgroundColor:`${ui.backgroundColor}`, color:'white', width:'96%'}} >
                         <Card.Body>
                             <Card.Title className="fst-italic"style={{color:`${ui.borders}`}} ><h3>OUR MISSION</h3></Card.Title>
 <br></br>
@@ -57,7 +58,7 @@ const AboutUs = () => {
 
 
                 <MDBCol md='6' xs='10'>
-                    <Card border="none" style={{backgroundColor:`${ui.backgroundColor}`, color:'white', marginTop:'35px'}} >
+                    <Card border="null" style={{backgroundColor:`${ui.backgroundColor}`, color:'white', marginTop:'35px', width:'96%'}} >
                         <Card.Body>
                             <Card.Title className="fst-italic" style={{color:`${ui.borders}`}}><h3>PRODUCTION SPACES</h3></Card.Title>
 <br></br>

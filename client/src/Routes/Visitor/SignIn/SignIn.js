@@ -10,6 +10,7 @@ import SignUpUser from '../../../Components/SignUpUser/SignUpUser';
 import LoginWarehouseOwner from '../../../Components/LoginWarehouseOwner/LoginWarehouseOwner';
 import LoginCustomer from '../../../Components/LoginCustomer/LoginCustomer';
 import ui from '../../../themes'
+import warehousesignin from '../../../Assets/warehousesignin.jpg';
 
 function SignIn() {
 
@@ -53,7 +54,7 @@ function SignIn() {
     <div>
 
 
-      <Container >
+      <Container>
 
 
         <Row className='mt-5'>
@@ -115,10 +116,11 @@ function SignIn() {
                 {isLoginOwner ? <LoginWarehouseOwner /> : <LoginCustomer />}
 
               </Modal.Body>
-
+          
 
             </Modal>
           </Card></Col>
+          <Col > <Card.Img  style={{borderRadius:'4px',border:` solid 1px ${ui.borders}` ,marginTop:'50px',height:'412px', width:'350px', position:'absolute', boxShadow:'1px 2px 9px #027fff'} }src ={`${warehousesignin}`} alt="img" />  </Col>
           <Col className='mt-5'><Card style={{ width: '21rem', height: '415px', boxShadow: '1px 2px 9px #027fff', backgroundColor: ` ${ui.lightBg}`, borderColor: ` ${ui.borders}` }}>
             <Card.Body>
               <Card.Title style={{color:`${ui.normalText}`}} >List a space </Card.Title>
@@ -135,7 +137,7 @@ function SignIn() {
               <span style={{color:`${ui.normalText}`}} >Don't have an account?</span><Card.Link style={{ color: '#027fff', borderColor: '#027fff' }} onClick={function (event) { openAndOwner() }}> Sign-up</Card.Link>
             </Card.Body>
           </Card></Col>
-          <Col > <Card.Img src={require("../../../Assets/Checking boxes-bro.png")} alt="Card image" style={{ width: '500px' }} /></Col>
+          
         </Row>
 
       </Container>
