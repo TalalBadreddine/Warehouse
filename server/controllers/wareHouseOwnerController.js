@@ -6,6 +6,7 @@ const crypto = require('crypto');
 const dotenv = require('dotenv')
 const jwtDecode = require('jwt-decode');
 const manageUsersAndWarehousesSchema = require('../models/manageUsersAndWarehousesSchema');
+const userSchema = require('../models/usersSchema')
 const extensions = require('../helper/extensions');
 
 
@@ -372,6 +373,20 @@ const addComment = async (req, res) => {
     }
 }
 
+const getProfileModalInfo = async (req, res) => {
+    try{
+
+        const results = await userSchema.findOne({
+            userEmail:`${req.body.userEmail}`
+        })
+        
+        return res.send(results).status(200)
+    }
+    catch(err){
+        console.log(`error at getProfileModalInfo => ${err.message}`)
+    }
+}
+
 
 
 
@@ -386,5 +401,6 @@ module.exports = {
     deleteWarehouse,
     getWarehouseDetails,
     completeStripeAccount,
-    addComment
+    addComment,
+    getProfileModalInfo
 }

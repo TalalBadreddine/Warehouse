@@ -281,6 +281,6 @@ module.exports = {
     testPayment,
     addComment,
     getWarehouseInfo,
-    addReply
+    addReply,
 }
 

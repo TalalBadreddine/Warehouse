@@ -13,7 +13,7 @@ const {
     testPayment,
     getWarehouseInfo,
     addComment,
-    addReply
+    addReply,
 } = require('../controllers/userController')
 
 
