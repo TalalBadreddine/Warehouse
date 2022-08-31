@@ -28,7 +28,7 @@ import { FaQuoteRight } from 'react-icons/fa'
 
 import TextField from '@mui/material/TextField';
 
-import video from '../../../Assets/video.mp4'
+import video from '../../../Assets/warehouses.mp4'
 import {FaSearch} from 'react-icons/fa';
 import {AiOutlineCheck} from 'react-icons/ai';
 import {BiGitPullRequest} from 'react-icons/bi';
@@ -76,7 +76,7 @@ function Landing() {
     <div className="header">
       <div style={{ height: '600px', position: 'relative' }} className="slider">
         <video loop autoPlay width={'100%'} height={800} style={{ marginBottom: '1%' }} controls><source src={`${video}`} type="video/mp4" /> </video>
-        <div style={{ position: 'absolute', top: '0', height: '800px', width: '100%', backgroundColor: 'rgba(0, 0, 0, 0.7)', backgroundSize: '300px 100px' }}> <p style={{ padding: '270px', textAlign: 'center', color: 'white', fontStyle: 'italic', fontSize: '60px' }}>A safe <span style={{ color: '#4177b2' }}
+        <div style={{ position: 'absolute', top: '0', height: '800px', width: '100%', backgroundColor: 'rgba(0, 0, 0, 0.6)', backgroundSize: '300px 100px' }}> <p style={{ padding: '270px', textAlign: 'center', color: 'white', fontStyle: 'italic', fontSize: '60px' }}>A safe <span style={{ color: '#4177b2' }}
         > warehouse</span> is a productive warehouse. </p></div>
       </div>
       <br></br><br></br><br></br>
@@ -96,7 +96,7 @@ function Landing() {
         <div className='col-2'> <Card className='m-3' style={{ width: '20rem', boxShadow: `4px 4px 4px ${ui.borders}` }}>
           <Card.Img variant="top" src={`${img2}`} />
           <Card.Body>
-            <Card.Title>RELY ON EXPERT ADVICE AND BEST PRACTICES FOR YOUR SEARCH</Card.Title>
+            <Card.Title>TIPS ON HOW TO CHOOSE A SUITABLE WAREHOUSE RENTAL ?</Card.Title>
 
 
           </Card.Body>
@@ -105,7 +105,7 @@ function Landing() {
         <div className='col-2'> <Card className='m-3' style={{ width: '20rem ', boxShadow: `4px 4px 4px ${ui.borders}` }}>
           <Card.Img variant="top" src={`${img3}`} />
           <Card.Body>
-            <Card.Title>RELY ON EXPERT ADVICE AND BEST PRACTICES FOR YOUR SEARCH</Card.Title>
+            <Card.Title>WANT TO KNOW WHY CHOOSE A LOGISTICS WAREHOUSE WITH US?</Card.Title>
 
 
           </Card.Body>
@@ -117,12 +117,12 @@ function Landing() {
 
         <Reveal>
           <div className='col-7 pb-5 m-auto pt-5'>
-            <div className='col-2 m-auto text-center'><p style={{ color: `blue` }}>Rent A Warehouse</p>
+            {/* <div className='col-2 m-auto text-center'><p style={{ color: `blue` }}>Rent A Warehouse</p>
 
               <hr style={{ backgroundColor: ' #FFD700', height: '5px', border: 'none' }}></hr>
-            </div>
+            </div> */}
             <div>
-              <p className='text-center' style={{ color: `${ui.normalText}`, fontWeight: 'bolder', fontSize: '3rem' }}>Warehouse Renting Steps</p>
+              <p className='text-center' style={{ color: `${ui.normalText}`, fontWeight: 'bolder', fontSize: '3rem' }}>Warehouse Renting Steps :</p>
             </div>
 
           </div>
@@ -292,10 +292,10 @@ function Landing() {
 
         <Reveal>
           <div className='col-7 pb-5 m-auto mt-5'>
-            <div className='col-2 m-auto'><p style={{ color: `blue` }}>Rent your space</p>
+            {/* <div className='col-2 m-auto'><p style={{ color: `blue` }}>Rent your space</p>
 
               <hr style={{ backgroundColor: ' #FFD700', height: '5px', border: 'none' }}></hr>
-            </div>
+            </div> */}
             <div>
               <p className='text-center' style={{ color: `${ui.normalText}`, fontWeight: 'bolder', fontSize: '3rem' }}>Become a Warehouse Renter Supplier</p>
               <div className='d-flex  justify-content-center col-12'>
