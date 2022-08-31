@@ -70,7 +70,7 @@ function ManageWarehouseOwner() {
             alert('Warehouse Owner already exists')
 
         }
-        console.log(item)
+        
         setRequests([...requests, item.message])
     }
 
@@ -123,7 +123,7 @@ function ManageWarehouseOwner() {
             setRequests(result.data)
             setSearchedWarehouseOwner(result.data)
 
-            console.log(result.data)
+            
 
         }).catch((err) => {
             if (err.response.data == 'forbidden') { navigate('/') }

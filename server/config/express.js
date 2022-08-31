@@ -64,7 +64,7 @@ async function startServer(){
                 const contact = await contactAdminSchema.create(data)
 
                 await contact.save()
-                console.log(contact)
+                
                 return res.status(200)
             }
             catch(err){

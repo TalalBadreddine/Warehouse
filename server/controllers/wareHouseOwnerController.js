@@ -89,7 +89,7 @@ const completeStripeAccount = async  (ownerAccountId) => {
             {requested: true}
           );
 
-          console.log(capability)
+          
     }
     catch(err){
         console.log(`error at completeStripeAccount ${err.message}`)
@@ -179,7 +179,7 @@ const acceptDeclineRequest = async (req, res) => {
         const requestedDate = [results.startRentDate, results.endRentDate]
         let returnStatus = ''
         
-        console.log(results)
+        
 
         if (requestStatus == 'accepted') {
          
@@ -426,7 +426,7 @@ const getUser = async (req, res) =>{
             email: userEmail
         })
 
-        console.log(results)
+        
         return res.send(results).status(200)
         
     }catch(err){

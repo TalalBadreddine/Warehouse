@@ -49,10 +49,6 @@ function LoginWarehouseOwner() {
                       else if(err.message === 'Request failed with status code 403'){
                         setError("Wrong Password");
                   }
-              //          else if(err.res.data === 'testing'){
-              //           window.alert("You are desactivated by the admin");
-              //            console.log("Wrong desactivated by the admin");
-              //  }
                   
 
               

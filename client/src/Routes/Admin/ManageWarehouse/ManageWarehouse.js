@@ -118,7 +118,7 @@ function ManageWarehouse() {
   }, [allWarehouses])
 
   useEffect(() => {
-    console.log(searchedWarehouses)
+    
 
     let arr = searchedWarehouses.map((item, i) => {
       return (
@@ -152,12 +152,12 @@ function ManageWarehouse() {
     getAllWarehousesAdmin().then(result => {
       let arr = []
       let data = result.data
-      console.log(result)
+      
       for(let i = 0 ; i < data.length ; i++){
 
         if(data[i].warehouses.length == 0)continue
         let warehouses = data[i].warehouses
-        console.log(warehouses)
+        
         for(let j = 0 ; j < warehouses.length ; j++){
           arr.push(warehouses[j][0])
         }

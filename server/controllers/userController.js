@@ -104,11 +104,11 @@ const getAllUserRequests = async (req, res) => {
     try {
 
         const decode = jwtDecode(req.cookies['jwt'])
-        console.log(decode)
+        
         const allUserRequests = await manageUsersAndWarehousesSchema.find({
             userEmail: decode.user.email
         })
-        console.log(allUserRequests)
+        
 
         return res.send(allUserRequests).status(200)
     }
@@ -132,7 +132,7 @@ const requestRentWarehouse = async (req, res) => {
             _id: decodedInfo.user._id
         })
 
-        console.log(warehouseOwnerDetails)
+        
 
         await extensions.checkIfTimeIsAvailbleWithWarehouseTime(warehouseInfo.datesAvailable, rentingDate).then(async (results) => {
 
@@ -198,7 +198,7 @@ const testPayment = async (req, res) => {
     });
 
 
-    console.log(session)
+    
     return res.send(session)
 }
 

@@ -43,7 +43,7 @@ function EditProfile() {
   useEffect(() => {
     getCurrentUser()
       .then((result) => {
-        console.log(result.data);
+        
         setPersonalInfo(result.data);
         setCurrUser(result.data);
       })
@@ -58,7 +58,7 @@ function EditProfile() {
 
     getUserWarehouseRequests(currUser.email)
       .then((result) => {
-        console.log(result.data);
+        
         setUserReq(result.data);
       })
       .catch((err) => {
@@ -91,7 +91,7 @@ function EditProfile() {
         image: base64,
       })
       .then((results) => {
-        console.log(results.data);
+        
       });
   };
   return (

@@ -109,7 +109,7 @@ const ViewWarehouseDetails = (props) => {
 
         }).then((results) => {
 
-            console.log(results.data)
+            
             let feedback = currentWarehouseData.feedback
             feedbackObject['addedIn'] = new Date()
             feedback[arrIndex].push(feedbackObject)

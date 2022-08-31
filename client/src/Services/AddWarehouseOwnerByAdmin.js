@@ -7,7 +7,7 @@ import axios from "axios";
      await axios.post(apiUri, warehouseOwner) 
              .then((res) => { 
                 results = res.data 
-                console.log(results)
+                
              }).catch((error) => { 
                  results = error.response.data.message 
                  console.log(error) 

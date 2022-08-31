@@ -30,7 +30,7 @@ const LoginAdmin = ({ setLoginUser }) => {
 
         })
             .then(res => {
-                console.log(res.status)
+                
                 if (res.data) {
                     navigate('/admin/')
                 }
