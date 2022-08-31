@@ -14,7 +14,6 @@ import { BiUserCircle } from 'react-icons/bi'
 import ui from '../../../themes'
 import PaymentStatus from '../../../Components/StripePaymentStatus/PaymentStatus'
 
-
 function CustomerRequests() {
 
     const [show, setShow] = useState(false);

@@ -2,6 +2,8 @@ const warehouseSchema = require('../models/warehouseSchema')
 const userSchema = require('../models/usersSchema')
 const WarehouseOwnerSchema = require('../models/WarehouseOwner')
 const manageUsersAndWarehousesSchema = require('../models/manageUsersAndWarehousesSchema')
+const jwtDecode = require('jwt-decode');
+
 
 
 const getEveryWarehouseOwnerAndHisWareHouses = async () => {
@@ -357,6 +359,53 @@ const getWarehousesAndNumberOfTimesRented = async () => {
     }
 }
 
+const getSpecificWarehouseRequests = async (warehouseId) => {
+    try{
+        const results = await manageUsersAndWarehousesSchema.find({
+            WarehouseId: warehouseId
+        })
+
+        return results
+
+    }
+    catch(err){
+        console.log(`error at getSpecificWarehouseRequests ${err.message}`)
+    }
+}
+
+const getCurrentOwnerWarehousesWithRequests = async (arrOfWarehousesId) =>{
+    try{
+
+        let allWarehousesWithRequests = []
+
+        for(let i = 0 ; i < arrOfWarehousesId.length ; i++){
+            let obj = {}
+            let currentRequests 
+            let currentWarehouse
+
+            await getSpecificWarehouseRequests(arrOfWarehousesId[i]).then((requests) => {
+                currentRequests = requests
+            })
+
+            let currentWarehouses = await warehouseSchema.find({
+                _id: arrOfWarehousesId[i]
+            })
+
+            obj.warehouse = currentWarehouses
+            obj.requests = currentRequests
+
+            allWarehousesWithRequests.push(obj)
+
+        }
+
+        return allWarehousesWithRequests
+
+    }
+    catch(err){
+        console.log(`error at getCurrentOwnerWarehousesWithRequests ${err.message}`)
+    }
+}
+
 
 module.exports = {
     getEveryWarehouseOwnerAndHisWareHouses,
@@ -365,5 +414,7 @@ module.exports = {
     splitTimeByRequestedTime,
     formatDate,
     getEveryWarehouseOwnerAndHisWareHousesPending,
-    getWarehousesAndNumberOfTimesRented
+    getWarehousesAndNumberOfTimesRented,
+    getSpecificWarehouseRequests,
+    getCurrentOwnerWarehousesWithRequests
 }

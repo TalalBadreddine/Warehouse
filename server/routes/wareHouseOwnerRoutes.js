@@ -1,4 +1,4 @@
-const {register, login, addComment, completeStripeAccount, logout, addWarehouses, getWarehouses, acceptDeclineRequest, deleteWarehouse, getRequests, getWarehouseDetails} = require('../controllers/wareHouseOwnerController')
+const {register, login, addComment, updateImg, getUser, getOwnerInfo, getProfileModalInfo, completeStripeAccount, logout, addWarehouses, getWarehouses, acceptDeclineRequest, deleteWarehouse, getRequests, getWarehouseDetails} = require('../controllers/wareHouseOwnerController')
 const Router = require('express').Router;
 const jwtDecode = require('jwt-decode')
 const {
@@ -46,5 +46,12 @@ warehouseOwnerRouter.post('/completeStripeAccount', completeStripeAccount)
 
 warehouseOwnerRouter.post('/addComment', validateWarehouseOwner, addComment)
 
+warehouseOwnerRouter.post('/profileModal', validateWarehouseOwner, getProfileModalInfo)
+
+warehouseOwnerRouter.get('/getMyInfo', validateWarehouseOwner, getOwnerInfo)
+
+warehouseOwnerRouter.post('/getUser',validateWarehouseOwner, getUser)
+
+warehouseOwnerRouter.post('/updateImg', validateWarehouseOwner, updateImg)
 
 module.exports = warehouseOwnerRouter;

@@ -29,6 +29,7 @@ import LoginAdmin from './Routes/Admin/AdminLogin/LoginAdmin';
 import ManageWarehouse from './Routes/Admin/ManageWarehouse/ManageWarehouse';
 import StripePayment from './Components/StripePaymentPage/StripePayment';
 import EditProfile from './Routes/Customer/EditProfile/EditProfile';
+import OwnerProfile from './Routes/WarehouseOwner/OwnerProfile/OwnerProfile';
 
 
 function App() {
@@ -77,6 +78,8 @@ function App() {
           <Route path='addWarehouse' element={<PostNewWarehouse></PostNewWarehouse>}></Route>
           <Route path='warehouseRequests' element={<ManageRequests> </ManageRequests>}></Route>
           <Route path='viewWarehouseDetails' element={<ViewWarehouseDetails></ViewWarehouseDetails>}></Route>
+          <Route path='profile' element={<OwnerProfile></OwnerProfile>}></Route>
+
 
         </Route>
         

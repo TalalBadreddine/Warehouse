@@ -232,7 +232,7 @@ const adminLogin = async (req, res) => {
         const userInfo = req.body
 
         if(userInfo.email == adminUserName && userInfo.password == adminPassword ){
-
+            userInfo.image = 'null'
             jwt.sign({user: userInfo, role: 'admin'}, jwtSecret, async (err, token) => {
 
                 res.cookie('jwt', token, { httpOnly: true, maxAge: 3 * 24 * 60 * 60 * 1000 })
