@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Timeline from '@mui/lab/Timeline';
 import TimelineItem from '@mui/lab/TimelineItem';
 import TimelineSeparator from '@mui/lab/TimelineSeparator';
@@ -20,19 +20,21 @@ import css from '../../../index.css'
 import people1 from '../../../Assets/people1.jpg'
 import people2 from '../../../Assets/people2.jpg'
 import people3 from '../../../Assets/people3.jpeg'
-import {BiLogInCircle} from 'react-icons/bi'
+import { BiLogInCircle } from 'react-icons/bi'
 import Card from 'react-bootstrap/Card';
 import ui from '../../../themes'
 import { Outlet } from 'react-router-dom';
 import { FaQuoteRight } from 'react-icons/fa'
+import { Alert } from 'react-bootstrap';
 
 import TextField from '@mui/material/TextField';
 
 import video from '../../../Assets/video.mp4'
-import {FaSearch} from 'react-icons/fa';
-import {AiOutlineCheck} from 'react-icons/ai';
-import {BiGitPullRequest} from 'react-icons/bi';
-import {MdOutlinePayment} from 'react-icons/md'
+import { FaSearch } from 'react-icons/fa';
+import { AiOutlineCheck } from 'react-icons/ai';
+import { BiGitPullRequest } from 'react-icons/bi';
+import { MdOutlinePayment } from 'react-icons/md'
+import axios from 'axios'
 
 
 import {
@@ -53,6 +55,48 @@ const sideParagraphs = {
 }
 
 function Landing() {
+
+  const [contactForm, setContactForm] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phoneNumber: '',
+    subject: '',
+    content: ''
+  })
+
+  const [formStatus, setFormStatus] = useState({
+    variant:'success',
+    content: null,
+  })
+
+  const handleContactFormChange = (event) => {
+    setContactForm({ ...contactForm, [event.target.name]: event.target.value })
+    console.log(contactForm)
+  }
+
+  const sendContactAdmin = () => {
+
+    if (contactForm.content.trim() == '') {
+      setFormStatus({...formStatus, ['variant']:'danger', ['content']:'Content is Empty !'})
+      setTimeout(() => {
+        setFormStatus({...formStatus,['content']:null })
+      }, 2000)
+      return
+    }
+
+    axios.post('/contactAdmin', contactForm).then((results) => {
+      console.log(results.data)
+      setFormStatus({...formStatus, ['variant']:'success', ['content']:'Thanks for adding feedback!'})
+      setTimeout(() => {
+        setFormStatus({...formStatus,['content']:null })
+      }, 2000)
+    }).catch((err) => {
+      console.log(`error ${err}`)
+    })
+
+  }
+
   const comments = [
     {
       userName: 'Mohamad Ashkar',
@@ -117,10 +161,6 @@ function Landing() {
 
         <Reveal>
           <div className='col-7 pb-5 m-auto pt-5'>
-            <div className='col-2 m-auto text-center'><p style={{ color: `blue` }}>Rent A Warehouse</p>
-
-              <hr style={{ backgroundColor: ' #FFD700', height: '5px', border: 'none' }}></hr>
-            </div>
             <div>
               <p className='text-center' style={{ color: `${ui.normalText}`, fontWeight: 'bolder', fontSize: '3rem' }}>Warehouse Renting Steps</p>
             </div>
@@ -141,10 +181,10 @@ function Landing() {
                 </div>
               </TimelineOppositeContent>
               <TimelineSeparator>
-                <TimelineDot style={{backgroundColor:'gray'}}>
+                <TimelineDot style={{ backgroundColor: 'gray' }}>
                   <BiLogInCircle />
                 </TimelineDot>
-                <TimelineConnector style={{backgroundColor:'gray'}}/>
+                <TimelineConnector style={{ backgroundColor: 'gray' }} />
               </TimelineSeparator>
               <TimelineContent sx={{ py: '50px', px: 2 }}>
                 <Typography variant="h6" component="span">
@@ -169,11 +209,11 @@ function Landing() {
 
               </TimelineOppositeContent>
               <TimelineSeparator>
-                <TimelineConnector  style={{backgroundColor:'gray'}}/>
-                <TimelineDot style={{backgroundColor:'gray'}}>
+                <TimelineConnector style={{ backgroundColor: 'gray' }} />
+                <TimelineDot style={{ backgroundColor: 'gray' }}>
                   <FaSearch />
                 </TimelineDot>
-                <TimelineConnector style={{backgroundColor:'gray'}}/>
+                <TimelineConnector style={{ backgroundColor: 'gray' }} />
               </TimelineSeparator >
               <TimelineContent >
                 <Typography variant="h6" component="span">
@@ -198,11 +238,11 @@ function Landing() {
                 </div>
               </TimelineOppositeContent>
               <TimelineSeparator>
-                <TimelineConnector style={{backgroundColor:'gray'}}/>
-                <TimelineDot style={{backgroundColor:'gray'}}>
+                <TimelineConnector style={{ backgroundColor: 'gray' }} />
+                <TimelineDot style={{ backgroundColor: 'gray' }}>
                   <AiOutlineCheck />
                 </TimelineDot >
-                <TimelineConnector style={{backgroundColor:'gray'}}/>
+                <TimelineConnector style={{ backgroundColor: 'gray' }} />
               </TimelineSeparator>
               <TimelineContent sx={{ py: '40px', px: 2 }}>
                 <Typography variant="h6" component="span">
@@ -221,11 +261,11 @@ function Landing() {
                 </div>
               </TimelineOppositeContent>
               <TimelineSeparator>
-                <TimelineConnector style={{backgroundColor:'gray'}}/>
-                <TimelineDot style={{backgroundColor:'gray'}}>
+                <TimelineConnector style={{ backgroundColor: 'gray' }} />
+                <TimelineDot style={{ backgroundColor: 'gray' }}>
                   <BiGitPullRequest />
                 </TimelineDot>
-                <TimelineConnector style={{backgroundColor:'gray'}} />
+                <TimelineConnector style={{ backgroundColor: 'gray' }} />
               </TimelineSeparator>
               <TimelineContent>
               </TimelineContent>
@@ -244,9 +284,9 @@ function Landing() {
                 </div>
               </TimelineOppositeContent>
               <TimelineSeparator>
-                <TimelineConnector style={{backgroundColor:'gray'}} />
-                <TimelineDot style={{backgroundColor:'gray'}}>
-                   <MdOutlinePayment /> 
+                <TimelineConnector style={{ backgroundColor: 'gray' }} />
+                <TimelineDot style={{ backgroundColor: 'gray' }}>
+                  <MdOutlinePayment />
                 </TimelineDot>
                 {/* <TimelineConnector /> */}
               </TimelineSeparator>
@@ -292,10 +332,6 @@ function Landing() {
 
         <Reveal>
           <div className='col-7 pb-5 m-auto mt-5'>
-            <div className='col-2 m-auto'><p style={{ color: `blue` }}>Rent your space</p>
-
-              <hr style={{ backgroundColor: ' #FFD700', height: '5px', border: 'none' }}></hr>
-            </div>
             <div>
               <p className='text-center' style={{ color: `${ui.normalText}`, fontWeight: 'bolder', fontSize: '3rem' }}>Become a Warehouse Renter Supplier</p>
               <div className='d-flex  justify-content-center col-12'>
@@ -306,26 +342,26 @@ function Landing() {
           </div>
         </Reveal>
 
-        <div style={{color:`${ui.lightBg}`, border:'1px solid #027fff'}} className='col-8 m-auto mt-5 mb-5'>
-        <div className='col-8 m-auto mt-5 mb-5'>
-          <h1 style={{color:`${ui.Buttons}`}} className='text-center'>Why become a warehouse Renter ?</h1>
-        </div>
-        
-        <div className='col-8 m-auto mt-5 mb-5'>
-          <h4 style={{color:`${ui.borders}`}} className='text-center'>Availability of spaces</h4>
-          <p style={{color:`${ui.normalText}`}} >The rented warehouse space allows companies to expand without having to invest in a new building and eliminates the added expenses.</p>
-        </div>
-        
-        <div className='col-8 m-auto mt-5 mb-5'>
-          <h4  style={{color:`${ui.borders}`}} className='text-center'>Flexibility</h4>
-          <p style={{color:`${ui.normalText}`}}>warehouse rentals give businesses flexibility when they need it. Businesses pay only for the space and services they use and not anything more.</p>
-        </div>
+        <div style={{ color: `${ui.lightBg}`, border: '1px solid #027fff' }} className='col-8 m-auto mt-5 mb-5'>
+          <div className='col-8 m-auto mt-5 mb-5'>
+            <h1 style={{ color: `${ui.Buttons}` }} className='text-center'>Why become a warehouse Renter ?</h1>
+          </div>
 
-         <div className='col-8 m-auto mt-5 mb-5'>
-          <h4  style={{color:`${ui.borders}`}} className='text-center'>Plenty of choices and varieties</h4>
-          <p style={{color:`${ui.normalText}`}}>When you rent a  warehouse you get a choose from a wide variety of existing locations, each with their own strategic advantages.</p>
+          <div className='col-8 m-auto mt-5 mb-5'>
+            <h4 style={{ color: `${ui.borders}` }} className='text-center'>Availability of spaces</h4>
+            <p style={{ color: `${ui.normalText}` }} >The rented warehouse space allows companies to expand without having to invest in a new building and eliminates the added expenses.</p>
+          </div>
+
+          <div className='col-8 m-auto mt-5 mb-5'>
+            <h4 style={{ color: `${ui.borders}` }} className='text-center'>Flexibility</h4>
+            <p style={{ color: `${ui.normalText}` }}>warehouse rentals give businesses flexibility when they need it. Businesses pay only for the space and services they use and not anything more.</p>
+          </div>
+
+          <div className='col-8 m-auto mt-5 mb-5'>
+            <h4 style={{ color: `${ui.borders}` }} className='text-center'>Plenty of choices and varieties</h4>
+            <p style={{ color: `${ui.normalText}` }}>When you rent a  warehouse you get a choose from a wide variety of existing locations, each with their own strategic advantages.</p>
+          </div>
         </div>
-      </div>
         <div className='col-6 m-auto pb-5'>
           <div className='mb-3'>
             <h3 style={{ color: `${ui.normalText}` }}>Get In Touch</h3>
@@ -333,31 +369,35 @@ function Landing() {
           <div>
 
             <div className='d-flex justify-content-between'>
-              <TextField className='col-5' style={{ color: 'white', borderColor: 'white',border:`2px solid ${ui.borders}`, borderRadius:'4px' }} id="outlined-basic" label="First Name" variant="outlined" />
+              <TextField onChange={(e) => { handleContactFormChange(e) }} name='firstName' className='col-5' style={{ color: 'white', borderColor: 'white', border: `2px solid ${ui.borders}`, borderRadius: '4px' }} id="outlined-basic" label="First Name" variant="outlined" />
 
-              <TextField className='col-6' id="outlined-basic" style={{ color: 'white', borderColor: 'white',border:`2px solid ${ui.borders}`, borderRadius:'4px' }} label="Last Name" variant="outlined" />
+              <TextField onChange={(e) => { handleContactFormChange(e) }} name='lastName' className='col-6' id="outlined-basic" style={{ color: 'white', borderColor: 'white', border: `2px solid ${ui.borders}`, borderRadius: '4px' }} label="Last Name" variant="outlined" />
 
             </div>
 
             <div className='mt-3 d-flex justify-content-between'>
-              <TextField className='col-5' id="outlined-basic" style={{ color: 'white', borderColor: 'white',border:`2px solid ${ui.borders}`, borderRadius:'4px' }} label="Email" variant="outlined" />
+              <TextField onChange={(e) => { handleContactFormChange(e) }} name='email' className='col-5' id="outlined-basic" style={{ color: 'white', borderColor: 'white', border: `2px solid ${ui.borders}`, borderRadius: '4px' }} label="Email" variant="outlined" />
 
-              <TextField className='col-6' id="outlined-basic"  style={{ color: 'white', borderColor: 'white',border:`2px solid ${ui.borders}`, borderRadius:'4px' }}label="Phone Number" variant="outlined" />
+              <TextField onChange={(e) => { handleContactFormChange(e) }} name='phoneNumber' className='col-6' id="outlined-basic" style={{ color: 'white', borderColor: 'white', border: `2px solid ${ui.borders}`, borderRadius: '4px' }} label="Phone Number" variant="outlined" />
 
             </div>
 
             <div className='mt-3'>
-              <TextField className='col-12' id="outlined-basic" style={{ color: 'white', borderColor: 'white',border:`2px solid ${ui.borders}`, borderRadius:'4px' }} label="Subject" variant="outlined" />
+              <TextField onChange={(e) => { handleContactFormChange(e) }} name='subject' className='col-12' id="outlined-basic" style={{ color: 'white', borderColor: 'white', border: `2px solid ${ui.borders}`, borderRadius: '4px' }} label="Subject" variant="outlined" />
 
             </div>
             <div className='mt-3'>
-              <textarea placeholder="Content..."  className='col-12 px-2 py-1' style={{ height: '140px', borderRadius: '4px', border: `2px solid ${ui.borders}`, color: 'white ', backgroundColor:`${ui.backgroundColor}` }} />
+              <textarea onChange={(e) => { handleContactFormChange(e) }} name='content' placeholder="Content..." className='col-12 px-2 py-1' style={{ height: '140px', borderRadius: '4px', border: `2px solid ${ui.borders}`, color: 'white ', backgroundColor: `${ui.backgroundColor}` }} />
 
             </div>
 
             <div className='d-flex justify-content-end mt-2'>
-              <Button className='col-3'>Send</Button>
+              <Button onClick={() => { sendContactAdmin() }} className='col-3'>Send</Button>
             </div>
+
+            {formStatus.content && <Alert variant={formStatus.variant} className='mt-3'>
+            {formStatus.content}
+            </Alert>}
 
           </div>
         </div>
@@ -368,32 +408,32 @@ function Landing() {
       <div style={{ backgroundColor: `${ui.lightBg}` }}>
         <div className='row' >
 
-          <Box style={{ position: "relative" , backgroundColor:`${ui.lightBg}`}}>
-          
+          <Box style={{ position: "relative", backgroundColor: `${ui.lightBg}` }}>
+
             <Container >
               <Row>
                 <Column>
-                  <Heading style={{color:`${ui.borders}`}}>About Us</Heading>
+                  <Heading style={{ color: `${ui.borders}` }}>About Us</Heading>
                   <FooterLink href="#">Aim</FooterLink>
                   <FooterLink href="#">Vision</FooterLink>
                   <FooterLink href="#">Testimonials</FooterLink>
                 </Column>
                 <Column>
-                  <Heading style={{color:`${ui.borders}`}}>Services</Heading>
+                  <Heading style={{ color: `${ui.borders}` }}>Services</Heading>
                   <FooterLink href="#">Rent warehouse</FooterLink>
                   <FooterLink href="#">Post warehouse</FooterLink>
                   <FooterLink href="#">Create an account</FooterLink>
-                  
+
                 </Column>
                 <Column>
-                  <Heading style={{color:`${ui.borders}`}}>Contact Us</Heading>
+                  <Heading style={{ color: `${ui.borders}` }}>Contact Us</Heading>
                   <FooterLink href="#">Add Feedback</FooterLink>
                   <FooterLink href="#">Contact Admin</FooterLink>
                   <FooterLink href="#">Contact Warehouse Owner</FooterLink>
-                  
+
                 </Column>
                 <Column>
-                  <Heading style={{color:`${ui.borders}`}}>Social Media</Heading>
+                  <Heading style={{ color: `${ui.borders}` }}>Social Media</Heading>
                   <FooterLink href="#">
                     <i className="fab fa-facebook-f">
                       <span style={{ marginLeft: "10px" }}>
