@@ -126,7 +126,7 @@ function ManageUsers() {
             return (
                 createData( item.userName , 
                             item.email , 
-                            <Button onClick={()=>handleStatus(item._id ,item.isActive)} style={{borderColor:'black',backgroundColor: item.isActive ? '#90EE90' : '#ffcccb',color: 'black', width:'100%'}}variant="contained" >{item.isActive ? 'Active' : 'Deactive'}</Button>,
+                            <Button onClick={()=>handleStatus(item._id ,item.isActive)} style={{borderColor:'black',backgroundColor: item.isActive ? '#90EE90' : '#ffcccb',color: 'black', width:'100%'}} variant="contained" >{item.isActive ? 'Active' : 'Deactive'}</Button>,
                             <>
                             <Button style={{ color: `${ui.normalText}`,border:`solid 1px ${ui.normalText}`,backgroundColor:`${ui.backgroundColor}`, margin: 5 }}
                             onClick={()=>handleUserHistory(item)}

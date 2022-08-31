@@ -15,7 +15,8 @@ const {
     getWarehouseInfo,
     addComment,
     addReply,
-    getCurrentUser
+    getCurrentUser,
+    getWarehouserequests
 } = require('../controllers/userController')
 
 
@@ -36,6 +37,8 @@ userRouter.post('/addComment', validateUser, addComment)
 userRouter.post('/addReply', validateUser, addReply)
 
 userRouter.post('/getWarehouseInfo', validateUser, getWarehouseInfo)
+
+userRouter.post('/getWarehouserequests', validateUser, getWarehouserequests)
 
 userRouter.get('/checkUserValidation', validateUser, (req, res) => {
     return res.status(200).send(true)

@@ -28,6 +28,7 @@ function CustomerRequests() {
 
     const replyBtnRef = useRef([])
     const replyInputRef = useRef([])
+
     const handleCloseViewModal = () => setShowViewModal(false)
 
     const navigate = useNavigate()

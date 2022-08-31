@@ -1,5 +1,8 @@
 import {useEffect,useState} from 'react';
 import React from 'react';
+import Accordion from 'react-bootstrap/Accordion';
+import { BsTrash } from 'react-icons/bs'
+import {Skeleton} from '@mui/material'
 import {
     MDBCol,
     MDBContainer,
@@ -19,21 +22,58 @@ import {
   } from 'mdb-react-ui-kit';
   import ui from '../../../themes'
   import {getCurrentUser} from '../../../Services/getCurrentUser';
+  import { getUserWarehouseRequests } from '../../../Services/getUserWarehouseRequests';
+  import FileBase64 from 'react-file-base64';
 
 function EditProfile() {
-
+const [userProfile,setUserProfile]=useState({
+images:[]
+});
+const [currUser,setCurrUser]=useState(null);
 
   useEffect(()=>{
+
     getCurrentUser().then(result => {
       
    console.log(result.data)
- 
+ setCurrUser(result.data)
 
 }).catch((err) => {
   console.log(err.message);
 })
 },[]);
- 
+const [userReq,setUserReq]=useState(null);
+
+  useEffect(()=>{
+    
+    getUserWarehouseRequests(currUser.user.email).then(result => {
+      
+   console.log(result.data)
+ setUserReq(result.data)
+
+}).catch((err) => {
+  console.log(err.message);
+})
+},[]);
+ if(!currUser){
+  return(
+    <div>
+      <Skeleton variant="circular" width={40} height={40} />
+                <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
+                <Skeleton variant="text" sx={{ fontSize: '3rem' }} />
+                <Skeleton variant="text" sx={{ fontSize: '3rem' }} />
+                <Skeleton variant="text" sx={{ fontSize: '3rem' }} />
+    </div>
+  )
+ }
+ const handleUploadImage = (item) => {
+  let images = []
+  for (let i = 0; i < item.length; i++) {
+    images.push(item[i].base64)
+  }
+  // setErrors({ ...errors, ['images']: null })
+  setUserProfile({ ...userProfile, ['images']: [...userProfile.images, ...images] })
+}
   return (
     <>
     <section>
@@ -44,47 +84,43 @@ function EditProfile() {
           <MDBCol lg="4">
             <MDBCard className="mb-4"style={{backgroundColor: `${ui.darkBg}`}} >
               <MDBCardBody className="text-center">
-                <MDBCardImage
-                  src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
-                  alt="avatar"
-                  className="rounded-circle"
-                  style={{ width: '150px' }}
-                  fluid />
-                <p className="mb-1" style={{color: `${ui.normalText}`}}>Full Stack Developer</p>
-                <p className="mb-4"style={{color: `${ui.normalText}`}}>Bay Area, San Francisco, CA</p>
-                <div className="d-flex justify-content-center mb-2">
-                  <MDBBtn>Follow</MDBBtn>
-                  <MDBBtn outline className="ms-1">Message</MDBBtn>
-                </div>
+                
+              
+              
+                <span style={{color:`${ui.normalText}`}}> Upload images </span>
+               
+<div display="flex" alignItems="center"justifyContent="center">
+         
+                  
+                  <div className='col-12'>
+                      {userProfile.images && userProfile.images.map((image, index) => {
+                        return (
+                          <div className='m-auto col-3' style={{   width: '50%' }} key={index}>
+                            <img style={{borderRadius:'50%'}} src={image} width='150px' height='150px' className='border ms-3'></img>
+                           
+                          </div>
+                        )
+                      })}
+                    </div></div>
+<br></br><br></br>
+                  <div>
+                    <div className=' col-12 text-center'>
+                      <FileBase64
+                        multiple={true}
+                        onDone={image => handleUploadImage(image)} />
+                    </div>
+                    
+
+                  </div>
+
+
+                
+           
+                
               </MDBCardBody>
             </MDBCard>
 
-            <MDBCard  className="mb-4 mb-lg-0"style={{backgroundColor: `${ui.darkBg}`}} >
-              <MDBCardBody className="p-0" >
-                <MDBListGroup flush className="rounded-3" >
-                  <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3" style={{backgroundColor: `${ui.darkBg}`,color: `${ui.normalText}`}}>
-                    <MDBIcon fas icon="globe fa-lg text-warning" />
-                    <MDBCardText>https://mdbootstrap.com</MDBCardText>
-                  </MDBListGroupItem>
-                  <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3"style={{backgroundColor: `${ui.darkBg}`,color: `${ui.normalText}`}}>
-                    <MDBIcon fab icon="github fa-lg" style={{ color: '#333333' }} />
-                    <MDBCardText>mdbootstrap</MDBCardText>
-                  </MDBListGroupItem>
-                  <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3"style={{backgroundColor: `${ui.darkBg}`,color: `${ui.normalText}`}}>
-                    <MDBIcon fab icon="twitter fa-lg" style={{ color: '#55acee' }} />
-                    <MDBCardText>@mdbootstrap</MDBCardText>
-                  </MDBListGroupItem>
-                  <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3"style={{backgroundColor: `${ui.darkBg}`,color: `${ui.normalText}`}}>
-                    <MDBIcon fab icon="instagram fa-lg" style={{ color: '#ac2bac' }} />
-                    <MDBCardText>mdbootstrap</MDBCardText>
-                  </MDBListGroupItem>
-                  <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3"style={{backgroundColor: `${ui.darkBg}`,color: `${ui.normalText}`}}>
-                    <MDBIcon fab icon="facebook fa-lg" style={{ color: '#3b5998' }} />
-                    <MDBCardText>mdbootstrap</MDBCardText>
-                  </MDBListGroupItem>
-                </MDBListGroup>
-              </MDBCardBody>
-            </MDBCard>
+           
           </MDBCol>
           <MDBCol lg="8">
             <MDBCard className="mb-4" style={{backgroundColor: `${ui.darkBg}`}}>
@@ -94,7 +130,7 @@ function EditProfile() {
                     <MDBCardText style={{color: `${ui.normalText}`}}>Full Name</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
-                    <MDBCardText style={{color: `${ui.normalText}`}}>Johnatan Smith</MDBCardText>
+                    <MDBCardText contentEditable="true" style={{color: `${ui.normalText}`}}>{currUser.user.userName}</MDBCardText>
                   </MDBCol>
                 </MDBRow>
                 <hr />
@@ -103,103 +139,75 @@ function EditProfile() {
                     <MDBCardText style={{color: `${ui.normalText}`}}>Email</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
-                    <MDBCardText style={{color: `${ui.normalText}`}}>example@example.com</MDBCardText>
+                    <MDBCardText style={{color: `${ui.normalText}`}}>{currUser.user.userName}</MDBCardText>
                   </MDBCol>
                 </MDBRow>
                 <hr />
                 <MDBRow>
                   <MDBCol sm="3">
-                    <MDBCardText style={{color: `${ui.normalText}`}}>Phone</MDBCardText>
+                    <MDBCardText style={{color: `${ui.normalText}`}}>Role</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
-                    <MDBCardText style={{color: `${ui.normalText}`}}>(097) 234-5678</MDBCardText>
+                    <MDBCardText style={{color: `${ui.normalText}`}}>{currUser.role}</MDBCardText>
                   </MDBCol>
                 </MDBRow>
                 <hr />
                 <MDBRow>
                   <MDBCol sm="3">
-                    <MDBCardText style={{color: `${ui.normalText}`}}>Mobile</MDBCardText>
+                    <MDBCardText style={{color: `${ui.normalText}`}}>Status</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
-                    <MDBCardText style={{color: `${ui.normalText}`}}>(098) 765-4321</MDBCardText>
+                    <MDBCardText style={{fontWeight:'bold',color:currUser.user.isActive ? '#90EE90':'red'}} >{currUser.user.isActive ? 'Active' : 'Deactive'}</MDBCardText>
                   </MDBCol>
                 </MDBRow>
                 <hr />
                 <MDBRow>
                   <MDBCol sm="3">
-                    <MDBCardText style={{color: `${ui.normalText}`}}>Address</MDBCardText>
+                  <MDBCardText style={{color: `${ui.normalText}`}}>Stripe Account Id</MDBCardText>
+                  
                   </MDBCol>
                   <MDBCol sm="9">
-                    <MDBCardText style={{color: `${ui.normalText}`}}>Bay Area, San Francisco, CA</MDBCardText>
+                  <MDBCardText style={{color: `${ui.normalText}`}}>{currUser.user.stripeAccountId}</MDBCardText>
                   </MDBCol>
                 </MDBRow>
               </MDBCardBody>
             </MDBCard>
 
             <MDBRow>
-              <MDBCol md="6">
-                <MDBCard style={{backgroundColor: `${ui.darkBg}`}} className="mb-4 mb-md-0">
-                  <MDBCardBody>
-                    <MDBCardText className="mb-4"style={{color: `${ui.normalText}`}}><span   className="text-primary font-italic me-1">assigment</span> Project Status</MDBCardText>
-                    <MDBCardText className="mb-1" style={{ fontSize: '.77rem',color: `${ui.normalText}` }}>Web Design</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={80} valuemin={0} valuemax={100} />
-                    </MDBProgress>
+              <MDBCol md="12">
+              /* <div className="container">
+        <table style={{backgroundColor: `${ui.darkBg}`}} className="table table-hover table-bordered mt-3">
+          <thead style={{color:'white'}}>
+            <tr>
+              <th scope="col">Warehouse Owner Email</th>
+              <th scope="col">Warehouse Name</th>
+              <th scope="col">Status</th>
+              <th scope="col">Start Rent Date</th>
+              <th scope="col">End Rent Date</th>
+              <th scope="col">Price</th>
+            </tr>
+          </thead>
+          <tbody style={{color:'white'}} >
+            {userReq && userReq.map((user,index) => {
+              return(
+              <tr key={index}>
+               
+                <td>{user.warehouseOwnerEmail}</td>
+                <td>{user.warehouseName}</td>
+                <td>{user.status}</td>
+                <td>{user.startRentDate}</td>
+                <td>{user.endRentDate}</td>
+                <td>{user.price}</td>
+   
+              </tr>
+           ) })}
 
-                    <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem',color: `${ui.normalText}` }}>Website Markup</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={72} valuemin={0} valuemax={100} />
-                    </MDBProgress>
-
-                    <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem',color: `${ui.normalText}` }}>One Page</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={89} valuemin={0} valuemax={100} />
-                    </MDBProgress>
-
-                    <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem',color: `${ui.normalText}` }}>Mobile Template</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={55} valuemin={0} valuemax={100} />
-                    </MDBProgress>
-
-                    <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem',color: `${ui.normalText}` }}>Backend API</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={66} valuemin={0} valuemax={100} />
-                    </MDBProgress>
-                  </MDBCardBody>
-                </MDBCard>
-              </MDBCol>
-
-              <MDBCol md="6">
-                <MDBCard style={{backgroundColor: `${ui.darkBg}`}} className="mb-4 mb-md-0">
-                  <MDBCardBody>
-                    <MDBCardText className="mb-4" style={{color: `${ui.normalText}`}}><span className="text-primary font-italic me-1">assigment</span> Project Status</MDBCardText>
-                    <MDBCardText className="mb-1" style={{ fontSize: '.77rem',color: `${ui.normalText}` }}>Web Design</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={80} valuemin={0} valuemax={100} />
-                    </MDBProgress>
-
-                    <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem',color: `${ui.normalText}` }}>Website Markup</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={72} valuemin={0} valuemax={100} />
-                    </MDBProgress>
-
-                    <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem',color: `${ui.normalText}` }}>One Page</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={89} valuemin={0} valuemax={100} />
-                    </MDBProgress>
-
-                    <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem',color: `${ui.normalText}` }}>Mobile Template</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={55} valuemin={0} valuemax={100} />
-                    </MDBProgress>
-
-                    <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem',color: `${ui.normalText}` }}>Backend API</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={66} valuemin={0} valuemax={100} />
-                    </MDBProgress>
-                  </MDBCardBody>
-                </MDBCard>
-              </MDBCol>
+           
+          </tbody>
+        </table>
+      </div> */
+                
+                         </MDBCol>
             </MDBRow>
           </MDBCol>
         </MDBRow>
