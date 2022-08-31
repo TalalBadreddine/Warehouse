@@ -259,6 +259,28 @@ const addComment = async (req, res) => {
         console.log(`error in addComment  => ${err.message}`)
     }
 }
+const updateImg = async (req, res) => {
+    try{
+
+        const decodedInfo = jwtDecode(req.cookies['jwt'])
+
+        
+        const img = req.body.image
+    
+        const results = await userSchema.updateOne({
+            _id: decodedInfo.user._id
+        }, {
+            $set: {
+                image: img
+            }
+        }
+        )
+        return res.send(results).status(200)
+    }
+    catch(err){
+        console.log(`error at updateImg => ${err.message}`)
+    }
+}
 
 const addReply = async (req, res) => {
     try {
@@ -291,10 +313,15 @@ const addReply = async (req, res) => {
     }
 
 }
-const getCurrentUser =  (req, res) => {
+const getCurrentUser = async (req, res) => {
     try{
+
         const decodedUser = jwtDecode(req.cookies['jwt'])
-       return res.send(decodedUser).status(200);
+        const results=await userSchema.findOne({
+            _id:decodedUser.user._id
+
+        })
+        return res.send(results).status(200);
       
         
 }
@@ -314,7 +341,8 @@ module.exports = {
     getWarehouseInfo,
     addReply,
     getCurrentUser,
-    getWarehouserequests
+    getWarehouserequests,
+    updateImg
 };
 
 
