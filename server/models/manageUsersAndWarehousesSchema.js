@@ -38,7 +38,12 @@ const manageUsersAndWarehousesSchema = new mongoose.Schema({
     clientSecret:{
         type: String
     },
-    
+    userImage:{
+        type:String
+    },
+    ownerImage:{
+        type:String
+    },
     registrationDate:{
         type: Date,
         default: new Date()

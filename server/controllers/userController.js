@@ -128,6 +128,11 @@ const requestRentWarehouse = async (req, res) => {
         const rentingDate = req.body.rentingDate
         const totalPrice = req.body.totalPrice
         const decodedInfo = jwtDecode(req.cookies['jwt'])
+        const getUserInfo = await userSchema.findOne({
+            _id: decodedInfo.user._id
+        })
+
+        console.log(warehouseOwnerDetails)
 
         await extensions.checkIfTimeIsAvailbleWithWarehouseTime(warehouseInfo.datesAvailable, rentingDate).then(async (results) => {
 
@@ -155,10 +160,12 @@ const requestRentWarehouse = async (req, res) => {
                     endRentDate: rentingDate[1],
                     price: parseInt(totalPrice),
                     warehouseName: warehouseInfo.name,
-                    warehouseOwnerName: warehouseOwnerDetails.ownerName,
+                    warehouseOwnerName: warehouseOwnerDetails.userName,
                     warehouseOwnerEmail: warehouseOwnerDetails.email,
                     clientSecret: session.client_secret,
-                    paymentId: session.id
+                    paymentId: session.id,
+                    userImage: getUserInfo.image,
+                    ownerImage: warehouseOwnerDetails.image
 
                 })
 

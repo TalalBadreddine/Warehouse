@@ -152,7 +152,7 @@ function ManageWarehouse() {
     getAllWarehousesAdmin().then(result => {
       let arr = []
       let data = result.data
-
+      console.log(result)
       for(let i = 0 ; i < data.length ; i++){
 
         if(data[i].warehouses.length == 0)continue

@@ -44,8 +44,8 @@ const [currUser,setCurrUser]=useState(null);
 },[]);
 const [userReq,setUserReq]=useState(null);
 
-  useEffect(()=>{
-    
+useEffect(()=>{
+    if(!currUser)return
     getUserWarehouseRequests(currUser.user.email).then(result => {
       
    console.log(result.data)
@@ -55,6 +55,7 @@ const [userReq,setUserReq]=useState(null);
   console.log(err.message);
 })
 },[]);
+
  if(!currUser){
   return(
     <div>
@@ -67,6 +68,7 @@ const [userReq,setUserReq]=useState(null);
   )
  }
  const handleUploadImage = (item) => {
+
   let images = []
   for (let i = 0; i < item.length; i++) {
     images.push(item[i].base64)

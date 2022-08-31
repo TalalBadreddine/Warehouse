@@ -376,11 +376,18 @@ const addComment = async (req, res) => {
 const getProfileModalInfo = async (req, res) => {
     try{
 
-        const results = await userSchema.findOne({
+        const userInfo = await userSchema.findOne({
             userEmail:`${req.body.userEmail}`
         })
+
+        const requestsInfo = await manageUsersAndWarehousesSchema.find({
+            userEmail: userInfo.email
+        })
         
-        return res.send(results).status(200)
+        return res.send({
+            personalInfo: userInfo,
+            otherInfo: requestsInfo
+        }).status(200)
     }
     catch(err){
         console.log(`error at getProfileModalInfo => ${err.message}`)

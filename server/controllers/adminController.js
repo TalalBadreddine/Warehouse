@@ -99,7 +99,7 @@ const activeDeactiveCustomer = async (req,res) => {
 const getAllWarehouses = async (req, res) => {
     try{
 
-         await extension.getEveryWarehouseOwnerAndHisWareHousesPending().then((results) => {
+         await extension.getEveryWarehouseOwnerAndHisWareHouses().then((results) => {
              console.log(results)
              return res.send(results).status(200)
 
