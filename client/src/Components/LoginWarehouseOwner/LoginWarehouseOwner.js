@@ -61,7 +61,7 @@ function LoginWarehouseOwner() {
     <Form.Control style={{backgroundColor:`${ui.lightBg}` , borderColor:`${ui.borders}`, color:`${ui.normalText}`}} value={email} onChange={HandleEmail}
       id="floatingInputCustom"
       type="email"
-      placeholder="name@example.com"
+      placeholder=" "
     />
     <label style={{color:`${ui.normalText}`}} htmlFor="floatingInputCustom">Email address</label>
     <Form.Control.Feedback id='email'>
@@ -73,7 +73,7 @@ function LoginWarehouseOwner() {
     <Form.Control style={{backgroundColor:`${ui.lightBg}` , borderColor:`${ui.borders}`, color:`${ui.normalText}`}} value={password} onChange={HandlePassword}
       id="floatingPasswordCustom"
       type="password"
-      placeholder="Password"
+      placeholder=" "
     />
     <label  style={{color:`${ui.normalText}`}} htmlFor="floatingPasswordCustom">Password</label>
   </Form.Floating>

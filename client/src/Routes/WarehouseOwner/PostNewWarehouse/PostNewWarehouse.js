@@ -104,7 +104,6 @@ function PostNewWarehouse() {
 
   const handleAddWarehouse = async (e) => {
     e.preventDefault()
-    setIsSuccessMarkHidden(false)
 
     if (warehouse.name == null || warehouse.name == '') {
       setError("Warehouse name can't be empty ")
@@ -146,7 +145,7 @@ function PostNewWarehouse() {
     setIsSuccessMarkHidden(false)
 
     window.scrollTo({ top: 10, behavior: 'smooth' })
-    setTimeout(() => { navigate('/owner/') }, 4000)
+    setTimeout(() => { navigate('/owner/') }, 5000)
 
     await axios.post('/userActivity', {
       action: `listed a new warehouse for renting, the warehouse name: ${warehouse.name}, with a space of ${warehouse.space} meters squared`,

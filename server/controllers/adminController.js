@@ -99,8 +99,7 @@ const activeDeactiveCustomer = async (req,res) => {
 const getAllWarehouses = async (req, res) => {
     try{
 
-         await extension.getEveryWarehouseOwnerAndHisWareHouses().then((results) => {
-             
+         await extension.getEveryWarehouseOwnerAndHisWareHousesPending().then((results) => {
              return res.send(results).status(200)
 
          })
@@ -205,6 +204,7 @@ const getAllWarehousesPending = async (req, res) => {
     try {   
         
         const warehouse =  await warehouseSchema.find({status: 'pending'});
+        console.log(warehouse)
         return res.send(warehouse).status(200)
     } catch(error){
         res.status(500).json({message : "internal error with function getAllwarehousesPending"})
