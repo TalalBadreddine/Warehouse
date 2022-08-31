@@ -5,13 +5,16 @@ const usersSchema = new mongoose.Schema({
     userName: String,
     email:String,
     password: String,
-    registerDate:{
+    registrationDate:{
         type:Date,
         default: new Date()
     },
     isActive: {
         type: Boolean,
         default: true
+    },
+    stripeAccountId:{
+        type: String
     }
 
 })

@@ -22,7 +22,8 @@ const {
     activeDeactiveCustomer,
     getUserRequests,
     getAllLogs,
-    getAllCustomerAndOwnersAndLogs
+    getAllCustomerAndOwnersAndLogs,
+    getAllStatistics
 } = require('../controllers/adminController')
 
 adminRouter.post('/login', adminLogin)
@@ -52,6 +53,8 @@ adminRouter.post('/getUserRequests',validateAdmin, getUserRequests)
 adminRouter.get('/getAllLogs', validateAdmin, getAllLogs)
 
 adminRouter.get('/getAllCustomerAndOwnersAndLogs', validateAdmin, getAllCustomerAndOwnersAndLogs)
+
+adminRouter.get('/getAllStatistics', validateAdmin, getAllStatistics)
 
 module.exports = {adminRouter}
 

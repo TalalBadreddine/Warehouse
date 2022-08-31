@@ -16,7 +16,7 @@ import WarehouseDetails from './Routes/Customer/WarehouseDetails/WarehouseDetail
 import ManageRequests from './Routes/WarehouseOwner/MangaRequests/ManageRequests'
 import MyWarehouses from './Routes/WarehouseOwner/MyWarehouses/MyWarehouses';
 import SideBar from './Components/SideBar/SideBar'
-import AdminSignIn from './Routes/Admin/AdminSignIn/AdminSignIn'
+
 import ManageUsers from './Routes/Admin/ManageUsers/ManageUsers';
 import ViewWarehouseDetails from './Routes/WarehouseOwner/ViewWarehouseDetails/ViewWarehouseDetails';
 import CustomerRequests from './Routes/Customer/CustomerRequests/CustomerRequests';
@@ -24,6 +24,11 @@ import UserDetails from './Components/UserDetails/UserDetails';
 import WarehouseRequests from './Routes/Admin/WarehouseRequests/WarehouseRequests';
 import ManageWarehouseOwner from './Routes/Admin/ManageWarehouseOwner/ManageWarehouseOwner'
 import UserActivity from './Routes/Admin/UserActivity/UserActivity';
+import Statistics from './Routes/Admin/Statistics/Statistics';
+import WarehouseOwnerDetails from './Routes/Admin/WarehouseOwnerDetails/WarehouseOwnerDetails';
+import LoginAdmin from './Routes/Admin/AdminLogin/LoginAdmin';
+import ManageWarehouse from './Routes/Admin/ManageWarehouse/ManageWarehouse';
+import StripePayment from './Components/StripePaymentPage/StripePayment';
 
 
 function App() {
@@ -31,6 +36,8 @@ function App() {
 
   return (
     <div>
+
+
       <Routes>
 
         {/* <Route path="" element={<Footer></Footer>}> */}
@@ -54,6 +61,7 @@ function App() {
           <Route path='' element={<SearchWarehouse role={'customer'}></SearchWarehouse>}></Route>
           <Route path='warehouseDetails' element={<WarehouseDetails></WarehouseDetails>}></Route>
           <Route path='requests' element={<CustomerRequests></CustomerRequests>}></Route>
+          <Route path='stripePayment' element={<StripePayment></StripePayment>}></Route>
 
         </Route>
 
@@ -69,25 +77,37 @@ function App() {
           <Route path='viewWarehouseDetails' element={<ViewWarehouseDetails></ViewWarehouseDetails>}></Route>
 
         </Route>
-        
-        
+
+
         <Route path='admin/' element={<SideBar></SideBar>}>
 
-             <Route path='' element={<ManageUsers></ManageUsers>}></Route>
-             <Route path='userdetails' element={<UserDetails></UserDetails>}></Route>
-             <Route path='requests' element={<WarehouseRequests></WarehouseRequests>}></Route>
-             <Route  path='manageOwner' element={<ManageWarehouseOwner></ManageWarehouseOwner>}></Route>
-             <Route path = 'userActivity' element={<UserActivity></UserActivity>}></Route>
+          <Route path='manageUsers' element={<ManageUsers></ManageUsers>}></Route>
+          <Route path='userdetails' element={<UserDetails></UserDetails>}></Route>
+          <Route path='requests' element={<WarehouseRequests></WarehouseRequests>}></Route>
+          <Route path='manageOwner' element={<ManageWarehouseOwner></ManageWarehouseOwner>}></Route>
+          <Route path='userActivity' element={<UserActivity></UserActivity>}></Route>
+          <Route path='' element={<Statistics></Statistics>}></Route>
+          <Route path='WarehouseOwnerDetails' element={<WarehouseOwnerDetails></WarehouseOwnerDetails>}></Route>
+
+
 
         </Route>
-        
-        <Route path='adminLogin' element={<AdminSignIn></AdminSignIn>}></Route>
 
-        {/* <Route path='*' element={<Navigate to='/' />} /> */}
 
-      </Routes>
+        <Route path='adminLogin' element={<LoginAdmin></LoginAdmin>}></Route>
 
-    </div>
+        <Route path='manageWarehouses' element={<ManageWarehouse></ManageWarehouse>}></Route>
+
+     
+
+      <Route path='adminLogin' element={<LoginAdmin></LoginAdmin>}></Route>
+
+
+      {/* <Route path='*' element={<Navigate to='/' />} /> */}
+
+    </Routes>
+
+    </div >
   )
 }
 

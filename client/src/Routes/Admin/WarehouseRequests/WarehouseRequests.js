@@ -13,9 +13,11 @@ import { Button } from '@mui/material';
 import { getAllWarehousesPending } from '../../../Services/GetWarehousesPending';
 import { acceptRejectWarehouseRequest } from '../../../Services/acceptRejectWarehouseRequest';
 import Box from '@mui/material/Box';
-
+import ui from '../../../themes';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import { useNavigate } from 'react-router-dom';
+import ContactMailIcon from '@mui/icons-material/ContactMail';
 
 
 
@@ -32,7 +34,7 @@ const style = {
 };
 
 function WarehouseRequests() {
-
+  const navigate = useNavigate()
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -43,7 +45,6 @@ function WarehouseRequests() {
       warehouseId: WAREHOUSEID,
       status: STATUS
     }).then(result => {
-      console.log(result)
     })
     let array2 = pendingRequests
     for (let i = 0; i < array2.length; i++) {
@@ -61,32 +62,36 @@ function WarehouseRequests() {
 
   useEffect(() => {
     getAllWarehousesPending().then(result => {
+      if(result.data == 'forbidden'){
+        navigate('/')
+      }
       let array = result.data.filter((item) => {
         return item.warehouses.length > 0
       })
-      console.log(array)
+
       setPendingRequests(array)
 
 
     }).catch((error) => {
-      console.log(error)
+      if(error.response.data == 'forbidden'){
+        navigate('/')
+      }
     })
 
   }, [])
 
   return (
     <div>
-      <Grid container spacing={2} sx={{ m: 2 }}>
-        <Grid item xs={2}></Grid>
-        <Grid item xs={8}>
+      <Grid container spacing={5} sx={{ m: 1 }}>
+        <Grid item xs={11}>
           <TableContainer component={Paper}>
 
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-              <TableHead>
+            <Table style={{backgroundColor:`${ui.lightBg}` , borderColor:`${ui.borders}`, color:`${ui.normalText} `}}  sx={{ minWidth: 650 }} aria-label="simple table">
+              <TableHead style={{backgroundColor:`${ui.borders}` }}>
                 <TableRow>
-                  <TableCell style={{ fontWeight: '600' }}>WarehouseName</TableCell>
-                  <TableCell style={{ fontWeight: '600' }} align="center">Provider</TableCell>
-                  <TableCell style={{ fontWeight: '600' }} align="center">Actions</TableCell>
+                  <TableCell style={{ fontWeight: '600',color:`${ui.normalText}` }}>WarehouseName</TableCell>
+                  <TableCell style={{ fontWeight: '600',color:`${ui.normalText}` }} align="center">Provider</TableCell>
+                  <TableCell style={{ fontWeight: '600',color:`${ui.normalText}` }} align="center">Actions</TableCell>
 
                 </TableRow>
               </TableHead>
@@ -94,13 +99,12 @@ function WarehouseRequests() {
                 {
                   pendingRequests.map((item, i) => {
                     return (item.warehouses.map((warehouse, index) => {
-                      console.log(warehouse[0].name)
                       return (<TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                        <TableCell align="left">{warehouse[0].name} </TableCell>
-                        <TableCell align="center"> {item.warehouseOwner.userName}</TableCell>
-                        <TableCell align="center">
+                        <TableCell style={{ fontWeight: '300',color:`${ui.normalText}` }} align="left">{warehouse[0].name} </TableCell>
+                        <TableCell style={{ fontWeight: '300',color:`${ui.normalText}` }} align="center"> {item.warehouseOwner.userName}</TableCell>
+                        <TableCell style={{ fontWeight: '300',color:`${ui.normalText}` }} align="center">
 
-                          <Button style={{ margin: 2, borderColor: '#54d494', color: '#54d494' }}
+                          <Button style={{ margin: 5, borderColor: `${ui.normalText}`, color: `${ui.backgroundColor}`,color:`${ui.normalText}` }}
                             variant="outlined"
                             onClick={handleOpen}
                           >
@@ -112,27 +116,29 @@ function WarehouseRequests() {
                             onClose={handleClose}
                             aria-labelledby="modal-modal-title"
                             aria-describedby="modal-modal-description"
+                            
                           >
-                            <Box sx={style}>
+                            <Box sx={style} style={{backgroundColor:`${ui.lightBg}` , color:`${ui.normalText}`}}>
+                              <div display='flex' justifyContent='center' align='left'>
                               <Typography id="modal-modal-title" variant="h6" component="h2">
-                                Contact Information
+                               <ContactMailIcon style={{fontSize:'300%'}} /> Contact Information
                               </Typography>
                               <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                                Email: {item.warehouseOwner.email} <br />
-                                Phone Number: {item.warehouseOwner.phoneNumber}
-                              </Typography>
+                               <p > Email: {item.warehouseOwner.email} </p>
+                               <p> Phone Number: {item.warehouseOwner.phoneNumber}</p>
+                              </Typography></div>
                             </Box>
                           </Modal>
 
-                          <Button style={{ margin: 2, borderColor: '#54d494', color: '#54d494' }} variant="outlined">
+                          <Button style={{ margin: 5, borderColor: `${ui.normalText}`, color: `${ui.backgroundColor}`,color:`${ui.normalText}` }} variant="outlined">
                             View
                           </Button>
-                          <Button style={{ margin: 2, backgroundColor: '#54d494' }}
+                          <Button style={{ margin: 5, borderColor: `${ui.normalText}`, backgroundColor: 'green',color:`${ui.normalText}` }}
                             variant="contained"
                             onClick={() => { HandleAcceptReject(warehouse[0]._id, 'accepted') }}>
                             Accept
                           </Button>
-                          <Button style={{ margin: 2, backgroundColor: 'red' }}
+                          <Button style={{ margin: 5, borderColor: `${ui.normalText}`, backgroundColor: 'red',color:`${ui.normalText}` }}
                             variant="contained"
                             onClick={() => { HandleAcceptReject(warehouse[0]._id, 'rejected') }}>
                             Reject
