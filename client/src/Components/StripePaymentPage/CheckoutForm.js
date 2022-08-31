@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {useStripe, useElements, PaymentElement} from '@stripe/react-stripe-js';
+import ui from '../../themes'
 
 const CheckoutForm = () => {
   const stripe = useStripe();
@@ -42,7 +43,7 @@ const CheckoutForm = () => {
   return (
     <form onSubmit={handleSubmit}>
       <PaymentElement />
-      <button disabled={!stripe}>Submit</button>
+      <button disabled={!stripe} style={{backgroundColor:`${ui.borders}`, borderRadius:'4px', boxShadow:`1px 1px 2px ${ui.normalText}`, color:`${ui.normalText}`, marginLeft:'45%'}} >Submit</button>
       {/* Show error message to your customers */}
       {errorMessage && <div>{errorMessage}</div>}
     </form>
