@@ -230,7 +230,7 @@ const SearchWarehouse = ({role}) => {
             action: `searched for warehouses and sorted them by ${sortType}`,
             role: 'customer'
         }).then((results) => {
-            console.log(results.data)
+            
         })
 
         setFiltredWarehousesInfo([...sortedArr])

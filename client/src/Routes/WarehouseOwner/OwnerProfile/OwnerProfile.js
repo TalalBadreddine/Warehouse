@@ -52,7 +52,7 @@ function OwnerProfile() {
 
         axios.get(('/warehouseOwner/getMyInfo')).then((results) => {
             let data = results.data
-            console.log(data)
+            
             setWarehousesData(data.warhousesData)
             setPersonalInfo(data.myInfo)
         })
@@ -120,7 +120,7 @@ function OwnerProfile() {
     }
 
     const getCalander = (request) => {
-        console.log(request)
+        
         return(
 
         <div >
@@ -156,7 +156,7 @@ function OwnerProfile() {
 
             userInfo = results.data
         })
-        console.log(userInfo)
+        
 
 
             return(
@@ -291,7 +291,7 @@ function OwnerProfile() {
         axios.post('/warehouseOwner/updateImg', {
             image: base64
         }).then((results) => {
-            console.log(results.data)
+            
         })
     }
 

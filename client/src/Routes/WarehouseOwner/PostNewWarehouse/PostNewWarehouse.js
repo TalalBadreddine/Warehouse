@@ -54,7 +54,7 @@ function PostNewWarehouse() {
       useLayoutEffect(() => {
           const updateSize = () => {
               setwindowWidth(window.innerWidth)
-              console.log(windowWidth)
+              
           };
           window.addEventListener("resize", updateSize)
 
@@ -256,7 +256,7 @@ function PostNewWarehouse() {
                       date={new Date()}
                       onChange={(item) => {
                         setSelectedDate(item.selection)
-                        console.log(item.selection)
+                        
                         setWarehouse({ ...warehouse, ['datesAvailable']: [[item.selection.startDate, item.selection.endDate]] })
                         setErrors({ ...errors, ['date']: null })
                       }

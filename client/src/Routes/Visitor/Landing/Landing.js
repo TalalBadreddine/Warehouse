@@ -72,7 +72,7 @@ function Landing() {
 
   const handleContactFormChange = (event) => {
     setContactForm({ ...contactForm, [event.target.name]: event.target.value })
-    console.log(contactForm)
+    
   }
 
   const sendContactAdmin = () => {
@@ -86,7 +86,7 @@ function Landing() {
     }
 
     axios.post('/contactAdmin', contactForm).then((results) => {
-      console.log(results.data)
+      
       setFormStatus({...formStatus, ['variant']:'success', ['content']:'Thanks for adding feedback!'})
       setTimeout(() => {
         setFormStatus({...formStatus,['content']:null })

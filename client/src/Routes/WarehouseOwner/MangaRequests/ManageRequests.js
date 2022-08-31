@@ -143,7 +143,7 @@ function ManageRequests() {
           action: `Rejected renting warehouse for ${currentRequest.userEmail} from ${new Date(currentRequest.startRentDate).toISOString().slice(0, 10)} To: ${new Date(currentRequest.endRentDate).toISOString().slice(0, 10)}`,
           role: 'warehouseOwner'
         }).then((results) => {
-          console.log(results.data)
+          
         })
 
       })

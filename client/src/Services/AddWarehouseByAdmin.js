@@ -7,7 +7,7 @@ export async function AddWarehouseByAdmin(warehouse){
     await axios.post(apiUri, warehouse)
             .then((res) => {
                results = res.data
-               console.log(results)
+               
             }).catch((error) => {
                 results = error.response.data.message
                 console.log(error)

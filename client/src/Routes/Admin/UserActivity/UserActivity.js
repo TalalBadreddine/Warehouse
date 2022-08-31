@@ -66,7 +66,7 @@ const formatDate = (date) => {
 
 const getIcon = (content) => {
     let line = content.toLowerCase()
-    console.log(line)
+    
     if(line.includes('logged in')){
         return(<img src={loginIcon} width='40px' height='40px'></img>)
     }
@@ -273,7 +273,7 @@ const UserActivity = () => {
             })
 
         }
-        console.log(currentUserLogs)
+        
         setCurrentUser(user)
         setCurrentLogs(currentUserLogs)
     }

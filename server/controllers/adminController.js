@@ -100,7 +100,7 @@ const getAllWarehouses = async (req, res) => {
     try{
 
          await extension.getEveryWarehouseOwnerAndHisWareHouses().then((results) => {
-             console.log(results)
+             
              return res.send(results).status(200)
 
          })
@@ -203,7 +203,7 @@ const  deleteWarehouseOwners = async(req, res) => {
 const getAllWarehousesPending = async (req, res) => {
 
     try {   
-        console.log('test')
+        
         const warehouse =  await warehouseSchema.find({status: 'pending'});
         return res.send(warehouse).status(200)
     } catch(error){

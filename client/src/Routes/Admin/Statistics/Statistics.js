@@ -46,8 +46,7 @@ const Statistics = () => {
         axios.get('/admin/getAllStatistics').then((results) => {
             if(results.data == 'forbidden'){navigate('/')}
             let data = results.data
-            console.log(data)
-            // @ [type, [arr], arr Of 11 for months]
+            
             let arrOfAllObjects = Object.keys(data).map((key) => {
                 let arr = new Array(11)
 
@@ -111,11 +110,11 @@ const Statistics = () => {
                 }
                 arrOfIncomes[j] = sum
             }
-            // console.log(arrOfIncomes)
+            
             setRevenueData(arrOfIncomes)
 
 
-            console.log(arrOfAllObjects)
+            
             setAllData(arrOfAllObjects)
 
         }).catch((err) => {

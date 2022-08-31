@@ -66,8 +66,8 @@ function SignIn() {
               <br></br>
               <br></br>
               <Card.Text style={{color:`${ui.normalText}`}} >
-                Some quick example text to build on the card title and make up the
-                bulk of the card's content.
+                As a user, if you want to rent a warewhouse and see warehouses in your area
+                you can start from here.
               </Card.Text>
               <br></br>
               <Button onClick={function (event) { openAndLoginCustomer() }} style={{ backgroundColor: ` ${ui.Buttons} `, borderColor: ` ${ui.borders}` }} variant="secondary">Login</Button>
@@ -127,8 +127,8 @@ function SignIn() {
               <br></br>
               <br></br>
               <Card.Text style={{color:`${ui.normalText}`}} >
-                Some quick example text to build on the card title and make up the
-                bulk of the card's content.
+                As a warehouse owner , if you want to list your warehouse for rent 
+                you can start from here.
               </Card.Text>
               <br></br>
               <Button onClick={function (event) { openAndLoginOwner() }} style={{ backgroundColor: '#027fff', borderColor: '#027fff' }} variant="secondary">Login</Button>
