@@ -130,7 +130,7 @@ function Landing() {
           <Card className='m-3' style={{ width: '20rem', boxShadow: `4px 4px 4px ${ui.borders}` }}>
             <Card.Img variant="top" src={`${img1}`} />
             <Card.Body>
-              <Card.Title>RELY ON EXPERT ADVICE AND BEST PRACTICES FOR YOUR SEARCH</Card.Title>
+              <Card.Title>TIPS ON HOW TO CHOOSE A SUITABLE WAREHOUSE RENTAL ?</Card.Title>
 
 
             </Card.Body>
@@ -140,7 +140,7 @@ function Landing() {
         <div className='col-2'> <Card className='m-3' style={{ width: '20rem', boxShadow: `4px 4px 4px ${ui.borders}` }}>
           <Card.Img variant="top" src={`${img2}`} />
           <Card.Body>
-            <Card.Title>RELY ON EXPERT ADVICE AND BEST PRACTICES FOR YOUR SEARCH</Card.Title>
+            <Card.Title>WANT TO KNOW WHY CHOOSE A LOGISTICS WAREHOUSE WITH US?</Card.Title>
 
 
           </Card.Body>
