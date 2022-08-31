@@ -12,6 +12,7 @@ import ViewWarehouseDetails from '../ViewWarehouseDetails/ViewWarehouseDetails'
 import axios from 'axios';
 import ui from '../../../themes'
 import ProfileModal from '../../../Components/ProfileModal/ProfileModal';
+import styles from './tablestyle.module.css'
 
 
 //TODO: SOMTIMES DATE is not availble (it will be returned from the back end ) but not in the front end
@@ -237,7 +238,7 @@ function ManageRequests() {
             </thead>
             <tbody>
 
-              {currentWarehouse && <Modal show={show} onHide={handleClose} >
+              {currentWarehouse && <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton style={{ backgroundColor: `${ui.backgroundColor}` }}>
                   <Modal.Title><h3 style={{ color: 'red' }}>Attention !</h3></Modal.Title>
                 </Modal.Header>
@@ -257,7 +258,7 @@ function ManageRequests() {
 
               {/* // TODO: Make it on click on image */}
               {showProfile &&
-                <Modal show={showProfile} centered >
+                <Modal show={showProfile} centered  size="lg">
                   <Modal.Body style={{ backgroundColor: `${ui.backgroundColor}`, color: `${ui.normalText}` }}>
                     <ProfileModal userEmail={currentUser} role={'owner'}></ProfileModal>
                   </Modal.Body>
@@ -273,11 +274,17 @@ function ManageRequests() {
               {
                 requests.filter(item => item.warehouseName.toLowerCase().includes(query)).map((item, i) => {
                   return <tr key={i}>
-                    <td style={{ color: `${ui.normalText}` }} onClick={() => {
+                    <td style={{ color: `${ui.normalText}` }} className='d-flex'> 
+                      <img src={`${item.userImage}`} width='50px' height={'50px'} style={{borderRadius:'100%'}} className={styles.tableRow}  onClick={() => {
                       setShowProfile(true)
                       setCurrentUser(item.userEmail)
-                      }}>{item.userEmail}</td>
-                    <td style={{ color: `${ui.normalText}` }}>{item.warehouseName}</td>
+                      }}></img>
+                       <span className='mt-3 ms-2' >{item.userEmail}</span></td>
+                    <td style={{ color: `${ui.normalText}` }} >
+                      <div className='d-flex ' style={{height:'100%', width:'100%'}} >
+                      <span  className='mt-3 m-auto'>{item.warehouseName}</span>
+                      </div>
+                      </td>
 
 
                     {showDetailsModal && currentRequestDetails && <ViewWarehouseDetails data={currentRequestDetails} showState={showDetailsModal} showAction={() => { setShowDetailsModal(true) }} hideAction={() => { setShowDetailsModal(false) }} ></ViewWarehouseDetails>}

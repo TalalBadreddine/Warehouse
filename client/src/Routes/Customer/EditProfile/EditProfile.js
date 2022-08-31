@@ -75,6 +75,7 @@ function EditProfile() {
         <Skeleton variant="text" sx={{ fontSize: "3rem" }} />
       </div>
     );
+
   }
 
   const handleEditImageBtnClick = () => {

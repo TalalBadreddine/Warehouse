@@ -23,6 +23,7 @@ table {
 form,
 input,
 label,
+::placeholder,
 i,
 select {
   color: #ffffff !important;

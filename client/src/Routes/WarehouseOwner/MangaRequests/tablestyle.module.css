@@ -12,6 +12,7 @@
     overflow: hidden ;
     overflow-y: scroll ;
 }
-/* .tablehead{
-     position: fixed;
-} */
+.tableRow:hover{
+    scale: 105%;
+    cursor: pointer;
+}

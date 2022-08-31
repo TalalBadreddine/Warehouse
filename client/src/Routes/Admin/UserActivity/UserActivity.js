@@ -222,7 +222,12 @@ const UserActivity = () => {
             }
 
             let row = usersArr.map((user) => {
-                return createData(user.email, user.userName, user.registrationDate ? new Date(user.registrationDate).toISOString().slice(0, 10) : new Date().toISOString().slice(0, 10), user._id)
+                let userHelper = <div className='d-flex'>
+                <img src={`${user.image}`} width='40px' height='40px' style={{borderRadius:'100%'}}></img>
+            <span className='my-auto ms-2'>{user.userName}</span>
+            </div>
+
+                return createData(user.email, userHelper, user.registrationDate ? new Date(user.registrationDate).toISOString().slice(0, 10) : new Date().toISOString().slice(0, 10), user._id)
             })
 
             logs = logs.filter((log) => {
@@ -341,7 +346,7 @@ const UserActivity = () => {
                         {currentUser &&
 
                             <div className='p-3'>
-                                <span style={{color:`${ui.normalText}`}}> <h4><span><BiUserCircle size={35}></BiUserCircle> </span>user: {currentUser.userName}</h4></span>
+                                <span style={{color:`${ui.normalText}`}}> <h4>{currentUser.userName}</h4></span>
 
                                 <div className='mt-3 d-flex'>
 

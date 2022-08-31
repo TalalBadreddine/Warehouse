@@ -11,6 +11,7 @@ const bodyParser = require('body-parser')
 const multer = require("multer");
 const cors = require('cors')
 const jwtDecode = require('jwt-decode')
+const contactAdminSchema = require('../models/contactAdmin')
 
 
 dotenv.config({path: __dirname + '/../.env'})
@@ -56,6 +57,20 @@ async function startServer(){
         app.use('/warehouseOwner', warehouseOwnerRouter )
 
         app.use('/visitor', visitorRouter)
+
+        app.use('/contactAdmin', async (req, res) => {
+            try{
+                const data = req.body
+                const contact = await contactAdminSchema.create(data)
+
+                await contact.save()
+                console.log(contact)
+                return res.status(200)
+            }
+            catch(err){
+                console.log(`error in express file at contactAdmin => ${err.message}`)
+            }
+        })
 
         app.use('/userActivity', async (req, res) => { 
             try{

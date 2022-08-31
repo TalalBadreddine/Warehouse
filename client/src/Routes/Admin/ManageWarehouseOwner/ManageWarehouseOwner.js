@@ -89,12 +89,15 @@ function ManageWarehouseOwner() {
     }, [requests])
 
     useEffect(() => {
-
+        //TODO: if you want we can add on Click on owner image 
         let arr = searchedWarehouseOwner.map((item, i) => {
-
+            let user = <div className='d-flex'>
+                <img src={`${item.image}`} width='40px' height='40px' style={{borderRadius:'100%'}}></img>
+            <span className='my-auto ms-2'>{item.userName}</span>
+            </div>
             return (
 
-                createData(item.userName,
+                createData(user,
                     item.email,
                     <>
                         <Button style={{ color: `${ui.normalText}`,border:`solid 2px ${ui.normalText}`,backgroundColor:`${ui.backgroundColor}`, margin: 5 }} onClick={() => { handleLogs(item) }}

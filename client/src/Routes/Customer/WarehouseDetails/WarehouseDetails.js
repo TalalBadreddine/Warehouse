@@ -84,6 +84,7 @@ const WarehouseDetails = () => {
 
     useEffect(() => {
         if (warehouseData == null) return
+        console.log(warehouseData)
         let maxDate = -Infinity
         let disabledDates = []
         for (let i = 0; i < warehouseData.datesAvailable.length; i++) {

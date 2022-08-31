@@ -216,9 +216,9 @@ const Statistics = () => {
                         {allData[1][1].map((owner) => {
                             return (
                                 <div className='d-flex justify-content-between col-12 m-auto'>
-                                    <p className='col-2 d-flex justify-content-center' style={{ color: 'white' }}><BsPersonCircle size={35}></BsPersonCircle></p>
-                                    <p className='col-6' style={{ color: `${ui.normalText}`, wordWrap:'break-word' }}>{owner.email}</p>
-                                    <p className='col-4' style={{ color: `${ui.normalText}` }}>{owner.myWarehouses.length} warehouse</p>
+                                    <p className='col-2 d-flex justify-content-center my-auto' style={{ color: 'white' }}><img src={`${owner.image}`} width='40px' height={'40px'} style={{borderRadius:'100%'}}></img></p>
+                                    <p className='col-6 my-auto' style={{ color: `${ui.normalText}`, wordWrap:'break-word' }}>{owner.email}</p>
+                                    <p className='col-4 my-auto' style={{ color: `${ui.normalText}` }}>{owner.myWarehouses.length} warehouse</p>
                                 </div>
                             )
                         })}

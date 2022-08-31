@@ -39,7 +39,6 @@ const ViewWarehouseDetails = (props) => {
     const textAreaRef = useRef()
     const replyBtnRef = useRef([])
     const replyInputRef = useRef([])
-    console.log(props)
     const [viewAllReply, setViewAllReply] = useState( props.data != 'undefined'   ? new Array(props.data.warehouseInfo[0].feedback.length).fill(0) : null)
 
     const handleComment = async () => {
