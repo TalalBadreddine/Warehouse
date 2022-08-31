@@ -3,11 +3,7 @@
   width: 98%;
 }
 
-/* @media screen and (max-width: 700px) {
-  .leaflet-container{
-    display: none;
-  }
-} */
+
 body {
   background-color: #011e3c !important;
 }
@@ -26,7 +22,7 @@ table {
 
 form,
 input,
-/* label, */
+label,
 i,
 select {
   color: #ffffff !important;

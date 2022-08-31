@@ -244,7 +244,7 @@ function EditProfile() {
               <MDBRow>
                 <MDBCol style={{ width: "100%" }}>
                   <table
-                    style={{ backgroundColor: `${ui.darkBg}` }}
+                    style={{ borderColor:`${ui.backgroundColor}`, backgroundColor: `${ui.darkBg}` }}
                     className="table  table-bordered mt-3"
                   >
                     <thead style={{ color: "white" }}>
