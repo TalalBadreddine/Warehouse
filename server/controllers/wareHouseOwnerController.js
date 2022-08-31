@@ -194,7 +194,7 @@ const acceptDeclineRequest = async (req, res) => {
 
                   await stripe.refunds.create({
                     payment_intent: `${results.paymentId}`,
-                    amount: results.price,
+                    amount: results.price * 100,
                 },{
                         stripeAccount: `${decodedInfo.user.stripeAccountId}`,
                       }
@@ -219,7 +219,7 @@ const acceptDeclineRequest = async (req, res) => {
             
             await stripe.refunds.create({
                 payment_intent: `${results.paymentId}`,
-                amount: results.price,
+                amount: results.price * 100,
                 reverse_transfer:'true'
             });
 
