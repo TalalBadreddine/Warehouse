@@ -52,7 +52,7 @@ const userLogin = async (req, res) => {
         const payload = {
             user
         }
-
+        user.image = 'null'
         await jwt.sign({ user: user, role: 'user' }, jwtSecret, async (err, token) => {
 
             await res.cookie('jwt', `${token}`, { httpOnly: true })

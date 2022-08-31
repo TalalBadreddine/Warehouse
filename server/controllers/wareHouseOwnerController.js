@@ -117,7 +117,7 @@ const login = async (req, res) => {
         const payload = {
             user
         }
-
+        user.image = 'null'
         await jwt.sign({ user: user, role: 'warehouseOwner' }, jwtSecret, async (err, token) => {
             completeStripeAccount(user.stripeAccountId)
             await res.cookie('jwt', `${token}`, { httpOnly: true })
@@ -387,6 +387,67 @@ const getProfileModalInfo = async (req, res) => {
     }
 }
 
+const getOwnerInfo = async (req, res) => {
+    try{
+        const myInfo = jwtDecode(req.cookies['jwt'])
+        const arrOfWarehousesId = myInfo.user.myWarehouses
+         let allWarehousesData 
+
+        const info =  await warehouseOwnerModel.findOne({
+            _id: myInfo.user._id
+         })
+
+         await extensions.getCurrentOwnerWarehousesWithRequests(arrOfWarehousesId).then((results) => {
+            allWarehousesData = results
+         })
+
+         return res.send({
+            warhousesData: allWarehousesData,
+            myInfo: info
+        }).status(200)
+    }
+    catch(err){
+        console.log(`error at getOwnerInfo ${err.message}`)
+    }
+}
+
+const getUser = async (req, res) =>{
+    try{
+        const userEmail = req.body.userEmail
+
+        const results = await userSchema.findOne({
+            email: userEmail
+        })
+
+        console.log(results)
+        return res.send(results).status(200)
+        
+    }catch(err){
+        console.log(`error at getUser => ${err.message}`)
+    }
+
+}
+
+const updateImg = async (req, res) => {
+    try{
+
+        const decodedInfo = jwtDecode(req.cookies['jwt'])
+        const img = req.body.image
+        
+        const results = await warehouseOwnerModel.updateOne({
+            _id: decodedInfo.user._id
+        }, {
+            $set: {
+                image: img
+            }
+        }
+        )
+        return res.send(results).status(200)
+    }
+    catch(err){
+        console.log(`error at updateImg => ${err.message}`)
+    }
+}
 
 
 
@@ -402,5 +463,8 @@ module.exports = {
     getWarehouseDetails,
     completeStripeAccount,
     addComment,
-    getProfileModalInfo
+    getProfileModalInfo,
+    getOwnerInfo,
+    getUser,
+    updateImg
 }

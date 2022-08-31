@@ -13,7 +13,6 @@ import { AiFillCaretDown } from 'react-icons/ai'
 import { BiUserCircle } from 'react-icons/bi'
 import ui from '../../../themes'
 import PaymentStatus from '../../../Components/StripePaymentStatus/PaymentStatus'
-import { withCookies, Cookies } from 'react-cookie';
 
 function CustomerRequests() {
 
@@ -29,8 +28,6 @@ function CustomerRequests() {
 
     const replyBtnRef = useRef([])
     const replyInputRef = useRef([])
-var token=Cookies.get('token');
-console.log(token);
     const handleCloseViewModal = () => setShowViewModal(false)
 
     const navigate = useNavigate()
