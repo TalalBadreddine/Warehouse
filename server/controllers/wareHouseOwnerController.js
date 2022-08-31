@@ -456,6 +456,21 @@ const updateImg = async (req, res) => {
     }
 }
 
+const getProfile = async (req, res) => {
+    try{   
+        const decodedUser = jwtDecode(req.cookies['jwt'])
+        const results=await warehouseOwnerModel.findOne({
+            _id:decodedUser.user._id
+
+        })
+        return res.send(results).status(200);
+
+    }
+    catch(err){
+        console.log(`error at get`)
+    }
+}
+
 
 
 module.exports = {
@@ -473,5 +488,6 @@ module.exports = {
     getProfileModalInfo,
     getOwnerInfo,
     getUser,
-    updateImg
+    updateImg,
+    getProfile
 }

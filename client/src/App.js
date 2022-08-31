@@ -61,7 +61,7 @@ function App() {
         <Route path='customer/' element={<Navigationbar role='customer'></Navigationbar>}>
 
           <Route path='' element={<SearchWarehouse role={'customer'}></SearchWarehouse>}></Route>
-          <Route path='EditProfile' element={<EditProfile></EditProfile>}></Route>
+          <Route path='profile' element={<EditProfile></EditProfile>}></Route>
           <Route path='warehouseDetails' element={<WarehouseDetails></WarehouseDetails>}></Route>
           <Route path='requests' element={<CustomerRequests></CustomerRequests>}></Route>
           <Route path='stripePayment' element={<StripePayment></StripePayment>}></Route>

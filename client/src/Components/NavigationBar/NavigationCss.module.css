@@ -14,3 +14,6 @@
 .navBar{
     background-color:  #071a2f !important;
 }
+.imageIcon:hover{
+    scale: 110%;
+}
