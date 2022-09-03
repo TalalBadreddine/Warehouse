@@ -65,6 +65,7 @@ function WarehouseRequests() {
       if(result.data == 'forbidden'){
         navigate('/')
       }
+      
       let array = result.data.filter((item) => {
         return item.warehouses.length > 0
       })

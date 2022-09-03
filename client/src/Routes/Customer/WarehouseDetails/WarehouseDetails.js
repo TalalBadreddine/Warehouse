@@ -34,7 +34,7 @@ import StripePayment from '../../../Components/StripePaymentPage/StripePayment'
 const WarehouseDetails = () => {
     const data = useLocation()
     const navigate = useNavigate();
-
+    console.log(data)
     const [warehouseData, setWarehouseData] = useState(data.state)
 
     const [stripeUserSecret, setStripeUserSecret] = useState(data.state.clientSecret)

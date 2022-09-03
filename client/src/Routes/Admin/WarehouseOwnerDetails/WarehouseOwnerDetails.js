@@ -10,7 +10,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import TableRow from '@mui/material/TableRow';
 import Grid from '@mui/material/Grid';
 import ui from '../../../themes'
-import { getCurrentCustomerInfo } from "../../../Services/getCurrentCustomerInfo"
+import axios from 'axios'
+// import { getCurrentCustomerInfo } from "../../../Services/getCurrentCustomerInfo"
 
 
 const columns = [
@@ -55,26 +56,41 @@ function WarehouseOwnerDetails() {
 
   useEffect(() => {
 
-    getCurrentCustomerInfo(userinfo.email).then(result => {
-      setRequests(result.data)
+    const getAllData = async () => {
 
+      await axios.post('/admin/getWarehouseOwnerAllRequests',{
+        warehouseOwnerEmail:userinfo.email
+      }).then((result) => {
+        console.log(result.data)
+        setRequests(result.data)
       let x = 0;
 
       let arr = result.data.map((item, i) => {
         x += parseInt(item.price)
         return (
           createData(item.warehouseName,
-            item.userName,
+            <div className='d-flex'>
+              <img src={`${item.userImage}`} width='50px' height='50px' style={{borderRadius:'100%'}}></img>
+              <p className='mt-2 ms-1'>{item.userEmail}</p>
+            </div>,
             item.price,
-            item.startRentDate,
-            item.endRentDate,
+            new Date(item.startRentDate).toISOString().slice(0,10),
+            new Date(item.endRentDate).toISOString().slice(0,10),
 
           )
         )
       })
       setRows([...arr])
       setSum(x)
-    })
+
+      })
+    }
+    getAllData()
+
+
+    // getCurrentCustomerInfo(userinfo.email).then(result => {
+      
+    // })
   }, []);
 
 

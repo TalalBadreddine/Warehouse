@@ -115,7 +115,6 @@ function CustomerRequests() {
         let arr = viewAllReply
         arr[indexOfRef] = 10000
         setViewAllReply([...arr])
-
         for (let i = 0; i < replyBtnRef.current.length; i++) {
             if (i != indexOfRef) replyBtnRef.current[i].className = 'd-none'
         }

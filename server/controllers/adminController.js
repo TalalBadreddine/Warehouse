@@ -67,6 +67,21 @@ const deleteCustomer = async(req, res) => {
     
 }
 
+const getWarehouseOwnerAllRequests = async (req, res) => {
+    try{
+        const ownerEmail = req.body.warehouseOwnerEmail
+        
+        const result = await manageUsersAndWarehousesSchema.find({
+            warehouseOwnerEmail:ownerEmail
+        })
+        return res.send(result).status(200)
+
+    }
+    catch(err){
+        console.log(`error at getWarehouseOwnerAllRequests =>  ${err.message}`)
+    }
+}
+
 const getCurrentCustomerInfo = async (req, res) => {
     try{
         const currentUserId = req.body.userId
@@ -99,7 +114,7 @@ const activeDeactiveCustomer = async (req,res) => {
 const getAllWarehouses = async (req, res) => {
     try{
 
-         await extension.getEveryWarehouseOwnerAndHisWareHousesPending().then((results) => {
+         await extension.getEveryWarehouseOwnerAndHisWareHouses().then((results) => {
              return res.send(results).status(200)
 
          })
@@ -203,9 +218,10 @@ const getAllWarehousesPending = async (req, res) => {
 
     try {   
         
-        const warehouse =  await warehouseSchema.find({status: 'pending'});
-        console.log(warehouse)
-        return res.send(warehouse).status(200)
+        await extension.getEveryWarehouseOwnerAndHisWareHousesPending().then((results) => {
+            return res.send(results).status(200)
+
+        })
     } catch(error){
         res.status(500).json({message : "internal error with function getAllwarehousesPending"})
     }
@@ -338,5 +354,6 @@ module.exports = {
     getUserRequests,
     getAllLogs,
     getAllStatistics,
+    getWarehouseOwnerAllRequests,
     getAllCustomerAndOwnersAndLogs
 }

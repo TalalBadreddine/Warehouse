@@ -25,6 +25,7 @@ const ProfileModal = (props) => {
 
             setUserInfo(results.data.personalInfo)
             setUserOtherInfo(results.data.otherInfo)
+            console.log(results.data.otherInfo)
 
         }).catch((err) => {
             console.log(err)

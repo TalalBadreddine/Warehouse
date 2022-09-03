@@ -141,7 +141,7 @@ const requestRentWarehouse = async (req, res) => {
                 const session = await  stripe.paymentIntents.create({
                     customer: decodedInfo.user.stripeAccountId,
                     setup_future_usage: 'off_session',
-                    amount: parseInt(totalPrice) * 100,
+                    amount: (parseInt(totalPrice) * 100),
                     currency: 'usd',
                     automatic_payment_methods: {
                         enabled: true,

@@ -269,7 +269,7 @@ const Statistics = () => {
                                         <p className='col-2'>Name: {warehouse.name} <br></br> Space: {warehouse.space} m <sup>2</sup> <br></br> Cost Per Day: {warehouse.pricePerDay} $ <br></br>Owner Email: {values.owner}</p>
                                         <p className='col-2'>Address: {`${warehouse.address[0]}, ${warehouse.address[1]} `}</p>
                                         <p className='col-2'>Profit Made For Owner: <span className='fs-5'>{values.profit * 0.95}$</span> <br></br> Profit Made for Admin:<span className='fs-5'> {values.profit * 0.05}$</span> </p>
-                                        <p className='col-2'>Description: {warehouse.description}</p>
+                                        <p className='col-2' style={{width:'100px',overflow:'hidden',height:'120px'}} >Description: {warehouse.description}</p>
                                         <p className='col-1'>Times Rented: {timesRented}</p>
 
 

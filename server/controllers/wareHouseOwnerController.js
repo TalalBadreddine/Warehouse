@@ -471,6 +471,38 @@ const getProfile = async (req, res) => {
     }
 }
 
+const addReply = async (req, res) => {
+    try {
+        const warehouseId = req.body.warehouseId
+        const content = req.body.content
+        const arrOfCommentsIndex = req.body.arrIndex
+        const decodedInfo = jwtDecode(req.cookies['jwt'])
+
+       const warehouse = await warehouseSchema.findOne({
+            _id: warehouseId
+        })
+        let currentFeedback = warehouse.feedback
+        currentFeedback[arrOfCommentsIndex].push({
+            comentorEmail: decodedInfo.user.email,
+            content: content
+        })
+
+        await warehouseSchema.updateOne({
+            _id: warehouseId
+        },{
+
+            feedback: currentFeedback
+
+        })
+
+        return res.send(decodedInfo.user.email)
+    }
+    catch (err) {
+        console.log(`Error at addReply => ${err.message}`)
+    }
+
+}
+
 
 
 module.exports = {
@@ -489,5 +521,6 @@ module.exports = {
     getOwnerInfo,
     getUser,
     updateImg,
-    getProfile
+    getProfile,
+    addReply
 }

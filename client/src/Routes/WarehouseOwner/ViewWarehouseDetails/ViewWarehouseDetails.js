@@ -73,12 +73,13 @@ const ViewWarehouseDetails = (props) => {
         let arr = viewAllReply
         arr[indexOfRef] = 10000
         setViewAllReply([...arr])
-
+        console.log( replyBtnRef.current[0])
         for (let i = 0; i < replyBtnRef.current.length; i++) {
-            if (i != indexOfRef) replyBtnRef.current[i].className = 'd-none'
+            if (i != indexOfRef && replyBtnRef.current[i] != undefined) replyBtnRef.current[i].className = 'd-none'
         }
 
         let target = replyBtnRef.current[indexOfRef]
+
         if (target.className == ' ') {
             target.className = 'd-none'
         } else {
@@ -95,19 +96,21 @@ const ViewWarehouseDetails = (props) => {
             return
         }
 
-        let feedbackObject = {
-            comentorEmail: 'current User',
-            content: content,
-            warehouseId: currentWarehouseData._id
-        }
 
-        axios.post('/admin/addReply', {
+
+        axios.post('/warehouseOwner/addReply', {
 
             arrIndex: arrIndex,
             content: content,
             warehouseId: currentWarehouseData._id
 
         }).then((results) => {
+
+            let feedbackObject = {
+                comentorEmail: results.data,
+                content: content,
+                warehouseId: currentWarehouseData._id
+            }
 
             
             let feedback = currentWarehouseData.feedback
@@ -336,7 +339,7 @@ const ViewWarehouseDetails = (props) => {
                                                                 <span className='ms-3' style={{ fontSize: '0.8rem', color: `${ui.xsTexts}` }}>{calculateDaysDifference(new Date(), commentArr[index].addedIn) > 0 ? `${calculateDaysDifference(new Date(), commentArr[index].addedIn)} day ago ` : 'Today'} </span>
                                                             </div>
                                                             <div className='col-12 ps-1 m-auto'>
-                                                                <p style={{ marginLeft:'10%',color:`${ui.borders}`,fontWeight:'bolder',fontSize: '1rem' }}>{commentArr[index].content}</p>
+                                                                <p  className="ms-3" style={{color:`${ui.borders}`,fontWeight:'bolder',fontSize: '1rem' }}>{commentArr[index].content}</p>
 
                                                                 <div className='d-flex'>
 
@@ -348,7 +351,6 @@ const ViewWarehouseDetails = (props) => {
                                                                     }}><AiFillCaretDown></AiFillCaretDown> View replies</p>}
                                                                      <p style={{ fontSize: '1rem', color: `black`, float:'right' }} className={commentArr.length > 1 ? `ms-5 ${styles.returnBtn}` : `ms-2 ${styles.returnBtn}`} onClick={(e) => {
                                                                         let arr = viewAllReply
-                                                                        console.log(viewAllReply)
                                                                         arr[helperIndex] = 10000
                                                                         setViewAllReply([...arr])
                                                                         handleReplyBtn(helperIndex)
