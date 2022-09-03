@@ -4,6 +4,7 @@ const {
     validateUser
   } = require('../middleware/auth')
 
+
 const {
     getWareHousesForUsers,
     userLogin,
@@ -13,7 +14,10 @@ const {
     testPayment,
     getWarehouseInfo,
     addComment,
-    addReply
+    addReply,
+    getCurrentUser,
+    getWarehouserequests,
+    updateImg
 } = require('../controllers/userController')
 
 
@@ -35,10 +39,14 @@ userRouter.post('/addReply', validateUser, addReply)
 
 userRouter.post('/getWarehouseInfo', validateUser, getWarehouseInfo)
 
+userRouter.post('/getWarehouserequests', validateUser, getWarehouserequests)
+
+userRouter.post('/updateImg', validateUser, updateImg)
+
 userRouter.get('/checkUserValidation', validateUser, (req, res) => {
     return res.status(200).send(true)
 })
-
+userRouter.get('/getCurrentUser',validateUser,getCurrentUser)
 module.exports = {
     userRouter,
     userRegister,

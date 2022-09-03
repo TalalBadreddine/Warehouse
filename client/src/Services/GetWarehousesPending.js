@@ -1,5 +1,5 @@
 import axios from "axios";
- const apiUri="/admin/getAllWarehouses";
+ const apiUri="/admin/getAllWarehousesPending";
 
 
  export function getAllWarehousesPending(){ 

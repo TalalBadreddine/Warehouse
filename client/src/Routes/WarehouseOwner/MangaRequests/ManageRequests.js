@@ -10,9 +10,12 @@ import { Modal } from 'react-bootstrap'
 import { Accordion } from 'react-bootstrap'
 import ViewWarehouseDetails from '../ViewWarehouseDetails/ViewWarehouseDetails'
 import axios from 'axios';
+import ui from '../../../themes'
+import ProfileModal from '../../../Components/ProfileModal/ProfileModal';
+import styles from './tablestyle.module.css'
 
 
-  //TODO: SOMTIMES DATE is not availble (it will be returned from the back end ) but not in the front end
+//TODO: SOMTIMES DATE is not availble (it will be returned from the back end ) but not in the front end
 
 function ManageRequests() {
 
@@ -21,6 +24,9 @@ function ManageRequests() {
   const [show, setShow] = useState(false)
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const [currentUser, setCurrentUser] = useState(null)
+  const [showProfile, setShowProfile] = useState(false)
 
   const [showDetailsModal, setShowDetailsModal] = useState(false)
   const [currentRequestDetails, setCurrentRequestDetails] = useState()
@@ -44,17 +50,14 @@ function ManageRequests() {
       requestedDate: STARTRENTDATE
 
     }).then(result => {
-      console.log(result)
     })
 
     await axios.post('/userActivity', {
       action: `${STATUS} renting warehouse for ${userEmail} from ${new Date(STARTRENTDATE).toISOString().slice(0, 10)} To: ${new Date(ENDRENTDATE).toISOString().slice(0, 10)}`,
       role: 'warehouseOwner'
     }).then((results) => {
-      console.log(results.data)
     })
 
-    console.log(`request Is Sent for ${ID, STATUS, WAREHOUSEID, STARTRENTDATE, ENDRENTDATE}`)
 
 
     let currentrequest = requests.filter((request) => {
@@ -76,24 +79,16 @@ function ManageRequests() {
 
       let endRentDate = new Date(ENDRENTDATE).getTime()
       let startRentDate = new Date(STARTRENTDATE).getTime()
-  
+
       let requestForThisWarehouse = requests.filter((request) => {
-  
+
         let currentRequestStartDate = new Date(request.startRentDate).getTime()
         let currentRequestEndDate = new Date(request.endRentDate).getTime()
-  
-        if(ID == request._id)return false
-        
+
+        if (ID == request._id) return false
+
         return currentRequestStartDate < endRentDate && startRentDate < currentRequestEndDate
       })
-
-
-      // let endRentDate = new Date(ENDRENTDATE).getTime()
-
-      // let requestForThisWarehouse = requests.filter((request) => {
-      //   let currentRequestStartDate = new Date(request.startRentDate).getTime()
-      //   return request.WarehouseId == WAREHOUSEID && currentRequestStartDate < endRentDate && ID != request._id
-      // })
 
       setModalContent({ ...modalContent, ['arrOfWarehouses']: requestForThisWarehouse })
 
@@ -124,11 +119,6 @@ function ManageRequests() {
       if (err.response.data == 'forbidden') { navigate('/') }
     })
 
-    // getRequest(warehouseOwner)
-    // .then(response => response.json())
-    // .then(records() => {
-    // })
-
   }, []);
 
   const handleAccpetBtn = async () => {
@@ -147,13 +137,13 @@ function ManageRequests() {
         warehouseId: currentRequest.WarehouseId,
         requestedDate: currentRequest.startRentDate
 
-      }).then( async (result) => {
+      }).then(async (result) => {
 
         await axios.post('/userActivity', {
           action: `Rejected renting warehouse for ${currentRequest.userEmail} from ${new Date(currentRequest.startRentDate).toISOString().slice(0, 10)} To: ${new Date(currentRequest.endRentDate).toISOString().slice(0, 10)}`,
           role: 'warehouseOwner'
         }).then((results) => {
-          console.log(results.data)
+          
         })
 
       })
@@ -166,13 +156,12 @@ function ManageRequests() {
       warehouseId: currentWarehouse.WarehouseId,
       requestedDate: currentWarehouse.startRentDate
 
-    }).then( async (result) => {
+    }).then(async (result) => {
 
       await axios.post('/userActivity', {
         action: `Accepted renting warehouse for ${currentWarehouse.userEmail} from ${new Date(currentWarehouse.startRentDate).toISOString().slice(0, 10)} To: ${new Date(currentWarehouse.endRentDate).toISOString().slice(0, 10)}`,
         role: 'warehouseOwner'
       }).then((results) => {
-        console.log(results.data)
       })
 
     })
@@ -198,8 +187,8 @@ function ManageRequests() {
       let currentRequestStartDate = new Date(request.startRentDate).getTime()
       let currentRequestEndDate = new Date(request.endRentDate).getTime()
 
-      if(request.WarehouseId != warehouseId)return false
-      if(requestData._id == request._id)return false
+      if (request.WarehouseId != warehouseId) return false
+      if (requestData._id == request._id) return false
 
       return currentRequestStartDate < endRentDate && startRentDate < currentRequestEndDate
     })
@@ -220,7 +209,7 @@ function ManageRequests() {
     setShowDetailsModal(true)
   }
 
-  //for the search functionality
+
   const [query, setQuery] = useState("")
 
   return (
@@ -234,9 +223,9 @@ function ManageRequests() {
 
 
 
-          <Table className={mytable.mytableone} striped bordered hover >
+          <Table style={{ backgroundColor: `${ui.lightBg}`, borderColor: `${ui.borders}`, color: `${ui.normalText}` }} className={mytable.mytableone} striped bordered hover >
 
-            <thead className={mytable.tablehaed}>
+            <thead style={{ backgroundColor: `${ui.borders}` }} className={mytable.tablehaed}>
               <tr>
 
                 <th>Costumer Email</th>
@@ -250,44 +239,14 @@ function ManageRequests() {
             <tbody>
 
               {currentWarehouse && <Modal show={show} onHide={handleClose}>
-                <Modal.Header closeButton>
+                <Modal.Header closeButton style={{ backgroundColor: `${ui.backgroundColor}` }}>
                   <Modal.Title><h3 style={{ color: 'red' }}>Attention !</h3></Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
+                <Modal.Body style={{ backgroundColor: `${ui.backgroundColor}`, color: `${ui.normalText}` }}>
                   <h5 style={{ fontWeight: 'meduim', letterSpacing: '1px' }}>The current request have conflict with {modalContent.arrOfWarehouses.length} other warehouses By accepting the request, you will be by default declining other requests.</h5>
-
-                  <Accordion className="mt-4 mb-4">
-                    <Accordion.Item eventKey="0">
-                      <Accordion.Header>Current Customer</Accordion.Header>
-                      <Accordion.Body>
-                        <div className='d-flex justify-content-between' style={{ fontSize: '0.9rem' }}>
-                          <p>Rentor: {currentWarehouse.userEmail.split('@')[0]}</p>
-                          <p>From: {new Date(currentWarehouse.startRentDate).toISOString().slice(0, 10)}</p>
-                          <p>To: {new Date(currentWarehouse.endRentDate).toISOString().slice(0, 10)}</p>
-                        </div>
-                      </Accordion.Body>
-                    </Accordion.Item>
-                    <Accordion.Item eventKey="1">
-                      <Accordion.Header>Other Customers</Accordion.Header>
-                      <Accordion.Body>
-                        {modalContent.arrOfWarehouses.length != 0 && modalContent.arrOfWarehouses.map((warehouse) => {
-                          console.log(warehouse)
-                          return (
-                            <div className="d-flex justify-content-between" style={{ fontSize: '0.9rem' }}>
-                              <p>Rentor: {warehouse.userEmail.split('@')[0]}</p>
-                              <p>From: {new Date(warehouse.startRentDate).toISOString().slice(0, 10)}</p>
-                              <p>To: {new Date(warehouse.endRentDate).toISOString().slice(0, 10)}</p>
-                              <hr></hr>
-                            </div>
-                          )
-                        })}
-
-                      </Accordion.Body>
-                    </Accordion.Item>
-                  </Accordion>
-
+                  <p className='mt-4'>Note: To check the other requests click on view details button in the table</p>
                 </Modal.Body>
-                <Modal.Footer>
+                <Modal.Footer style={{ backgroundColor: `${ui.backgroundColor}` }}>
                   <Button variant="secondary" onClick={handleClose}>
                     Close
                   </Button>
@@ -297,30 +256,53 @@ function ManageRequests() {
                 </Modal.Footer>
               </Modal>}
 
+              {/* // TODO: Make it on click on image */}
+              {showProfile &&
+                <Modal show={showProfile} centered  size="lg">
+                  <Modal.Body style={{ backgroundColor: `${ui.backgroundColor}`, color: `${ui.normalText}` }}>
+                    <ProfileModal userEmail={currentUser} role={'owner'}></ProfileModal>
+                  </Modal.Body>
+                  <Modal.Footer style={{ backgroundColor: `${ui.backgroundColor}` }}>
+                    <Button variant="secondary" onClick={() => {setShowProfile(false)}}>
+                      Close
+                    </Button>
+                  </Modal.Footer>
+                </Modal>
+                }
+
+
               {
                 requests.filter(item => item.warehouseName.toLowerCase().includes(query)).map((item, i) => {
-                  // if(item.status === 'pending'){
                   return <tr key={i}>
-                    <td>{item.userEmail}</td>
-                    <td>{item.warehouseName}</td>
+                    <td style={{ color: `${ui.normalText}` }} className='d-flex'> 
+                      <img src={`${item.userImage}`} width='50px' height={'50px'} style={{borderRadius:'100%'}} className={styles.tableRow}  onClick={() => {
+                      setShowProfile(true)
+                      setCurrentUser(item.userEmail)
+                      }}></img>
+                       <span className='mt-3 ms-2' >{item.userEmail}</span></td>
+                    <td style={{ color: `${ui.normalText}` }} >
+                      <div className='d-flex ' style={{height:'100%', width:'100%'}} >
+                      <span  className='mt-3 m-auto'>{item.warehouseName}</span>
+                      </div>
+                      </td>
 
 
                     {showDetailsModal && currentRequestDetails && <ViewWarehouseDetails data={currentRequestDetails} showState={showDetailsModal} showAction={() => { setShowDetailsModal(true) }} hideAction={() => { setShowDetailsModal(false) }} ></ViewWarehouseDetails>}
 
                     <td>
-                      <Button className="m-1" variant="success" style={{ backgroundColor: "#54d494", borderColor: "#54d494" }}
+                      <Button className="m-1" variant="success" style={{ backgroundColor: `${ui.Buttons}`, borderColor: `${ui.normalText}` }}
                         onClick={() => {
                           HandleAccept(item._id, 'accepted', item.WarehouseId, item.startRentDate, item.endRentDate, item.userEmail)
                           setCurrentWarehouse(item)
                         }}>Accept</Button>{' '}
 
-                      <Button className="m-1" variant="danger" style={{ backgroundColor: "#ff0000", borderColor: "#ff0000" }}
+                      <Button className="m-1" variant="danger" style={{ backgroundColor: "#ff0000", borderColor: `${ui.normalText}` }}
                         onClick={() => {
                           HandleAccept(item._id, 'rejected', item.WarehouseId, item.startRentDate, item.endRentDate, item.userEmail)
                           setCurrentWarehouse(item)
                         }}>Decline</Button>{' '}
 
-                      <Button className="m-1" variant="light" style={{ backgroundColor: "#c1c1c1", borderColor: "#c1c1c1" }} onClick={() => { handleViewDetails(item) }}>View Details</Button>{' '}
+                      <Button className="m-1" variant="light" style={{ backgroundColor: `${ui.lightBg}`, color: `${ui.normalText}`, borderColor: `${ui.normalText}` }} onClick={() => { handleViewDetails(item) }}>View Details</Button>{' '}
                     </td>
                   </tr>
                   // }

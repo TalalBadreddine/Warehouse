@@ -1,11 +1,19 @@
 .loginBtn:hover{
-    border-color: green;
-    border: 0.7px solid green;
-    box-shadow: 0px 0px 4px green;
+    border-color: #027fff;
+    border: 0.7px solid #027fff;
+    box-shadow: 0px 0px 4px #027fff;
+    color: #027fff;
+    background-color: #027fff;
 }
 
 .loginBtn{
 
-    border-color: green;
-    border: 0.7px solid green;
+    border-color: #027fff;
+    border: 0.7px solid #027fff;
+}
+.navBar{
+    background-color:  #071a2f !important;
+}
+.imageIcon:hover{
+    scale: 110%;
 }

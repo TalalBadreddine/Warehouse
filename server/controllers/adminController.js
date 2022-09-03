@@ -67,6 +67,21 @@ const deleteCustomer = async(req, res) => {
     
 }
 
+const getWarehouseOwnerAllRequests = async (req, res) => {
+    try{
+        const ownerEmail = req.body.warehouseOwnerEmail
+        
+        const result = await manageUsersAndWarehousesSchema.find({
+            warehouseOwnerEmail:ownerEmail
+        })
+        return res.send(result).status(200)
+
+    }
+    catch(err){
+        console.log(`error at getWarehouseOwnerAllRequests =>  ${err.message}`)
+    }
+}
+
 const getCurrentCustomerInfo = async (req, res) => {
     try{
         const currentUserId = req.body.userId
@@ -99,8 +114,7 @@ const activeDeactiveCustomer = async (req,res) => {
 const getAllWarehouses = async (req, res) => {
     try{
 
-         await extension.getEveryWarehouseOwnerAndHisWareHousesPending().then((results) => {
-             console.log(results)
+         await extension.getEveryWarehouseOwnerAndHisWareHouses().then((results) => {
              return res.send(results).status(200)
 
          })
@@ -139,8 +153,8 @@ const  deleteWarehouse = async(req, res) => {
       try{
           const _Id= req.body._Id
           await warehouseSchema.findOneAndDelete({_Id:_Id})
-          res.status(200).json({message : "warehouse deleted"})
-    }
+          res.status(201).json(result)
+            }
     catch(error){
         res.status(500).json({message :"internal error with fucntion delete warehouse"})
 
@@ -203,9 +217,11 @@ const  deleteWarehouseOwners = async(req, res) => {
 const getAllWarehousesPending = async (req, res) => {
 
     try {   
-        console.log('test')
-        const warehouse =  await warehouseSchema.find({status: 'pending'});
-        return res.send(warehouse).status(200)
+        
+        await extension.getEveryWarehouseOwnerAndHisWareHousesPending().then((results) => {
+            return res.send(results).status(200)
+
+        })
     } catch(error){
         res.status(500).json({message : "internal error with function getAllwarehousesPending"})
     }
@@ -232,7 +248,7 @@ const adminLogin = async (req, res) => {
         const userInfo = req.body
 
         if(userInfo.email == adminUserName && userInfo.password == adminPassword ){
-
+            userInfo.image = 'null'
             jwt.sign({user: userInfo, role: 'admin'}, jwtSecret, async (err, token) => {
 
                 res.cookie('jwt', token, { httpOnly: true, maxAge: 3 * 24 * 60 * 60 * 1000 })
@@ -296,6 +312,29 @@ const getAllCustomerAndOwnersAndLogs = async (req, res) => {
     }
 }
 
+const getAllStatistics = async (req, res) => {
+    try{
+        const customers = await usersSchema.find()
+        const owners = await warehouseOwnerSchema.find()
+        const rentingRequests = await manageUsersAndWarehousesSchema.find()
+        const warehouses = await warehouseSchema.find()
+        let warehousesMap = {}
+        await extension.getWarehousesAndNumberOfTimesRented().then((results) => {
+            warehousesMap = results
+        })
+
+        return res.send({
+            customers,
+            owners,
+            rentingRequests,
+            warehouses,
+            warehousesMap
+        }).status(200)
+    }
+    catch(err){
+        console.log(`error at the getAllStatistics function => ${err.message}`)
+    }
+}
 
 module.exports = {
     getAllCustomer,
@@ -314,5 +353,7 @@ module.exports = {
     activeDeactiveCustomer,
     getUserRequests,
     getAllLogs,
+    getAllStatistics,
+    getWarehouseOwnerAllRequests,
     getAllCustomerAndOwnersAndLogs
 }

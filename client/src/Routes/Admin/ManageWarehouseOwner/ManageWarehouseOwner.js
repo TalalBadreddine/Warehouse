@@ -13,10 +13,12 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import Modal from 'react-bootstrap/Modal';
-
+import ui from '../../../themes'
 import { getAllWarehouseOwners } from "../../../Services/getAllWarehouseOwners"
 import { deleteWarehouseOwnerByAdmin } from "../../../Services/deleteWarehouseOwnerByAdmin"
 import AddWarehouseOwner from '../../../Components/AddWarehouseOwner/AddWarehouseOwner';
+
+
 
 const columns = [
     { id: 'userName', label: 'Warehouse Owner', minWidth: 170 },
@@ -68,7 +70,7 @@ function ManageWarehouseOwner() {
             alert('Warehouse Owner already exists')
 
         }
-        console.log(item)
+        
         setRequests([...requests, item.message])
     }
 
@@ -87,20 +89,23 @@ function ManageWarehouseOwner() {
     }, [requests])
 
     useEffect(() => {
-
+        //TODO: if you want we can add on Click on owner image 
         let arr = searchedWarehouseOwner.map((item, i) => {
-
+            let user = <div className='d-flex'>
+                <img src={`${item.image}`} width='40px' height='40px' style={{borderRadius:'100%'}}></img>
+            <span className='my-auto ms-2'>{item.userName}</span>
+            </div>
             return (
 
-                createData(item.userName,
+                createData(user,
                     item.email,
                     <>
-                        <Button style={{ color: 'white', backgroundColor: '#54d494', margin: 5, boxShadow: '3px 3px 6px green' }} onClick={() => { handleLogs(item) }}
+                        <Button style={{ color: `${ui.normalText}`,border:`solid 2px ${ui.normalText}`,backgroundColor:`${ui.backgroundColor}`, margin: 5 }} onClick={() => { handleLogs(item) }}
                             variant="Contained"
                             size="medium">
                             CheckLog
                         </Button>
-                        <Button className="ms-4" style={{ color: 'white', backgroundColor: 'red', borderColor: 'red', margin: 5, boxShadow: '3px 3px 6px #792727' }}
+                        <Button className="ms-4" style={{ color: `${ui.normalText}`, backgroundColor: 'red', border: ' solid 2px red', margin: 5 }}
                             onClick={() => { handleDeleteWarehouseOwner(item.email) }}
                             variant="outlined"
                             size="medium">
@@ -118,7 +123,7 @@ function ManageWarehouseOwner() {
             setRequests(result.data)
             setSearchedWarehouseOwner(result.data)
 
-            console.log(result.data)
+            
 
         }).catch((err) => {
             if (err.response.data == 'forbidden') { navigate('/') }
@@ -133,12 +138,11 @@ function ManageWarehouseOwner() {
 
     return (
         <div>
-            <Grid container spacing={2} sx={{ m: 2 }}>
-                <Grid item xs={2}></Grid>
-                <Grid item xs={8}>
-                    <TextField style={{ width: '40%' }} sx={{ m: 1 }} id="outlined-basic" label="Search for a Warehouse Owner..." variant="outlined" size='small' onChange={(e) => setQuery(e.target.value)} />
+            <Grid container spacing={5} sx={{ m: 1 }}>
+                <Grid item xs={11}>
+                    <TextField style={{ width: '40%', backgroundColor:`${ui.searchesInput}` , border: 'solid 1px #7890a9', borderRadius:'6px'}} sx={{ m: 1 }} id="outlined-basic" label="Search for a Warehouse Owner..." variant="outlined" size='small' onChange={(e) => setQuery(e.target.value)} />
                     <Button
-                        style={{ backgroundColor: 'gray', borderColor: '#54d494', float: 'right', boxShadow: '3px 3px 6px black' }}
+                        style={{ backgroundColor: `${ui.Buttons}`, borderColor: '#54d494', float: 'right', boxShadow: '3px 3px 6px black' }}
                         startIcon={<AddIcon />} sx={{ m: 1 }}
                         onClick={handleShow}
                         variant="contained"
@@ -146,23 +150,23 @@ function ManageWarehouseOwner() {
                         Create
                     </Button>
 
-                    <Paper sx={{ width: '100%', overflow: 'hidden' }} style={{ marginTop: '5%' }}>
-                        <TableContainer sx={{ maxHeight: 500 }} >
-                            <Table stickyHeader aria-label="sticky table">
-                                <TableHead>
-                                    <TableRow>
+                    <Paper  sx={{ width: '100%', overflow: 'hidden' }} style={{ marginTop: '3%',borderColor:`${ui.borders}` }}>
+                        <TableContainer style={{borderColor:`${ui.borders}`}} sx={{ maxHeight: 500 }} >
+                            <Table style={{borderColor:`${ui.borders}`}} stickyHeader aria-label="sticky table">
+                                <TableHead style={{borderColor:`${ui.borders}`}}>
+                                    <TableRow style={{borderColor:`${ui.borders}`}}>
                                         {columns.map((column) => (
-                                            <TableCell
+                                            <TableCell 
                                                 key={column.id}
                                                 align={column.align}
-                                                style={{ minWidth: column.minWidth, fontSize: '20px', backgroundColor: 'lightgrey' }}
+                                                style={{ minWidth: column.minWidth, fontSize: '20px',color:'white', backgroundColor: `${ui.borders}` ,borderColor:`${ui.borders}`}}
                                             >
                                                 {column.label}
                                             </TableCell>
                                         ))}
                                     </TableRow>
                                 </TableHead>
-                                <TableBody>
+                                <TableBody style={{borderColor:`${ui.borders}`}}>
                                     {rows && rows
                                         .slice()
                                         .map((row) => {
@@ -174,7 +178,7 @@ function ManageWarehouseOwner() {
                                                             <TableCell
                                                                 key={column.id}
                                                                 align={column.align}
-                                                                style={{ fontSize: '17px' }}
+                                                                style={{ fontSize: '17px', color:'white', backgroundColor: `${ui.backgroundColor}`, borderBottom:'solid 1px white' }}
                                                             >
                                                                 {column.format && typeof value === 'number'
                                                                     ? column.format(value)
@@ -193,7 +197,7 @@ function ManageWarehouseOwner() {
                 </Grid>
                 <Grid item xs={2}></Grid>
             </Grid>
-            <Modal
+            <Modal 
                 show={show}
                 onHide={handleClose}
                 backdrop="static"
@@ -202,11 +206,11 @@ function ManageWarehouseOwner() {
                 centered
                 keyboard={false}
             >
-                <Modal.Header closeButton>
-                    <Modal.Title>Add a Warehouse Owner</Modal.Title>
+                <Modal.Header style={{backgroundColor:`${ui.lightBg}` , color:`${ui.normalText}`}} closeButton>
+                    <Modal.Title >Add a Warehouse Owner</Modal.Title>
                 </Modal.Header>
 
-                <Modal.Body>
+                <Modal.Body style={{backgroundColor:`${ui.lightBg}` , color:`${ui.normalText}`}} >
                     <AddWarehouseOwner addAction={handleAddRow} closeAction={() => { handleClose() }} />
                 </Modal.Body>
 

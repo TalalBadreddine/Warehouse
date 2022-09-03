@@ -6,6 +6,7 @@ const crypto = require('crypto');
 const dotenv = require('dotenv')
 const jwtDecode = require('jwt-decode');
 const manageUsersAndWarehousesSchema = require('../models/manageUsersAndWarehousesSchema');
+const userSchema = require('../models/usersSchema')
 const extensions = require('../helper/extensions');
 
 
@@ -43,7 +44,6 @@ const register = async (req, res) => {
             },
         });
 
-        console.log(account)
 
         await warehouseOwnerModel.create({
             userName: userName,
@@ -65,14 +65,36 @@ const register = async (req, res) => {
             collect: 'currently_due',
           });
 
-          console.log(accountLink)
+          let obj = {accountLink: accountLink, accountId: account.id}   
 
-        return res.send(accountLink).status(200)
+        return res.send(obj).status(200)
 
     } catch (error) {
         console.log(error)
         res.status(500).json({ message: "an error occured at register function " });
     }
+}
+
+// TODO: add it to the login phase
+const completeStripeAccount = async  (ownerAccountId) => {
+
+    try{
+
+        const accountId = ownerAccountId
+
+
+        const capability = await stripe.accounts.updateCapability(
+            `${accountId}`,
+            'card_payments',
+            {requested: true}
+          );
+
+          
+    }
+    catch(err){
+        console.log(`error at completeStripeAccount ${err.message}`)
+    }
+
 }
 
 //Login
@@ -95,9 +117,9 @@ const login = async (req, res) => {
         const payload = {
             user
         }
-
+        user.image = 'null'
         await jwt.sign({ user: user, role: 'warehouseOwner' }, jwtSecret, async (err, token) => {
-
+            completeStripeAccount(user.stripeAccountId)
             await res.cookie('jwt', `${token}`, { httpOnly: true })
             res.status(200).json(token)
         })
@@ -148,6 +170,7 @@ const acceptDeclineRequest = async (req, res) => {
         const requestId = req.body.requestId
         let requestStatus = req.body.status
         const warehouseId = req.body.warehouseId
+        const decodedInfo = jwtDecode(req.cookies['jwt'])
 
         const results = await manageUsersAndWarehousesSchema.findOne({
             _id: requestId
@@ -155,9 +178,11 @@ const acceptDeclineRequest = async (req, res) => {
 
         const requestedDate = [results.startRentDate, results.endRentDate]
         let returnStatus = ''
+        
+        
 
         if (requestStatus == 'accepted') {
-
+         
             await extensions.userRentAWarehouseInSpecificDate(warehouseId, requestedDate).then(async (response) => {
               
                 if (response) { 
@@ -165,6 +190,17 @@ const acceptDeclineRequest = async (req, res) => {
                     returnStatus = 'accepted'
 
              } else { 
+
+
+                  await stripe.refunds.create({
+                    payment_intent: `${results.paymentId}`,
+                    amount: results.price * 100,
+                },{
+                        stripeAccount: `${decodedInfo.user.stripeAccountId}`,
+                      }
+                  );
+
+
                  requestStatus = 'rejected'
                  returnStatus = 'rejected cause of time conflict'
                  }
@@ -180,6 +216,12 @@ const acceptDeclineRequest = async (req, res) => {
             })
             
         }else{
+            
+            await stripe.refunds.create({
+                payment_intent: `${results.paymentId}`,
+                amount: results.price * 100,
+                reverse_transfer:'true'
+            });
 
             returnStatus = 'rejected'
             await manageUsersAndWarehousesSchema.updateOne({
@@ -204,12 +246,11 @@ const acceptDeclineRequest = async (req, res) => {
 // POST request to add a warehouseowner
 
 const addWarehouses = async (req, res) => {
-
     try {
         const warehouse = req.body;
         const decodedInfo = jwtDecode(req.cookies['jwt'])
         const result = await warehouseSchema.create(warehouse);
-
+        await result.save()
         await warehouseOwnerModel.updateOne({
             _id: decodedInfo.user._id
         },{
@@ -303,6 +344,164 @@ const getWarehouseDetails = async (req, res) => {
     }
 }
 
+const addComment = async (req, res) => {
+    try {
+        const content = req.body.content
+        const warehouseId = req.body.warehouseId
+        const decodedInfo = jwtDecode(req.cookies['jwt'])
+
+
+        const results = await warehouseSchema.updateOne({
+            _id: warehouseId
+        }, {
+            $push: {
+                feedback: [{
+
+                    comentorEmail: decodedInfo.user.email,
+                    content: content
+                }]
+            }
+        })
+        if (results.acknowledged) {
+            return res.send({ comentorEmail: decodedInfo.user.email, content: content, addedIn: new Date() }).status(200)
+        } else {
+            return res.status(424).send('Failed to add the comment')
+        }
+    }
+    catch (err) {
+        console.log(`error in addComment  => ${err.message}`)
+    }
+}
+
+const getProfileModalInfo = async (req, res) => {
+    try{
+
+        const userInfo = await userSchema.findOne({
+            userEmail:`${req.body.userEmail}`
+        })
+
+        const requestsInfo = await manageUsersAndWarehousesSchema.find({
+            userEmail: userInfo.email
+        })
+        
+        return res.send({
+            personalInfo: userInfo,
+            otherInfo: requestsInfo
+        }).status(200)
+    }
+    catch(err){
+        console.log(`error at getProfileModalInfo => ${err.message}`)
+    }
+}
+
+const getOwnerInfo = async (req, res) => {
+    try{
+        const myInfo = jwtDecode(req.cookies['jwt'])
+        const arrOfWarehousesId = myInfo.user.myWarehouses
+         let allWarehousesData 
+
+        const info =  await warehouseOwnerModel.findOne({
+            _id: myInfo.user._id
+         })
+
+         await extensions.getCurrentOwnerWarehousesWithRequests(arrOfWarehousesId).then((results) => {
+            allWarehousesData = results
+         })
+
+         return res.send({
+            warhousesData: allWarehousesData,
+            myInfo: info
+        }).status(200)
+    }
+    catch(err){
+        console.log(`error at getOwnerInfo ${err.message}`)
+    }
+}
+
+const getUser = async (req, res) =>{
+    try{
+        const userEmail = req.body.userEmail
+
+        const results = await userSchema.findOne({
+            email: userEmail
+        })
+
+        
+        return res.send(results).status(200)
+        
+    }catch(err){
+        console.log(`error at getUser => ${err.message}`)
+    }
+
+}
+
+const updateImg = async (req, res) => {
+    try{
+
+        const decodedInfo = jwtDecode(req.cookies['jwt'])
+        const img = req.body.image
+        
+        const results = await warehouseOwnerModel.updateOne({
+            _id: decodedInfo.user._id
+        }, {
+            $set: {
+                image: img
+            }
+        }
+        )
+        return res.send(results).status(200)
+    }
+    catch(err){
+        console.log(`error at updateImg => ${err.message}`)
+    }
+}
+
+const getProfile = async (req, res) => {
+    try{   
+        const decodedUser = jwtDecode(req.cookies['jwt'])
+        const results=await warehouseOwnerModel.findOne({
+            _id:decodedUser.user._id
+
+        })
+        return res.send(results).status(200);
+
+    }
+    catch(err){
+        console.log(`error at get`)
+    }
+}
+
+const addReply = async (req, res) => {
+    try {
+        const warehouseId = req.body.warehouseId
+        const content = req.body.content
+        const arrOfCommentsIndex = req.body.arrIndex
+        const decodedInfo = jwtDecode(req.cookies['jwt'])
+
+       const warehouse = await warehouseSchema.findOne({
+            _id: warehouseId
+        })
+        let currentFeedback = warehouse.feedback
+        currentFeedback[arrOfCommentsIndex].push({
+            comentorEmail: decodedInfo.user.email,
+            content: content
+        })
+
+        await warehouseSchema.updateOne({
+            _id: warehouseId
+        },{
+
+            feedback: currentFeedback
+
+        })
+
+        return res.send(decodedInfo.user.email)
+    }
+    catch (err) {
+        console.log(`Error at addReply => ${err.message}`)
+    }
+
+}
 
 
 
@@ -315,5 +514,13 @@ module.exports = {
     getWarehouses,
     acceptDeclineRequest,
     deleteWarehouse,
-    getWarehouseDetails
+    getWarehouseDetails,
+    completeStripeAccount,
+    addComment,
+    getProfileModalInfo,
+    getOwnerInfo,
+    getUser,
+    updateImg,
+    getProfile,
+    addReply
 }

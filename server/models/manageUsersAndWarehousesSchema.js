@@ -30,6 +30,23 @@ const manageUsersAndWarehousesSchema = new mongoose.Schema({
         type: String,
         //['pending','accepted','rejected']
         default: 'pending'
+    },
+    paymentId:{
+        type:String
+    },
+
+    clientSecret:{
+        type: String
+    },
+    userImage:{
+        type:String
+    },
+    ownerImage:{
+        type:String
+    },
+    registrationDate:{
+        type: Date,
+        default: new Date()
     }
 
 

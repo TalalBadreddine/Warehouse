@@ -1,0 +1,16 @@
+.tableRow:hover{
+    background-color: rgba(232, 226, 226, 0.211) !important;
+    cursor: pointer;
+    scale: 110%;
+}
+
+.profileImg:hover ~ .editImgBtn{
+    display: block !important;
+}
+.editImgBtn:hover{
+    display: block !important;
+}
+
+.editImgBtn{
+    display: none !important;
+}

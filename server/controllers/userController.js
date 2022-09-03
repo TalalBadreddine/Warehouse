@@ -7,7 +7,7 @@ const crypto = require('crypto');
 const dotenv = require('dotenv')
 const extensions = require('../helper/extensions')
 
-dotenv.config({path: __dirname + '/../.env'})
+dotenv.config({ path: __dirname + '/../.env' })
 
 const {
     hashType,
@@ -21,100 +21,98 @@ const stripe = require('stripe')(`${stripeSecretKey}`);
 
 
 const getWareHousesForUsers = async (req, res) => {
-    try{
+    try {
 
         await extensions.getEveryWarehouseOwnerAndHisWareHouses().then((results) => {
             return res.send(results).status(200)
         })
 
     }
-    catch(err){
+    catch (err) {
         console.log(`error at getWareHousesForUsers => ${err.message}`)
     }
 
 }
 
 const userLogin = async (req, res) => {
-    try{
+    try {
+        const { email, password } = req.body;
 
-        const userInfo = req.body
- 
-        const userFromDb = await userSchema.findOne({
-            email: userInfo.email
+        const user = await userSchema.findOne({
+            email
         })
- 
-        
-        if(!userFromDb){
-            return res.send('Does not exist').status(404)
-          
-        }
-   
-        else if(userFromDb.password != crypto.createHash(hashType).update(userInfo.password).digest(encodeAs)){
-            return res.send('wrong password').status(403)
-           
-        }
 
-        else if(!userFromDb.isActive ){
-            return res.send('Inactive').status(403)
-            
-        }else {
+        if (!user) return res.status(400).json({ message: "user does not exist" });
 
-       
-        await jwt.sign({user: userInfo, role: 'user'}, jwtSecret, async (err, token) => {
-            await res.cookie('jwt', `${token}`, { httpOnly: true, maxAge: 3 * 24 * 60 * 60 * 1000 })
-            return res.status(200).send(true)
+        // verify password
+        if ((crypto.createHash(hashType).update(password).digest(encodeAs) != user.password))
+            return res.status(403).json({ message: "incorrect password!" })
+
+        // create token
+        const payload = {
+            user
+        }
+        user.image = 'null'
+        await jwt.sign({ user: user, role: 'user' }, jwtSecret, async (err, token) => {
+
+            await res.cookie('jwt', `${token}`, { httpOnly: true })
+            res.status(200).json(true)
         })
-        
-    }
 
     }
-    catch(err){
+    catch (err) {
         console.log(`error at userLogin => ${err.message}`)
     }
 }
 
 
 const userRegister = async (req, res) => {
-    try{
-
+    try {
         const userInfo = req.body
 
         const usersWithSameEmail = await userSchema.find({
             email: userInfo.email
         })
 
-        if(usersWithSameEmail.length >= 1 ) return res.send('exist').status(409)   // 409 => conflict
+        if (usersWithSameEmail.length >= 1) return res.send('exist').status(409)   // 409 => conflict
+
+        const customer = await stripe.customers.create({
+
+        });
 
         let user = new userSchema({
 
             email: userInfo.email,
-            password: crypto.createHash(hashType).update(userInfo.password).digest(encodeAs)
+            password: crypto.createHash(hashType).update(userInfo.password).digest(encodeAs),
+            userName: userInfo.userName,
+            stripeAccountId: customer.id
 
         })
+
 
         await user.save()
 
         return res.send('added').status(200)
     }
-    catch(err){
+    catch (err) {
         console.log(`err at userRegisterFunction => ${err.message}`)
     }
 }
 
 // first build  request rent for warehouse
 const getAllUserRequests = async (req, res) => {
-    try{
+    try {
 
         const decode = jwtDecode(req.cookies['jwt'])
-        console.log(decode)
+        
         const allUserRequests = await manageUsersAndWarehousesSchema.find({
             userEmail: decode.user.email
         })
-        console.log(allUserRequests)
+        
 
         return res.send(allUserRequests).status(200)
     }
-    catch(err){
+    catch (err) {
         console.log(`err at getAllUserRequests => ${err.message}`)
     }
 }
@@ -122,84 +120,90 @@ const getAllUserRequests = async (req, res) => {
 
 // resolve time conflict
 const requestRentWarehouse = async (req, res) => {
-    const warehouseInfo = req.body.warehouseData
-    const warehouseOwnerDetails = warehouseInfo.Owner
-    const rentingDate = req.body.rentingDate
-    const totalPrice = req.body.totalPrice
-    const decodedInfo = jwtDecode(req.cookies['jwt'])
-    
-    await extensions.checkIfTimeIsAvailbleWithWarehouseTime(warehouseInfo.datesAvailable , rentingDate).then(async (results) => {
+    try {
 
-        if(results){
-            
-            let relation = new manageUsersAndWarehousesSchema({
 
-                userEmail: decodedInfo.user.email,
-                WarehouseId: warehouseInfo._id,
-                startRentDate: rentingDate[0],
-                endRentDate: rentingDate[1],
-                price: parseInt(totalPrice),
-                warehouseName: warehouseInfo.name,
-                warehouseOwnerName: warehouseOwnerDetails.ownerName,
-                warehouseOwnerEmail: warehouseOwnerDetails.email
+        const warehouseInfo = req.body.warehouseData
+        const warehouseOwnerDetails = warehouseInfo.Owner
+        const rentingDate = req.body.rentingDate
+        const totalPrice = req.body.totalPrice
+        const decodedInfo = jwtDecode(req.cookies['jwt'])
+        const getUserInfo = await userSchema.findOne({
+            _id: decodedInfo.user._id
+        })
 
-            })
+        
 
-            await relation.save()
+        await extensions.checkIfTimeIsAvailbleWithWarehouseTime(warehouseInfo.datesAvailable, rentingDate).then(async (results) => {
 
-            const session = await stripe.checkout.sessions.create({
-                payment_method_types: ['card'],
-                line_items: [{
-                  price_data: {
+            if (results) {
+
+                const session = await  stripe.paymentIntents.create({
+                    customer: decodedInfo.user.stripeAccountId,
+                    setup_future_usage: 'off_session',
+                    amount: (parseInt(totalPrice) * 100),
                     currency: 'usd',
-                    unit_amount: totalPrice * 100,
-                    product_data: {
-                      name: warehouseInfo.name,
-                      description: `renting ${warehouseInfo.name} from ${new Date(relation.startRentDate).toISOString().slice(0, 10) } to ${new Date(relation.endRentDate).toISOString().slice(0, 10)}`,
+                    automatic_payment_methods: {
+                        enabled: true,
                     },
-                  },
-                  quantity: 1,
-                }],
-    
-                mode: 'payment',
-                success_url: 'http://localhost:3000/customer/requests',
-                cancel_url: 'http://localhost:3000/customer/',
-              });
-              //TODO: add path for payment
-            //   payment_intent_data: {
-            //     transfer_data: {
-            //         destination: warehouseOwnerDetails.stripeId
-            //     }
-            // },
+                    transfer_data: {
+                        destination: `${warehouseOwnerDetails.stripeAccountId}`,
+                      },
+                });
+                
 
-            return res.send(session).status(200)
+                let relation = new manageUsersAndWarehousesSchema({
 
-        }
+                    userEmail: decodedInfo.user.email,
+                    WarehouseId: warehouseInfo._id,
+                    startRentDate: rentingDate[0],
+                    endRentDate: rentingDate[1],
+                    price: parseInt(totalPrice),
+                    warehouseName: warehouseInfo.name,
+                    warehouseOwnerName: warehouseOwnerDetails.userName,
+                    warehouseOwnerEmail: warehouseOwnerDetails.email,
+                    clientSecret: session.client_secret,
+                    paymentId: session.id,
+                    userImage: getUserInfo.image,
+                    ownerImage: warehouseOwnerDetails.image
 
-        return res.send('not availble').status(410)
+                })
 
-    })
+                await relation.save()
+
+                return res.send(relation).status(200)
+
+            }
+
+            return res.send('not availble').status(410)
+
+
+        })
+
+    } catch (err) {
+        console.log(`error at requestRentWarehouse => ${err.message} `)
+    }
 }
 
 const testPayment = async (req, res) => {
     // const capabilities = await stripe.accounts.listCapabilities(
     //     ''
     //   );
-      
-      const transfer = await stripe.transfers.create({
+
+    const transfer = await stripe.transfers.create({
         amount: 7000,
         currency: 'usd',
         destination: 'acct_1LWggURe4M9JlCWK',
         transfer_group: '1',
-      });
-      
+    });
 
-      console.log(session)
-      return res.send(session)
+
+    
+    return res.send(session)
 }
 
-const getWarehouseInfo =  async (req, res) => {
-    try{
+const getWarehouseInfo = async (req, res) => {
+    try {
         const warehouseId = req.body.warehouseId
 
         const results = await warehouseSchema.find({
@@ -208,21 +212,35 @@ const getWarehouseInfo =  async (req, res) => {
 
         return res.send(results[0]).status(200)
     }
-    catch(err){
+    catch (err) {
+        console.log(`error at the getWarehouseInfo ${err.message}`)
+    }
+}
+const getWarehouserequests = async (req, res) => {
+    try {
+        const userEmail = req.body.userEmail
+
+        const results = await manageUsersAndWarehousesSchema.find({
+            userEmail: userEmail
+        })
+
+        return res.send(results).status(200)
+    }
+    catch (err) {
         console.log(`error at the getWarehouseInfo ${err.message}`)
     }
 }
 
 const addComment = async (req, res) => {
-    try{
+    try {
         const content = req.body.content
         const warehouseId = req.body.warehouseId
         const decodedInfo = jwtDecode(req.cookies['jwt'])
-    
+
 
         const results = await warehouseSchema.updateOne({
             _id: warehouseId
-        },{
+        }, {
             $push: {
                 feedback: [{
 
@@ -231,52 +249,86 @@ const addComment = async (req, res) => {
                 }]
             }
         })
-       if(results.acknowledged){
-           return res.send( {comentorEmail: decodedInfo.user.email, content: content, addedIn: new Date()} ).status(200)
-       }else{
-           return res.status(424).send('Failed to add the comment')
-       }
+        if (results.acknowledged) {
+            return res.send({ comentorEmail: decodedInfo.user.email, content: content, addedIn: new Date() }).status(200)
+        } else {
+            return res.status(424).send('Failed to add the comment')
+        }
+    }
+    catch (err) {
+        console.log(`error in addComment  => ${err.message}`)
+    }
+}
+const updateImg = async (req, res) => {
+    try{
+
+        const decodedInfo = jwtDecode(req.cookies['jwt'])
+
+        
+        const img = req.body.image
+    
+        const results = await userSchema.updateOne({
+            _id: decodedInfo.user._id
+        }, {
+            $set: {
+                image: img
+            }
+        }
+        )
+        return res.send(results).status(200)
     }
     catch(err){
-        console.log(`error in addComment  => ${err.message}`)
+        console.log(`error at updateImg => ${err.message}`)
     }
 }
 
 const addReply = async (req, res) => {
-    try{
+    try {
         const warehouseId = req.body.warehouseId
         const content = req.body.content
         const arrOfCommentsIndex = req.body.arrIndex
         const decodedInfo = jwtDecode(req.cookies['jwt'])
-        const test = 'feedback.'+ arrOfCommentsIndex
 
-        // 'feedback.pos': {
+       const warehouse = await warehouseSchema.findOne({
+            _id: warehouseId
+        })
+        let currentFeedback = warehouse.feedback
+        currentFeedback[arrOfCommentsIndex].push({
+            comentorEmail: decodedInfo.user.email,
+            content: content
+        })
 
-        //     comentorEmail: decodedInfo.user.email,
-        //     content: content
+        await warehouseSchema.updateOne({
+            _id: warehouseId
+        },{
 
-        // }
-        
-        // await warehouseSchema.updateOne({
-        //     _id: warehouseId
-        // },{
-        //     $push:{
-        //         "feedback.arrOfCommentsIndex": {
+            feedback: currentFeedback
 
-        //             comentorEmail: decodedInfo.user.email,
-        //             content: content
+        })
 
-        //         }
-        //     }
-        // },)
-        return res.send('good')
+        return res.send(decodedInfo.user.email)
     }
-    catch(err){
+    catch (err) {
         console.log(`Error at addReply => ${err.message}`)
     }
 
 }
+const getCurrentUser = async (req, res) => {
+    try{
 
+        const decodedUser = jwtDecode(req.cookies['jwt'])
+        const results=await userSchema.findOne({
+            _id:decodedUser.user._id
+
+        })
+        return res.send(results).status(200);
+      
+        
+}
+catch (err) {
+    console.log(`Error at addReply => ${err.message}`)
+}
+}
 
 module.exports = {
     getWareHousesForUsers,
@@ -287,6 +339,10 @@ module.exports = {
     testPayment,
     addComment,
     getWarehouseInfo,
-    addReply
-}
+    addReply,
+    getCurrentUser,
+    getWarehouserequests,
+    updateImg
+};
+
 
